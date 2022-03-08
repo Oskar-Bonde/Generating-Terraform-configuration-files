@@ -1,0 +1,112 @@
+# raw-data/hashicorp-certified-terraform\05-Terraform-Variables\05-01-Terraform-Input-Variables\v11-File-Function
+# Terraform Block with AWS provider
+terraform {
+  required_version = "~> 0.14" # which means any version equal & above 0.14 like 0.15, 0.16 etc and < 1.xx
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider Block AWS in region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create variable called aws_region with default "us-east-1"
+variable "aws_region" {
+  description = "Region in which AWS Resources to be created"
+  type = string
+  default = "us-east-1"
+}
+
+# variable called ec2_ami_id with default ami-0915bcb5fa77e4892
+variable "ec2_ami_id" {
+  description = "AMI ID"
+  type = string  
+  default = "ami-0915bcb5fa77e4892"
+}
+
+# create number variable called ec2_instance_count with default 1
+variable "ec2_instance_count" {
+  description = "EC2 Instance Count"
+  type = number
+  default = 1
+}
+
+# creaet variable ec2_instance_type with default t3.micro
+variable "ec2_instance_type" {
+  description = "EC2 Instance Type"
+  type = string
+  default = "t3.micro"
+}
+
+# Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
+resource "aws_security_group" "vpc-ssh" {
+  name        = "vpc-ssh"
+  description = "Dev VPC SSH"
+  ingress {
+    description = "Allow Port 22"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "Allow all IP and Ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create Security Group for web traffic
+resource "aws_security_group" "vpc-web" {
+  name        = "vpc-web"
+  description = "Dev VPC Web"
+
+  ingress {
+    description = "Allow Port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow Port 443"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all IP and Ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create EC2 Instance with ami var.ec2_ami_id, instance type set to var.ec2_instance_type, count to var.ec2_instance_count
+resource "aws_instance" "my-ec2-vm" {
+  ami           = var.ec2_ami_id 
+  instance_type = var.ec2_instance_type
+  key_name      = "terraform-key"
+  count = var.ec2_instance_count
+	user_data = file("apache-install.sh")  
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+  tags = {
+    "Name" = "web"
+  }
+}
+
+
+
+

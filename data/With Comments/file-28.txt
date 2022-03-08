@@ -1,0 +1,62 @@
+# raw-data/hashicorp-certified-terraform\05-Terraform-Variables\05-03-Terraform-Local-Values\terraform-manifests
+# Terraform Block with aws provider
+terraform {
+  required_version = "~> 0.14" # which means any version equal & above 0.14 like 0.15, 0.16 etc and < 1.xx
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider aws block with variable region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# make variable for aws region with default us east 1
+variable "aws_region" {
+  description = "Region in which AWS Resources to be created"
+  type = string
+  default = "us-east-1"
+}
+
+# variable app name
+variable "app_name" {
+  description = "Application Name"
+  type = string
+}
+
+# make a variable for the environment name
+variable "environment_name" {
+  description = "Environment Name"
+  type = string
+}
+
+# Create S3 Bucket, make bucket name var.app_name + var.environment_name + bucket
+resource "aws_s3_bucket" "mys3bucket" {
+  bucket = "${var.app_name}-${var.environment_name}-bucket"
+  acl = "private"
+  tags = {
+    Name = "${var.app_name}-${var.environment_name}-bucket"
+    Environment = var.environment_name
+  }
+}
+
+# Define Local Values
+locals {
+  bucket-name = "${var.app_name}-${var.environment_name}-bucket" # Complex expression
+}
+
+# Create S3 Bucket called mys3bucket with private acl and bucket from local.bucket name
+resource "aws_s3_bucket" "mys3bucket" {
+  bucket = local.bucket-name
+  acl = "private"
+  tags = {
+    Name = local.bucket-name
+    Environment = var.environment_name
+  }
+}
+

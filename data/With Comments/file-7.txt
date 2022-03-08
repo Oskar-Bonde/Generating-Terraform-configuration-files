@@ -1,0 +1,30 @@
+# raw-data/hashicorp-certified-terraform\04-Terraform-Resources\04-01-Resource-Syntax-and-Behavior\terraform-manifests
+# Terraform Block with the aws provider
+terraform {
+  required_version = "~> 0.14"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider Block aws in us-east-1
+provider "aws" {
+  region  = "us-east-1"
+}
+
+# Resource block that creates an ec2 instance with ami-047a51fa27710816e, instance type t2.micro
+resource "aws_instance" "my-ec2-vm" {
+  ami               = "ami-047a51fa27710816e"
+  instance_type     = "t2.micro"
+  availability_zone = "us-east-1a"
+  #availability_zone = "us-east-1b"
+  tags = {
+    "Name" = "web"
+  }
+}
+
+
+

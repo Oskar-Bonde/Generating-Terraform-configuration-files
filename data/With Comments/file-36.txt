@@ -1,0 +1,41 @@
+# raw-data/hashicorp-certified-terraform\09-Terraform-Provisioners\09-03-local-exec-provisioner\terraform-manifests
+# Terraform Block with AWS provider
+terraform {
+  required_version = "~> 0.14" 
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# AWS provider with region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create aws instance with variable ami and instance type. Use vpc security ids from ssh and web groups. Make provisioner creation time provisioner. Make a destroy time provisioner
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id 
+  instance_type = var.instance_type
+  key_name      = "terraform-key"
+	user_data = file("apache-install.sh")  
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+  tags = {
+    "Name" = "vm-${terraform.workspace}-0"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.my-ec2-vm.private_ip} >> creation-time-private-ip.txt"
+    working_dir = "local-exec-output-files/"
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = "echo Destroy-time provisioner Instanace Destroyed at `date` >> destroy-time.txt"
+    working_dir = "local-exec-output-files/"
+  }  
+
+}

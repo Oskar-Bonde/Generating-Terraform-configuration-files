@@ -1,0 +1,38 @@
+# raw-data/hashicorp-certified-terraform\15-Terraform-Expressions\15-01-Terraform-Functions\terraform-manifests
+# Terraform Block with AWS
+terraform {
+  required_version = "~> 0.14"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region and default profile
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create varaible called package_name with defualt name httpd
+variable "package_name" {
+  type = string
+  default = "httpd"
+}
+# output, get Public IP from my-ec2-vm
+output "ec2_instance_publicip" {
+  value = aws_instance.my-ec2-vm.*.public_ip
+}
+
+# Output, create public DNS URL for my-ec2-vm 
+output "ec2_publicdns" {
+  description = "Public DNS URL of an EC2 Instance"
+  value = aws_instance.my-ec2-vm.*.public_dns
+}
+
+# Output, concat aws_security_group.vpc-ssh.id and aws_security_group.vpc-web.id
+output "security_group_ids" {
+  value = concat([aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id])
+}

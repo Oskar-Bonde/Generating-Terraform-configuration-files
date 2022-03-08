@@ -1,0 +1,64 @@
+# raw-data/hashicorp-certified-terraform\11-Terraform-Cloud-and-Enterprise-Capabilities\11-02-Share-Modules-in-Private-Module-Registry\terraform-manifests
+# Terraform Block with AWS
+terraform {
+  required_version = "~> 0.14" 
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider AWS region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create Variable for S3 Bucket Name called my_s3_bucket
+variable "my_s3_bucket" {
+  type = string
+  default = "mybucket-1047"
+}
+
+# Create Variable for S3 Bucket Tags
+variable "my_s3_tags" {
+  description = "Tags to set on the bucket"
+  type = map(string)
+  default = {
+    Terraform = "true"
+    Environment = "dev"
+    newtag1 = "tag1"
+    newtag2 = "tag2"
+  }
+
+# Module, call source app.terraform.io/hcta-demo1/s3-website/aws. Use name var.my_s3_bucket and tags var.my_s3_tags
+module "website_s3_bucket123" {
+  source  = "app.terraform.io/hcta-demo1/s3-website/aws"
+  version = "1.0.1"
+  bucket_name = var.my_s3_bucket
+  tags = var.my_s3_tags
+}
+
+# Output block: ARN of the S3 Bucket
+output "arn" {
+  value       = aws_s3_bucket.s3_bucket.arn
+}
+
+# Output block: Name (id) of the bucket
+output "name" {
+  value       = aws_s3_bucket.s3_bucket.id
+}
+
+# Output block: Domain Name of the bucket
+output "domain" {
+  value       = aws_s3_bucket.s3_bucket.website_domain
+}
+
+# Output block: Endpoint Information of the bucket
+output "endpoint" {
+  value       = aws_s3_bucket.s3_bucket.website_endpoint
+}
+
+

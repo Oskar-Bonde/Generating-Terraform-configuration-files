@@ -1,0 +1,47 @@
+# raw-data/hashicorp-certified-terraform\11-Terraform-Cloud-and-Enterprise-Capabilities\11-04-Migrate-State-to-Terraform-Cloud\terraform-manifests
+# Terraform Block with AWS. Set backend hostname to app.terraform.io and organization to hcta-demo1
+terraform {
+  required_version = "~> 0.14"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+# Update remote backend information
+  backend "remote" {
+    hostname      = "app.terraform.io"
+    organization  = "hcta-demo1" 
+    workspaces {
+      name = "state-migration-demo" 
+    }
+  }
+}
+
+# Provider AWS block with region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+}
+
+# Create EC2 Instance - Amazon2 Linux. Set user data to apache-install.sh
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id 
+  instance_type = var.instance_type
+  count = 1
+  #key_name      = "terraform-key"
+  user_data = file("apache-install.sh")  
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+  tags = {
+    "Name" = "Terraform-Cloud-${count.index}"
+  }
+}
+
+# Output block: get EC2 Instance Public IP
+output "ec2_instance_publicip" {
+  value = aws_instance.my-ec2-vm.*.public_ip
+}
+
+# Output block: Get Public DNS URL of ec2 instance
+output "ec2_publicdns" {
+  value = aws_instance.my-ec2-vm.*.public_dns
+}
