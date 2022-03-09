@@ -1,0 +1,54 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region and default profile
+provider "aws" {
+  profile = "default"
+  region  = var.aws_region
+}
+
+# Create Variable for S3 Bucket Name called my_s3_bucket
+variable "my_s3_bucket" {
+  default = "my-s3-bucket"
+}
+
+# Create Variable for S3 Bucket Tags
+variable "my_s3_bucket_tags" {
+  default = {
+    Name = "my-s3-bucket"
+  }
+}
+
+# Call Custom Terraform Module located in ./modules/aws-s3-static-website-bucket
+module "aws-s3-static-website-bucket" {
+  source = "./modules/aws-s3-static-website-bucket"
+  bucket_name = var.my_s3_bucket
+  bucket_tags = var.my_s3_bucket_tags
+}
+
+# Output block: ARN of the S3 Bucket
+output "s3_bucket_arn" {
+  value = module.aws-s3-static-website-bucket.arn
+}
+
+# Output block: Name (id) of the bucket
+output "s3_bucket_name" {
+  value = module.aws-s3-static-website-bucket.name
+}
+
+# Output block: Domain Name of the bucket
+output "s3_bucket_domain_name" {
+  value = module.aws-s3-static-website-bucket.domain_name
+}
+
+# Output block: Endpoint Information of the bucket
+output "s3_bucket_endpoint" {
+  value = module.aws-s3-static-website-bucket.endpoint
+}
+

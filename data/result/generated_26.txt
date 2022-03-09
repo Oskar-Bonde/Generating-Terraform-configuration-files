@@ -1,0 +1,27 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region and default profile
+provider "aws" {
+  profile = "default"
+  region  = var.aws_region
+}
+
+# Module block called ec2_cluster. Set source to terraform-aws-modules/ec2-instance/aws, name it my-modules-demo, set instance count to 2 and ami to data.aws_ami.amzlinux.id. Set VPC security group id to sg-b8406afc and subnet id to subnet-4ee95470.
+module "ec2_cluster" {
+  source = "terraform-aws-modules/ec2-instance/aws"
+  name   = "my-modules-demo"
+  instance_count = 2
+  ami = data.aws_ami.amzlinux.id
+  vpc_security_group_ids = [
+    "sg-b8406afc"
+  ]
+  subnet_id = "subnet-4ee95470"
+}
+

@@ -1,0 +1,33 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create EC2 Instance with ami set to data.aws_ami.amzlinux.id, instance type var.instance_type. Connection Block for Provisioners to connect to EC2 Instance. Copy the file-copy.html file to /tmp/file-copy.html. 
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.amzlinux.id
+  instance_type = var.instance_type
+  tags {
+    Name = "HelloWorld"
+  }
+  # Connection Block for Provisioners to connect to EC2 Instance
+  connection_type = "ssh"
+  connection_options {
+    user = "ec2-user"
+    private_key = file("/tmp/file-copy.html")
+  }
+  provisioner "file" {
+    source = "file-copy.html"
+    destination = "/tmp/file-copy.html"
+  }
+}
+

@@ -1,0 +1,23 @@
+# Terraform Block AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS in us east 1
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create EC2 Instance and ignore changes to tags
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+

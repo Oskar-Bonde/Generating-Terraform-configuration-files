@@ -1,0 +1,73 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block, region set to us east 1 and default profile
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Resource, an aws security group with the following ingress ports: 80, 443, 8080, 8081, 7080, 708
+resource "aws_security_group" "web" {
+  name        = "terraform_example"
+  description = "Allow HTTP and HTTPS traffic"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from
+}
+
+# Define locals, ports = 80, 443, 8080, 8081, 7080, 7081
+locals {
+  port_80 = 80
+  port_443 = 443
+  port_8080 = 8080
+  port_8081 = 8081
+  port_7080 = 7080
+  port_7081 = 7081
+}
+
+# Create Security Group using Terraform Dynamic Block with for each local.ports 
+resource "aws_security_group_rule" "http-ingress" {
+  type        = "ingress"
+  from_port   = "${local.port_80}"
+  to_port     = "${local.port_80}"
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.web.id}"
+}
+

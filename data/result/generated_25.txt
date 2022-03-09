@@ -1,0 +1,155 @@
+# Terraform Block the providers AWS, null and time
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+    null = {
+      source  = "hashicorp/null"
+    }
+    time = {
+      source  = "hashicorp/time"
+    }
+  }
+}
+
+# Provider block AWS with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create aws instance called my-ec2-vm. Use ami data.aws_ami.amzlinux.id, instance type var.instance_type. Set security group to ssh and web
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id
+  instance_type = var.instance_type
+  security_groups = ["ssh", "web"]
+}
+
+# Resource block, Wait for 90 seconds after creating my-ec2-vm instance
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id
+  instance_type = var.instance_type
+  security_groups = ["ssh", "web"]
+
+  wait_for {
+    # Wait for the instance to be running
+    delay = 5
+    timeout = 300
+    # Attach a Tag to the instance with key Name and value Terraform-test-instance and return success
+    depends_on = [aws_instance.my-ec2-vm]
+    success_value = "passed"
+    attribute = "state"
+    operation = "=="
+    target = "running"
+  }
+}
+
+# Resource block, depend on wait_90_seconds. Then, make connection block for provisioners to connect to EC2 Instance. Provisioner block that copies the app1 folder to /tmp. Another provisioner block that copies the /tmp/app1 folder to Apache Webserver /var/www/html directory
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id
+  instance_type = var.instance_type
+  security_groups = ["ssh", "web"]
+
+  wait_for {
+    # Wait for the instance to be running
+    delay = 5
+    timeout = 300
+    # Attach a Tag to the instance with key Name and value Terraform-test-instance and return success
+    depends_on = [aws_instance.my-ec2-vm]
+    success_value = "passed"
+    attribute = "state"
+    operation = "=="
+    target = "running"
+  }
+
+  connection {
+    # Wait for the instance to be running
+    delay = 5
+    timeout = 300
+    # Attach a Tag to the instance with key Name and value Terraform-test-instance and return success
+    depends_on = [aws_instance.my-ec2-vm]
+    success_value = "passed"
+    attribute = "state"
+    operation = "=="
+    target = "running"
+
+}
+
+# Copies the /tmp/app1 folder to Apache Webserver /var/www/html directory
+provisioner "file" {
+  source = "app1"
+  destination = "/var/www/html"
+}
+
+# Define Output Values
+output "public_ip" {
+  value = aws_instance.my-ec2-vm.public_ip
+}
+
+# Attribute Reference
+# https://www.terraform.io/docs/configuration/expressions.html#attribute-reference
+
+# Resource Reference
+# https://www.terraform.io/docs/configuration/resources.html#resource-reference
+
+# Data Reference
+# https://www.terraform.io/docs/configuration/data-sources.html#data-reference
+
+# Variable Reference
+# https://www.terraform.io/docs/configuration/variables.html#variable-reference
+
+# Output Reference
+# https://www.terraform.io/docs/configuration/outputs.html#output-reference
+
+# Module Reference
+# https://www.terraform.io/docs/configuration/modules.html#module-reference
+
+# Provider Reference
+# https://www.terraform.io/docs/configuration/providers.html#provider-reference
+
+# Terraform configuration file
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+
+}
+
+# Attribute Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/expressions.html#attribute-reference
+
+# Resource Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/resources.html#resource-reference
+
+# Data Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/data-sources.html#data-reference
+
+# Variable Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/variables.html#variable-reference
+
+# Output Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/outputs.html#output-reference
+
+# Module Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/modules.html#module-reference
+
+# Provider Reference - Create Public DNS URL 
+# https://www.terraform.io/docs/configuration/providers.html#provider-reference
+
+# Terraform configuration file
+# Terraform Block with the
+}
+
+# Get latest AMI ID for Amazon Linux2 OS
+data "aws_ami" "amzlinux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+}
+

@@ -1,0 +1,35 @@
+# Terraform Block with AWS. Set backend organization to hcta-demo1
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+  backend "s3" {
+    bucket = "hcta-demo1"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+# Provider Block with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create S3 Bucket Resource. Set name to var.bucket_name, 
+# region to var.aws_region, and acl to "private"
+resource "aws_s3_bucket" "bucket" {
+  bucket = var.bucket_name
+  acl    = "private"
+  region = var.aws_region
+}
+
+# Resource, aws s3 bucket object. Set key to index.html
+# and bucket to var.bucket_name
+resource "aws_s3_bucket_object" "object" {
+  bucket  = var.bucket_name
+  key     = "index.html"
+  content = "Hello World"
+}
+

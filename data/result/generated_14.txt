@@ -1,0 +1,88 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Variable aws region with default us east 1
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# make variable ec2_ami_id with default ami-0915bcb5fa77e4892
+variable "ec2_ami_id" {
+  default = "ami-0915bcb5fa77e4892"
+}
+
+# make variable ec2 instance type with default t3.micro
+variable "ec2_instance_type" {
+  default = "t3.micro"
+}
+
+# Create Security Group and allow port 22 and all traffic egress
+resource "aws_security_group" "web" {
+  name        = "terraform_example"
+  description = "Allow ssh and web access"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create Security Group and allow port 80 and 443 ingress and all traffic egress
+resource "aws_security_group" "web" {
+  name        = "terraform_example"
+  description = "Allow ssh and web access"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create EC2 Instance with the ami variable and instance type variable. Also use the vpc security groups
+resource "aws_instance" "web" {
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+  security_groups = [aws_security_group.web.name]
+  vpc_security_group_ids = [aws_security_group.web.id]
+  subnet_id = aws_subnet.public.0.id
+  depends_on = [aws_internet_gateway.gw]
+}
+

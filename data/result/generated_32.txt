@@ -1,0 +1,40 @@
+# Terraform Block with AWS. Set backend hostname to app.terraform.io and organization to hcta-demo1
+terraform {
+  backend "app.terraform.io" {
+    organization = "hcta-demo1"
+  }
+}
+
+# Update remote backend information
+terraform remote config -backend=app.terraform.io -backend-config="organization=hcta-demo1"
+
+# Terraform configuration file
+# Terraform Block with AWS. Set backend hostname to app.terraform.io and organization to hcta-demo1
+terraform {
+  backend "app.terraform.io" {
+    organization = "hcta-demo1"
+  }
+}
+
+# Provider AWS block with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create EC2 Instance - Amazon2 Linux. Set user data to apache-install.sh
+resource "aws_instance" "amazon2" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+  user_data     = file("scripts/apache-install.sh")
+}
+
+# Output block: get EC2 Instance Public IP
+output "amazon2_public_ip" {
+  value = aws_instance.amazon2.public_ip
+}
+
+# Output block: Get Public DNS URL of ec2 instance
+output "amazon2_public_dns" {
+  value = aws_instance.amazon2.public_dns
+}
+

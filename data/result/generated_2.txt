@@ -1,0 +1,49 @@
+# Terraform Block with aws
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider in us east 1
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create S3 Bucket per environment with for_each and maps
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = "${var.bucket_name}"
+  acl    = "private"
+
+  tags = {
+    Name = "${var.bucket_name}"
+  }
+
+  for_each = "${var.environments}"
+
+  lifecycle {
+    ignore_changes = ["tags"]
+  }
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AWSCloudTrailAclCheck",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "s3:GetBucketAcl",
+      "Resource": "arn:aws:s3:::${var.bucket_name}"
+    },
+    {
+      "Sid": "AWSCloudTrailWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws
+}
+

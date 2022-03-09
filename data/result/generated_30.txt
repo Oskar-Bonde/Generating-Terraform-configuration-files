@@ -1,0 +1,53 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create Variable for S3 Bucket Name called my_s3_bucket
+variable "my_s3_bucket" {
+  default = "my-s3-bucket"
+}
+
+# Create Variable for S3 Bucket Tags
+variable "my_s3_bucket_tags" {
+  default = {
+    Name = "my-s3-bucket"
+  }
+}
+
+# Module, call source app.terraform.io/hcta-demo1/s3-website/aws. Use name var.my_s3_bucket and tags var.my_s3_tags
+module "s3-website" {
+  source = "app.terraform.io/hcta-demo1/s3-website/aws"
+  name   = var.my_s3_bucket
+  tags   = var.my_s3_bucket_tags
+}
+
+# Output block: ARN of the S3 Bucket
+output "s3_bucket_arn" {
+  value = module.s3-website.arn
+}
+
+# Output block: Name (id) of the bucket
+output "s3_bucket_name" {
+  value = module.s3-website.id
+}
+
+# Output block: Domain Name of the bucket
+output "s3_bucket_domain_name" {
+  value = module.s3-website.domain_name
+}
+
+# Output block: Endpoint Information of the bucket
+output "s3_bucket_endpoint" {
+  value = module.s3-website.endpoint
+}
+

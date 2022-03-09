@@ -1,0 +1,62 @@
+# Terraform Block with AWS. Set backend to hcta-demo1
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+  backend "s3" {
+    bucket = "hcta-demo1"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+# Provider AWS with region set to var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create Variable for S3 Bucket Name called my_s3_bucket. Set defualt to mybucket-1051
+variable "my_s3_bucket" {
+  default = "mybucket-1051"
+}
+
+# Create Variable for S3 Bucket Tags. Set default to Terraform = true, Environment = dev, newtag1 = tag1, newtag2 = tag2 and newtag3 = tag3
+variable "s3_bucket_tags" {
+  default = {
+    Terraform = true
+    Environment = "dev"
+    newtag1 = "tag1"
+    newtag2 = "tag2"
+    newtag3 = "tag3"
+  }
+}
+
+# Call moduel with source app.terraform.io/hcta-demo1/s3-website/aws
+module "s3-website" {
+  source = "app.terraform.io/hcta-demo1/s3-website/aws"
+  bucket = var.my_s3_bucket
+  tags   = var.s3_bucket_tags
+}
+
+# Output block: ARN of the S3 Bucket
+output "s3_bucket_arn" {
+  value = module.s3-website.arn
+}
+
+# Output block: Name (id) of the bucket
+output "s3_bucket_name" {
+  value = module.s3-website.id
+}
+
+# Output block: Domain Name of the bucket
+output "s3_bucket_domain_name" {
+  value = module.s3-website.domain_name
+}
+
+# Output block: Endpoint Information of the bucket
+output "s3_bucket_endpoint" {
+  value = module.s3-website.endpoint
+}
+

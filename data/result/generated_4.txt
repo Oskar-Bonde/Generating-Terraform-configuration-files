@@ -1,0 +1,25 @@
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS in us east 1
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create EC2 Instance called web with Amazon Linux ami, zone us east 1 and lifecycle create before destroy true
+resource "aws_instance" "web" {
+  ami           = "ami-55a7ea65"
+  instance_type = "t2.micro"
+  availability_zone = "us-east-1a"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

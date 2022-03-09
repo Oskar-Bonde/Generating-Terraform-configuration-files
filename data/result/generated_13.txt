@@ -1,0 +1,81 @@
+# Terraform Block with aws
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block with variable region
+provider "aws" {
+  region = var.region
+}
+
+# Provider Block
+provider "aws" {
+  region = var.region
+}
+
+# Region variable with default us-east-1
+variable "region" {
+  default = "us-east-1"
+}
+
+# varaible called ec2_ami_id with default ami-0915bcb5fa77e4892 and a condition to make sure string is an AMI id
+variable "ec2_ami_id" {
+  default = "ami-0915bcb5fa77e4892"
+  type    = "string"
+  description = "EC2 AMI ID"
+  condition = "ec2_ami_id_is_ami"
+}
+
+# variable for ec2 instance count default 1
+variable "ec2_instance_count" {
+  default = 1
+  type    = "number"
+}
+
+# create variable ec2 instance type with default t3.micro
+variable "ec2_instance_type" {
+  default = "t3.micro"
+  type    = "string"
+}
+
+# Create Security Group SSH Traffic
+resource "aws_security_group" "ssh" {
+  name        = "ssh"
+  description = "Allow SSH traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    cidr_blocks     = [var.cidr_block]
+  }
+}
+
+# Create Security Group Web Traffic
+resource "aws_security_group" "web" {
+  name        = "web"
+  description = "Allow HTTP traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    cidr_blocks     = [var.cidr_block]
+  }
+}
+
+# Create EC2 Instance using the variables var.ec2_ami_id, var.ec2_instance_type, var.ec2_instance_count, aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id
+resource "aws_instance" "web" {
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+  count         = var.ec2_instance_count
+
+  security_groups = [aws_security_group.ssh.id, aws_security_group.web.id]
+}
+

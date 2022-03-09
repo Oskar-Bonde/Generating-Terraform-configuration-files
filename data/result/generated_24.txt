@@ -1,0 +1,40 @@
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create aws instance with variable ami and instance type. Use vpc security ids from ssh and web groups. Make provisioner creation time provisioner. Make a destroy time provisioner
+resource "aws_instance" "web" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  security_groups = [
+    "${aws_security_group.ssh.id}",
+    "${aws_security_group.web.id}",
+  ]
+  provisioner "local-exec" {
+    command = "echo 'Hello world'"
+  }
+  provisioner "file" {
+    source      = "myfile.txt"
+    destination = "/home/ubuntu/myfile.txt"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y apache2",
+    ]
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

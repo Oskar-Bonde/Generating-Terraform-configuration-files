@@ -1,0 +1,84 @@
+# Terraform Block with AWS and random providers
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+    random = {
+      source  = "hashicorp/random"
+    }
+  }
+}
+
+# Provider Block with region set to var.aws_region and default profile
+provider "aws" {
+  profile = "default"
+  region  = var.aws_region
+}
+
+# variable with a list of Availability Zones. Defualt is us-east-1 a b and c
+variable "aws_azs" {
+  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+}
+
+# varaible called high_availability, set to false by default
+variable "high_availability" {
+  default = false
+}
+
+# variable called name, set to ec2-user as default
+variable "name" {
+  default = "ec2-user"
+}
+
+#variable called team, set to stacksimplify as default
+variable "team" {
+  default = "stacksimplify"
+}
+
+# resource called random_id, with byte_length 8
+resource "random_id" "random_id" {
+  byte_length = 8
+}
+
+# Locals with name and team set to variables
+locals {
+  name_local = "${var.name}"
+  team_local = "${var.team}"
+}
+
+# Output: my-ec2-vm common tags
+output "my-ec2-vm" {
+  value = "${local.name_local}-${local.team_local}-${random_id.random_id.result}"
+}
+
+# Outout: ELB DNS Name
+output "ELB DNS Name" {
+  value = "${aws_elb.elb.dns_name}"
+}
+
+# Resource, create AWS ELB
+resource "aws_elb" "elb" {
+  name               = "terraform-elb-%s"
+  availability_zones = "${local.aws_azs}"
+
+  listener {
+    instance_port      = 80
+    instance_protocol  = "http"
+    lb_port            = 80
+    lb_protocol        = "http"
+  }
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    target              = "HTTP:80/"
+    interval            = 5
+    timeout             = 2
+  }
+
+  tags {
+    Name = "${local.name_local}-${local.team_local}-${random_id.random_id.result}"
+  }
+}
+

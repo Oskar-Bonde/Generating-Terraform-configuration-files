@@ -1,0 +1,54 @@
+# Terraform Block with AWS. Add a backend as S3 for remote state storage and state locking
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+  backend "s3" {
+    bucket = "terraform-state-a3b557"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+# Provider Block AWS with region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create EC2 Instance Amazon Linux
+resource "aws_instance" "web" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+  tags {
+    Name = "HelloWorld"
+  }
+}
+
+# Get latest AMI ID for Amazon Linux2 OS
+data "aws_ami" "amzn-ami-hvm-2.0.20190618.0-x86_64-gp2" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-2.0.*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["gp2"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+

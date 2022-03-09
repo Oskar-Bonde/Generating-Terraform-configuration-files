@@ -1,0 +1,17 @@
+# Terraform block with AWS and random provider as well as a backend S3 bucket in us-east-1, bucket called mybucket and key in path "key"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
+  }
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "key"
+    region = "us-east-1"
+  }
+}
+
