@@ -18,7 +18,8 @@ class data_class:
                 file_num += 1
                 prompts = []
                 solutions = []
-                #self.raw_file[file_num] = f.read()
+                self.raw_file[file_num] = f.read()
+                f.seek(0)
                 for line in f.readlines()[1:]:
                     if line[0] == "#":
                         prompts.append(line)
@@ -29,6 +30,7 @@ class data_class:
         self.num_files = file_num
         
     def generate_tf(self, index):
+        """
         context_file = open("data/context.txt", "r")
         context = context_file.read()
         output = ""
@@ -47,12 +49,15 @@ class data_class:
             output = output + generated["choices"][0]["text"] +"\n}\n\n"
         generated_file = open("data/result/generated_"+str(index)+".txt", "w")
         generated_file.write(output)
+        """
+        solution_file = open("data/solution/solution_"+str(index)+".txt", "w")
+        solution_file.write(self.raw_file[index])
         
     def evaluate_all(self):
-        for i in range(29, self.num_files):
+        for i in range(0, self.num_files):
             print(i)
             self.generate_tf(i)
-            time.sleep(40)
+            #time.sleep(0)
         
         
 if __name__ == "__main__":

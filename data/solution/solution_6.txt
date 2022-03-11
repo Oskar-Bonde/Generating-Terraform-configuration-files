@@ -1,0 +1,34 @@
+# raw-data/hashicorp-certified-terraform\04-Terraform-Resources\04-05-Meta-Argument-lifecycle\v3-ignore_changes
+# Terraform Block AWS
+terraform {
+  required_version = "~> 0.14"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider AWS in us east 1
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+
+# Create EC2 Instance and ignore changes to tags
+resource "aws_instance" "web" {
+  ami = "ami-0915bcb5fa77e4892" 
+  instance_type = "t2.micro"
+  tags = {
+    "Name" = "web-3"
+  }
+  lifecycle {
+    ignore_changes = [
+      tags,
+    ]
+  }
+}
+
+
+

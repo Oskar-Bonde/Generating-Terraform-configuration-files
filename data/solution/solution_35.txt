@@ -1,0 +1,30 @@
+# raw-data/hashicorp-certified-terraform\13-Terraform-State-Import\v1-ec2-instance
+# Terraform Block with AWS
+terraform {
+  required_version = "~> 0.14"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+}
+
+# Resource, make aws instance. Use ami-038f1ca1bd58a5790, instance type t2.small and availability zone us-east-1e
+resource "aws_instance" "myec2vm" {
+  
+  ami = "ami-038f1ca1bd58a5790"
+  instance_type = "t2.small" 
+  availability_zone = "us-east-1e"
+  key_name = "terraform-key"
+  tags = {
+    "Name" = "State-Import-Demo"
+  }
+}
+
+
