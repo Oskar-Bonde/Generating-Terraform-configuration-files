@@ -1,0 +1,101 @@
+# raw-data/collabnix-course\beginners\gcp\virtual-machine
+resource "google_compute_address" "static" {
+  name = "external-ip-${random_id.top_level_resource_suffix.hex}"
+}
+
+
+# This disk will get attached to our VM.
+resource "google_compute_disk" "default" {
+  name     = "disk-${random_id.top_level_resource_suffix.hex}"
+  type     = "pd-ssd"
+  size     = 20
+  zone     = var.gcp_compute_zone
+  image    = data.google_compute_image.ubuntu_image.self_link
+}
+
+# This data source will get us the image name for Ubuntu.
+data "google_compute_image" "ubuntu_image" {
+  family  = "ubuntu-1604-lts"
+  project = "ubuntu-os-cloud"
+}
+
+
+# This resource will allow all the resources to have a particular prefix which will a user to 
+# identify all the resources created by him.
+resource "random_id" "top_level_resource_suffix" {
+  byte_length = 8
+}
+
+resource "google_compute_instance" "nginx" {
+  name         = "vm-${random_id.top_level_resource_suffix.hex}"
+  machine_type = var.machine_type
+  zone         = var.gcp_compute_zone
+
+  allow_stopping_for_update = true
+
+  boot_disk {
+    source = google_compute_disk.default.self_link
+  }
+
+  # A startup script that will run on our os and setup a nginx server for us
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install nginx-light -y"
+
+  # Allows traffic @ PORT 80. It is recommended to use custom vpc and subnets with firewalls rules
+  tags = ["http-server"]
+
+  # Block where you can configure your vpc and subnets
+  network_interface {
+    network = "default"
+    access_config {
+      nat_ip = google_compute_address.static.address
+    }
+  }
+
+  # Adding a service account
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/monitoring"]
+  }
+}
+
+
+
+output "instance_name" {
+  value = google_compute_instance.nginx.name
+}
+
+output "disk_name" {
+  value = google_compute_disk.default.name
+}
+
+output "public_address" {
+  value = google_compute_address.static.address
+}
+
+
+provider "google" {
+  version = "~> 3.0.0"
+  project = var.gcp_project_id
+  region  = var.gcp_project_location
+}
+
+
+variable "gcp_project_id" {
+  description = "This is a GCP Project id"
+  type        = string
+}
+
+variable "gcp_project_location" {
+  description = "This is a GCP Project id"
+  type        = string
+}
+
+variable "machine_type" {
+  description = "This is the type of the machine"
+  type        = string
+}
+
+variable "gcp_compute_zone" {
+  description = "This is the zone in which the compute instances will be created"
+  type        = string
+}
+

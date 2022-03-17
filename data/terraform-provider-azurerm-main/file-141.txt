@@ -1,0 +1,108 @@
+# raw-data/terraform-provider-azurerm-main\examples\virtual-machines\virtual_machine\provisioners\linux
+locals {
+  virtual_machine_name = "${var.prefix}-vm"
+  admin_username       = "testadmin"
+  admin_password       = "Password1234!"
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "${var.prefix}-resources"
+  location = "${var.location}"
+}
+
+resource "azurerm_virtual_network" "example" {
+  name                = "${var.prefix}-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = "${azurerm_resource_group.example.location}"
+  resource_group_name = "${azurerm_resource_group.example.name}"
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "internal"
+  resource_group_name  = "${azurerm_resource_group.example.name}"
+  virtual_network_name = "${azurerm_virtual_network.example.name}"
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+resource "azurerm_public_ip" "example" {
+  name                = "${var.prefix}-publicip"
+  resource_group_name = "${azurerm_resource_group.example.name}"
+  location            = "${azurerm_resource_group.example.location}"
+  allocation_method   = "Static"
+}
+
+resource "azurerm_network_interface" "example" {
+  name                = "${var.prefix}-nic"
+  location            = "${azurerm_resource_group.example.location}"
+  resource_group_name = "${azurerm_resource_group.example.name}"
+
+  ip_configuration {
+    name                          = "configuration"
+    subnet_id                     = "${azurerm_subnet.example.id}"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "${azurerm_public_ip.example.id}"
+  }
+}
+
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_virtual_machine" "example" {
+  name                  = "${local.virtual_machine_name}"
+  location              = "${azurerm_resource_group.example.location}"
+  resource_group_name   = "${azurerm_resource_group.example.name}"
+  network_interface_ids = ["${azurerm_network_interface.example.id}"]
+  vm_size               = "Standard_F2"
+
+  # This means the OS Disk will be deleted when Terraform destroys the Virtual Machine
+  # NOTE: This may not be optimal in all cases.
+  delete_os_disk_on_termination = true
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+
+  storage_os_disk {
+    name              = "${var.prefix}-osdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+
+  os_profile {
+    computer_name  = "${local.virtual_machine_name}"
+    admin_username = "${local.admin_username}"
+    admin_password = "${local.admin_password}"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      user     = "${local.admin_username}"
+      password = "${local.admin_password}"
+    }
+
+    inline = [
+      "ls -la",
+    ]
+  }
+}
+
+
+variable "prefix" {
+  description = "The Prefix used for all resources in this example"
+}
+
+variable "location" {
+  description = "The Azure Region in which the resources in this example should exist"
+}
+
+

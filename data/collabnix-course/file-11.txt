@@ -1,0 +1,120 @@
+# raw-data/collabnix-course\beginners\azure\module_example\child_module
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*     Create a Virtual Network in Azure             *#
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+
+#
+# - Create a Resource Group
+#
+
+resource "azurerm_resource_group" "rg" {
+    name        =   var.resource_group_name
+    location    =   var.location
+    tags        =   {
+        "project"       =   "Collabnix"
+        "deployed_with" =   "Terraform"
+    }
+}
+
+#
+# - Create a Virtual Network
+#
+
+resource "azurerm_virtual_network" "vnet" {
+  resource_group_name   =   azurerm_resource_group.rg.name
+  name                  =   var.virtual_network_name
+  location              =   azurerm_resource_group.rg.location
+  address_space         =   [var.vnet_address_range]
+   tags                 =   {
+        "project"       =   "Collabnix"
+        "deployed_with" =   "Terraform"
+    }
+}
+
+#
+# - Create a Subnet inside the virtual network
+#
+
+resource "azurerm_subnet" "sn" {
+   name                 =   var.subnet_name
+   resource_group_name  =   azurerm_resource_group.rg.name
+   virtual_network_name =   azurerm_virtual_network.vnet.name
+   address_prefixes     =   [var.subnet_address_range]
+}
+
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*  Create a Virtual Network in Azure - Outputs      *#
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+
+output "resource-group-name" {
+    description     =   "Print the name of the resource group"
+    value           =   azurerm_resource_group.rg.name
+}
+
+output "resource-group-location" {
+    description     =   "Print the location of the resource group"
+    value           =   azurerm_resource_group.rg.location
+}
+
+output "virtual-network-name" {
+    description     =   "Print the name of the virtual network"
+    value           =   azurerm_virtual_network.vnet.name
+}
+
+output "virtual-network-ip-range" {
+    description     =   "Print the ip range of the virtual network"
+    value           =   azurerm_virtual_network.vnet.address_space
+}
+
+output "subnet-name" {
+    description     =   "Print the name of the subnet"
+    value           =   azurerm_subnet.sn.name
+}
+
+output "subnet-ip-range" {
+    description     =   "Print the ip range of the subnet"
+    value           =   [azurerm_subnet.sn.address_prefixes]
+}
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*  Create a Virtual Network in Azure - Variables    *#
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+
+# Resource Group Variables
+
+variable "resource_group_name" {
+    description =   "Name of the resource group"
+    type        =   string
+}
+
+variable "location" {
+    description =   "Location of the resource group"
+    type        =   string
+}
+
+# Vnet Variables
+
+variable "virtual_network_name" {
+    description =   "Name of the virtual network"
+    type        =   string
+}
+
+variable "vnet_address_range" {
+    description =   "IP Range of the virtual network"
+    type        =   string
+}
+
+# Subnet Variables
+
+variable "subnet_name" {
+    description =   "Name of the subnet"
+    type        =   string
+}
+
+variable "subnet_address_range" {
+    description =   "IP Range of the virtual network"
+    type        =   string
+}
+
+

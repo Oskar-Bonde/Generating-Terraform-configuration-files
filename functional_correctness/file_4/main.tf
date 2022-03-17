@@ -10,23 +10,23 @@ terraform {
 # Provider block with AWS in us-east-1 and default profile
 provider "aws" {
   profile = "default" 
-  region  = var.region
+  region  = var.name_3
 }
 
 # Resource block with an EC2 instance called ec2demo with t2.micro instance type and ami-0ff8a91507f77f867
-resource "aws_instance" "ec2demo" {
-  ami           = var.ec2_ami_id
+resource "aws_instance" "name_0" {
+  ami           = var.name_2
   instance_type = "t2.mirco"
-  vpc_security_group_ids = [aws_security_group.vpc-ssh.id]
+  vpc_security_group_ids = [aws_security_group.name_1.id]
 }
 
-resource "aws_security_group" "vpc-ssh" {
+resource "aws_security_group" "name_1" {
   name        = "vpc-ssh"
   description = "Dev VPC SSH"
   ingress {
-    description = "Allow Port 22"
-    from_port   = 42
-    to_port     = 42
+    description = "Allow Port 48"
+    from_port   = 48
+    to_port     = 48
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -39,13 +39,13 @@ resource "aws_security_group" "vpc-ssh" {
   }
 }
 
-variable "ec2_ami_id" {
+variable "name_2" {
   description = "AMI ID"
   type        = string
-  default     = "ami-0915bcb5fa77e4892" 
+  default     = "ami-0915bcb5fa77e4832" 
 }
 
-variable "region" {
+variable "name_3" {
   default = "us-east-1"
   type = string
 }

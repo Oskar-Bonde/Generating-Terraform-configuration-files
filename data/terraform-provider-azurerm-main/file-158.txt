@@ -1,0 +1,43 @@
+# raw-data/terraform-provider-azurerm-main\examples\virtual-machines\windows\vm-joined-to-active-directory\modules\network
+resource "azurerm_virtual_network" "example" {
+  name                = join("-", [var.prefix, "network"])
+  location            = var.location
+  address_space       = ["10.0.0.0/16"]
+  resource_group_name = var.resource_group_name
+  dns_servers         = ["10.0.1.4", "8.8.8.8"]
+}
+
+resource "azurerm_subnet" "domain-controllers" {
+  name                 = "domain-controllers"
+  address_prefixes     = ["10.0.1.0/24"]
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.example.name
+}
+
+resource "azurerm_subnet" "domain-members" {
+  name                 = "domain-members"
+  address_prefixes     = ["10.0.2.0/24"]
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.example.name
+}
+
+output "domain_controllers_subnet_id" {
+  value = azurerm_subnet.domain-controllers.id
+}
+
+output "domain_members_subnet_id" {
+  value = azurerm_subnet.domain-members.id
+}
+
+variable "prefix" {
+  description = "The prefix which should be used for all resources in this example"
+}
+
+variable "location" {
+  description = "The Azure Region in which all resources in this example should be created."
+}
+
+variable "resource_group_name" {
+  description = "The name of the resource group"
+}
+

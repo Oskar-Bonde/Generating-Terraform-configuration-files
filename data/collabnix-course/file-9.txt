@@ -1,0 +1,331 @@
+# raw-data/collabnix-course\beginners\azure\linuxVM
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# Create a Linux VM 
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+
+#
+# - Provider Block
+#
+
+provider "azurerm" {
+    version         =   ">=2.6"
+    client_id       =   var.client_id
+    client_secret   =   var.client_secret
+    subscription_id =   var.subscription_id
+    tenant_id       =   var.tenant_id
+    
+    features {}
+}
+
+#
+# - Create a Resource Group
+#
+
+resource "azurerm_resource_group" "rg" {
+    name                  =   "${var.prefix}-rg"
+    location              =   var.location
+    tags                  =   var.tags
+}
+
+#
+# - Create a Virtual Network
+#
+
+resource "azurerm_virtual_network" "vnet" {
+    name                  =   "${var.prefix}-vnet"
+    resource_group_name   =   azurerm_resource_group.rg.name
+    location              =   azurerm_resource_group.rg.location
+    address_space         =   [var.vnet_address_range]
+    tags                  =   var.tags
+}
+
+#
+# - Create a Subnet inside the virtual network
+#
+
+resource "azurerm_subnet" "web" {
+    name                  =   "${var.prefix}-web-subnet"
+    resource_group_name   =   azurerm_resource_group.rg.name
+    virtual_network_name  =   azurerm_virtual_network.vnet.name
+    address_prefixes      =   [var.subnet_address_range]
+}
+
+#
+# - Create a Network Security Group
+#
+
+resource "azurerm_network_security_group" "nsg" {
+    name                        =       "${var.prefix}-web-nsg"
+    resource_group_name         =       azurerm_resource_group.rg.name
+    location                    =       azurerm_resource_group.rg.location
+    tags                        =       var.tags
+
+    security_rule {
+    name                        =       "Allow_SSH"
+    priority                    =       1000
+    direction                   =       "Inbound"
+    access                      =       "Allow"
+    protocol                    =       "Tcp"
+    source_port_range           =       "*"
+    destination_port_range      =       22
+    source_address_prefix       =       "PASTE_YOUR_IP_ADDRESS_HERE" 
+    destination_address_prefix  =       "*"
+    
+    }
+}
+
+
+#
+# - Subnet-NSG Association
+#
+
+resource "azurerm_subnet_network_security_group_association" "subnet-nsg" {
+    subnet_id                    =       azurerm_subnet.web.id
+    network_security_group_id    =       azurerm_network_security_group.nsg.id
+}
+
+
+#
+# - Public IP (To Login to Linux VM)
+#
+
+resource "azurerm_public_ip" "pip" {
+    name                            =     "${var.prefix}-linuxvm-public-ip"
+    resource_group_name             =     azurerm_resource_group.rg.name
+    location                        =     azurerm_resource_group.rg.location
+    allocation_method               =     var.allocation_method[0]
+    tags                            =     var.tags
+}
+
+#
+# - Create a Network Interface Card for Virtual Machine
+#
+
+resource "azurerm_network_interface" "nic" {
+    name                              =   "${var.prefix}-linuxvm-nic"
+    resource_group_name               =   azurerm_resource_group.rg.name
+    location                          =   azurerm_resource_group.rg.location
+    tags                              =   var.tags
+    ip_configuration                  {
+        name                          =  "${var.prefix}-nic-ipconfig"
+        subnet_id                     =   azurerm_subnet.web.id
+        public_ip_address_id          =   azurerm_public_ip.pip.id
+        private_ip_address_allocation =   var.allocation_method[1]
+    }
+}
+
+
+#
+# - Create a Linux Virtual Machine
+# 
+
+resource "azurerm_linux_virtual_machine" "vm" {
+    name                              =   "${var.prefix}-linuxvm"
+    resource_group_name               =   azurerm_resource_group.rg.name
+    location                          =   azurerm_resource_group.rg.location
+    network_interface_ids             =   [azurerm_network_interface.nic.id]
+    size                              =   var.virtual_machine_size
+    computer_name                     =   var.computer_name
+    admin_username                    =   var.admin_username
+    admin_password                    =   var.admin_password
+    disable_password_authentication   =   false
+
+    os_disk  {
+        name                          =   "${var.prefix}-linuxvm-os-disk"
+        caching                       =   var.os_disk_caching
+        storage_account_type          =   var.os_disk_storage_account_type
+        disk_size_gb                  =   var.os_disk_size_gb
+    }
+
+    source_image_reference {
+        publisher                     =   var.publisher
+        offer                         =   var.offer
+        sku                           =   var.sku
+        version                       =   var.vm_image_version
+    }
+
+    tags                              =   var.tags
+
+}
+
+
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# Linux VM - Outputs
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+
+output "resource-group-name" {
+    description     =   "Print the name of the resource group"
+    value           =   azurerm_resource_group.rg.name
+}
+
+output "resource-group-location" {
+    description     =   "Print the location of the resource group"
+    value           =   azurerm_resource_group.rg.location
+}
+
+output "virtual-network-name" {
+    description     =   "Print the name of the virtual network"
+    value           =   azurerm_virtual_network.vnet.name
+}
+
+output "virtual-network-ip-range" {
+    description     =   "Print the ip range of the virtual network"
+    value           =   azurerm_virtual_network.vnet.address_space
+}
+
+output "subnet-name" {
+    description     =   "Print the name of the subnet"
+    value           =   azurerm_subnet.web.name
+}
+
+output "subnet-ip-range" {
+    description     =   "Print the ip range of the subnet"
+    value           =   [azurerm_subnet.web.address_prefixes]
+}
+
+output "linux_nic_name" {
+    value           =   azurerm_network_interface.nic.name
+}
+
+output "public_ip_address" {
+    value           =   azurerm_public_ip.pip.ip_address
+}
+
+output "linux_vm_login" {
+    value           = {
+        "username"  =   azurerm_linux_virtual_machine.vm.admin_username
+        "password"  =   azurerm_linux_virtual_machine.vm.admin_password
+    }  
+}
+
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+# Linux VM - Variables
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*
+
+# Service Principal Variables
+
+variable "client_id" {
+    description =   "Client ID (APP ID) of the application"
+    type        =   string
+}
+
+variable "client_secret" {
+    description =   "Client Secret (Password) of the application"
+    type        =   string
+}
+
+variable "subscription_id" {
+    description =   "Subscription ID"
+    type        =   string
+}
+
+variable "tenant_id" {
+    description =   "Tenant ID"
+    type        =   string
+}
+
+# Prefix and Tags
+
+variable "prefix" {
+    description =   "Prefix to append to all resource names"
+    type        =   string
+    default     =   "collabnix"
+}
+
+variable "tags" {
+    description =   "Resouce tags"
+    type        =   map(string)
+    default     =   {
+        "project"       =   "Collabnix"
+        "deployed_with" =   "Terraform"
+    }
+}
+
+# Resource Group
+
+variable "location" {
+    description =   "Location of the resource group"
+    type        =   string
+    default     =   "East US"
+}
+
+# Vnet and Subnet
+
+variable "vnet_address_range" {
+    description =   "IP Range of the virtual network"
+    type        =   string
+    default     =   "10.0.0.0/16"
+}
+
+variable "subnet_address_range" {
+    description =   "IP Range of the virtual network"
+    type        =   string
+    default     =   "10.0.1.0/24"
+}
+
+# Public IP and NIC Allocation Method
+
+variable "allocation_method" {
+    description =   "Allocation method for Public IP Address and NIC Private ip address"
+    type        =   list(string)
+    default     =   ["Static", "Dynamic"]
+}
+
+
+# VM 
+
+variable "virtual_machine_size" {
+    description =   "Size of the VM"
+    type        =   string
+    default     =   "Standard_B1s"
+}
+
+variable "computer_name" {
+    description =   "Computer name"
+    type        =   string
+    default     =   "Linuxvm"
+}
+
+variable "admin_username" {
+    description =   "Username to login to the VM"
+    type        =   string
+    default     =   "linuxadmin"
+}
+
+variable "admin_password" {
+    description =   "Password to login to the VM"
+    type        =   string
+    default     =   "P@$$w0rD2020*"
+}
+
+variable "os_disk_caching" {
+    default     =       "ReadWrite"
+}
+
+variable "os_disk_storage_account_type" {
+    default     =       "StandardSSD_LRS"
+}
+
+variable "os_disk_size_gb" {
+    default     =       64
+}
+
+variable "publisher" {
+    default     =       "Canonical"
+}
+
+variable "offer" {
+    default     =       "UbuntuServer"
+}
+
+variable "sku" {
+    default     =       "16.04-LTS"
+}
+
+variable "vm_image_version" {
+    default     =       "latest"
+}
+
+

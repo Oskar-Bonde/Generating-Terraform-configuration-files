@@ -1,0 +1,593 @@
+# raw-data/collabnix-course\intermediate\Terraform-Functions
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#
+#*  Terraform Functions - File System Functions  *#
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#
+
+#--------------------------------------------------------------------------------------------------------------------
+# abspath()
+# Takes a string containing a filesystem path and converts it to an absolute path. 
+# That is, if the path is not absolute, it will be joined with the current working directory.
+# Syntax: abspath()
+#--------------------------------------------------------------------------------------------------------------------
+
+output "abspath-output" {
+    description     =   "Print the output of abspath function"
+    value           =   abspath(path.root)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# file()
+# Reads the contents of a file at the given path and returns them as a string.
+# Syntax: file(path)
+#--------------------------------------------------------------------------------------------------------------------
+
+output "file-output" {
+    description     =   "Print the output of file function"
+    value           =   file("./file1.txt")
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# fileexits()
+# Determines whether a file exists at a given path.
+# Syntax: fileexists(path)
+#--------------------------------------------------------------------------------------------------------------------
+
+output "fileexists-output" {
+    description     =   "Print the output of fileexists function"
+    value           =   {
+        "Exists"        =   fileexists("./file1.txt")
+        "Doesnt_Exist"  =   fileexists("./nofile.txt")
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# pathexpand()
+# Takes a filesystem path that might begin with a ~ segment, and if so it replaces that segment with the current user's home directory path.
+# Syntax: pathexpand(filenamewithpath)
+# More info at https://www.terraform.io/docs/configuration/functions/pathexpand.html
+#--------------------------------------------------------------------------------------------------------------------
+
+output "pathexpand-output" {
+    description     =   "Print the output of pathexpand function"
+    value           =   pathexpand("~/file1.txt")
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# templatefile()
+# Reads the file at the given path and renders its content as a template using a supplied set of template variables.
+# Syntax: templatefile(path, vars)
+# More info at https://www.terraform.io/docs/configuration/functions/templatefile.html
+#--------------------------------------------------------------------------------------------------------------------
+
+output "templatefile-output" {
+    description     =   "Print the output of templatefile function"
+    value           =   templatefile("./output.tmpl", {ip_address = "10.0.10.0", port = 443})
+}
+
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#
+#*  Terraform Functions - IP Network Functions   *#
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#
+
+#--------------------------------------------------------------------------------------------------------------------
+# cidrsubnet()
+# Calculates a subnet address within given IP network address prefix. 
+# Syntax: cidrsubnet(prefix, newbits, netnum)
+# More Info at https://www.terraform.io/docs/configuration/functions/cidrsubnet.html
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "vpc-cidr" {
+    description     =   "Address range of Aws VPC/Azure Vnet"
+    type            =   string
+    default         =   "10.0.0.0/16"
+}
+
+output "cidrsubnet-output" {
+    description =   "Print the output of cidrsubnet function"
+    value       =   {
+        "Web-Subnet"        =   cidrsubnet(var.vpc-cidr, 8, 1)
+        "App-Subnet"        =   cidrsubnet(var.vpc-cidr, 8, 2)
+        "DB-Subnet"         =   cidrsubnet(var.vpc-cidr, 8, 3)
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# cidrsubnets()
+# Calculates a sequence of consecutive IP address ranges within a particular CIDR prefix.
+# Syntax: cidrsubnets(prefix, newbits...)
+# More Info at https://www.terraform.io/docs/configuration/functions/cidrsubnets.html
+#--------------------------------------------------------------------------------------------------------------------
+
+output "cidrsubnets-output" {
+    description =   "Print the output of cidrsubnets function"
+    value       =   {
+        "Dev-Subnets"   =   cidrsubnets(var.vpc-cidr, 8, 8, 8, 8)
+        "Prod-Subnets"  =   cidrsubnets(var.vpc-cidr, 4, 4, 8, 4)
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# cidrhost()
+# Calculates a full host IP address for a given host number within a given IP network address prefix.
+# Syntax: cidrhost(prefix, hostnum)
+# More Info at https://www.terraform.io/docs/configuration/functions/cidrhost.html
+#--------------------------------------------------------------------------------------------------------------------
+
+output "cidrhost-output" {
+    description =   "Print the output of cidrhost function"
+    value       =   {
+        "IP1"        =   cidrhost(var.vpc-cidr, 8)
+        "IP2"        =   cidrhost(var.vpc-cidr, 256)
+        "IP3"        =   cidrhost(var.vpc-cidr, 268)
+    }
+}
+
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*    Terraform Functions - Numeric Functions                     *#
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# abs()
+# returns the absolute value of the given number. In other words, if the number is zero or positive then it is returned as-is, but if it is negative then it is multiplied by -1 to make it positive before returning it.
+# Syntax: abs(number)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "abs-output" {
+    description     =   "Print the output of abs function"
+    value           =   {
+        "positive"   =   abs(13)
+        "zero"       =   abs(0)
+        "negative"   =   abs(-482)
+        "float"      =   abs(-13.25)
+    }
+}
+
+# Interesting Observation: if you uncomment the below output, Terraform will crash because it cant serialize infinity(1/0) as Json.
+
+// output "tf-crash" {
+//     value = abs(1/0)
+//  }
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# ceil()
+# Returns the closest whole number that is greater than or equal to the given value, which may be a fraction.
+# Syntax: ceil(number)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "ceil-output" {
+    description     =   "Print the output of ceil function"
+    value           =   {
+        "op1"       =   ceil(13)
+        "op2"       =   ceil(13.0)
+        "op3"       =   ceil(13.1)
+        "op4"       =   ceil(13.99999)
+    }
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# floor()
+# Returns the closest whole number that is less than or equal to the given value, which may be a fraction.
+# Syntax: floor(number)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "floor-output" {
+    description     =   "Print the output of floor function"
+    value           =   {
+        "op1"       =   floor(13)
+        "op2"       =   floor(13.0)
+        "op3"       =   floor(13.1)
+        "op4"       =   floor(13.99999)
+    }
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# log()
+# Returns the logarithm of a given number in a given base.
+# Syntax: log(number, base)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "log-output" {
+    description     =   "Print the output of log function"
+    value           =   {
+        "op1"       =   log(10,2)
+        "op2"       =   log(16,4)
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# max()
+# Takes one or more numbers and returns the greatest number from the set.
+# Syntax: max(number1, number2, ...)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "max-output" {
+    description     =   "Print the output of max function"
+    value           =   max(13, 25, 0, 1325, 482, 27, 19)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# min()
+# Takes one or more numbers and returns the smallest number from the set.
+# Syntax: min(number1, number2, ...)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "min-output" {
+    description     =   "Print the output of min function"
+    value           =   min(13, 25, 1325, 482, 27, 19)
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# pow()
+# Calculates an exponent, by raising its first argument to the power of the second argument.
+# Syntax: pow(number1, number2)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "pow-output" {
+    description     =   "Print the output of pow function"
+    value           =   {
+        "op1"       =   pow(13,2)
+        "op2"       =   pow(5,0)
+        "op3"       =   pow(0,5)
+        "op4"       =   pow(0,0)
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# signum()
+# Determines the sign of a number, returning a number between -1 and 1 to represent the sign.
+# Syntax: signum(number)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+output "signum-output" {
+    description     =   "Print the output of signum function"
+    value           =   {
+        "op1"       =   signum(0)
+        "op2"       =   signum(13)
+        "op3"       =   signum(-13)
+    }
+}
+
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+#*    Terraform Functions - String and Collection Functions       *#
+#*#*#*#*#*#*#*#*##*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# lower()
+# Converts all cased letters in the given string to lowercase.
+# Syntax: lower(string)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+variable "lower_var" {
+    description     =   "Example of lower function in Terraform"
+    type            =   string
+    default         =   "COLLABNIX"
+}
+
+output "lower-output" {
+    description     =   "Print the variable in lowercase"
+    value           =   lower(var.lower_var)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# upper()
+# Converts all cased letters in the given string to uppercase.
+# Syntax: upper(string)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "upper_var" {
+    description     =   "Example of upper function in Terraform"
+    type            =   string
+    default         =   "collabnix"
+}
+
+output "upper-output" {
+    description     =   "Print the variable in uppercase"
+    value           =   upper(var.upper_var)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# split() --> 
+# Produces a list by dividing a given string at all occurrences of a given separator.
+# Syntax: split(delimiter, string)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "split_var" {
+    description     =   "Example of split function in Terraform"
+    type            =   string
+    default         =   "collabnix,terraform,aws,azure,gpc"
+}
+
+output "split-output" {
+    description     =   "Print the output of split function"
+    value           =   split(",",var.split_var)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# replace()
+# Searches a given string for another given substring, and replaces each occurrence with a given replacement string.
+# Syntax: replace(string, search, replace)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "replace_var" {
+    description     =   "Example of replace function in Terraform"
+    type            =   string
+    default         =   "us-east-1"
+}
+
+output "replace-output" {
+    description     =   "Print the output of replace function"
+    value           =   replace(var.replace_var, "east", "west")
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# substr()
+# Extracts a substring from a given string by offset and length.
+# Syntax: substr(string, offset, length)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "substr_var" {
+    description     =   "Example of replace function in Terraform"
+    type            =   string
+    default         =   "collabnix"
+}
+
+output "substr-output" {
+    description     =   "Print the output of replace function"
+    value           =   substr(var.substr_var, 1, 3)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# concat() 
+# Takes two or more lists and combines them into a single list. 
+# Syntax: concat(list1,list2,list3,...)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+variable "list1" {
+    description     =   "Example of concat function in Terraform"
+    type            =   list(string)
+    default         =   ["collbnix","is"]
+}
+
+variable "list2" {
+    description     =   "Example of concat function in Terraform"
+    type            =   list(string)
+    default         =   ["an","awesome","group"]
+}
+
+output "concat-output" {
+    description     =   "Print the output of concat function"
+    value           =   concat(var.list1,var.list2)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# distinct() 
+# Takes a list and returns a new list with any duplicate elements removed. 
+# Syntax: distinct(list)
+#--------------------------------------------------------------------------------------------------------------------
+
+
+variable "distinct_var" {
+    description     =   "Example of distinct function in Terraform"
+    type            =   list(string)
+    default         =   ["aws","aws","azure","gcp","aws","azure","k8s"]
+}
+
+output "distinct-output" {
+    description     =   "Print the output of distinct function"
+    value           =   distinct(var.distinct_var)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# element() 
+# Retrieves a single element from a list.
+# Syntax: element(list,index)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "element_var" {
+    description     =   "Example of element function in Terraform"
+    type            =   list(string)
+    default         =   ["collabnix", "aws", "azure", "gcp", "k8s"]
+}
+
+output "element-output" {
+    description     =   "Map the index with its value"
+    value           =   {
+        0         =       element(var.element_var, 0)
+        1         =       element(var.element_var, 1)
+        2         =       element(var.element_var, 2)
+        3         =       element(var.element_var, 3)
+        4         =       element(var.element_var, 4)
+    }
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# join()
+# Produces a string by concatenating together all elements of a given list of strings with the given delimiter.
+# Syntax: join(delimiter,list)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "join_list" {
+    description     =   "Example of join function in Terraform"
+    type            =   list(string)
+    default         =   ["collabnix","terraform","aws","azure","gpc"]
+}
+
+output "join-output" {
+    description     =   "Print the output of join function"
+    value           =   join("-", var.join_list)
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# length()
+# Determines the length of a given list, map, or string.
+# Syntax: length(value)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "length_str" {
+    description     =   "Example of length of a string"
+    type            =   string
+    default         =   "Collabnix"
+}
+
+variable "length_list" {
+    description     =   "Example of length of a list"
+    type            =   list(string)
+    default         =   ["collabnix","terraform","aws","azure","gpc"]
+}
+
+variable "length_map" { 
+    description     =   "Example of length of a map"
+    type            =   map(string)
+    default = {
+        "aws"       =   1
+        "azure"     =   2
+        "gcp"       =   3
+  }
+}
+
+variable "length_null" {
+    description     =   "Example of length of a null string"
+    type            =   string
+    default         =   ""
+}
+
+output "length-output" {
+    description     =   "Print the output of length function"
+    value           =   {
+        
+        length-string     =   length(var.length_str)
+        length-list       =   length(var.length_list)
+        length-map        =   length(var.length_map)
+        length-null       =   length(var.length_null)
+    }
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# slice()
+# Extracts some consecutive elements from within a list.
+# Syntax: slice(list, startindex, endindex)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "slice_var" {
+    description     =   "Example of Slice function in Terraform"
+    type            =   list(string)
+    default         =   ["collabnix","terraform","aws","azure","gpc"]
+}
+
+output "slice-output" {
+    description     =   "Print the output of Slice function"
+    value           =   slice(var.slice_var, 1, 4)
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# sort()
+# Sorts a list in lexicographical order.
+# Syntax: sort(list)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "sort_list1" {
+    description     =   "Example of sort function in Terraform"
+    type            =   list(string)
+    default         =   ["collabnix", "terraform", "aws", "azure", "gpc"]
+}
+
+variable "sort_list2" {
+    description     =   "Example of Slice function in Terraform"
+    type            =   list(string)
+    default         =   ["d", "a", "c", "b", ""]
+}
+
+variable "sort_list3" {
+    description     =   "Example of Slice function in Terraform"
+    type            =   list(number)
+    default         =   [482, 13, 25, 27, 19]
+}
+
+output "sort-outputs" {
+    description     =   "Print the output of sort function"
+    value           =   {
+        sort-list1  =   sort(var.sort_list1)
+        sort_list2  =   sort(var.sort_list2)
+        sort-list3  =   sort(var.sort_list3)
+    }
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# lookup()
+# Retrieves the value of a single element from a map, given its key. 
+# If the given key does not exist, a the given default value is returned instead.
+# Syntax:  lookup(map, key, default)
+#--------------------------------------------------------------------------------------------------------------------
+
+variable "map1" {
+    description     =   "Example of lookup function in Terraform"
+    type            =   map(string)
+    default         =   {
+        "Aws"       =   "Best"
+        "Azure"     =   "Better"
+        "Gcp"       =   "Good"
+    }
+}
+
+output "lookup-output" {
+    description     =   "Print the output of lookup function"
+    value           =   {
+        Key_Exists          =   lookup(var.map1, "Azure", "Default") 
+        Key_Doesnt_Exist    =   lookup(var.map1, "Oracle", "GettingBetter")
+    }
+}
+
+#--------------------------------------------------------------------------------------------------------------------
+# setproduct()
+# setproduct function finds all of the possible combinations of elements from all of the given sets by computing the Cartesian product.
+# Syntax: setproduct(sets...)
+#--------------------------------------------------------------------------------------------------------------------
+
+output "setproduct-output" {
+    description     =   "Print the output of setproduct function"
+    value           =   setproduct(["Aws", "Azure", "Gcp"], ["Certified"], ["Associate", "Professional"])
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------
+# zipmap()
+# Constructs a map from a list of keys and a corresponding list of values.
+# Both keyslist and valueslist must be of the same length. keyslist must be a list of strings, while valueslist can be a list of any type.
+# Syntax: zipmap(keyslist, valueslist)
+#--------------------------------------------------------------------------------------------------------------------
+
+output "zipmap-output" {
+    description     =   "Print the output of zipmap function"
+    value           =   zipmap(["Aws", "Azure", "Gcp"], [1, 2, 3])
+}
+
+
+

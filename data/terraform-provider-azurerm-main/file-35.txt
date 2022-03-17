@@ -1,0 +1,80 @@
+# raw-data/terraform-provider-azurerm-main\examples\cosmos-db\failover
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "${var.prefix}-resources"
+  location = var.location
+}
+
+resource "azurerm_cosmosdb_account" "example" {
+  name                      = "${var.prefix}-cosmosdb"
+  location                  = azurerm_resource_group.example.location
+  resource_group_name       = azurerm_resource_group.example.name
+  offer_type                = "Standard"
+  kind                      = "GlobalDocumentDB"
+  enable_automatic_failover = true
+
+  // set ip_range_filter to allow azure services (0.0.0.0) and azure portal.
+  // https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-firewall#allow-requests-from-the-azure-portal
+  // https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-firewall#allow-requests-from-global-azure-datacenters-or-other-sources-within-azure
+  ip_range_filter = "0.0.0.0,104.42.195.92,40.76.54.131,52.176.6.30,52.169.50.45,52.187.184.26"
+
+  consistency_policy {
+    consistency_level       = "BoundedStaleness"
+    max_interval_in_seconds = 10
+    max_staleness_prefix    = 200
+  }
+
+  geo_location {
+    prefix            = "${var.prefix}-customid"
+    location          = azurerm_resource_group.example.location
+    failover_priority = 2
+  }
+
+  geo_location {
+    location          = var.alt_location
+    failover_priority = 0
+  }
+}
+
+
+output "cosmos-db-id" {
+  value = azurerm_cosmosdb_account.example.id
+}
+
+output "cosmos-db-endpoint" {
+  value = azurerm_cosmosdb_account.example.endpoint
+}
+
+output "cosmos-db-endpoints_read" {
+  value = azurerm_cosmosdb_account.example.read_endpoints
+}
+
+output "cosmos-db-endpoints_write" {
+  value = azurerm_cosmosdb_account.example.write_endpoints
+}
+
+output "cosmos-db-primary_key" {
+  value = azurerm_cosmosdb_account.example.primary_key
+}
+
+output "cosmos-db-secondary_key" {
+  value = azurerm_cosmosdb_account.example.secondary_key
+}
+
+
+variable "prefix" {
+  description = "The prefix which should be used for all resources in this example"
+}
+
+variable "location" {
+  description = "The Azure Region in which all resources in this example should be created."
+}
+
+variable "alt_location" {
+  description = "The Azure Region which should be used for the alternate location for this example."
+}
+
+
