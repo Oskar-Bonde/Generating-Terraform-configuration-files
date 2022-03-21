@@ -1,0 +1,48 @@
+# raw-data/hashicorp-certified-terraform\09-Terraform-Provisioners\09-02-remote-exec-provisioner\terraform-manifests
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Make AWS instance. Set ami to data.aws_ami.amzlinux.id, instance_type to var.instance_type, user data file apache-install.sh. Connection Block for Provisioners to connect to EC2 Instance. Copies the file-copy.html file to /tmp/file-copy.html. Make provisioner that copies the file to Apache Webserver /var/www/html directory
+Create EC2 Instance - Amazon Linux
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id 
+  instance_type = var.instance_type
+  key_name      = "terraform-key"
+	user_data = file("apache-install.sh")  
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+  tags = {
+    "Name" = "vm-${terraform.workspace}-0"
+  }
+
+  connection {
+    type = "ssh"
+    host = self.public_ip 
+    user = "ec2-user"
+    password = ""
+    private_key = file("private-key/terraform-key.pem")
+  }  
+
+  provisioner "file" {
+    source      = "apps/file-copy.html"
+    destination = "/tmp/file-copy.html"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sleep 120",
+      "sudo cp /tmp/file-copy.html /var/www/html"
+    ]
+  }
+}

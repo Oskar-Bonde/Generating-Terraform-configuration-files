@@ -1,0 +1,106 @@
+# raw-data/hashicorp-certified-terraform\04-Terraform-Resources\04-02-Meta-Argument-depends_on\terraform-manifests
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+
+# Create a AWS VPC resource with private network 10.0.0.0/16
+resource "aws_vpc" "vpc-dev" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    "Name" = "vpc-dev"
+  }
+}
+
+# Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true
+resource "aws_subnet" "vpc-dev-public-subnet-1" {
+  vpc_id                  = aws_vpc.vpc-dev.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-east-1a"
+  map_public_ip_on_launch = true
+}
+
+# AWS Internet Gateway with vpc id aws_vpc.vpc-dev.id
+resource "aws_internet_gateway" "vpc-dev-igw" {
+  vpc_id = aws_vpc.vpc-dev.id
+}
+
+# Create AWS route table
+resource "aws_route_table" "vpc-dev-public-route-table" {
+  vpc_id = aws_vpc.vpc-dev.id
+}
+
+# Create Route in Route Table for Internet Access
+resource "aws_route" "vpc-dev-public-route" {
+  route_table_id         = aws_route_table.vpc-dev-public-route-table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.vpc-dev-igw.id
+}
+
+# Resource block: associate the Route Table with the Subnet
+resource "aws_route_table_association" "vpc-dev-public-route-table-associate" {
+  route_table_id = aws_route_table.vpc-dev-public-route-table.id
+  subnet_id      = aws_subnet.vpc-dev-public-subnet-1.id
+}
+
+# Create aws security group and allow port 22, 80 and all IP and Ports Outbound
+resource "aws_security_group" "dev-vpc-sg" {
+  name        = "dev-vpc-default-sg"
+  description = "Dev VPC Default Security Group"
+  vpc_id      = aws_vpc.vpc-dev.id
+
+  ingress {
+    description = "Allow Port 22"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow Port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all IP and Ports Outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create EC2 Instance with subnet, vpc security group, and ami Amazon Linux
+resource "aws_instance" "my-ec2-vm" {
+  ami                    = "ami-047a51fa27710816e"
+  instance_type          = "t2.micro"
+  key_name               = "terraform-key"
+  subnet_id              = aws_subnet.vpc-dev-public-subnet-1.id
+  vpc_security_group_ids = [aws_security_group.dev-vpc-sg.id]
+  tags = {
+    "Name" = "myec2vm"
+  }    
+}
+
+# Resource block: Create Elastic IP
+resource "aws_eip" "my-eip" {
+  instance = aws_instance.my-ec2-vm.id
+  vpc      = true
+  depends_on = [aws_internet_gateway.vpc-dev-igw]
+}
+
+

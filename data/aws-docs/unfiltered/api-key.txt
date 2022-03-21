@@ -1,0 +1,19 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    } 
+  }
+}
+
+# Provider Block, region set to us east 1 and default profile
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+
+# Data block, get the name and value of an API key with id ru3mpjgse6
+data "aws_api_gateway_api_key" "my_api_key" {
+  id = "ru3mpjgse6"
+}

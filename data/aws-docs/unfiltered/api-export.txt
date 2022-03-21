@@ -1,0 +1,21 @@
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    } 
+  }
+}
+
+# Provider Block, region set to us east 1 and default profile
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+
+# data block, export the definition of the api aws_apigatewayv2_route.test.api_id to JSON file
+data "aws_apigatewayv2_export" "export_JSON" {
+  api_id        = aws_apigatewayv2_route.test.api_id
+  specification = "OAS30"
+  output_type   = "JSON"
+}

@@ -1,0 +1,22 @@
+# raw-data/hashicorp-certified-terraform\13-Terraform-State-Import\v2-s3bucket
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS with region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+}
+
+# Resource, create s3 bucket. Set bucket to state-import-bucket, acl private and force destroy false
+resource "aws_s3_bucket" "mybucket" {
+  bucket = "state-import-bucket"
+  acl = "private"
+  force_destroy = false
+}
+

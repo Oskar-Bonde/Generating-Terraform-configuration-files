@@ -1,0 +1,21 @@
+# Terraform Block with aws provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider aws block with variable region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create S3 Bucket, make bucket icecream linux bucket and acl is private
+resource "aws_s3_bucket" "mys3bucket" {
+  bucket = "icecream-linux-bucket"
+  acl = "private"
+
+}

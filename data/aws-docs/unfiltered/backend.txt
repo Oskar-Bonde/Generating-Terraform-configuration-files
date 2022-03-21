@@ -1,0 +1,22 @@
+# Terraform Block with AWS. Create backend called remote. Set backend hostname to app.terraform.io and organization to hcta-demo1
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+
+# Update remote backend information
+  backend "remote" {
+    hostname      = "app.terraform.io"
+    organization  = "hcta-demo1" 
+    workspaces {
+      name = "state-migration-demo" 
+    }
+  }
+}
+
+# Provider AWS block with region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+}

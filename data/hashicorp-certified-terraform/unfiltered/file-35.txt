@@ -1,0 +1,52 @@
+# raw-data/hashicorp-certified-terraform\11-Terraform-Cloud-and-Enterprise-Capabilities\11-01-Terraform-Cloud-Github-Integration\terraform-manifests
+# Terraform Block with AWS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS region var.aws_region
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+
+# variable called aws_region
+variable "aws_region" {
+  description = "Region in which AWS Resources to be created"
+  type = string
+}
+
+# variable called instance_type
+variable "instance_type" {
+  description = "EC2 Instance Type - Instance Sizing"
+  type = string
+}
+
+# Create EC2 Instance with ami set to data.aws_ami.amzlinux.id. Use instance type variable, count 1 and ssh and web security groups
+resource "aws_instance" "my-ec2-vm" {
+  ami           = data.aws_ami.amzlinux.id 
+  instance_type = var.instance_type
+  count = 1
+  key_name      = "terraform-key"
+  user_data = file("apache-install.sh")  
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+  tags = {
+    "Name" = "Terraform-Cloud-${count.index}"
+  }
+}
+
+# Output block, create EC2 Instance Public IP
+output "ec2_instance_publicip" {
+  value = aws_instance.my-ec2-vm.*.public_ip
+}
+
+
+# Output block, Create Public DNS URL
+output "ec2_publicdns" {
+  value = aws_instance.my-ec2-vm.*.public_dns
+}
