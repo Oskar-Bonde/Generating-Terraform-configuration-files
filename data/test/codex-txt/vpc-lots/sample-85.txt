@@ -1,0 +1,62 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block, region set to us east 1 and default profile
+provider "aws" {
+  region     = "us-east-1"
+  profile    = "default"
+}
+
+# Resource, an aws security group with the following ingress ports: 80, 443, 8080, 8081, 7080, 708
+resource "aws_security_group" "web" {
+  name        = "terraform_acceptance_test_example"
+  description = "Used in the terraform acceptance tests"
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 443
+    to_port     = 443
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8080
+    to_port     = 8080
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 8081
+    to_port     = 8081
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 7080
+    to_port     = 7080
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 708
+    to_port     = 708
+    cidr_blocks = ["10.0.0.0/8"]
+  }
+}
+

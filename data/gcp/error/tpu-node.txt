@@ -1,0 +1,26 @@
+# Terraform block with google provider
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block. Use project terraform-338909 and zone europe west4
+provider "google" {
+    project = "terraform-338909"
+    zone = "europe-west4"
+}
+
+# data block, tpu tensorflow versions that are available
+data "google_tpu_tensorflow_versions" "available" {
+}
+
+# resource block, create a google tpu node. Use v3-8 accelerator type, use cidr block 10.2.0.0/29 and use tensorflow version from the data block
+resource "google_tpu_node" "tpu" {
+  name = "test-tpu"
+  accelerator_type   = "v3-8"
+  tensorflow_version = data.google_tpu_tensorflow_versions.available.versions[0]
+  cidr_block         = "10.2.0.0/29"
+}

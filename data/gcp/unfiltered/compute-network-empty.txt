@@ -1,0 +1,17 @@
+# Terraform block with google provider
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# a google compute network resource with name terraform network
+resource "google_compute_network" "vpc_network" {
+  name = "terraform-network"
+}

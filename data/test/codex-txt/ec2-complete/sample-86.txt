@@ -1,0 +1,89 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS in region var.aws_region
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create variable called aws_region with default "us-east-1"
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable called ec2_ami_id with default ami-0915bcb5fa77e4892
+variable "ec2_ami_id" {
+  default = "ami-0915bcb5fa77e4892"
+}
+
+# create number variable called ec2_instance_count with default 1
+variable "ec2_instance_count" {
+  default = 1
+}
+
+# creaet variable ec2_instance_type with default t3.micro
+variable "ec2_instance_type" {
+  default = "t3.micro"
+}
+
+# Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
+resource "aws_security_group" "ssh_sg" {
+  name        = "ssh_sg"
+  description = "Allow SSH traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create Security Group for web traffic
+resource "aws_security_group" "web_sg" {
+  name        = "web_sg"
+  description = "Allow web traffic"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
+resource "aws_instance" "web" {
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+  count         = var.ec2_instance_count
+
+  vpc_security_group_ids = [
+    aws_security_group.ssh_sg.id,
+    aws_security_group.web_sg.id,
+  ]
+
+  subnet_id = aws_subnet.public_subnet.id
+}
+

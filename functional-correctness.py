@@ -1,68 +1,115 @@
-import json
 import os
 import re
 import shutil
 import sys
+import numpy as np
 
-def make_json(tf_path):
-    #os.system("terraform -chdir="+str(tf_path)+" destroy")
-    os.system("terraform -chdir="+str(tf_path)+" init")
-    os.system("terraform -chdir="+str(tf_path)+" plan -out=binary")
-    os.system("terraform -chdir="+str(tf_path)+" show -json binary > "+str(tf_path)+"/plan.json")
-    #shutil.rmtree(tf_path+'/.terraform')
-    #os.system("terraform -chdir="+str(tf_path)+" destroy")
-    file = open(str(tf_path)+"/plan.json", "r", encoding='utf-8', errors='ignore')
-    stringPlan = file.read()
-    file.close()
-    if stringPlan == "":
-        shutil.rmtree(tf_path)
-        sys.exit("Error "+tf_path)
-        
-    stringPlan = re.sub('"(description|name)":".+?"','',stringPlan) #(,?)"(description|name)":".+?"(,?)        
-    return stringPlan
+def make_tf(tf_path, model):
+    os.system(f'terraform -chdir={tf_path} init')
+    os.system(f'terraform -chdir={tf_path} plan -out=binary')
+    os.system(f'terraform -chdir={tf_path} show -json binary > {tf_path}/plan.json')
+    shutil.rmtree(f'{tf_path}/.terraform')
+    if model == 'human':
+        file = open(str(tf_path)+'/plan.json', 'r', encoding='utf-8', errors='ignore')
+        stringPlan = file.read()
+        file.close()
+        if stringPlan == '':
+            shutil.rmtree(tf_path)
+            sys.exit('Error '+tf_path)
+            
+    #stringPlan = re.sub('"(description|name)":".+?"','',stringPlan) #(,?)"(description|name)":".+?"(,?)        
+    #return stringPlan
 
 def remove_identifiers(txt_file, tf_folder):
-    with open(txt_file, "r", encoding='utf-8', errors='ignore') as file:
+    with open(txt_file, 'r', encoding='utf-8', errors='ignore') as file:
         identifiers = {}
+        reference = {}
         i = 0
         for line in file:
             words = line.split(' ')
-            if words[0] == "resource" or words[0]=="data":
-                identifiers[words[2][1:-1]] ="name_"+str(i)
+            if words[0] == 'resource':
+                reference[words[1][1:-1]+'.'+words[2][1:-1]] = words[1][1:-1]+'.name_'+str(i)
+                identifiers[words[1]+' '+words[2]] = words[1]+' "name_'+str(i)+'"'
                 i+=1
-
-            elif words[0]=="variable" or words[0]=="output" or words[0]=="dynamic": # or words[0]=="module"
-                identifiers[words[1][1:-1]] ="name_"+str(i)
+            if words[0]=='data':
+                reference['data.'+words[1][1:-1]+'.'+words[2][1:-1]] = 'data.'+words[1][1:-1]+'.name_'+str(i)
+                identifiers[words[1]+' '+words[2]] = words[1]+' "name_'+str(i)+'"'
                 i+=1
-
+            if words[0]=='variable':
+                reference['var.'+words[1][1:-1]] = 'var.name_'+str(i)
+                identifiers['variable '+words[1]] = 'variable "name_'+str(i)+'"'
+                i+=1
+            if words[0]=='output':
+                reference['output.'+words[1][1:-1]] = 'output.name_'+str(i)
+                identifiers['output '+words[1]] = 'output "name_'+str(i)+'"'
+                i+=1
         file.seek(0)
-        file.readline()
         main = file.read()
-        
+    
     for k in sorted(identifiers.keys(), reverse=True):
-        main = main.replace('.'+k,'.'+identifiers[k])
-        main = main.replace('"'+k+'" {', '"'+identifiers[k]+'" {')
-    file = open(tf_folder+"/main.tf", "w", encoding='utf-8', errors='ignore')
+        main = main.replace(k, identifiers[k])
+    for k in sorted(reference.keys(), reverse=True):
+        main = main.replace(k, reference[k])
+    file = open(tf_folder+'/main.tf', 'w', encoding='utf-8', errors='ignore')
     file.write(main)
 
+def compare_json(ref_path, generated):
+    ref_file = open(ref_path, 'r', encoding='utf-8', errors='ignore')
+    reference = ref_file.read()
+    for folder in sorted(os.listdir(generated)):
+        with open(generated+'/'+folder+'/plan.json', 'r', encoding='utf-8', errors='ignore') as file:
+            json_plan = file.read()
+            if json_plan == reference:
+                print(folder+' are identical')
+            else:
+                print(folder+' are different')
 
-def numericalSort(value):
-    numbers = re.compile(r'(\d+)')
-    parts = numbers.split(value)
-    parts[1::2] = map(int, parts[1::2])
-    return parts
-
-def open_all(path):
-    unfiltered_path = path+'/unfiltered'
-    for file in sorted(os.listdir(unfiltered_path), key=numericalSort):
+def pass1(path, model):
+    task_names = []
+    out_txt = open(f'data/{path}/result.txt', 'a', encoding='utf-8', errors='ignore')
+    out_txt.write('Task | Success rate | Errors')
+    total_success_rate = []
+    for task in sorted(os.listdir(f'data/{path}/{model}-tf')):
+        task_names.append(task)
+        success_rate = []
+        errors = ''
+        with open(f'data/{path}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
+            human_json = human_file.read()
+            human_json = re.sub('"(description|name)":".+?"','', human_json) 
+            for sample in sorted(os.listdir(f'data/{path}/{model}-tf/{task}')):
+                with open(f'data/{path}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
+                    model_json = model_file.read()
+                    model_json = re.sub('"(description|name)":".+?"','', model_json)
+                    if model_json == human_json:
+                        success_rate.append(1)
+                    else: 
+                        success_rate.append(0)
+                        errors.append(int(sample[7:]))
+        total_success_rate.append(np.mean(success_rate))
+        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} ')
+    out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%')
+                        
+def make_json(path, model):
+    txt_path = f'data/{path}/{model}-txt'
+    for file in sorted(os.listdir(txt_path)):
         print(file)
-        tf_path = path+'/tf-solution/'+file[:-4]
-        if not os.path.exists(tf_path):
-            os.makedirs(tf_path)
-            remove_identifiers(unfiltered_path+'/'+file, tf_path)
-            make_json(tf_path)
+        if model == 'human':
+            tf_path = f'data/{path}/{model}-tf/{file[:-4]}'
+            if not os.path.exists(tf_path):
+                os.makedirs(tf_path)
+                remove_identifiers(f'{txt_path}/{file}', tf_path)
+                make_tf(tf_path, model)
+        else:
+            tf_path = f'data/{path}/{model}-tf/{file}'
+            if not os.path.exists(tf_path):
+                os.makedirs(tf_path)
+            for sample in sorted(os.listdir(f'{txt_path}/{file}')):
+                if not os.path.exists(f'{tf_path}/{sample[:-4]}'):
+                    os.makedirs(f'{tf_path}/{sample[:-4]}')
+                    remove_identifiers(f'{txt_path}/{file}/{sample}', f'{tf_path}/{sample[:-4]}')
+                    make_tf(f'{tf_path}/{sample[:-4]}', model)
 
 if __name__ == "__main__":
-    open_all("data/hashicorp-certified-terraform")
-    
-
+    make_json('test', 'codex')
+    pass1('test', 'codex')
+    #compare_json('functional_correctness/test/reference.json', 'functional_correctness/test/tf-solution')

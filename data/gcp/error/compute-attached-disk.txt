@@ -1,0 +1,38 @@
+# Terraform block with google provider
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute instance. Use e2 medium machine type, assign name, use boot disk debian 9. Set network interface to default and ignore changes to attached disk
+resource "google_compute_instance" "default" {
+  name         = "attached-disk-instance"
+  machine_type = "e2-medium"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  lifecycle {
+    ignore_changes = [attached_disk]
+  }
+}
+
+# create resource compute attached disk. Use disk id and instance to compute instance id
+resource "google_compute_attached_disk" "default" {
+  disk     = google_compute_disk.default.id
+  instance = google_compute_instance.default.id
+}

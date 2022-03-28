@@ -1,0 +1,17 @@
+# Terraform block with google provider
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# api gateway resource, use api id google maps
+resource "google_api_gateway_api" "api" {
+  api_id = "google-maps"
+}

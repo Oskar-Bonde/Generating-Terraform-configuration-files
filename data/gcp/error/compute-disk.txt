@@ -1,0 +1,20 @@
+# Terraform block with google provider
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# make compute disk resource, of type pd ssd, use debian 9 image and physical block size is 4096 bytes
+resource "google_compute_disk" "default" {
+  name  = "test-disk"
+  type  = "pd-ssd"
+  image = "debian-9-stretch-v20200805"
+  physical_block_size_bytes = 4096
+}

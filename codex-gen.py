@@ -5,62 +5,83 @@ import time
 # sample is a dict with index key. It contains a list of touples with promt and solution
 
 class data_class:
-    def __init__(self):
-        self.path = "data\evaluation"
+    def __init__(self, provider):
+        self.provider = provider 
+        self.path = "data/{}/unfiltered".format(provider)
         self.files = {}
-        self.raw_file = {}
         self.read_files()
         
     def read_files(self):
-        file_num = -1
+        file_num = 0
         for filename in sorted(os.listdir(self.path)):
             with open(os.path.join(self.path, filename), 'r') as f:
                 file_num += 1
                 prompts = []
                 solutions = []
-                self.raw_file[file_num] = f.read()
-                f.seek(0)
-                for line in f.readlines()[1:]:
+                for line in f.readlines():
                     if line[0] == "#":
                         prompts.append(line)
                         solutions.append("")
                     else: 
                         solutions[-1] = solutions[-1] + line
-                self.files[file_num] = (prompts, solutions)
+                self.files[filename[:-4]] = (prompts, solutions)
         self.num_files = file_num
-        
-    def generate_tf(self, index):
-        """
-        context_file = open("data/context.txt", "r")
+
+    def generate_tf(self, key, context):
+        context_file = open(context, "r")
         context = context_file.read()
-        output = ""
-        for prompt in self.files[index][0]:
-            output = output + prompt
-            generated = openai.Completion.create(
+        prompt = self.files[key][0][0]
+        samples = 100
+        batch_size = 20
+        input = []
+        for batch in range(samples // batch_size):
+            generated = self.codex(context+prompt, batch_size)
+            for i in range(batch_size):
+                input.append(context+prompt)
+                input[i+batch*batch_size] = generated["choices"][i]["text"]+"\n}\n\n"
+                
+        for prompt in self.files[key][0][1:]:
+            print("new prompt")
+            time.sleep(60)
+            for i in range(samples):
+                input[i] = input[i] + prompt
+            for batch in range(samples // batch_size):
+                generated = self.codex(input[batch*batch_size: (batch+1)*batch_size], 1) # 150 000 tokens per min
+                for j in range(batch_size):
+                    input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"\n}\n\n"
+                    if generated["choices"][j]["finish_reason"] == "length":
+                        print(f"Finish reason length index {batch*batch_size+j}")
+                        print(prompt)
+
+        for i in range(samples):
+            file_path = f'data/{self.provider}/codex-txt/{key}/sample-{i}.txt'
+            sample_file = open(file_path, "w")
+            sample_file.write(input[i])
+
+    def evaluate_all(self, wait=60):
+        for key in sorted(self.files.keys(), reverse=False):
+            print(key)
+            save_path = f'data/{self.provider}/codex-txt/{key}'
+            if not os.path.exists(save_path):
+                os.makedirs(save_path)
+                self.generate_tf(key, f"data/context-{self.provider}.txt")
+                print(f'Wait {wait}s')
+                time.sleep(wait)
+        
+    def codex(self, input, samples):
+        generated = openai.Completion.create(
                 engine="code-davinci-001", #  code-cushman-001
-                prompt= context+output,
-                max_tokens = 256,
+                prompt= input,
+                max_tokens = 512,
                 top_p = 0.05,
-                #temperature=0.1,
-                n = 1,
+                temperature=0.1,
+                n = samples,
                 stop = "\n}\n",
-                echo = False
-            )
-            output = output + generated["choices"][0]["text"] +"\n}\n\n"
-        generated_file = open("data/result/generated_"+str(index)+".txt", "w")
-        generated_file.write(output)
-        """
-        solution_file = open("data/solution/solution_"+str(index)+".txt", "w")
-        solution_file.write(self.raw_file[index])
-        
-    def evaluate_all(self):
-        for i in range(0, self.num_files):
-            print(i)
-            self.generate_tf(i)
-            #time.sleep(0)
-        
-        
+                echo = False )
+        return generated
+
 if __name__ == "__main__":
     openai.api_key = "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"#os.getenv("KEY")
-    data = data_class()
+    
+    data = data_class("test")
     data.evaluate_all()
