@@ -8,7 +8,8 @@ def make_tf(tf_path, model):
     os.system(f'terraform -chdir={tf_path} init')
     os.system(f'terraform -chdir={tf_path} plan -out=binary')
     os.system(f'terraform -chdir={tf_path} show -json binary > {tf_path}/plan.json')
-    shutil.rmtree(f'{tf_path}/.terraform')
+    if os.path.exists(f'{tf_path}/.terraform'):
+        shutil.rmtree(f'{tf_path}/.terraform')
     if model == 'human':
         file = open(str(tf_path)+'/plan.json', 'r', encoding='utf-8', errors='ignore')
         stringPlan = file.read()
@@ -64,30 +65,35 @@ def compare_json(ref_path, generated):
             else:
                 print(folder+' are different')
 
+def remove_ident(input):
+    input = re.sub('"(tags|tags_all)":.+?},','', input)
+    input = re.sub('"(description|name|constant_value)":".+?"','', input)
+    return  re.sub('({|}|,|[|]|"|:)','', input)
+
 def pass1(path, model):
     task_names = []
-    out_txt = open(f'data/{path}/result.txt', 'a', encoding='utf-8', errors='ignore')
-    out_txt.write('Task | Success rate | Errors')
+    out_txt = open(f'data/{path}/result.txt', 'w', encoding='utf-8', errors='ignore')
+    out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
     for task in sorted(os.listdir(f'data/{path}/{model}-tf')):
         task_names.append(task)
         success_rate = []
-        errors = ''
+        errors = []
         with open(f'data/{path}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
             human_json = human_file.read()
-            human_json = re.sub('"(description|name)":".+?"','', human_json) 
+            human_json = remove_ident(human_json)
             for sample in sorted(os.listdir(f'data/{path}/{model}-tf/{task}')):
                 with open(f'data/{path}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
                     model_json = model_file.read()
-                    model_json = re.sub('"(description|name)":".+?"','', model_json)
+                    model_json = remove_ident(model_json)
                     if model_json == human_json:
                         success_rate.append(1)
                     else: 
                         success_rate.append(0)
                         errors.append(int(sample[7:]))
         total_success_rate.append(np.mean(success_rate))
-        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} ')
-    out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%')
+        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
+    out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
                         
 def make_json(path, model):
     txt_path = f'data/{path}/{model}-txt'
@@ -111,5 +117,6 @@ def make_json(path, model):
 
 if __name__ == "__main__":
     make_json('test', 'codex')
+    make_json('test', 'human')
     pass1('test', 'codex')
     #compare_json('functional_correctness/test/reference.json', 'functional_correctness/test/tf-solution')

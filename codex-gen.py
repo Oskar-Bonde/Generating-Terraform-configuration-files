@@ -4,10 +4,10 @@ import time
 
 # sample is a dict with index key. It contains a list of touples with promt and solution
 
-class data_class:
+class CodexModel:
     def __init__(self, provider):
         self.provider = provider 
-        self.path = "data/{}/unfiltered".format(provider)
+        self.path = f"data/{provider}/human-txt"
         self.files = {}
         self.read_files()
         
@@ -27,12 +27,13 @@ class data_class:
                 self.files[filename[:-4]] = (prompts, solutions)
         self.num_files = file_num
 
-    def generate_tf(self, key, context):
+    def generate_tf(self, key, context, samples=10, wait=60):
         context_file = open(context, "r")
         context = context_file.read()
         prompt = self.files[key][0][0]
-        samples = 100
         batch_size = 20
+        if batch_size > samples:
+            batch_size = samples
         input = []
         for batch in range(samples // batch_size):
             generated = self.codex(context+prompt, batch_size)
@@ -42,7 +43,7 @@ class data_class:
                 
         for prompt in self.files[key][0][1:]:
             print("new prompt")
-            time.sleep(60)
+            time.sleep(wait)
             for i in range(samples):
                 input[i] = input[i] + prompt
             for batch in range(samples // batch_size):
@@ -58,13 +59,13 @@ class data_class:
             sample_file = open(file_path, "w")
             sample_file.write(input[i])
 
-    def evaluate_all(self, wait=60):
+    def generate_samples(self, samples, wait=60):
         for key in sorted(self.files.keys(), reverse=False):
             print(key)
             save_path = f'data/{self.provider}/codex-txt/{key}'
             if not os.path.exists(save_path):
                 os.makedirs(save_path)
-                self.generate_tf(key, f"data/context-{self.provider}.txt")
+                self.generate_tf(key, f"data/context-{self.provider}.txt", samples, wait)
                 print(f'Wait {wait}s')
                 time.sleep(wait)
         
@@ -73,8 +74,8 @@ class data_class:
                 engine="code-davinci-001", #  code-cushman-001
                 prompt= input,
                 max_tokens = 512,
-                top_p = 0.05,
-                temperature=0.1,
+                top_p = 0.95,
+                temperature=0.2,
                 n = samples,
                 stop = "\n}\n",
                 echo = False )
@@ -83,5 +84,5 @@ class data_class:
 if __name__ == "__main__":
     openai.api_key = "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"#os.getenv("KEY")
     
-    data = data_class("test")
-    data.evaluate_all()
+    model = CodexModel("test")
+    model.generate_samples(3, 10)

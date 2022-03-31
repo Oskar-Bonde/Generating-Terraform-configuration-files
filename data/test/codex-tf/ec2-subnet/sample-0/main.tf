@@ -6,9 +6,10 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1
+# Provider Block: aws in us east 1 and default profile
 provider "aws" {
-  region = "us-east-1"
+  region     = "us-east-1"
+  profile    = "default"
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
@@ -23,12 +24,10 @@ resource "aws_subnet" "name_1" {
   map_public_ip_on_launch = true
 }
 
-# Create EC2 Instance with subnet, vpc security group, and ami Amazon Linux
+# Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
 resource "aws_instance" "name_2" {
-  ami           = "ami-c58c1dd3"
+  ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
   subnet_id     = "${aws_subnet.name_1.id}"
-  associate_public_ip_address = true
-  vpc_security_group_ids = ["${aws_security_group.foo.id}"]
 }
 

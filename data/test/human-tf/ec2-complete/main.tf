@@ -1,3 +1,4 @@
+# Terraform Block with AWS provider
 terraform {
   required_providers {
     aws = {
@@ -6,32 +7,32 @@ terraform {
   }
 }
 
-# Provider Block AWS in region var.name_0
+# Provider Block AWS in region var.name_0 and default profile
 provider "aws" {
   region  = var.name_0
   profile = "default"
 }
 
-# Create variable called aws_region with default "us-east-1"
+# Create variable called aws_region with default "us-east-1" and type string
 variable "name_0" {
   type = string
   default = "us-east-1"
 }
 
-# variable called ec2_ami_id with default ami-0915bcb5fa77e4892
+# variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
 variable "name_1" {
   type = string  
   default = "ami-0915bcb5fa77e4892"
 }
 
-# create number variable called ec2_instance_count with default 1
+# create number variable called ec2_instance_count with default 1 and type number
 variable "name_2" {
   description = "EC2 Instance Count"
   type = number
   default = 1
 }
 
-# creaet variable ec2_instance_type with default t3.micro
+# creaet variable ec2_instance_type with default t3.micro and type string
 variable "name_3" {
   description = "EC2 Instance Type"
   type = string
@@ -44,6 +45,7 @@ resource "aws_security_group" "name_4" {
   description = "Dev VPC SSH"
   ingress {
     description = "Allow Port 22"
+    
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

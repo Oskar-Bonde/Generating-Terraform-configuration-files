@@ -1,0 +1,14 @@
+Task | Success rate | Errors
+aws-instance-1 | 0.0% | [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+aws-instance-profile | 100.0% | [] 
+ec2-complete | 0.0% | [0, 1, 2] 
+ec2-connection | 0.0% | [0, 1, 2] 
+ec2-subnet | 100.0% | [] 
+output-ec2-ip | 100.0% | [] 
+route-table | 66.66666666666666% | [2] 
+s3-bucket | 100.0% | [] 
+subnet | 100.0% | [] 
+variable-ec2 | 0.0% | [0, 1, 2] 
+vpc | 100.0% | [] 
+vpc-lots | 100.0% | [] 
+Average success rate 63.888888888888886%

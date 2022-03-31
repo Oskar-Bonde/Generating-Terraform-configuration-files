@@ -6,9 +6,10 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1
+# Provider Block: aws in us east 1 and default profile
 provider "aws" {
   region = "us-east-1"
+  profile = "default"
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16

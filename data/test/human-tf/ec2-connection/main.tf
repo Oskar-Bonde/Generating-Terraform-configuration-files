@@ -1,3 +1,4 @@
+# Terraform Block with AWS
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider Block AWS with region us east 1
+# Provider Block AWS with region us east 1 and default profile
 provider "aws" {
   region  = "us-east-1"
   profile = "default"

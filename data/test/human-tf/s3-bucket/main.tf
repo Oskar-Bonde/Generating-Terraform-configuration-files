@@ -1,3 +1,4 @@
+# Terraform Block with aws provider
 terraform {
   required_providers {
     aws = {
@@ -6,13 +7,13 @@ terraform {
   }
 }
 
-# Provider aws block with us east 1 region
+# Provider aws block with us east 1 region and default profile
 provider "aws" {
   region  = "us-east-1"
   profile = "default"
 }
 
-# Create S3 Bucket, make bucket icecream linux bucket and acl is private
+# Create S3 Bucket, set bucket to  "icecream-linux-bucket"
 resource "aws_s3_bucket" "name_0" {
   bucket = "icecream-linux-bucket"
 }
