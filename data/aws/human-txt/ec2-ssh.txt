@@ -10,11 +10,10 @@ terraform {
 # Provider AWS in region "us-east-1"
 provider "aws" {
   region  = "us-east-1"
-  profile = "default"
 }
 
 
-# Create Security Group that allows port 22 and all outbound IP and ports
+# Create Security Group that allows port 22 inbound and all outbound ports
 resource "aws_security_group" "vpc-ssh" {
   name        = "vpc-ssh"
   description = "Dev VPC SSH"
@@ -34,7 +33,7 @@ resource "aws_security_group" "vpc-ssh" {
   }
 }
 
-# Create EC2 Instance with ami set to "ami-0915bcb5fa77e4892" and instance type t3.micro. Use vpc ssh security group id
+# Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
 resource "aws_instance" "my-ec2-vm" {
   ami                    = "ami-0915bcb5fa77e4892" 
   instance_type          = "t3.micro"

@@ -7,13 +7,12 @@ terraform {
   }
 }
 
-# Provider aws block with us east 1 region and default profile
+# Provider aws block with us east 1 region
 provider "aws" {
   region  = "us-east-1"
-  profile = "default"
 }
 
-# Create S3 Bucket, set bucket to  "icecream-linux-bucket"
+# Create S3 Bucket, set bucket to  "icecream"
 resource "aws_s3_bucket" "mys3bucket" {
-  bucket = "icecream-linux-bucket"
+  bucket = "icecream"
 }

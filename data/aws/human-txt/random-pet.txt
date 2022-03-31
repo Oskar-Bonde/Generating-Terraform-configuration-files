@@ -10,10 +10,9 @@ terraform {
   }
 }
 
-# AWS provider block in region us-east-1  and profile set as default
+# AWS provider block in region us-east-1
 provider "aws" {
   region = "us-east-1"
-  profile = "default"
 }
 
 # Resource block to create a random pet name of length 5 with separator -

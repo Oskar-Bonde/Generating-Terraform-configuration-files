@@ -9,11 +9,10 @@ terraform {
 
 # Provider block with AWS in us-east-1 region
 provider "aws" {
-  profile = "default"
   region  = "us-east-1"
 }
 
-# Resource, create AWS ELB that listens for port 80
+# Resource, create AWS ELB that listens for instance port 80 and lb port 80
 resource "aws_elb" "elb" {
   
     listener {
