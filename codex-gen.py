@@ -84,5 +84,5 @@ class CodexModel:
 if __name__ == "__main__":
     openai.api_key = "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"#os.getenv("KEY")
     
-    model = CodexModel("test")
-    model.generate_samples(3, 10)
+    model = CodexModel("gcp")
+    model.generate_samples(1, 5)

@@ -7,13 +7,12 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block that is empty
 provider "google" {
 }
 
-# a compute instance that has machine type f1-micro, debian-9 image and default network
+# a compute instance that has image debian-9, network interface default and is type f1-micro
 resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
   machine_type = "f1-micro"
 
   boot_disk {

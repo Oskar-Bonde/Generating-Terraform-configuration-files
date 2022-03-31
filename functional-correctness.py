@@ -116,7 +116,8 @@ def make_json(path, model):
                     make_tf(f'{tf_path}/{sample[:-4]}', model)
 
 if __name__ == "__main__":
-    make_json('test', 'codex')
-    make_json('test', 'human')
-    pass1('test', 'codex')
+    provider = 'gcp'
+    make_json(provider, 'human')
+    make_json(provider, 'codex')
+    pass1(provider, 'codex')
     #compare_json('functional_correctness/test/reference.json', 'functional_correctness/test/tf-solution')
