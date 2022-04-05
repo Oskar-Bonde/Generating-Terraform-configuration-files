@@ -11,8 +11,8 @@ terraform {
 provider "google" {
 }
 
-# a string variable called name with default value "service"
-variable "service_name" {
+# a string type variable called name with default value "service"
+variable "name" {
   description = "A name of the service"
   type        = string
   default     = "service"

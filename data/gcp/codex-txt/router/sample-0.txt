@@ -6,10 +6,9 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
-  credentials = "${file("${path.module}/credentials.json")}"
-  project     = "${var.project}"
+  region = "europe-north1"
 }
 
 # create compute network resource. Give it the name foobar and don't auto create subnetworks

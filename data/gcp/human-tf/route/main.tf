@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,12 +7,13 @@ terraform {
   }
 }
 
-# google provider block. Make it empty
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # a compute network resource with a name
-resource "google_compute_network" "name_1" {
+resource "google_compute_network" "name_0" {
   name = "compute-network"
 }
 
@@ -19,7 +21,7 @@ resource "google_compute_network" "name_1" {
 resource "google_compute_route" "name_1" {
   name        = "network-route"
   dest_range  = "15.0.0.0/24"
-  network     = google_compute_network.name_1.name
+  network     = google_compute_network.name_0.name
   next_hop_ip = "10.132.1.5"
   priority    = 100
 }

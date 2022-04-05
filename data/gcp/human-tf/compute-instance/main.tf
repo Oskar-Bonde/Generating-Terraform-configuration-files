@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,13 +7,14 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
-# a compute instance that has machine type f1-micro, debian-9 image and default network
+# a compute instance that has image debian-9, network interface default, is type f1-micro and has a name
 resource "google_compute_instance" "name_0" {
-  name         = "terraform-instance"
+  name = "foo"
   machine_type = "f1-micro"
 
   boot_disk {

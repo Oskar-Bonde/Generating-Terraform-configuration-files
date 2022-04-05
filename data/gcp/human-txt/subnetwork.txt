@@ -7,16 +7,17 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
-# create compute network with a name surf
+# create compute network with name surf
 resource "google_compute_network" "default" {
   name = "my-network"
 }
 
-# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use previous compute network called surf
+# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use compute network surf id
 resource "google_compute_subnetwork" "default" {
   name          = "my-subnet"
   ip_cidr_range = "10.0.0.0/16"

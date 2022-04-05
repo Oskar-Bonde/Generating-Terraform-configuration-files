@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,8 +7,9 @@ terraform {
   }
 }
 
-# google provider block with default settings
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # create dns policy, enable inbound forwarding and enable logging

@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,11 +7,12 @@ terraform {
   }
 }
 
-# google provider block with default settings
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
-# data block with google compute zones in europe west4. The status must be UP
+# data block with google compute zones in europe west4. The status must be UP and project is terraform-338909
 data "google_compute_zones" "name_0" {
   region = "europe-west4"
   status = "UP"

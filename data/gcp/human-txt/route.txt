@@ -7,8 +7,9 @@ terraform {
   }
 }
 
-# google provider block. Make it empty
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # a compute network resource with a name

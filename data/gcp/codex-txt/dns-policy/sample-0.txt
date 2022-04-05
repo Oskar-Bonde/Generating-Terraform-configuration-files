@@ -6,17 +6,16 @@ terraform {
   }
 }
 
-# google provider block with default settings
+# google provider block with only region set to europe north1
 provider "google" {
-  credentials = "path/to/credentials.json"
-  project     = "my-project-id"
-  region      = "us-central1"
+  region = "europe-north1"
 }
 
 # create dns policy, enable inbound forwarding and enable logging
-resource "google_dns_managed_zone" "foobar" {
-  name        = "mzone-test-%s"
-  dns_name    = "tf-acctest-%s.hashicorptest.com"
-  description = "Test zone"
+resource "google_dns_policy" "policy" {
+  name        = "policy-%s"
+  description = "Policy created while an audit_logging test is running"
+  enable_inbound_forwarding = true
+  enable_logging = true
 }
 

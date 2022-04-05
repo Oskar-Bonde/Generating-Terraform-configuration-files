@@ -6,21 +6,20 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
-  credentials = "${file("${path.module}/credentials.json")}"
-  project     = "${var.project}"
+  region = "europe-north1"
 }
 
 # create storage bucket resource, give it a name and set location to EU
 resource "google_storage_bucket" "name_0" {
-  name     = "tf-test-bucket-%{random_suffix}"
-  location = "EU"
+  name     = "my-bucket-%%{random_suffix}"
+  location = "europe-north1"
 }
 
 # create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn
 resource "google_compute_backend_bucket" "name_1" {
-  name        = "tf-test-backend-%{random_suffix}"
+  name        = "my-backend-bucket-%{random_suffix}"
   bucket_name = google_storage_bucket.name_0.name
   enable_cdn  = true
 }

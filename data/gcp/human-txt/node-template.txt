@@ -7,11 +7,12 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
-# create a node template. Assign a name, set node type to us-central1
+# create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "template" {
   name      = "soletenant-tmpl"
   node_type = "n1-node-96-624"

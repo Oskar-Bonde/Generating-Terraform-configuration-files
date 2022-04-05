@@ -7,8 +7,9 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # compute network that auto creates subnetworks
@@ -17,7 +18,7 @@ resource "google_compute_network" "vpc_network" {
   auto_create_subnetworks = "true"
 }
 
-# a compute instance that has machine type f1-micro, debian-9 image and self link to vpc network
+# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance"
   machine_type = "f1-micro"

@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,8 +7,9 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # create storage bucket resource, give it a name and set location to EU

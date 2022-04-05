@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,19 +7,20 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # create compute network, give it a name
-resource "google_compute_network" "name_1" {
+resource "google_compute_network" "name_0" {
   name = "test-network"
 }
 
 # create compute firewall, give it the name test-firewall. Use the compute network name, allow protocol icmp, also allow tcp in ports 80, 8080 and 1000-2000. Use source tags web
 resource "google_compute_firewall" "name_1" {
   name    = "test-firewall"
-  network = google_compute_network.name_1.name
+  network = google_compute_network.name_0.name
 
   allow {
     protocol = "icmp"

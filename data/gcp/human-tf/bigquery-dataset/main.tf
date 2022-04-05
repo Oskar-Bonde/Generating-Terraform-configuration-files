@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,8 +7,9 @@ terraform {
   }
 }
 
-# google provider block with default settings
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # bigquery dataset resource. Use dataset id example_dataset, located in the EU and set to expire after 1 hour. The reader role is assigned to hashicorp.com domain

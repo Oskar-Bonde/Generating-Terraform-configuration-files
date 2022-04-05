@@ -43,7 +43,7 @@ resource "azurerm_public_ip" "example" {
   sku                 = "Standard"
 }
 
-# resource block with firewall. Create ip configuration block, assign subnet id and public ip id. Assign resource group location and name
+# resource block with firewall. Create ip configuration block, assign subnet id and public ip id. Assign resource group location and name. Set sku tier to Standard and sku name to AZFW_Hub
 resource "azurerm_firewall" "example" {
   name                = "testfirewall"
   location            = azurerm_resource_group.example.location
@@ -54,4 +54,6 @@ resource "azurerm_firewall" "example" {
     subnet_id            = azurerm_subnet.example.id
     public_ip_address_id = azurerm_public_ip.example.id
   }
+  sku_tier = "Standard"
+  sku_name = "AZFW_Hub"
 }

@@ -6,26 +6,30 @@ terraform {
   }
 }
 
-# google provider block with default settings
+# google provider block with only region set to europe north1
 provider "google" {
-  credentials = "${file("${path.module}/credentials.json")}"
-  project     = "${var.project}"
+  region = "europe-north1"
 }
 
 # data block with available google compute zones in europe west4. The status must be UP and project is terraform-338909
 data "google_compute_zones" "name_0" {
-  name = "europe-west4"
+  available_resource_creation = "VMs"
+  name_regex = "europe-west4.*"
   status = "UP"
   project = "terraform-338909"
 }
 
 # compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name
 resource "google_compute_instance" "name_1" {
-  name         = "terraform-%{count.index}"
+  count = "${length(data.google_compute_zones.name_0.names)}"
+  name = "${join(",", data.google_compute_zones.name_0.names)}"
   machine_type = "f1-micro"
-  zone         = "${data.google_compute_zones.name_0.names[count.index]}"
-  image_project = "debian-cloud"
-  image        = "debian-9-stretch-v20190213"
+  zone = "${data.google_compute_zones.name_0.names[count.index]}"
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
   network_interface {
     network = "default"
   }

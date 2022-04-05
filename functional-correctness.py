@@ -46,7 +46,7 @@ def remove_identifiers(txt_file, tf_folder):
                 i+=1
         file.seek(0)
         main = file.read()
-    
+
     for k in sorted(identifiers.keys(), reverse=True):
         main = main.replace(k, identifiers[k])
     for k in sorted(reference.keys(), reverse=True):
@@ -65,7 +65,7 @@ def compare_json(ref_path, generated):
             else:
                 print(folder+' are different')
 
-def remove_ident(input):
+def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
     input = re.sub('"(description|name|constant_value)":".+?"','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
@@ -81,11 +81,11 @@ def pass1(path, model):
         errors = []
         with open(f'data/{path}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
             human_json = human_file.read()
-            human_json = remove_ident(human_json)
+            human_json = clean_json(human_json)
             for sample in sorted(os.listdir(f'data/{path}/{model}-tf/{task}')):
                 with open(f'data/{path}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
                     model_json = model_file.read()
-                    model_json = remove_ident(model_json)
+                    model_json = clean_json(model_json)
                     if model_json == human_json:
                         success_rate.append(1)
                     else: 
@@ -116,8 +116,7 @@ def make_json(path, model):
                     make_tf(f'{tf_path}/{sample[:-4]}', model)
 
 if __name__ == "__main__":
-    provider = 'gcp'
+    provider = 'azure'
     make_json(provider, 'human')
     make_json(provider, 'codex')
     pass1(provider, 'codex')
-    #compare_json('functional_correctness/test/reference.json', 'functional_correctness/test/tf-solution')

@@ -1,1 +1,0 @@
-{"format_version":"1.1","terraform_version":"1.1.0-dev","planned_values":{"root_module":{}},"configuration":{"provider_config":{"google":{"name":"google","full_name":"registry.terraform.io/hashicorp/google"}},"root_module":{}}}

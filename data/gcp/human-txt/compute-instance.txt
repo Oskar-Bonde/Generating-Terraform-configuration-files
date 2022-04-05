@@ -7,12 +7,14 @@ terraform {
   }
 }
 
-# google provider block that is empty
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
-# a compute instance that has image debian-9, network interface default and is type f1-micro
+# a compute instance that has boot disk debian-9 image, network interface default, is type f1-micro and has a name
 resource "google_compute_instance" "vm_instance" {
+  name = "foo"
   machine_type = "f1-micro"
 
   boot_disk {

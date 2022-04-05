@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,12 +7,13 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # create compute network resource. Give it the name foobar and don't auto create subnetworks
-resource "google_compute_network" "name_1" {
+resource "google_compute_network" "name_0" {
   name                    = "my-network"
   auto_create_subnetworks = false
 }
@@ -19,7 +21,7 @@ resource "google_compute_network" "name_1" {
 # resource block: create a compute router for the foobar network. Make a bgp block, use asn 64514, advertise mode custom, advertise groups all subnets and set advertised ip ranges to 1.2.3.4 and 6.7.0.0/16
 resource "google_compute_router" "name_1" {
   name    = "my-router"
-  network = google_compute_network.name_1.name
+  network = google_compute_network.name_0.name
   bgp {
     asn               = 64514
     advertise_mode    = "CUSTOM"

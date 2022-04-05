@@ -1,3 +1,4 @@
+# Terraform block with google provider
 terraform {
   required_providers {
     google = {
@@ -6,12 +7,13 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
+  region = "europe-north1"
 }
 
 # create compute network with a name surf
-resource "google_compute_network" "name_1" {
+resource "google_compute_network" "name_0" {
   name = "my-network"
 }
 
@@ -19,5 +21,5 @@ resource "google_compute_network" "name_1" {
 resource "google_compute_subnetwork" "name_1" {
   name          = "my-subnet"
   ip_cidr_range = "10.0.0.0/16"
-  network       = google_compute_network.name_1.id
+  network       = google_compute_network.name_0.id
 }
