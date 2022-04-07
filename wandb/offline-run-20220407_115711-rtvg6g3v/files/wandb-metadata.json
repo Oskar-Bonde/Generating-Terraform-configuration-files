@@ -1,0 +1,22 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.8.0",
+    "heartbeatAt": "2022-04-07T09:57:14.478436",
+    "startedAt": "2022-04-07T09:57:11.873342",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "c:/Users/ebonosk/Master Thesis/Generating-Terraform-configuration-files/codeParrot/codeParrot-gen.py",
+    "codePath": "codeParrot\\codeParrot-gen.py",
+    "git": {
+        "remote": "https://github.com/Oskar-Bonde/Generating-Terraform-configuration-files.git",
+        "commit": "d4cdbc8e53412951951c4d5a6be77323f1b9614f"
+    },
+    "email": "oskar.bonde@gmail.com",
+    "root": "C:/Users/ebonosk/Master Thesis/Generating-Terraform-configuration-files",
+    "host": "se-00032645",
+    "username": "ebonosk",
+    "executable": "C:\\Users\\ebonosk\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
+}

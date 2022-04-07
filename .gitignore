@@ -131,3 +131,4 @@ dmypy.json
 # terraform
 .terraform/
 raw-data/
+data/train-raw/
