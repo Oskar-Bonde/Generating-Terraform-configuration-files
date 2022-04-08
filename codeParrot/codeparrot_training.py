@@ -30,8 +30,7 @@ class ConstantLengthDataset(IterableDataset):
     """
 
     def __init__(
-        self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=1024, chars_per_token=3.6
-    ):
+        self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=1024, chars_per_token=3.6):
         self.tokenizer = tokenizer
         self.concat_token_id = tokenizer.bos_token_id
         self.dataset = dataset
@@ -70,7 +69,7 @@ class ConstantLengthDataset(IterableDataset):
 
 
 def setup_logging(args):
-    project_name = args.model_ckpt.split("/")[-1]
+    project_name = 'CodeParrot' #args.model_ckpt.split("/")[-1]
     logger = logging.getLogger(__name__)
     log_dir = Path(args.save_dir) / "log/"
     log_dir.mkdir(exist_ok=True)
@@ -159,14 +158,14 @@ args = Namespace(**vars(args), **acc_state)
 samples_per_step = accelerator.state.num_processes * args.train_batch_size
 set_seed(args.seed)
 
+# Logging
+logger, tb_writer, run_name = setup_logging(args)
+logger.info(accelerator.state)
+
 """
 # Clone model repository
 if accelerator.is_main_process:
     hf_repo = Repository(args.save_dir, clone_from=args.model_ckpt)
-
-# Logging
-logger, tb_writer, run_name = setup_logging(args)
-logger.info(accelerator.state)
 
 # Checkout new branch on repo
 if accelerator.is_main_process:
@@ -192,11 +191,10 @@ lr_scheduler = get_scheduler(
 def get_lr():
     return optimizer.param_groups[0]["lr"]
 
-"""
+
 # Prepare everything with our `accelerator`.
-model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
-    model, optimizer, train_dataloader, eval_dataloader
-)"""
+model, optimizer, train_dataloader = accelerator.prepare(
+    model, optimizer, train_dataloader) # eval_dataloader
 
 # Train model
 model.train()
@@ -217,12 +215,12 @@ for step, batch in enumerate(train_dataloader, start=1):
     if step % args.save_checkpoint_steps == 0:
         logger.info("Evaluating and saving model checkpoint")
         #eval_loss, perplexity = evaluate(args)
-        #log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
+        log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
         accelerator.wait_for_everyone()
         unwrapped_model = accelerator.unwrap_model(model)
         unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
-        if accelerator.is_main_process:
-            hf_repo.push_to_hub(commit_message=f"step {step}")
+        #if accelerator.is_main_process:
+        #    hf_repo.push_to_hub(commit_message=f"step {step}")
         model.train()
     if completed_steps >= args.max_train_steps:
         break
@@ -234,5 +232,5 @@ logger.info("Evaluating and saving model after training")
 accelerator.wait_for_everyone()
 unwrapped_model = accelerator.unwrap_model(model)
 unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
-if accelerator.is_main_process:
-    hf_repo.push_to_hub(commit_message="final model")
+#if accelerator.is_main_process:
+#    hf_repo.push_to_hub(commit_message="final model")

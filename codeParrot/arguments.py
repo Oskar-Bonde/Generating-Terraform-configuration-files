@@ -10,7 +10,7 @@ class TrainingArguments:
 
     
     save_dir: Optional[str] = field(
-        default="./codeParrot/models",
+        default="./models",
         metadata={"help": "Save dir where model repo is cloned and models updates are saved to."},
     )
     dataset_name_train: Optional[str] = field(
@@ -19,7 +19,7 @@ class TrainingArguments:
     dataset_name_valid: Optional[str] = field(
         default=" TODO ", metadata={"help": "Name or path of validation dataset."}
     )
-    train_batch_size: Optional[int] = field(default=192, metadata={"help": "Batch size for training."})
+    train_batch_size: Optional[int] = field(default=64, metadata={"help": "Batch size for training."})
     valid_batch_size: Optional[int] = field(default=192, metadata={"help": "Batch size for evaluation."})
     weight_decay: Optional[float] = field(default=0.1, metadata={"help": "Value of weight decay."})
     shuffle_buffer: Optional[int] = field(
