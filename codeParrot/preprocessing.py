@@ -8,6 +8,7 @@ import re
 import numpy as np
 from datasets import load_dataset
 from transformers import HfArgumentParser
+from transformers import AutoTokenizer
 
 from arguments import PreprocessingArguments
 
@@ -83,15 +84,19 @@ def compress_file(file_path):
             shutil.copyfileobj(f_in, f_out)
     os.unlink(file_path)
 
-def remove_license(input):
-    for i in range(len(input)):
-        content = input[i]
-        content = re.sub('/[*][\S\s]+(license|License|Copyright|copyright|WARRANTIES)+[\S\s]+[*]/','', content)
-        content = re.sub('#.+(license|License|Copyright|copyright|WARRANTIES| law )+.+\n','', content)
-        content = re.sub('#\n','', content)
-        input[i]= content
+def clean_map(row):    
+    content = row['content']
+    content = re.sub('/[*][\S\s]+(license|License|Copyright|copyright|WARRANTIES)+[\S\s]+[*]/','', content)
+    content = re.sub('#.+(license|License|Copyright|copyright|WARRANTIES| law )+.+\n','', content)
+    content = re.sub('#\n','', content)
 
-    return input
+    tokens = tokenizer.encode(content)
+    if len(tokens) > 1024:
+        tokens = tokens[:1024]
+        content = tokenizer.decode(tokens)
+        
+    row['content'] = content
+    return row
 
 # Settings
 parser = HfArgumentParser(PreprocessingArguments)
@@ -121,7 +126,8 @@ print(f"Time to filter dataset: {time.time()-t_start:.2f}")
 print(f"Size of filtered dataset: {len(ds_filter)}")
 
 # Remove license comments
-#ds_filter['content'] = remove_license(ds_filter['content'][:])
+tokenizer = AutoTokenizer.from_pretrained("lvwerra/codeparrot-small")
+ds_filter = ds_filter.map(clean_map)
 
 # Save data in batches of samples_per_file
 if not os.path.exists(args.output_dir):

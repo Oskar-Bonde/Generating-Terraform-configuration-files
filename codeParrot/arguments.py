@@ -19,8 +19,8 @@ class TrainingArguments:
     dataset_name_valid: Optional[str] = field(
         default=" TODO ", metadata={"help": "Name or path of validation dataset."}
     )
-    train_batch_size: Optional[int] = field(default=64, metadata={"help": "Batch size for training."})
-    valid_batch_size: Optional[int] = field(default=192, metadata={"help": "Batch size for evaluation."})
+    train_batch_size: Optional[int] = field(default=16, metadata={"help": "Batch size for training."})
+    valid_batch_size: Optional[int] = field(default=16, metadata={"help": "Batch size for evaluation."})
     weight_decay: Optional[float] = field(default=0.1, metadata={"help": "Value of weight decay."})
     shuffle_buffer: Optional[int] = field(
         default=1000, metadata={"help": "Size of buffer used to shuffle streaming dataset."}
@@ -83,8 +83,11 @@ class HumanEvalArguments:
     """
 
     model_ckpt: Optional[str] = field(
-        default="lvwerra/codeparrot",
+        default="./models/",
         metadata={"help": "Model name or path of model to be evaluated."},
+    )
+    provider: Optional[str] = field(
+        default="aws",
     )
     num_workers: Optional[int] = field(default=None, metadata={"help": "Number of workers used for code evaluation."})
     num_tasks: Optional[int] = field(
@@ -95,12 +98,12 @@ class HumanEvalArguments:
         default=True, metadata={"help": "Sample from the language model's output distribution."}
     )
     temperature: Optional[float] = field(default=0.2, metadata={"help": "Sampling temperature used for generation."})
-    max_new_tokens: Optional[int] = field(default=256, metadata={"help": "Maximum number of newly generated tokens."})
+    max_new_tokens: Optional[int] = field(default=512, metadata={"help": "Maximum number of newly generated tokens."})
     top_k: Optional[int] = field(default=0, metadata={"help": "Top-k parameter used for generation."})
     top_p: Optional[float] = field(default=0.95, metadata={"help": "Top-p parameter used for nucleus sampling."})
     batch_size: Optional[int] = field(default=10, metadata={"help": "Number of generations to run in parallel."})
     n_samples: Optional[int] = field(
-        default=200, metadata={"help": "Number of completions to generate for each sample."}
+        default=100, metadata={"help": "Number of completions to generate for each sample."}
     )
     seed: Optional[int] = field(default=1, metadata={"help": "Random seed used for evaluation."})
     output_file: Optional[str] = field(
@@ -130,10 +133,10 @@ class PreprocessingArguments:
         },
     )
     dataset_name: Optional[str] = field(
-        default="codeparrot", metadata={"help": "Folder or name of dataset to process."}
+        default="data/train-raw", metadata={"help": "Folder or name of dataset to process."}
     )
     output_dir: Optional[str] = field(
-        default="codeparrot-clean", metadata={"help": "Folder to save processed processed dataset."}
+        default="data/train-clean", metadata={"help": "Folder to save processed processed dataset."}
     )
     samples_per_file: Optional[int] = field(
         default=100_000, metadata={"help": "Number of files to save per JSON output file."}

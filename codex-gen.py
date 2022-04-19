@@ -27,13 +27,22 @@ class CodexModel:
                 self.files[filename[:-4]] = (prompts, solutions)
         self.num_files = file_num
 
+    def generate_samples(self, samples, wait=60):
+        for key in sorted(self.files.keys(), reverse=False):
+            print(key)
+            save_path = f'data/{self.provider}/codex-txt/{key}'
+            if not os.path.exists(save_path):
+                os.makedirs(save_path)
+                self.generate_tf(key, f"data/context-{self.provider}.txt", samples, wait)
+                print(f'Wait {wait}s')
+                time.sleep(wait)
+
     def generate_tf(self, key, context, samples=10, wait=60):
         context_file = open(context, "r")
         context = context_file.read()
         prompt = self.files[key][0][0]
         batch_size = 20
-        if batch_size > samples:
-            batch_size = samples
+        if batch_size > samples: batch_size = samples
         input = []
         for batch in range(samples // batch_size):
             generated = self.codex(context+prompt, batch_size)
@@ -58,16 +67,6 @@ class CodexModel:
             file_path = f'data/{self.provider}/codex-txt/{key}/sample-{i}.txt'
             sample_file = open(file_path, "w")
             sample_file.write(input[i])
-
-    def generate_samples(self, samples, wait=60):
-        for key in sorted(self.files.keys(), reverse=False):
-            print(key)
-            save_path = f'data/{self.provider}/codex-txt/{key}'
-            if not os.path.exists(save_path):
-                os.makedirs(save_path)
-                self.generate_tf(key, f"data/context-{self.provider}.txt", samples, wait)
-                print(f'Wait {wait}s')
-                time.sleep(wait)
         
     def codex(self, input, samples):
         generated = openai.Completion.create(

@@ -9,13 +9,15 @@ from torch.utils.data import IterableDataset
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
+import nvidia_smi
 import transformers
-import wandb
+#import wandb
 from accelerate import Accelerator
 from arguments import TrainingArguments
 from huggingface_hub import Repository
 from transformers import AdamW, AutoModelForCausalLM, AutoTokenizer, HfArgumentParser, get_scheduler, set_seed
 
+nvidia_smi.nvmlInit()
 
 class ConstantLengthDataset(IterableDataset):
     """
@@ -29,8 +31,7 @@ class ConstantLengthDataset(IterableDataset):
             chars_per_token: Number of characters per token used to estimate number of tokens in text buffer.
     """
 
-    def __init__(
-        self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=1024, chars_per_token=3.6):
+    def __init__(self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=64, chars_per_token=3.6):
         self.tokenizer = tokenizer
         self.concat_token_id = tokenizer.bos_token_id
         self.dataset = dataset
@@ -81,8 +82,8 @@ def setup_logging(args):
         handlers=[logging.FileHandler(log_dir / filename), logging.StreamHandler()],
     )
     if accelerator.is_main_process:  # we only want to setup logging once
-        wandb.init(project=project_name, config=args)
-        run_name = wandb.run.name
+        #wandb.init(project=project_name, config=args)
+        run_name = "run-name"#wandb.run.name
         tb_writer = SummaryWriter()
         tb_writer.add_hparams(vars(args), {"0": 0})
         logger.setLevel(logging.INFO)
@@ -98,11 +99,10 @@ def setup_logging(args):
 
 
 def create_dataloaders(args):
-    ds_kwargs = {"streaming": True}
-    train_data = load_dataset(args.dataset_name_train, split="train", **ds_kwargs)
+    train_data = load_dataset(args.dataset_name_train, split="train", streaming=True)
     train_data = train_data.shuffle(buffer_size=args.shuffle_buffer, seed=args.seed)
-    #valid_data = load_dataset(args.dataset_name_valid, split="train", **ds_kwargs)
-    train_dataset = ConstantLengthDataset(tokenizer, train_data, infinite=True, seq_length=args.seq_length)
+    #valid_data = load_dataset(args.dataset_name_valid, split="train", streaming=True)
+    train_dataset = ConstantLengthDataset(tokenizer, train_data, infinite=True, seq_length=args.seq_length, num_of_sequences= 2*args.train_batch_size)
     #valid_dataset = ConstantLengthDataset(tokenizer, valid_data, infinite=False, seq_length=args.seq_length)
     train_dataloader = DataLoader(train_dataset, batch_size=args.train_batch_size)
     #eval_dataloader = DataLoader(valid_dataset, batch_size=args.valid_batch_size)
@@ -125,7 +125,7 @@ def get_grouped_params(model, args, no_decay=["bias", "LayerNorm.weight"]):
 def log_metrics(step, metrics):
     logger.info(f"Step {step}: {metrics}")
     if accelerator.is_main_process:
-        wandb.log(metrics)
+        #wandb.log(metrics)
         [tb_writer.add_scalar(k, v, step) for k, v in metrics.items()]
 
 
@@ -187,24 +187,35 @@ lr_scheduler = get_scheduler(
     num_training_steps=args.max_train_steps,
 )
 
-
 def get_lr():
     return optimizer.param_groups[0]["lr"]
 
-
+print('Prepare accelerator')
 # Prepare everything with our `accelerator`.
 model, optimizer, train_dataloader = accelerator.prepare(
     model, optimizer, train_dataloader) # eval_dataloader
 
+
+print('Train model')
 # Train model
 model.train()
 completed_steps = 0
 for step, batch in enumerate(train_dataloader, start=1):
+    """
+    print('Calculate loss')
+    print(batch.size())
+    handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
+    info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
+    print("Total memory:", info.total)
+    print("Free memory:", info.free)
+    print("Used memory:", info.used)
+    """
     loss = model(batch, labels=batch, use_cache=False).loss
     log_metrics(
         step, {"lr": get_lr(), "samples": step * samples_per_step, "steps": completed_steps, "loss/train": loss.item()}
     )
     loss = loss / args.gradient_accumulation_steps
+    #print('Begin backpropagation')
     accelerator.backward(loss)
     if step % args.gradient_accumulation_steps == 0:
         accelerator.clip_grad_norm_(model.parameters(), 1.0)
@@ -215,7 +226,7 @@ for step, batch in enumerate(train_dataloader, start=1):
     if step % args.save_checkpoint_steps == 0:
         logger.info("Evaluating and saving model checkpoint")
         #eval_loss, perplexity = evaluate(args)
-        log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
+        #log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
         accelerator.wait_for_everyone()
         unwrapped_model = accelerator.unwrap_model(model)
         unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
