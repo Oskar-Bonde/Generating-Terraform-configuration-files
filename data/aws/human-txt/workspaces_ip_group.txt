@@ -19,4 +19,5 @@ resource "aws_workspaces_ip_group" "contractors" {
   rules {
     source      = "150.24.14.0/24"
     description = "NY"
+  }
 }

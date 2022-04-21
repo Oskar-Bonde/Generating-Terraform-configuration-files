@@ -1,0 +1,9 @@
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mQuoted references are deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 23, in resource "aws_instance_timeout" "name_1":
+[33m│[0m [0m  23:   depends_on = [[4m"aws_instance.ec2demo"[0m][0m
+[33m│[0m [0m
+[33m│[0m [0mIn this context, references are expected literally rather than in quotes. Terraform 0.11 and earlier required quotes, but quoted references are now deprecated and will be removed in a future version of Terraform. Remove the quotes surrounding this reference to silence this warning.
+[33m╵[0m[0m
+[0m[0m

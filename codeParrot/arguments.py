@@ -84,31 +84,24 @@ class HumanEvalArguments:
 
     model_ckpt: Optional[str] = field(
         default="./models/",
-        metadata={"help": "Model name or path of model to be evaluated."},
-    )
-    provider: Optional[str] = field(
-        default="aws",
-    )
+        metadata={"help": "Model name or path of model to be evaluated."},)
+    
+    provider: Optional[str] = field(default="aws",)
+    
+    batch_size: Optional[int] = field(
+        default=10, metadata={"help": "Number of generations to run in parallel."})
+    n_samples: Optional[int] = field(
+        default=3, metadata={"help": "Number of completions to generate for each task."})
     num_workers: Optional[int] = field(default=None, metadata={"help": "Number of workers used for code evaluation."})
-    num_tasks: Optional[int] = field(
-        default=None,
-        metadata={"help": "The number of human-eval tasks to run. If not included all tasks are evaluated."},
-    )
-    do_sample: Optional[bool] = field(
-        default=True, metadata={"help": "Sample from the language model's output distribution."}
-    )
+    
     temperature: Optional[float] = field(default=0.2, metadata={"help": "Sampling temperature used for generation."})
-    max_new_tokens: Optional[int] = field(default=512, metadata={"help": "Maximum number of newly generated tokens."})
     top_k: Optional[int] = field(default=0, metadata={"help": "Top-k parameter used for generation."})
     top_p: Optional[float] = field(default=0.95, metadata={"help": "Top-p parameter used for nucleus sampling."})
-    batch_size: Optional[int] = field(default=10, metadata={"help": "Number of generations to run in parallel."})
-    n_samples: Optional[int] = field(
-        default=100, metadata={"help": "Number of completions to generate for each sample."}
-    )
+    do_sample: Optional[bool] = field(default=True, metadata={"help": "Sample from the language model's output distribution."})
+
+    
     seed: Optional[int] = field(default=1, metadata={"help": "Random seed used for evaluation."})
-    output_file: Optional[str] = field(
-        default="eval_results.json", metadata={"help": "Random seed used for evaluation."}
-    )
+
     HF_ALLOW_CODE_EVAL: Optional[str] = field(
         default="0", metadata={"help": "Allow `code_eval` to execute Python code on machine"}
     )

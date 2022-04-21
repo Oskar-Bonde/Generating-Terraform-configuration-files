@@ -28,19 +28,19 @@ def remove_identifiers(txt_file, tf_folder):
         i = 0
         for line in file:
             words = line.split(' ')
-            if words[0] == 'resource':
+            if words[0] == 'resource' and len(words)>=3:
                 reference[words[1][1:-1]+'.'+words[2][1:-1]] = words[1][1:-1]+'.name_'+str(i)
                 identifiers[words[1]+' '+words[2]] = words[1]+' "name_'+str(i)+'"'
                 i+=1
-            if words[0]=='data':
+            if words[0]=='data' and len(words)>=3:
                 reference['data.'+words[1][1:-1]+'.'+words[2][1:-1]] = 'data.'+words[1][1:-1]+'.name_'+str(i)
                 identifiers[words[1]+' '+words[2]] = words[1]+' "name_'+str(i)+'"'
                 i+=1
-            if words[0]=='variable':
+            if words[0]=='variable' and len(words)>=2:
                 reference['var.'+words[1][1:-1]] = 'var.name_'+str(i)
                 identifiers['variable '+words[1]] = 'variable "name_'+str(i)+'"'
                 i+=1
-            if words[0]=='output':
+            if words[0]=='output' and len(words)>=2:
                 reference['output.'+words[1][1:-1]] = 'output.name_'+str(i)
                 identifiers['output '+words[1]] = 'output "name_'+str(i)+'"'
                 i+=1
@@ -72,7 +72,7 @@ def clean_json(input):
 
 def pass1(path, model):
     task_names = []
-    out_txt = open(f'data/{path}/result.txt', 'w', encoding='utf-8', errors='ignore')
+    out_txt = open(f'data/{path}/result_{model}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
     for task in sorted(os.listdir(f'data/{path}/{model}-tf')):
@@ -91,11 +91,13 @@ def pass1(path, model):
                     else: 
                         success_rate.append(0)
                         errors.append(int(sample[7:]))
+        if success_rate == []: success_rate=[0]
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
                         
 def make_json(path, model):
+    print(model)
     txt_path = f'data/{path}/{model}-txt'
     for file in sorted(os.listdir(txt_path)):
         print(file)
@@ -116,7 +118,7 @@ def make_json(path, model):
                     make_tf(f'{tf_path}/{sample[:-4]}', model)
 
 if __name__ == "__main__":
-    provider = 'azure'
+    provider = 'aws'
     make_json(provider, 'human')
-    make_json(provider, 'codex')
-    pass1(provider, 'codex')
+    make_json(provider, 'codeparrot')
+    pass1(provider, 'codeparrot')

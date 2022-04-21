@@ -243,5 +243,3 @@ logger.info("Evaluating and saving model after training")
 accelerator.wait_for_everyone()
 unwrapped_model = accelerator.unwrap_model(model)
 unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
-#if accelerator.is_main_process:
-#    hf_repo.push_to_hub(commit_message="final model")

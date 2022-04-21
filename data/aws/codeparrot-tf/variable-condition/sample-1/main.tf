@@ -1,0 +1,25 @@
+provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block with variable region and default profile
+provider "aws" {
+  alias  = "files"
+  region = "us-east-1"
+}
+
+# Provider Block with AMI
+provider "aws" {
+  alias  = "files"
+  region = "us-east-1"
+}
+
+# varaible called ec2_ami_id with default ami-0915bcb5fa77e4892 and a condition to make sure string is an AMI id/string
+# https://docs.aws.amazon.com/AmazonECS/latest/UserGuide/AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AMI-AM
+}
+
