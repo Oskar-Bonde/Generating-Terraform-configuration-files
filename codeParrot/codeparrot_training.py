@@ -9,7 +9,7 @@ from torch.utils.data import IterableDataset
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-import nvidia_smi
+#import nvidia_smi
 import transformers
 #import wandb
 from accelerate import Accelerator
@@ -17,7 +17,7 @@ from arguments import TrainingArguments
 from huggingface_hub import Repository
 from transformers import AdamW, AutoModelForCausalLM, AutoTokenizer, HfArgumentParser, get_scheduler, set_seed
 
-nvidia_smi.nvmlInit()
+#nvidia_smi.nvmlInit()
 
 class ConstantLengthDataset(IterableDataset):
     """
@@ -101,12 +101,12 @@ def setup_logging(args):
 def create_dataloaders(args):
     train_data = load_dataset(args.dataset_name_train, split="train", streaming=True)
     train_data = train_data.shuffle(buffer_size=args.shuffle_buffer, seed=args.seed)
-    #valid_data = load_dataset(args.dataset_name_valid, split="train", streaming=True)
+    valid_data = load_dataset(args.dataset_name_valid, split="validation", streaming=True)
     train_dataset = ConstantLengthDataset(tokenizer, train_data, infinite=True, seq_length=args.seq_length, num_of_sequences= 2*args.train_batch_size)
-    #valid_dataset = ConstantLengthDataset(tokenizer, valid_data, infinite=False, seq_length=args.seq_length)
+    valid_dataset = ConstantLengthDataset(tokenizer, valid_data, infinite=False, seq_length=args.seq_length)
     train_dataloader = DataLoader(train_dataset, batch_size=args.train_batch_size)
-    #eval_dataloader = DataLoader(valid_dataset, batch_size=args.valid_batch_size)
-    return train_dataloader#, eval_dataloader
+    eval_dataloader = DataLoader(valid_dataset, batch_size=args.valid_batch_size)
+    return train_dataloader, eval_dataloader
 
 
 def get_grouped_params(model, args, no_decay=["bias", "LayerNorm.weight"]):
@@ -176,7 +176,7 @@ model = AutoModelForCausalLM.from_pretrained("lvwerra/codeparrot-small")
 tokenizer = AutoTokenizer.from_pretrained("lvwerra/codeparrot-small")
 
 # Load dataset and dataloader
-train_dataloader = create_dataloaders(args) #, eval_dataloader
+train_dataloader, eval_dataloader= create_dataloaders(args)
 
 # Prepare the optimizer and learning rate scheduler
 optimizer = AdamW(get_grouped_params(model, args), lr=args.learning_rate)
@@ -192,8 +192,8 @@ def get_lr():
 
 print('Prepare accelerator')
 # Prepare everything with our `accelerator`.
-model, optimizer, train_dataloader = accelerator.prepare(
-    model, optimizer, train_dataloader) # eval_dataloader
+model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
+    model, optimizer, train_dataloader, eval_dataloader)
 
 
 print('Train model')
@@ -211,9 +211,9 @@ for step, batch in enumerate(train_dataloader, start=1):
     print("Used memory:", info.used)
     """
     loss = model(batch, labels=batch, use_cache=False).loss
-    log_metrics(
-        step, {"lr": get_lr(), "samples": step * samples_per_step, "steps": completed_steps, "loss/train": loss.item()}
-    )
+    if completed_steps % 500 == 0:
+        log_metrics(
+            step, {"lr": get_lr(), "samples": step * samples_per_step, "steps": completed_steps, "loss/train": loss.item()})
     loss = loss / args.gradient_accumulation_steps
     #print('Begin backpropagation')
     accelerator.backward(loss)
@@ -225,8 +225,8 @@ for step, batch in enumerate(train_dataloader, start=1):
         completed_steps += 1
     if step % args.save_checkpoint_steps == 0:
         logger.info("Evaluating and saving model checkpoint")
-        #eval_loss, perplexity = evaluate(args)
-        #log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
+        eval_loss, perplexity = evaluate(args)
+        log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
         accelerator.wait_for_everyone()
         unwrapped_model = accelerator.unwrap_model(model)
         unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
@@ -238,8 +238,8 @@ for step, batch in enumerate(train_dataloader, start=1):
 
 # Evaluate and save the last checkpoint
 logger.info("Evaluating and saving model after training")
-#eval_loss, perplexity = evaluate(args)
-#log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
+eval_loss, perplexity = evaluate(args)
+log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
 accelerator.wait_for_everyone()
 unwrapped_model = accelerator.unwrap_model(model)
 unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)

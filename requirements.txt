@@ -16,5 +16,10 @@ huggingface-hub == 0.1.0
 # pip uninstall setuptools
 # python3 -m pip install setuptools==59.5.0
 # accelerate config
+# nohup accelerate launch code
 # nvidia-smi -l 1
-# /home/oskar_bonde/cloud-codeparrot/models/config.json
+# /home/oskar_bonde/cloud-codeparrot/models/model-1.zip
+
+# nohup accelerate launch codeparrot_training.py --save_dir ./models/model-2 --learning_rate 5e-5
+# zip -r model.zip model-1 
+# gsutil cp /home/oskar_bonde/cloud-codeparrot/models/model-2.zip gs://terraform-models 

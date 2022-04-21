@@ -1,2 +1,0 @@
-top_p = 0.05
-temperature=0.1

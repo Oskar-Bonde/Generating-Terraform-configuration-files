@@ -7,20 +7,18 @@ class TrainingArguments:
     """
     Configuration for training model.
     """
-
-    
     save_dir: Optional[str] = field(
-        default="./models",
+        default="./models/model-1",
         metadata={"help": "Save dir where model repo is cloned and models updates are saved to."},
     )
     dataset_name_train: Optional[str] = field(
-        default="data/train-clean", metadata={"help": "Name or path of training dataset."}
+        default="data/train-clean/train", metadata={"help": "Name or path of training dataset."}
     )
     dataset_name_valid: Optional[str] = field(
-        default=" TODO ", metadata={"help": "Name or path of validation dataset."}
+        default="data/train-clean/validation", metadata={"help": "Name or path of validation dataset."}
     )
-    train_batch_size: Optional[int] = field(default=16, metadata={"help": "Batch size for training."})
-    valid_batch_size: Optional[int] = field(default=16, metadata={"help": "Batch size for evaluation."})
+    train_batch_size: Optional[int] = field(default=12, metadata={"help": "Batch size for training."})
+    valid_batch_size: Optional[int] = field(default=12, metadata={"help": "Batch size for evaluation."})
     weight_decay: Optional[float] = field(default=0.1, metadata={"help": "Value of weight decay."})
     shuffle_buffer: Optional[int] = field(
         default=1000, metadata={"help": "Size of buffer used to shuffle streaming dataset."}
@@ -31,14 +29,14 @@ class TrainingArguments:
         default=2000, metadata={"help": "Number of warmup steps in the learning rate schedule."}
     )
     
-    max_train_steps: Optional[int] = field(default=5000, metadata={"help": "Maximum number of training steps."})
+    max_train_steps: Optional[int] = field(default=20000, metadata={"help": "Maximum number of training steps."})
     max_eval_steps: Optional[int] = field(
         default=-1, metadata={"help": "Maximum number of evaluation steps. If -1 the full dataset is evaluated."}
     )
     seq_length: Optional[int] = field(default=1024, metadata={"help": "Sequence lengths used for training."})
     seed: Optional[int] = field(default=1, metadata={"help": "Training seed."})
     save_checkpoint_steps: Optional[int] = field(
-        default=1024,
+        default=1000,
         metadata={"help": "Interval to save checkpoints. Measured as number of forward passes not training steps."},
     )
     gradient_accumulation_steps: Optional[int] = field(
@@ -143,8 +141,9 @@ class PreprocessingArguments:
         default=100, metadata={"help": "Maximum mean line length in file, otherwise file is filtered."}
     )
     alpha_frac: Optional[float] = field(
-        default=0.25, metadata={"help": "Maximum fraction of non-alphanumeric characters, otherwise file is filtered."}
-    )
+        default=0.25, metadata={"help": "Maximum fraction of non-alphanumeric characters, otherwise file is filtered."})
+    val_fraction: Optional[float] = field(
+        default=0.2)
 
 
 @dataclass

@@ -1,0 +1,102 @@
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS in region var.aws_region and default profile
+provider "aws" {
+  region  = var.aws_region
+  profile = "default"
+}
+
+# Create variable called aws_region with default "us-east-1" and type string
+variable "aws_region" {
+  type = string
+  default = "us-east-1"
+}
+
+# variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
+variable "ec2_ami_id" {
+  type = string  
+  default = "ami-0915bcb5fa77e4892"
+}
+
+# create number variable called ec2_instance_count with default 1 and type number
+variable "ec2_instance_count" {
+  description = "EC2 Instance Count"
+  type = number
+  default = 1
+}
+
+# creaet variable ec2_instance_type with default t3.micro and type string
+variable "ec2_instance_type" {
+  description = "EC2 Instance Type"
+  type = string
+  default = "t3.micro"
+}
+
+# Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
+resource "aws_security_group" "vpc-ssh" {
+  name        = "vpc-ssh"
+  description = "Dev VPC SSH"
+  ingress {
+    description = "Allow Port 22"
+    
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "Allow all IP and Ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create Security Group for web traffic
+resource "aws_security_group" "vpc-web" {
+  name        = "vpc-web"
+  description = "Dev VPC Web"
+
+  ingress {
+    description = "Allow Port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow Port 443"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all IP and Ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
+resource "aws_instance" "my-ec2-vm" {
+  ami           = var.ec2_ami_id 
+  instance_type = var.ec2_instance_type
+  vpc_security_group_ids = [aws_security_group.vpc-ssh.id, aws_security_group.vpc-web.id]
+}
+
+
+
+
