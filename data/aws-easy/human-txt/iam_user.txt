@@ -1,0 +1,19 @@
+# Terraform Block with aws provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block
+provider "aws" {
+  region  = "us-east-1"
+}
+
+# Create AWS IAM user resource
+resource "aws_iam_user" "myuser" {
+  for_each = toset(["TJack", "TJames", "TMadhu", "TDave"])
+  name     = each.key
+}

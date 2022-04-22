@@ -7,12 +7,12 @@ terraform {
   }
 }
 
-# AWS provider block in region us-east-1
+# AWS provider block
 provider "aws" {
   region = "us-east-1"  
 }
 
-# Resource block with an amazon VPC in private network 10.0.0.0/16
+# Resource block with an amazon VPC
 resource "aws_vpc" "myvpc" {
   cidr_block = "10.0.0.0/16"
 }

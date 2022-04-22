@@ -1,0 +1,20 @@
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block
+provider "aws" {
+  region  = var.aws_region
+}
+
+# Create variable
+variable "aws_region" {
+  type        = string
+  default     = "us-east-1"
+}
+

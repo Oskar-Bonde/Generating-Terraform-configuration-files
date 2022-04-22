@@ -1,0 +1,38 @@
+# Terraform Block with AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region  = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "vpc-dev" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# AWS Internet Gateway 
+resource "aws_internet_gateway" "vpc-dev-igw" {
+  vpc_id = aws_vpc.vpc-dev.id
+}
+
+# Create EC2 Instance
+resource "aws_instance" "my-ec2-vm" {
+  ami                    = "ami-047a51fa27710816e"
+  instance_type          = "t2.micro" 
+}
+
+# Resource block: Create Elastic IP
+resource "aws_eip" "my-eip" {
+  instance = aws_instance.my-ec2-vm.id
+  vpc      = true
+  depends_on = [aws_internet_gateway.vpc-dev-igw]
+}
+
+

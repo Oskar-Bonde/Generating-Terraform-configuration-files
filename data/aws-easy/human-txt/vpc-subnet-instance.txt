@@ -10,22 +10,27 @@ terraform {
 # Provider Block
 provider "aws" {
   region  = "us-east-1"
+  profile = "default"
 }
 
-# Create a AWS VPC resource
+# Create a AWS VPC
 resource "aws_vpc" "vpc-dev" {
   cidr_block = "10.0.0.0/16"
+  tags = {
+    "Name" = "vpc-dev"
+  }
 }
 
-# Create AWS subnets resource 
+# Create AWS subnets resource
 resource "aws_subnet" "vpc-dev-public-subnet-1" {
   vpc_id                  = aws_vpc.vpc-dev.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
 }
 
-# create a nat gateway
-resource "aws_nat_gateway" "example" {
-  connectivity_type = "private"
-  subnet_id         = aws_subnet.vpc-dev-public-subnet-1.id
+# Create EC2 Instance
+resource "aws_instance" "my-ec2-vm" {
+  ami                    = "ami-047a51fa27710816e"
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.vpc-dev-public-subnet-1.id  
 }

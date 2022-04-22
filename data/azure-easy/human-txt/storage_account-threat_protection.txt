@@ -1,0 +1,35 @@
+# Terraform block with azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "atp-example" {
+  name     = "atp-example"
+  location = "West Europe"
+}
+
+# create storage account resource
+resource "azurerm_storage_account" "example1" {
+  name                = "examplestorage"
+  resource_group_name = azurerm_resource_group.atp-example.name
+  location                 = azurerm_resource_group.atp-example.location
+  
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create advanced threat protection resource
+resource "azurerm_advanced_threat_protection" "example2" {
+  target_resource_id = azurerm_storage_account.example1.id
+  enabled            = true
+}
