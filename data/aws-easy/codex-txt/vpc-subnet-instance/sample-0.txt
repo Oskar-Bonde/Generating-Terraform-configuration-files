@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# Create AWS subnets resource
+resource "aws_subnet" "public" {
+  vpc_id = "${aws_vpc.main.id}"
+  cidr_block = "10.0.1.0/24"
+}
+
+# Create EC2 Instance
+resource "aws_instance" "web" {
+  ami = "ami-c5eabbf5"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.public.id}"
+}
+

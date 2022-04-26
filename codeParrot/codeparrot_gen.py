@@ -21,30 +21,33 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, HfArgumentParser, 
 
 EOF_STRINGS = ["\n}\n"]
 
-def dataset_dict(provider='aws'):
+def dataset_dict(provider='aws', block_context=False):
     path = f"data/{provider}/human-txt"
     context_path = f"data/context-{provider}.txt"
     context_file = open(context_path, "r")
     context = context_file.read()
+    block_init = False
     task_name = {}
     data_list = []
     n_tasks = 0
     for filename in sorted(os.listdir(path)):
         with open(os.path.join(path, filename), 'r') as f:
             prompts = []
-            solutions = []
             for line in f.readlines():
                 if line[0] == "#":
                     prompts.append(line)
-                    solutions.append("")
-                else: 
-                    solutions[-1] = solutions[-1] + line
+                    if block_context:
+                        block_init = True
+                elif block_init:
+                    block_init = False
+                    prompts[-1] = prompts[-1] + line.split()[0]+' '
             
             prompts[0] = context + prompts[0]
             data_list.append(prompts)
             task_name[n_tasks] = filename[:-4]
             n_tasks += 1
     print(n_tasks, ' tasks')
+    print(data_list[0])
     return data_list, task_name
 
 class EndOfFunctionCriteria(StoppingCriteria):
@@ -126,7 +129,7 @@ def main():
         "stopping_criteria": StoppingCriteriaList([EndOfFunctionCriteria(0, EOF_STRINGS, tokenizer)]),}
 
     # Load evaluation dataset
-    data_list, task_name = dataset_dict(args.provider)
+    data_list, task_name = dataset_dict(args.provider, args.block_context)
     
     model, data_list, tokenizer = accelerator.prepare(model, data_list, tokenizer) # eval_loader
     
@@ -144,28 +147,12 @@ def main():
                         code[s] = code[s] + data_list[i][j].strip()
                     
                     for batch in range(n_samples//batch_size):
-                        #tokens = tokenizer(code[batch*batch_size: (1+batch)*batch_size], padding=True, return_tensors="pt")
-                        tokens = tokenizer(['# Provider AWS in region "us-east-1" \n', '# Terraform block \n'], padding=True, return_tensors="pt")
+                        tokens = tokenizer(code[batch*batch_size: (1+batch)*batch_size], padding=True, return_tensors="pt")
+                        #tokens = tokenizer(['# Provider AWS in region "us-east-1" \n', '# Terraform block \n'], padding=True, return_tensors="pt")
                         gen_kwargs["stopping_criteria"][0].start_length = tokens.input_ids.shape[-1]
                         
                         tokens.input_ids =  tokens.input_ids[:,-1024:]
                         tokens.attention_mask = tokens.attention_mask[:,-1024:]
-                        """
-                        print("Tokens ", tokens.input_ids)
-                        print("Mask ", tokens.attention_mask)
-                        block_tokens = accelerator.unwrap_model(model).generate(
-                            input_ids=tokens.input_ids.cuda(), 
-                            attention_mask=tokens.attention_mask.cuda(), 
-                            num_beams=1,
-                            max_new_tokens = 1,
-                            force_words_ids = block_token,
-                            bad_words_ids = comment_token,
-                            #do_sample = args.do_sample,
-                            no_repeat_ngram_size=1,
-                            remove_invalid_values=True)
-                        print("Block ", block_tokens)
-                        quit()
-                        """
                         generated_tokens = accelerator.unwrap_model(model).generate(
                             input_ids = tokens.input_ids.cuda(), 
                             attention_mask = tokens.attention_mask.cuda(),
@@ -186,6 +173,8 @@ def main():
                 for s in range(n_samples):
                     # remove context
                     code[s] = code[s][len(data_list[i][0]):]
+                    if args.block_context:
+                        code[s]='terraform '+code[s]
                     sample_file = open(f'{file_path}/sample-{s}.txt', "w", encoding='utf-8', errors='ignore')
                     sample_file.write(code[s])
                 print('Saved ', task_name[i])  

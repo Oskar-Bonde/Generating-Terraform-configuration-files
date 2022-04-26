@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block
+provider "aws" {
+  region  = "us-east-1"
+  profile = "profile"
+}
+
+# Create a AWS VPC resource 
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# create a default network acl
+resource "aws_default_network_acl" "default" {
+  default_network_acl_id = "${aws_vpc.main.default_network_acl_id}"
+}
+

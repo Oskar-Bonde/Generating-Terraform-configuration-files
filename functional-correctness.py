@@ -3,11 +3,15 @@ import re
 import shutil
 import sys
 import numpy as np
+import json
 
-def make_tf(tf_path, model):
+def make_tf(tf_path, model, easy):
     os.system(f'terraform -chdir={tf_path} init')
-    os.system(f'terraform -chdir={tf_path} plan -out=binary')
-    os.system(f'terraform -chdir={tf_path} show -json binary > {tf_path}/plan.json')
+    if not easy:
+        os.system(f'terraform -chdir={tf_path} plan -out=binary')
+        os.system(f'terraform -chdir={tf_path} show -json binary > {tf_path}/plan.json')
+    if easy:
+        os.system(f'terraform -chdir={tf_path} plan -json > {tf_path}/plan.json')
     if os.path.exists(f'{tf_path}/.terraform'):
         shutil.rmtree(f'{tf_path}/.terraform')
     if model == 'human':
@@ -70,20 +74,20 @@ def clean_json(input):
     input = re.sub('"(description|name|constant_value)":".+?"','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
 
-def pass1(path, model):
+def pass1(provider, model):
     task_names = []
-    out_txt = open(f'data/{path}/result_{model}.txt', 'w', encoding='utf-8', errors='ignore')
+    out_txt = open(f'data/{provider}/result_{model}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
-    for task in sorted(os.listdir(f'data/{path}/{model}-tf')):
+    for task in sorted(os.listdir(f'data/{provider}/{model}-tf')):
         task_names.append(task)
         success_rate = []
         errors = []
-        with open(f'data/{path}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
+        with open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
             human_json = human_file.read()
             human_json = clean_json(human_json)
-            for sample in sorted(os.listdir(f'data/{path}/{model}-tf/{task}')):
-                with open(f'data/{path}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
+            for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
+                with open(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
                     model_json = model_file.read()
                     model_json = clean_json(model_json)
                     if model_json == human_json:
@@ -95,30 +99,75 @@ def pass1(path, model):
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
-                        
-def make_json(path, model):
+    
+def compile_check(provider, model):
+    task_names = []
+    out_txt = open(f'data/{provider}-easy/result_{model}.txt', 'w', encoding='utf-8', errors='ignore')
+    out_txt.write('Task | Success rate | Errors\n')
+    total_success_rate = []
+    for task in sorted(os.listdir(f'data/{provider}-easy/{model}-tf')):
+        task_names.append(task)
+        success_rate = []
+        errors = []
+        with open(f'data/{provider}-easy/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore') as human_file:
+            human_plan = human_file.readlines()
+            for sample in sorted(os.listdir(f'data/{provider}-easy/{model}-tf/{task}')):
+                correct = 1
+                with open(f'data/{provider}-easy/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore') as model_file:
+                    model_plan = model_file.readlines()
+                    for i in range(len(human_plan)-1):
+                        line_human = json.loads(human_plan[i])
+                        if line_human['@level'] =='info':
+                            if len(model_plan) > i and '{' in model_plan[i]:
+                                line_model = json.loads(model_plan[i])
+                                if line_model['@message'] != line_human['@message']:
+                                    correct = 0
+                                    if int(sample[7:]) not in errors:
+                                        errors.append(int(sample[7:]))
+                            else:
+                                correct = 0
+                                if int(sample[7:]) not in errors:
+                                        errors.append(int(sample[7:]))
+                                #print('length error')
+                success_rate.append(correct)
+            
+        if success_rate == []: success_rate=[0]
+        total_success_rate.append(np.mean(success_rate))
+        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
+    out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
+             
+def make_json(provider, model, easy=False):
     print(model)
-    txt_path = f'data/{path}/{model}-txt'
-    for file in sorted(os.listdir(txt_path)):
+    if easy:
+        path = f'data/{provider}-easy/{model}'
+    else:
+        path = f'data/{provider}/{model}'
+    for file in sorted(os.listdir(f'{path}-txt')):
         print(file)
         if model == 'human':
-            tf_path = f'data/{path}/{model}-tf/{file[:-4]}'
+            tf_path = f'{path}-tf/{file[:-4]}'
             if not os.path.exists(tf_path):
                 os.makedirs(tf_path)
-                remove_identifiers(f'{txt_path}/{file}', tf_path)
-                make_tf(tf_path, model)
+                remove_identifiers(f'{path}-txt/{file}', tf_path)
+                make_tf(tf_path, model, easy)
         else:
-            tf_path = f'data/{path}/{model}-tf/{file}'
+            tf_path = f'{path}-tf/{file}'
             if not os.path.exists(tf_path):
                 os.makedirs(tf_path)
-            for sample in sorted(os.listdir(f'{txt_path}/{file}')):
+            for sample in sorted(os.listdir(f'{path}-txt/{file}')):
                 if not os.path.exists(f'{tf_path}/{sample[:-4]}'):
                     os.makedirs(f'{tf_path}/{sample[:-4]}')
-                    remove_identifiers(f'{txt_path}/{file}/{sample}', f'{tf_path}/{sample[:-4]}')
-                    make_tf(f'{tf_path}/{sample[:-4]}', model)
+                    remove_identifiers(f'{path}-txt/{file}/{sample}', f'{tf_path}/{sample[:-4]}')
+                    make_tf(f'{tf_path}/{sample[:-4]}', model, easy)
 
 if __name__ == "__main__":
     provider = 'aws'
-    make_json(provider, 'human')
-    make_json(provider, 'codeparrot')
-    pass1(provider, 'codeparrot')
+    easy = True
+    model = 'codeparrot'
+    make_json(provider, 'human', easy)
+    make_json(provider, model, easy)
+    if easy:
+        compile_check(provider, model)
+    else:
+        pass1(provider, model)
+    

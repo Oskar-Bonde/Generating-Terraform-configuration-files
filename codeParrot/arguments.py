@@ -17,6 +17,7 @@ class TrainingArguments:
     dataset_name_valid: Optional[str] = field(
         default="data/train-clean/validation", metadata={"help": "Name or path of validation dataset."}
     )
+
     train_batch_size: Optional[int] = field(default=12, metadata={"help": "Batch size for training."})
     valid_batch_size: Optional[int] = field(default=12, metadata={"help": "Batch size for evaluation."})
     weight_decay: Optional[float] = field(default=0.1, metadata={"help": "Value of weight decay."})
@@ -81,15 +82,16 @@ class HumanEvalArguments:
     """
 
     model_ckpt: Optional[str] = field(
-        default="./models/",
+        default="./models/model-2",
         metadata={"help": "Model name or path of model to be evaluated."},)
-    
-    provider: Optional[str] = field(default="aws",)
+    block_context:Optional[bool] = field(
+        default=True, metadata={"help": "Provide type of block as context to model if true"})
+    provider: Optional[str] = field(default="aws-easy",)
     
     batch_size: Optional[int] = field(
         default=10, metadata={"help": "Number of generations to run in parallel."})
     n_samples: Optional[int] = field(
-        default=3, metadata={"help": "Number of completions to generate for each task."})
+        default=10, metadata={"help": "Number of completions to generate for each task."})
     num_workers: Optional[int] = field(default=None, metadata={"help": "Number of workers used for code evaluation."})
     
     temperature: Optional[float] = field(default=0.2, metadata={"help": "Sampling temperature used for generation."})

@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block 
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# create vpc resource
+resource "aws_vpc" "default" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# create an egress only internet gateway
+resource "aws_internet_gateway" "default" {
+  vpc_id = "${aws_vpc.default.id}"
+}
+
