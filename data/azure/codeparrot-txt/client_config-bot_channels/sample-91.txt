@@ -1,0 +1,50 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file
+data "template_file" "example_config" {
+  template = file("${path.module}/templates/example_config.tpl")
+
+  vars = {
+    azurerm_subscription_id = var.azurerm_subscription_id
+    azurerm_client_id       = var.azurerm_client_id
+    azurerm_client_secret   = var.azurerm_client_secret
+    azurerm_tenant_id       = var.azurerm_tenant_id
+    azurerm_location        = var.azurerm_location
+    azurerm_resource_group   = azurerm_resource_group.rg.name
+    azurerm_resource_group_location = data.azurerm_resource_group.example_resources.location
+    azurerm_resource_group_name   = azurerm_resource_group.example_resources.name
+    azurerm_storage_account_name  = var.azurerm_storage_account_name
+    azurerm_storage_container_name = var.azurerm_storage_container_name
+    azurerm_storage_blob_container = var.azurerm_storage_container_name
+    azurerm_default_resource_group = var.azurerm_default_resource_group
+    azurerm_dns_name_label = var.azurerm_dns_name_label
+    azurerm_dns_name = var.azurerm_dns_name
+  }
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name to get registration id
+resource "azurerm_bot_application_registration" "example_registration" {
+  name                = "example-registration"
+  location            = "West US"
+  resource_group_name = azurerm_resource_group.rg.name
+  app_id              = azurerm_bot_application_registration.example_application_registration.app_id
+  registration_id     = var.azure_app_registration_id
+}
+

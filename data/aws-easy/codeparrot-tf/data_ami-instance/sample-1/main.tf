@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -15,13 +16,19 @@ provider "aws" {
 # data AMI ID block
 data "aws_ami" "name_0" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
-# Create AWS instance
-resource
-aws_instance" "instance" {
-  ami           = data.aws_ami.name_0.id
-  instance_type = "t2.micro"
+# Create AWS instancevariable
+resource "aws_instance_variable" "name_1" {
+  instance_name = "instance-var-${var.env}"
+  description = "instance-var-${var.env}"
+  type = "String"
 }
 

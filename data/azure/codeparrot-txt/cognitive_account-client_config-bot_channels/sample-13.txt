@@ -1,0 +1,62 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group.
+resource "azurerm_cosmosdb_account" "tf_sa" {
+  name                = "tf_sa"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  account_type        = "Standard_LRS"
+}
+
+# data block, azurem client config
+data "template_file" "tf_sa_user_data" {
+  template = file("../common/userdata/azurem_client_config.json")
+
+  vars = {
+    account_name = azurerm_cosmosdb_account.tf_sa.name
+    account_key    = azurerm_cosmosdb_account.tf_sa.primary_access_key
+    account_primary_access_key = azurerm_cosmosdb_account.tf_sa.primary_access_key
+    account_secondary_access_key = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_2 = azurerm_cosmosdb_account.tf_sa.primary_access_key
+    account_key_3 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_4 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_5 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_6 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_7 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_8 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_9 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_10 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_11 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_12 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_13 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_14 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_15 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_16 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_17 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_18 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_19 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_20 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_21 = azurerm_cosmosdb_account.tf_sa.secondary_access_key
+    account_key_22 = azurerm_cosmosdb_account.tf_sa.secondary_
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+}
+

@@ -1,0 +1,66 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example-resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create container registry resource. Assign resource group name and location. Set sku to premium and admin enabled to false. Inside a georeplications block, set location to East US and enable zone reduncancy.
+resource "azurerm_container_registry" "example-registry" {
+  name                = "example-registry"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  location            = "West US"
+  sku                 = "Premium"
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    storage_account_type = "Standard_LRS"
+  }
+  lifecycle {
+    ignore_changes = [
+      #Ignore change for resource_group_name
+      #Ignore change for container_registry_id
+      #Ignore change for container_registry_type
+      #Ignore change for container_registry_version
+      #Ignore change for container_registry_encryption_key_secret
+      #Ignore change for container_registry_encryption_key_secret_name
+      #Ignore change for container_registry_encryption_key_secret_type
+      #Ignore change for container_registry_encryption_key_secret_version
+      #Ignore change for container_registry_encryption_key_secret_data
+      #Ignore change for container_registry_encryption_key_secret_data_key_name
+      #Ignore change for container_registry_encryption_key_secret_data_key_type
+      #Ignore change for container_registry_encryption_key_secret_data_key_secret_data_key_name
+      #Ignore change for container_registry_encryption_key_secret_data_key_secret_data_key_secret_data_key_type
+      ignore_changes = [
+        #Ignore change for container_registry_default_container_label
+        #Ignore change for container_registry_default_resource_group_name
+        #Ignore change for container_registry_default_resource_group_location
+        #Ignore change for container_registry_default_resource_group_type
+        #Ignore change for container_registry_dns_name
+        #Ignore change for container_registry_dns_name_label
+        #Ignore change for container_registry_dns_name_type
+        #Ignore change for container_registry_dns_name_value
+        #Ignore change for container_registry_dns_name_value_type
+        #Ignore change for container_registry_dns_name_value_encryption_key_secret
+        #Ignore change for container_registry_dns_name_value_encryption_key_secret
+        #Ignore change for container_registry_dns_name_value_encryption_key_secret
+        ignore_changes = [
+          #Ignore change for container_registry_email_address
+        ]
+      ]
+    ]
+  }
+}
+

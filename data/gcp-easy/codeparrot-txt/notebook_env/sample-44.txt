@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create google notebooks enviroment
+resource "google_notebooks_instance" "instance" {
+  name = "my-notebooks-instance"
+  location = "us-central1"
+  machine_type = "n1-standard-1"
+  tags = ["notebooks"]
+
+  create_duration = "10s"
+}
+

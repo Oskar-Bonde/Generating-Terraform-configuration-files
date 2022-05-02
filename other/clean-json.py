@@ -18,3 +18,10 @@ else:
     print(string1)
     print()
     print(string2)
+
+string3 = "aws_instance.name_0[0]: Plan to create"
+
+def remove_brackets(input):
+    input = re.sub('\[.+\]','', input)
+    return input
+print(remove_brackets(string3))

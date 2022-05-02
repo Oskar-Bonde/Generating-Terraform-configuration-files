@@ -1,0 +1,72 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create google notebooks enviroment
+resource "google_notebooks_instance" "instance" {
+  name = "my-notebooks-instance-${random_suffix}"
+  machine_type = "n1-standard-1"
+
+  # create a publicly accessible instance in the default zone
+  zone = "us-central1-a"
+
+  # create a network interface in the default zone
+  network_interface {
+    network = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+
+  # create a subnet in the default zone
+  network_interface {
+    network = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+
+  # create a service account in the default zone
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+
+  # create a storage bucket in the default zone
+  storage_bucket = "my-bucket"
+
+  # create a network interface for the instance
+  network_interface {
+    network = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+
+  # create a storage bucket in the default zone
+  storage_bucket = "my-bucket"
+
+  # create a network interface for the instance
+  network_interface {
+    network = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+
+  # create a storage bucket in the default zone
+  storage_bucket = "my-bucket"
+
+  # create a service account in the default zone
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+}
+

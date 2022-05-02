@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resourceter
+resource "azurerm_cosmosdb_account" "account" {
+  name                = "myTFCosmosDbAccount"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_tier         = "Standard"
+  account_replication_type = "GRS"
+}
+
+# data block, azurem client config
+data "template_file" "user_data" {
+  template = file("${path.module}/user-data.tpl")
+
+  vars = {
+    account_tier = "Standard"
+    account_replication_type = "GRS"
+    account_replication_size = "10"
+    account_type = "Standard_LRS"
+    account_access_type = "WAL"
+    account_replication_count = "2"
+    account_access_key = "${var.azure_key_data["username"]}.p12"
+  }
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channel_registration" "channel_registration" {
+  name                = "myTFCosmosDbChannelRegistration"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  channel_registration_endpoint = "${var.azure_key_data["username"]}.p12"
+  certificate_name   = "myTFCosmosDbCert"
+  certificate_type   = "HSM"
+  certificate_create  = "true"
+}
+

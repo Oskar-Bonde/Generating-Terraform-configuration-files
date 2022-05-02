@@ -1,0 +1,199 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
+  policy_type  = "SINGLE_IP_INTERNET"
+  dns_policy_name = google_dns_policy.dns_policy.name
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // SSH
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  // HTTP
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPS
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // CloudSQL
+  allow {
+    protocol = "tcp"
+    ports    = ["1521"]
+  }
+
+  // Stackdriver
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Network
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Firewall
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  // Instances
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Network Interface
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Firewall with default settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Firewall with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Firewall with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "icmp"
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  // Firewall with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "icmp"
+    ports    = ["22"]
+  }
+
+  // Firewall with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "icmp"
+    ports    = ["22"]
+  }
+
+  // Firewall with custom settings
+  allow {
+    protocol = "tcp"
+    ports    = ["10000-20000"]
+  }
+
+  // Instances with custom settings
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+
+  // Network interface with custom settings
+  allow {
+    protocol = "icmp"
+    ports    = ["22"]
+ 
+}
+

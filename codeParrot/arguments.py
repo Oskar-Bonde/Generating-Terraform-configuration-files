@@ -37,7 +37,7 @@ class TrainingArguments:
     seq_length: Optional[int] = field(default=1024, metadata={"help": "Sequence lengths used for training."})
     seed: Optional[int] = field(default=1, metadata={"help": "Training seed."})
     save_checkpoint_steps: Optional[int] = field(
-        default=1000,
+        default=500,
         metadata={"help": "Interval to save checkpoints. Measured as number of forward passes not training steps."},
     )
     gradient_accumulation_steps: Optional[int] = field(
@@ -46,12 +46,15 @@ class TrainingArguments:
     gradient_checkpointing: Optional[bool] = field(
         default=False, metadata={"help": "Use gradient checkpointing to reduce memory footprint."}
     )
-    """
     model_ckpt: Optional[str] = field(
-        default="lvwerra/codeparrot",
+        default="lvwerra/codeparrot-small",
         metadata={"help": "Model name or path of model to be trained."},
     )
-    """
+    resume_from_checkpoint: Optional[str] = field(
+        default=None,
+        metadata={"help": "States path if the training should continue from a checkpoint folder."},
+    )
+
 
 
 @dataclass
@@ -82,10 +85,10 @@ class HumanEvalArguments:
     """
 
     model_ckpt: Optional[str] = field(
-        default="./models/model-2",
+        default="./models/model-3",
         metadata={"help": "Model name or path of model to be evaluated."},)
     block_context:Optional[bool] = field(
-        default=True, metadata={"help": "Provide type of block as context to model if true"})
+        default=False, metadata={"help": "Provide type of block as context to model if true"})
     provider: Optional[str] = field(default="aws-easy",)
     
     batch_size: Optional[int] = field(
@@ -99,18 +102,14 @@ class HumanEvalArguments:
     top_p: Optional[float] = field(default=0.95, metadata={"help": "Top-p parameter used for nucleus sampling."})
     do_sample: Optional[bool] = field(default=True, metadata={"help": "Sample from the language model's output distribution."})
 
-    
     seed: Optional[int] = field(default=1, metadata={"help": "Random seed used for evaluation."})
 
     HF_ALLOW_CODE_EVAL: Optional[str] = field(
-        default="0", metadata={"help": "Allow `code_eval` to execute Python code on machine"}
-    )
+        default="0", metadata={"help": "Allow `code_eval` to execute Python code on machine"})
+
     device_int: Optional[int] = field(
-        default=-1,
-        metadata={
-            "help": "Determine which device to run the `text-generation` Pipeline on. -1 is CPU and any zero or positive number corresponds to which GPU device id to run on."
-        },
-    )
+        default=-1, 
+        metadata={"help": "Determine which device to run the `text-generation` Pipeline on. -1 is CPU and any zero or positive number corresponds to which GPU device id to run on."},)
 
 
 @dataclass

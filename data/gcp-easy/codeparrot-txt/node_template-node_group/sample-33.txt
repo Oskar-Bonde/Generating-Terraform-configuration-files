@@ -1,0 +1,64 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_node_template" "node_group_template" {
+  name_prefix  = "node-template-"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+}
+

@@ -1,0 +1,131 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# make iothub resourcevariable
+resource "azurerm_resource_variable" "resource_group_name" {
+  name = "myTFResourceGroup"
+  type = "string"
+}
+
+# iot security solution resource
+resource "azurerm_resource_group_security_solution" "iot_security_solution" {
+  name                = "myIotSecurityGroupSolution"
+  location            = "westus2"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 100
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 101
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 102
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 103
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 104
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 105
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 106
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_solution {
+    name                       = "mySecuritySolution"
+    priority                   = 107
+    action                   = "Allow"
+    direction                  = "Inbound"
+    access
+}
+

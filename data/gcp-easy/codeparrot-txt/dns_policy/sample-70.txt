@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
+  description = "Terraform dns policy"
+  policy = [
+    {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  ]
+}
+

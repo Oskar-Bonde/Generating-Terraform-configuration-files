@@ -14,9 +14,9 @@ provider "aws" {
 
 # Create Security Group
 resource "aws_security_group" "name_0" {
-  name        = "terraform_example"
-  description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.default.id}"
+  name        = "ec2demo"
+  description = "Security group for the EC2 demo"
+  vpc_id      = "${aws_vpc.terraform-vpc.id}"
 
   # SSH access from anywhere
   ingress {
@@ -43,10 +43,9 @@ resource "aws_security_group" "name_0" {
   }
 }
 
-# Create EC2 Instance 
-resource
+# Create EC2 Instance
 resource "aws_instance" "name_1" {
-  ami           = "ami-0ff8a91507f77f867"
+  ami           = "ami-0ff8a91507f77f867" 
   instance_type = "t2.micro"
 }
 

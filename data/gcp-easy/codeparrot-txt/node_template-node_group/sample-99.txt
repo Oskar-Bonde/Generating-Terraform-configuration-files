@@ -1,0 +1,108 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_instance_group_manager" "node_group_manager" {
+  name = "my-node-group-manager"
+  zone = "us-central1-a"
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name              = "my-node-group-manager"
+    base_instance_name = "vm"
+  }
+
+  base_instance_name = "vm"
+  target_size        = 1
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name              = "my-node-group-manager"
+    base_instance_name = "vm"
+  }
+
+  target_pools = [
+    {
+      name            = "pool-01"
+      instances        = ["${google_compute_instance.vm_instance.name}"]
+      base_instance_name = "vm"
+    },
+  ]
+
+  base_instance_name = "vm"
+  target_size        = 1
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name              = "my-node-group-manager"
+    base_instance_name = "vm"
+  }
+
+  target_pools = [
+    {
+      name            = "pool-02"
+      instances        = ["${google_compute_instance.vm_instance.name}"]
+      base_instance_name = "vm"
+    },
+  ]
+
+  base_instance_name = "vm"
+  target_size        = 1
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name              = "my-node-group-manager"
+    base_instance_name = "vm"
+  }
+
+  target_pools = [
+    {
+      name            = "pool-03"
+      instances        = ["${google_compute_instance.vm_instance.name}"]
+      base_instance_name = "vm"
+    },
+  ]
+
+  base_instance_name = "vm"
+  target_size        = 1
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name              =
+}
+

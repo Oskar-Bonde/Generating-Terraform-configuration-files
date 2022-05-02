@@ -1,0 +1,84 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+  can_ip_forward = true
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_instance_group_manager" "node_group_manager" {
+  name = "my-group-manager-${random_suffix}"
+  zone = "us-central1-a"
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name               = "1.0.0"
+    base_instance_name = "my-instance-1"
+  }
+
+  target_size  = 2
+  named_port {
+    name = "http"
+    port = "80"
+  }
+
+  version {
+    instance_template  = google_compute_instance_template.node_template.id
+    name               = "1.0.1"
+    base_instance_name = "my-instance-2"
+  }
+
+  named_port {
+    name = "https"
+    port = "443"
+  }
+
+  # install nginx and serve a simple web page
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install -y nginx"
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+
+  # install sample application
+  metadata_startup_script = "sudo apt-get install -y sample"
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+}
+

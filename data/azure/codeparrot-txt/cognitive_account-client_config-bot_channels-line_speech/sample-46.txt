@@ -1,0 +1,70 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group.
+resource "azurerm_cosmosdb_account" "scott" {
+  name                = "scott"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  account_type        = "Standard_LRS"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "stor" {
+  name                = "stor"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  account_type        = "Standard_LRS"
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+resource "azurerm_bot_application_registration" "bot_registration" {
+  name                = "botRegistration"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  app_id              = azurerm_cosmosdb_account.scott.id
+  registration_method   = "email"
+  auto_registration_enabled = true
+}
+
+# resource block called bot channel direct line speech. Use name and location from bot_channels_registration. For cognitive service location and access key use cognitive account. Assign resource group name
+resource "azurerm_bot_application_chat_inbound" "bot_chat_inbound" {
+  name                = "botChatInbound"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  app_id              = azurerm_cosmosdb_account.scott.id
+  chat_channel_id     = azurerm_bot_application_chat_inbound.bot_chat_inbound.chat_channel_id
+  enable_speech_adaptation = true
+  enable_record_interaction = true
+  enable_redirection = true
+  enable_chat_upload   = true
+  enable_chat_message_notifications = true
+  enable_offline_email_notifications = true
+  enable_offline_push_notifications = true
+  enable_offline_telemetry = true
+  enable_offline_conversion = true
+  enable_offline_conversion_bot_id = true
+  enable_offline_conversion_channel_id = true
+  enable_offline_telemetry_bot_id = true
+  enable_offline_conversion_channel_name = true
+}
+

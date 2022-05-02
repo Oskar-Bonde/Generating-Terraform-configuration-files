@@ -1,0 +1,154 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
+  description = "Terraform dns policy"
+  project = "my-project-id"
+  # allow outbound tcp traffic on all ports
+  allow {
+    ports = ["80", "443"]
+  }
+  network_tier = "PREMIUM"
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound tcp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound tcp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound tcp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["53"]
+  }
+ 
+}
+

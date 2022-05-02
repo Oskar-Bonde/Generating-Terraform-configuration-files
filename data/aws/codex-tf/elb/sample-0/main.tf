@@ -14,17 +14,17 @@ provider "aws" {
 # Resource, create AWS ELB that listens for instance port 80 and lb port 80
 resource "aws_elb" "name_0" {
   name = "terraform-elb-%s"
-  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"]
+  availability_zones = ["us-east-1a", "us-east-1b"]
 
   listener {
-    instance_port     = 80
+    instance_port = 80
     instance_protocol = "http"
-    lb_port           = 80
-    lb_protocol       = "http"
+    lb_port = 80
+    lb_protocol = "http"
   }
 
   tags {
-    Name = "tf-elb-%s"
+    Name = "tf-elb"
   }
 }
 

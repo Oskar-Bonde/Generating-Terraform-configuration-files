@@ -1,0 +1,79 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# a virtual network resource in address space 10.0.0.0/16. Use location and resource group name with a 
+# 
+# resource "azurerm_virtual_network" "vnet" {
+#   name                = "vnet"
+#   address_space       = ["10.0.0.0/16"]
+#   location            = "West US"
+#   resource_group_name = "${azurerm_resource_group.example_resources.name}"
+# }
+
+# create virtual network in resource group with name 
+resource "azurerm_virtual_network" "vnet2" {
+  name                = "vnet2"
+  address_space       = ["10.0.1.0/24"]
+  location            = "West US"
+  resource_group_name = "${azurerm_resource_group.example_resources.name}"
+}
+
+# create subnet resource, with address prefix 10.0.1.0/24. Use virtual network name and the resource group name with a 
+# 
+# resource "azurerm_subnet" "subnet1" {
+#   name                 = "subnet1"
+#   address_prefix       = "10.0.1.0/24"
+#   resource_group_name  = "${azurerm_resource_group.example_resources.name}"
+#   virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+# }
+
+# create subnet resource, with address prefix 10.0.2.0/24. Use virtual network name and the resource group name with a 
+# 
+# resource "azurerm_subnet" "subnet2" {
+#   name                 = "subnet2"
+#   address_prefix       = "10.0.2.0/24"
+#   resource_group_name  = "${azurerm_resource_group.example_resources.name}"
+#   virtual_network_name = "${azurerm_virtual_network.vnet2.name}"
+# }
+
+# create subnet resource, with address prefix 10.0.3.0/24. Use virtual network name and the resource group name with a 
+# 
+# resource "azurerm_subnet" "subnet3" {
+#   name                 = "subnet3"
+#   address_prefix       = "10.0.3.0/24"
+#   resource_group_name  = "${azurerm_resource_group.example_resources.name}"
+#   virtual_network_name = "${azurerm_virtual_network.vnet3.name}"
+# }
+
+# create subnet resource, with address prefix 10.0.4.0/24. Use virtual network name and the resource group name with a 
+# 
+# resource "azurerm_subnet" "subnet4" {
+#   name                 = "subnet4"
+#   address_prefix       = "10.0.4.0/24"
+#   resource_group_name  = "${azurerm_resource_group.example_resources.name}"
+#   virtual_network_name = "${azurerm_virtual_network.vnet4.name}"
+# }
+
+# create subnet resource, with address prefix 10.0.5.0/24. Use virtual network name and the resource group name with a 
+# 
+# resource "azurerm_subnet" "subnet5" {
+#   name                 = "subnet5"
+#   address_prefix       =
+}
+

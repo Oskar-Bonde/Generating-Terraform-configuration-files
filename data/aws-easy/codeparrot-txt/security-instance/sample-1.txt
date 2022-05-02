@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -14,17 +14,9 @@ provider "aws" {
 
 # Create Security Group
 resource "aws_security_group" "default" {
-  name        = "terraform_example"
+  name        = "terraform_example_sg"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.default.id}"
-
-  # SSH access from anywhere
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  vpc_id      = "${aws_vpc.terraform-vpc.id}"
 
   # HTTP access from anywhere
   ingress {
@@ -43,10 +35,34 @@ resource "aws_security_group" "default" {
   }
 }
 
-# Create EC2 Instance 
-resource
-resource "aws_instance" "ec2demo" {
-  ami           = "ami-0ff8a91507f77f867"
-  instance_type = "t2.micro"
+# Create EC2 Instancevariable group
+resource "aws_instance_variable_group" "default" {
+  name        = "terraform_example_instance_var_group"
+  description = "Used in the terraform"
+  vpc_id      = "${aws_vpc.terraform-vpc.id}"
+
+  # SSH access from anywhere
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from the VPC
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  # outbound internet access
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 

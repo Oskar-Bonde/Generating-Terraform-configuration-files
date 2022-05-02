@@ -1,0 +1,104 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create public ip resource group
+resource "azurerm_public_ip" "pip" {
+  name                         = "pip"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  allocation_method            = "Static"
+  sku                          = "Standard"
+  domain_name_label            = "piptest"
+}
+
+# make a lb resourcevariable
+resource "azurerm_lb" "piplb" {
+  name                = "piplb"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard"
+  frontend_ip_configuration {
+    name                 = "piplbconfig1"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig2"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig3"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig4"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig5"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig6"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig7"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig8"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig9"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig10"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig11"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig12"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig13"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig14"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig15"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "piplbconfig16"
+    public_ip_address_id = azurerm_public_ip.pip.id
+  }
+  frontend_ip_configuration {
+    name                 = "pip
+}
+

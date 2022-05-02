@@ -6,19 +6,13 @@ terraform {
   }
 }
 
-# Provider AWS
-provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
-}
+# Provider AWS security group
+# IAM Role: Allow the Terraform Kubernetes service to access other AWS services
+resource "aws_security_group" "kubernetes" {
+  name        = "kubernetes"
+  description = "Allow Kubernetes service to access other AWS services"
+  vpc_id      = "${aws_vpc.kubernetes.id}"
 
-# create a workspace ip group
-resource "aws_security_group" "ec2demo_workstation" {
-  name        = "ec2demo_workstation"
-  description = "ec2demo workstation"
-  vpc_id      = "${aws_vpc.default.id}"
-
-  # SSH access from anywhere
   ingress {
     from_port   = 22
     to_port     = 22
@@ -26,7 +20,6 @@ resource "aws_security_group" "ec2demo_workstation" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # HTTP access from anywhere
   ingress {
     from_port   = 80
     to_port     = 80
@@ -34,7 +27,76 @@ resource "aws_security_group" "ec2demo_workstation" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # outbound internet access
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# create a workspace ip group
+resource "aws_security_group" "workspace" {
+  name        = "workspace"
+  description = "Allow Workspace service to access other AWS services"
+  vpc_id      = "${aws_vpc.kubernetes.id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

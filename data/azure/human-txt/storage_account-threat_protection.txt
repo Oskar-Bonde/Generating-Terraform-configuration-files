@@ -7,7 +7,7 @@ terraform {
   }
 }
 
-# Provider block with azure, empty features block
+# Provider block with features block
 provider "azurerm" {
   features {}
 }

@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "default" {
+  name = "my-network-${local.name_suffix}"
+  auto_create_subnetworks = false
+}
+
+# create a compute ha vpn gateway
+resource "google_compute_ha_vpn_gateway" "default" {
+  name = "my-ha-vpn-${local.name_suffix}"
+  network = google_compute_network.default.id
+  region = "us-central1"
+  config {
+    ip_address = google_compute_address.default.address
+    gateway_ip = "default"
+  }
+}
+

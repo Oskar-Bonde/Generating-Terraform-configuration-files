@@ -1,0 +1,35 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create composer environment in region us-central1
+resource "google_composer_environment" "env" {
+  name     = "env-${random_suffix}"
+  region   = "us-central1"
+  project  = google_project.project.project_id
+
+  composer_env {
+    image = "debian-cloud/debian-9"
+  }
+
+  depends_on = [
+    google_project_service.composer_api,
+    google_project_service.composer_container_api,
+    google_project_service.composer_service_account,
+    google_project_service.composer_storage_api,
+    google_project_service.composer_sql_component,
+    google_project_service.composer_user_service,
+    google_project_service.composer_storage_container_registry,
+    google_project_service.composer_storage_operator_service,
+    google_project_service.composer_version_operator_service
+  ]
+}
+

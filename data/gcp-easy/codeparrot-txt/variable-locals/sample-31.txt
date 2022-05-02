@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# variable block
+variable "instance_name" {
+  type = string
+}
+
+# local blockvariable
+variable "instance_type" {
+  type = string
+}
+

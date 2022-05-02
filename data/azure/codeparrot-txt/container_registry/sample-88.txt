@@ -1,0 +1,126 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create container registry resource. Assign resource group name and location. Set sku to premium and admin enabled to false. Inside a georeplications block, set location to East US and enable zone reduncancy and enable public IP address.
+resource "azurerm_container_registry" "example_registry" {
+  name                = "example-registry"
+  resource_group_name = azurerm_resource_group.example_resources.name
+  sku                 = "West US"
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  admin_enabled       = true
+  sku_name            = "West US"
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-01"
+    managed             = true
+  }
+  version {
+    instance_template = "2016-03-01"
+    name              = "2016-03-
+}
+

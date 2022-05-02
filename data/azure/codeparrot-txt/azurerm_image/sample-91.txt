@@ -1,0 +1,63 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "example" {
+  name     = "example"
+  location = "westus"
+}
+
+# resource block. Create image in location west us and assign resource group name. In os disc block, assign os type Linux, generatlized state, and size 30 gb.
+resource "azurerm_virtual_machine" "vm" {
+  name                = "myTFVirtualMachine"
+  location            = "westus"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  network_interface_ids = ["${azurerm_network_interface.nic.id}"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+
+  storage_os_disk {
+    name          = "myTFVirtualMachineOSDisk"
+    vhd_uri       = "${azurerm_storage_account.storage.primary_blob_endpoint}${azurerm_storage_container.container.name}/myTFVirtualMachineOSDisk.vhd"
+    caching       = "ReadWrite"
+    create_option = "FromImage"
+  }
+
+  os_profile {
+    computer_name  = "myTFVirtualMachine"
+    admin_username = "${var.vm_admin_username}"
+    admin_password = "Password1234!"
+    custom_data    = "${base64encode("${data.template_file.user_data_windows_config.rendered}")}"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = true
+
+    ssh_keys {
+      path     = "/home/${var.vm_admin_username}/.ssh/authorized_keys"
+      key_data = "${file(var.vm_admin_public_key_path)}"
+    }
+  }
+
+  tags {
+    environment = "test"
+  }
+}
+

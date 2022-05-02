@@ -1,36 +1,21 @@
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-    }
-  }
-}
-
-# AWS provider block
-provider
-aws {
+provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Resource block to create a random pet name 
-resource
-random_pet = "true"
-
-# Terraform configuration file
-# Terraform block with the AWS provider
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-    }
-  }
+# AWS provider block with AWS
+provider "aws" {
+  alias  = "files"
+  region = "us-east-1"
 }
 
-# Create AWS S3 bucket 
-resource
-aws_s3_bucket" "terraform_state" {
-  bucket = "terraform_state"
-  acl    = "private"
+# Resource block to create a random pet name//
+resource "random_pet_name" "name_0" {
+  byte_length = 2
+}
+
+# Create AWS S3 bucketvariable for the PET
+resource "aws_s3_bucket_variable" "name_1" {
+  bucket_name = aws_s3_bucket.test.id
 }
 

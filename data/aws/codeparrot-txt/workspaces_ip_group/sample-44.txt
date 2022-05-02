@@ -1,0 +1,121 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS in region "us-east-1"
+provider "aws" {
+  region = "us-east-1"
+}
+
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA1
+resource "aws_security_group" "workspace" {
+  name_prefix = "workspace-"
+  description = "workspace security group"
+  vpc_id = "${aws_vpc.vpc.id}"
+  ingress {
+    from_port = 150
+    to_port = 150
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10051
+    to_port = 10051
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10052
+    to_port = 10052
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10053
+    to_port = 10053
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10054
+    to_port = 10054
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10055
+    to_port = 10055
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10056
+    to_port = 10056
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10057
+    to_port = 10057
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10058
+    to_port = 10058
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10059
+    to_port = 10059
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10060
+    to_port = 10060
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10061
+    to_port = 10061
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10062
+    to_port = 10062
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10063
+    to_port = 10063
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10064
+    to_port = 10064
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10065
+    to_port = 10065
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 10066
+    to_port = 10066
+    protocol = "tcp"
+    cidr_blocks = ["
+}
+

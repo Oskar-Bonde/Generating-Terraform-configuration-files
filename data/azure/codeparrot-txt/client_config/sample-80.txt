@@ -1,0 +1,40 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file, and terraform will download and install terraform
+data "template_file" "example_script" {
+  template = file("${path.module}/files/example_script.sh")
+
+  vars = {
+    terraform_image = "centos-7-x64"
+    terraform_version = "1.4.0"
+    terraform_sha256sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum_sha256sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9e0f-a0cc-4757-b3a7-9e6e6e5b5e9eae"
+    terraform_sha512sum_sha512sum_sha512sum_sha512sum_sha256sum_sha512sum = "4f7f4e9
+}
+

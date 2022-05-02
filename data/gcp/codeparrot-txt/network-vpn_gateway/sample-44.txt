@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create compute network with global routing mode and set auto create subnetworks to false
+resource "google_compute_network" "default" {
+  name = "my-network"
+}
+
+# resource compute ha vpn gateway, in the us central1 region and use the compute network id
+resource "google_compute_ha_vpn_gateway" "ha_gateway" {
+  name    = "ha-vpn-${local.name_suffix}"
+  network = google_compute_network.default.id
+  region  = "us-central1"
+  vpn_gateway = google_compute_ha_vpn_gateway.ha_gateway.id
+}
+

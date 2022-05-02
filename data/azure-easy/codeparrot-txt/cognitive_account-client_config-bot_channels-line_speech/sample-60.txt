@@ -1,0 +1,89 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resource group
+resource "azurerm_resource_group" "cognitive_rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# data block, azurem client config
+data "azurerm_subscription" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "bosh" {
+  name                     = "bosh"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_application_registration" "default" {
+  name                = "default"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  sku                 = "Standard"
+  webhook_url          = "https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/sites/${azurerm_resource_group.rg.name}/Webhooks/${azurerm_bot_application_registration.default.name}"
+
+  sku_name = "Standard"
+  webhook_url = "https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/sites/${azurerm_resource_group.rg.name}/Webhooks/${azurerm_bot_application_registration.default.name}/skus"
+
+  webhook_configuration {
+    allowed_ips = [
+      "10.0.0.5",
+      "172.16.0.0/12",
+      "192.168.0.0/16",
+      "192.168.0.0/17",
+      "192.168.0.0/16",
+      "192.168.0.0/15",
+      "192.168.0.0/14",
+      "192.168.0.0/13",
+      "192.168.0.0/12",
+      "192.168.0.0/11",
+      "192.168.0.0/10",
+      "192.168.0.0/9",
+      "192.168.0.0/8",
+      "192.168.0.0/7",
+      "192.168.0.0/6",
+      "192.168.0.0/5",
+      "192.168.0.0/4",
+      "192.168.0.0/3",
+      "192.168.0.0/2",
+      "192.168.0.0/1",
+      "192.168.0.0/0",
+      "192.168.0.0/1",
+      "192.168.0.0/2",
+      "192.168.0.0/3",
+      "192.168.0.0/4",
+      "192.168.0.0/5",
+      "192.168.0.0/6",
+      "192.168.0.0/7",
+      "192.168.0.0/8",
+      "192.168.0.0/7",
+      "192.168.0.0/6",
+     
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_
+}
+

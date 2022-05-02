@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# compute network resource
+resource "google_compute_network" "default" {
+  name = "my-network-${local.name_suffix}"
+}
+
+# a compute instancevariable with default value
+resource "google_compute_instance_template" "default" {
+  name_prefix  = "my-instance-template-"
+  machine_type = "f1-micro"
+  can_ip_forward = false
+
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+
+  can_ip_forward = true
+}
+

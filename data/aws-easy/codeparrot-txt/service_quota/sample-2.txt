@@ -6,18 +6,16 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # create a service quota resource
-resource "aws_quota_resource" "service_quota" {
-  name = "service-quota"
-  # resource_type = "service"
-  # resource_id = "service-quota-${var.service_name}"
-  # value = "1"
-  # depends_on = [aws_instance.ec2demo]
+resource "aws_service_quota" "service_quota" {
+  provider = "aws.us-east-1"
+  name     = "service-quota"
+  location = "us-east-1"
 }
 

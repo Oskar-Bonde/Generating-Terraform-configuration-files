@@ -1,0 +1,62 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resourcevariable
+resource "azurerm_cosmosdb_account" "account" {
+  name                = "myTF${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_type        = "Standard_LRS"
+}
+
+# data block, azurem client config
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data.tpl")
+  vars = {
+    account_id = azurerm_cosmosdb_account.account.id
+    client_id = azurerm_cosmosdb_account.account.name
+    client_secret = azurerm_cosmosdb_account.account.client_secret
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    tenant_name = data.azurerm_client_config.current.tenant_name
+    location = data.azurerm_client_config.current.location
+    resource_group_name = azurerm_resource_group.rg.name
+  }
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channel_registration" "channel_registration" {
+  name                = "myTF${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  channel_registration_endpoint = data.azurerm_bot_channel_registration.channel_registration.registration_endpoint
+  certificate_name   = "myTF${var.env}"
+  certificate_type   = "X509"
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_speech" "bot_channel_direct_speech" {
+  name                = "myTF${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  channel_speech_callback = data.azurerm_bot_channel_direct_speech.channel_direct_speech.speech_callback
+  certificate_name   = "myTF${var.env}"
+  certificate_type   = "X509"
+}
+

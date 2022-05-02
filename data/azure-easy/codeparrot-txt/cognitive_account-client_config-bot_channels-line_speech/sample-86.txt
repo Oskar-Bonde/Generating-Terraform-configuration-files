@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resource
+resource "azurerm_cosmosdb_account" "cognitive" {
+  name                = "myCognitive"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_type        = "Standard_LRS"
+}
+
+# data block, azurem client config
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data.tpl")
+
+  vars = {
+    account_id = azurerm_cosmosdb_account.cognitive.id
+    client_id = azurerm_cosmosdb_account.cognitive.primary_blob_endpoint
+    client_secret = azurerm_cosmosdb_account.cognitive.primary_key
+  }
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channel_registration" "bot_registration" {
+  name                = "bot_registration"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  channel_registration_endpoint = data.template_file.user_data.rendered
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_speech" "bot_speech" {
+  name                = "bot_speech"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  channel_speech_callback = data.template_file.user_data.rendered
+}
+

@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,7 +17,7 @@ resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
-# AWS Internet Gateway
+# AWS Internet Gatewayvariable
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
 }
@@ -25,10 +25,19 @@ resource "aws_internet_gateway" "default" {
 # Create AWS route table
 resource "aws_route_table" "default" {
   vpc_id = "${aws_vpc.default.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.default.id}"
+  }
+
+  tags {
+    Name = "terraform-example"
+  }
 }
 
 # Create route resource
-resourceresource "aws_route" "default" {
+resource "aws_route" "internet_access" {
   route_table_id         = "${aws_route_table.default.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.default.id}"

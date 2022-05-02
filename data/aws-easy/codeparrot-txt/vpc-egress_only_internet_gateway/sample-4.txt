@@ -6,19 +6,26 @@ terraform {
   }
 }
 
-# Provider block 
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # create vpc resource
-resource "aws_vpc" "default" {
+resource "aws_vpc" "vpc1" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  tags = {
+    Name = "vpc1"
+  }
 }
 
-# create an egress only internet gateway
-resource "aws_internet_gateway" "default" {
-  vpc_id = "${aws_vpc.default.id}"
+# create an egress only internet gatewayvariable
+resource "aws_internet_gateway" "igw1" {
+  vpc_id = "${aws_vpc.vpc1.id}"
+  tags = {
+    Name = "igw1"
+  }
 }
 

@@ -1,0 +1,181 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
+  policy_type  = "SINGLE_IP_INTERNET"
+  dns_policy_name = google_dns_policy.dns_policy.name
+
+  // allows traffic from the private subnet
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  // allows traffic from the load balancer
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  // allow traffic from the backend service
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // allow traffic from the probe
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "udp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the backend service
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the probe
+  allow {
+    protocol = "udp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "udp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the instance
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  // allow traffic from the load balancer
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  // allow traffic from the firewall
+  allow {
+    protocol = "udp"
+    ports    =
+}
+

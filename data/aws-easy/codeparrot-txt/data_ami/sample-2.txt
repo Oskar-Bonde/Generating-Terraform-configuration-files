@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -12,9 +13,15 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# data AMI ID block
-data "aws_ami" "ami" {
+# data AMI ID block#1
+resource "aws_ami" "ubuntu_140405_64_40G_cloudinit_20161115.vhd" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 

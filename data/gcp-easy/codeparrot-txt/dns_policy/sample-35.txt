@@ -1,0 +1,60 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
+
+  // DNS
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud DNS
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud Storage
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud Build
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud Identity
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud Build
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+
+  // Cloud Identity
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+    allow_access_to_remote_network = true
+  }
+}
+

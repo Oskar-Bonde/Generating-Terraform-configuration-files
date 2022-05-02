@@ -1,0 +1,22 @@
+# Terraform configuration file
+# terraform block with azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block 
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# Terraform configuration file

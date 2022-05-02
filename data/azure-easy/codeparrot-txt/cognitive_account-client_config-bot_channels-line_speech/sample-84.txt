@@ -1,0 +1,58 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resourcevariable
+resource "azurerm_resource_group" "tf_rg" {
+  name     = "tfRG"
+  location = "westus2"
+}
+
+# data block, azurem client config
+data "azurerm_subscription" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "stor" {
+  name                     = "stor"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = data.azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_application_registration" "app" {
+  name                = "app"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  sku                 = "Standard"
+  webhook_url          = "https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/serverfarms/add"
+  redirect_uris        = ["https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/serverfarms/add"]
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_application_chat_incoming" "app" {
+  name                = "app"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  sku                 = "Standard"
+  webhook_url          = "https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/serverfarms/chat/incoming"
+  redirect_uris        = ["https://hooks.azure.com/subscriptions/${azurerm_subscription.current.name}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Web/serverfarms/chat/incoming"]
+}
+

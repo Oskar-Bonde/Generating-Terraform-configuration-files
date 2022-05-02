@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# resource block, create automation account
+resource "azurerm_automation_account" "automation" {
+  name                = "tfrg${var.random_id.result}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  administrator_login = "ubuntu"
+  administrator_login_password = random_string.autonomous_database_password.result
+  tags {
+    environment = "test"
+  }
+}
+

@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file, and terraform state file
+data "azurerm_client_config" "current" {}
+
+# terraform state file, terraform state file can be found under:
+# terraform state list --location westus --resource-group westus2
+terraform {
+  backend "azurerm" {
+    resource_group_name = azurerm_resource_group.rg.name
+    location = "westus"
+  }
+}
+

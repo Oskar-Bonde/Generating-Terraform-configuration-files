@@ -1,0 +1,119 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# a virtual network resource
+resource "azurerm_virtual_network" "vnet" {
+  name                = "myTFVNet"
+  address_space       = ["10.0.0.0/16"]
+  location            = "westus2"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+}
+
+# create subnet resource
+resource "azurerm_subnet" "subnet" {
+  name                 = "myTFSubnet"
+  resource_group_name  = "${azurerm_resource_group.rg.name}"
+  virtual_network_name = "${azurerm_virtual_network.vnet.name}"
+  address_prefix       = "10.0.1.0/24"
+}
+
+# resource block of public ip resource
+resource "azurerm_public_ip" "pip" {
+  name                         = "pip"
+  location                     = "westus2"
+  resource_group_name          = "${azurerm_resource_group.rg.name}"
+  public_ip_address_allocation = "static"
+  domain_name_label            = "piptest"
+}
+
+# resource block with firewall
+resource "azurerm_network_security_group" "nsg" {
+  name                = "nsg"
+  location            = "westus2"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+
+  security_rule {
+    name                       = "allow-ssh"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-docker-gc"
+    priority                   = 200
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "5000"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-k8s-io-insecure"
+    priority                   = 201
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-kubelet-insecure"
+    priority                   = 202
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-kubelet-secure"
+    priority                   = 203
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "allow-to-master-tcp-1-2379"
+    priority                   = 204
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp
+}
+

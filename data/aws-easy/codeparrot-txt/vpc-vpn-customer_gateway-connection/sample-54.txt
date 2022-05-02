@@ -1,0 +1,49 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "default" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  tags = {
+    Name = "terraform-aws-vpc"
+  }
+}
+
+# make a vpn gateway// to connect to the internet
+resource "aws_internet_gateway" "default" {
+  vpc_id = "${aws_vpc.default.id}"
+  tags = {
+    Name = "terraform-aws-internet-gateway"
+  }
+}
+
+# create a customer gatewayresource
+resource "aws_customer_gateway" "default" {
+  bgp_asn    = 65000
+  ip_address = "${aws_eip.default.public_ip}"
+  type       = "ipsec.1"
+  tags = {
+    Name = "terraform-aws-customer-gateway"
+  }
+}
+
+# make a vpn connection
+resource "aws_vpn_connection" "default" {
+  customer_gateway_id = "${aws_customer_gateway.default.id}"
+  customer_gateway_tags = {
+    "customer-gateway" = "true"
+  }
+}
+

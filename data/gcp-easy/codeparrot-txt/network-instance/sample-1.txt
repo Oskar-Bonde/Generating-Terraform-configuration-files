@@ -1,0 +1,78 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# compute network resource
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = false
+}
+
+# a compute instancevariable with a default value
+resource "google_compute_instance_template" "default" {
+  name = "my-instance-template-${random_suffix}"
+  machine_type = "f1-micro"
+  can_ip_forward = true
+
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete = true
+    boot = true
+  }
+
+  metadata = {
+    startup-script = <<-EOF1
+      #!/bin/bash
+      sudo apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=my-instance-name
+      IP=my-ip-address.example.com
+      METADATA=some_metadata
+      NO_ICP=1
+      NO_INTERNAL_IP=1
+      NO_EXTERNAL_IP=1
+      TAG=some_tag
+      IG=my-network-tag
+      IP_RANGE=10.0.0.0/16
+      LOCATION=my-location
+      PTR=my-prefix
+      SERVICE_ACCOUNT=some_service_account
+      APPEND=my-application-tag
+      APPEND_GROUP=my-application-tag
+      APPEND_ALL_MEMBERS=yes
+      APPEND_ALL_NETWORKS=yes
+      APPEND_ALL_SUBNETWORKS=yes
+      APPEND_ALL_SUBNETWORKS_ALL_MEMBERS=yes
+      APPEND_ALL_SUBNETWORKS_ALL_NETWORKS=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEMO=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEMO_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEMO_DEVICES=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_DEVICES_MOUNTED=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_MOUNTED_DEVICES=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE_MOUNTED_DEVICES_MOUNTED=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE_MOUNTED_DEVICES_MOUNTED_DEVICES_MOUNTED_DEVICES_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE_DEVICES_MOUNTED_DEVICES_MOUNTED_DEVICES_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE_DEVICES_MOUNTED_DEVICES_MOUNTED_DEVICES_ACTIVE=yes
+      APPEND_ALL_SUBNETWORKS_ALL_SUBNETWORKS_ACTIVE_DEVICES_ACTIVE_DEVICES_MOUNTED_DEVICES_MOUNTED_DEVICES_MOUNTED_DEVICES_ACTIVE=yes
+      APPEND_
+}
+

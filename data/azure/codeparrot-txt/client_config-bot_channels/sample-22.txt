@@ -1,0 +1,49 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example_resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file, and terraform state file
+data "azurerm_client_config" "current" {}
+
+# terraform state file
+# terraform role, when terraform state file is not empty
+data "terraform_state" "current" {}
+
+# terraform role, when terraform state file is not empty
+data "terraform_state" "dev" {}
+
+# terraform role, when terraform state file is not empty
+data "terraform_state" "prod" {}
+
+
+variable "project_id" {
+  description = "The GCP project to use for integration tests"
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name to get registration id
+resource "google_project_service" "bot_channels_registration" {
+  project = var.project_id
+  service = "bot.channels.register"
+
+  depends_on = [
+    # The project's services must be set up before the
+    # service can be created.
+    "google_project_service.services",
+  ]
+}
+

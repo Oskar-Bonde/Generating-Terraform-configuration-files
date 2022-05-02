@@ -1,0 +1,83 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_instance_group_manager" "node_group_manager" {
+  name = "my-node-group-manager"
+  zone = "us-central1-a"
+
+  tags = ["foo", "bar"]
+
+  #  network_interface {
+  #    network = "default"
+  #    access_config {
+  #      }
+  #  }
+
+  #  disk {
+  #    source_image = "debian-cloud/debian-9"
+  #    auto_delete  = true
+  #    boot         = true
+  #  }
+
+  #  network_interface {
+  #    network = "default"
+  #    access_config {
+  #      }
+  #  }
+
+  #  disk {
+  #    source_image = "debian-cloud/debian-9"
+  #    auto_delete  = true
+  #    boot         = true
+  #  }
+
+  #  network_interface {
+  #    network = "default"
+  #    access_config {
+  #      }
+  #  }
+
+  #  disk {
+  #    source_image = "debian-cloud/debian-9"
+  #    auto_delete  = true
+  #    boot         = true
+  #  }
+
+  #  network_interface {
+  #    network = "default"
+  #    access_config {
+  #      }
+  #  }
+
+  #  disk {
+  #    source_image = "debian-cloud/debian-
+}
+

@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# a compute network resource
+resource "google_compute_network" "default" {
+  name = "my-network-${local.name_suffix}"
+}
+
+# compute route resource
+resource "google_compute_route" "default" {
+  name        = "my-route-${local.name_suffix}"
+  network     = google_compute_network.default.self_link
+  dest_range  = "0.0.0.0/0"
+  priority    = 1000
+
+  next_hop_ilb = google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip
+  priority    = 1000
+  tags = ["foo", "bar"]
+}
+

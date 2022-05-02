@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# data block with google compute zones
+data "google_compute_zones" "available" {
+  region = var.region
+}
+
+# make a compute instancevariable
+resource "google_compute_instance_variable" "instance_var" {
+  name = "my-instance-var-${random_suffix}"
+  type = "n1-standard-1"
+  value = "my-instance-var-value"
+
+  tags = ["foo", "bar"]
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

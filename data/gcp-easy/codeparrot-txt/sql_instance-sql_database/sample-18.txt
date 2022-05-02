@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# resource block, sql database instance
+resource "google_sql_database_instance" "instance" {
+  name = "my-sql-database-instance"
+  database_version = "POSTGRES_12"
+  region = "us-central1"
+  settings {
+    tier = "db-f1-micro"
+    ip_configuration {
+      authorized_networks {
+        name = "my-network-name"
+        value = "192.168.0.0/16"
+      }
+    }
+  }
+  deletion_protection =  "true"
+}
+
+# create a sql database
+}
+

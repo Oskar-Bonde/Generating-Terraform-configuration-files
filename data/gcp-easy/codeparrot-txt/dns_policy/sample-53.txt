@@ -1,0 +1,34 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "dns-policy-${local.name_suffix}"
+  zone = "us-central1-a"
+  description = "DNS policy for ${google_dns_managed_zone.dns_zone.name}"
+
+  # allow outbound tcp traffic on all ports
+  allow {
+    ports = ["22", "80", "443"]
+  }
+
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound icmp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+}
+

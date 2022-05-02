@@ -1,0 +1,193 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
+
+  // DNS
+  dns_policy {
+    policy_type = "POLICY_PERSISTENT"
+  }
+
+  // Firewall
+  firewall_config {
+    disable_on_destroy = false
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["22"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["80", "443"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["443"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+    allow {
+      protocol = "tcp"
+      ports    = ["4222", "4223"]
+    }
+  }
+
+  // Instances
+  instances = [
+    google_compute_instance.vm_instance.name,
+  ]
+
+  // Firewall rules
+  firewall_rules {
+   
+}
+

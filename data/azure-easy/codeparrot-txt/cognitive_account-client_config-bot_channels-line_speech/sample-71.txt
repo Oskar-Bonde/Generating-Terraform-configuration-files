@@ -1,0 +1,185 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create resource group policy
+resource "azurerm_resource_group_policy" "policy" {
+  name     = "myTFResourceGroupPolicy"
+  location = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+
+  # allow outbound traffic on all ports
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "80", "443"]
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp"
+    ports    = ["1-65535"]
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "icmp"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "esp"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "ah"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "ah-esp"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp-1-65535"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp-1-65535"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp-1-65535"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v6"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v6"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v6"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp-1-65535"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "udp-1-65535"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "sctp-v4"
+  }
+
+  # allow outbound traffic on a specific port
+  allow {
+    protocol = "s
+}
+
+# create cognitive account resource
+}
+
+# data block, azurem client config
+}
+
+# create bot channels registration resource
+}
+
+# resource block called bot channel direct line speech
+}
+

@@ -1,0 +1,83 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+
+  metadata = {
+    startup-script = <<-EOF1
+      #!/bin/bash
+      sudo apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=node-template
+      IP=${google_compute_address.gcp_sap_hana_intip_ip.address}
+      METADATA=${google_compute_instance_metadata.vm_instance.metadata}
+      NODES=${google_compute_instance_metadata.vm_instance.metadata}
+      NET=${google_compute_network.gcp_sap_hana_intip.self_link}
+      IP_RANGE=${google_compute_address.gcp_sap_hana_intip_ip.address}/32
+      NETMASK=255.255.255.0
+
+      ALL_IPS=${join(",", google_compute_instance.vm_instance.*.network_interface.0.access_config.0.assigned_nat_ip)}
+
+      ALL_IPS_V6=${join(",", google_compute_instance.vm_instance.*.network_interface.0.access_config.0.assigned_nat_ip_v6)}
+
+      #!/bin/bash
+      sudo apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=node-template
+      IP=${google_compute_address.gcp_sap_hana_intip_ip.address}
+      METADATA=${google_compute_instance_metadata.vm_instance.metadata}
+      NODES=${google_compute_instance_metadata.vm_instance.metadata}
+      NET=${google_compute_network.gcp_sap_hana_intip.self_link}
+      IP_RANGE=${google_compute_address.gcp_sap_hana_intip_ip.address}/32
+      NETMASK=255.255.255.0
+
+      ALL_IPS=${join(",", google_compute_instance.vm_instance.*.network_interface.0.access_config.0.assigned_nat_ip)}
+
+      ALL_IPS_V6=${join(",", google_compute_instance.vm_instance.*.network_interface.0.access_config.0.assigned_nat_ip_v6)}
+
+      #!/bin/bash
+      sudo apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=node-template
+      IP=${google_compute_address.gcp_sap_hana_intip_ip.address}
+      METADATA=${google_compute_instance_metadata.vm_instance.metadata}
+      NODES=${google_compute_instance_metadata.vm_instance.metadata}
+      NET=${google_compute_network.gcp_sap_hana_intip.self_link}
+      IP_RANGE=${google_compute_address.gcp_sap_hana_intip_ip.address}/32
+      NETMASK=255.255.255.0
+
+      ALL_IPS=${join(",", google_compute_instance.vm_instance.*.network_interface.0.access_config.0.assigned_nat_ip)}
+
+      ALL_IPS_V6=${join(",", google
+}
+
+# create a compute node group resource
+}
+

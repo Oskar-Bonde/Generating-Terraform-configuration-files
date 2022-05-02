@@ -1,0 +1,43 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example-resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file, and terraform state file
+data "azurerm_client_config" "current" {}
+
+# terraform state file, terraform state file can be found under:
+# terraform get-credentials
+# terraform get-credentials --location westus --resource-group westus2
+terraform {
+  backend "azurerm" {
+    subscription_id = "${data.azurerm_client_config.current.subscription_id}"
+    client_id       = "${data.azurerm_client_config.current.client_id}"
+    client_secret   = "${data.azurerm_client_config.current.client_secret}"
+    tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
+    }
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name to get unique name
+resource "azurerm_bot_application_registration" "example-registration" {
+  name                = "example-registration"
+  location            = "westus"
+  resource_group_name = "${azurerm_resource_group.example-resources.name}"
+  sku                 = "West US"
+  tags                = "${module.camtags.tagsmap}"
+}
+

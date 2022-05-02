@@ -1,0 +1,157 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# resource block, sql database instance
+resource "google_sql_database_instance" "db_instance" {
+  name = "my-sql-db-instance"
+  region = "us-central1"
+
+  database_version = "POSTGRES_12"
+
+  settings {
+    tier = "db-f1-micro"
+
+    ip_configuration {
+      authorized_networks {
+        name = "PublicIp"
+        value = "192.168.0.10"
+      }
+    }
+
+    database_flags {
+      name  = "autovacuum"
+      value = "on"
+    }
+
+    database_flags {
+      name  = "max_connections"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "max_connections_per_instance"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "7"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "02:00-03:00"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_retention_period"
+      value = "10"
+    }
+
+    database_flags {
+      name  = "maintenance_window"
+      value = "sun:04:30-sun:04:30"
+    }
+
+    database_flags {
+      name  = "backup_window"
+      value
+}
+
+# create a sql database
+}
+

@@ -1,0 +1,133 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "my_network" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+}
+
+# create a compute ha vpn gatewayvariable
+resource "google_compute_ha_vpn_gateway" "my_ha_gateway" {
+  name = "my-ha-vpn-gateway-${random_suffix}"
+  network = google_compute_network.my_network.self_link
+
+  # create a vpn tunnel to each network in the network
+  peer_ip_address = google_compute_ha_vpn_gateway.my_ha_gateway.address
+  shared_secret = "a secret message"
+
+  # create a static external IP address
+  static_ip_address = "10.0.0.5"
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group_ids = [
+    "sg-network-default-sg-fw",
+  ]
+
+  # create a static external IP address and enable IP mirroring
+  static_only = true
+
+  # enable network firewalls
+  network_security_group
+}
+

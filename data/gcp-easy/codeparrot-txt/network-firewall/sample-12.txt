@@ -1,0 +1,56 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+}
+
+# create compute firewall
+resource "google_compute_firewall" "default" {
+  name = "my-firewall-${random_suffix}"
+  network = "default"
+  source_ranges = ["10.0.0.0/8"]
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports = ["22"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+
+  allow {
+    protocol = "esp"
+    ports = ["22"]
+  }
+
+  allow {
+    protocol = "ah"
+    ports = ["22"]
+  }
+
+  allow {
+    protocol = "sctp"
+    ports = ["22"]
+  }
+
+  target_tags = ["my-tag"]
+}
+

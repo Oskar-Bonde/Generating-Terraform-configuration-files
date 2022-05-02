@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,8 +17,9 @@ resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
-# Make a service discovery private dns namespace resource
-resource "aws_route53_zone" "default" {
-  name = "hashicorp.com"
+# Make a service discovery private dns namespace resource# TODO: remove when ready to cut over
+resource "aws_route53_zone" "private" {
+  name = "private.example.com"
+  vpc_id  = "${aws_vpc.default.id}"
 }
 

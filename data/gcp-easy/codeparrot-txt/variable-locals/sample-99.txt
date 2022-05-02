@@ -1,0 +1,37 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# variable block
+variable "instance_name" {
+  description = "instance name"
+  type        = string
+}
+
+# local block
+resource "google_compute_instance" "instance" {
+  name         = "${var.instance_name}"
+  machine_type = "f1-micro"
+  zone         = "${var.zone}"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

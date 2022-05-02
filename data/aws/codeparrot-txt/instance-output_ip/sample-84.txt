@@ -1,0 +1,26 @@
+provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block with region us east and default profile
+provider "aws" {
+  region  = "us-east-1"
+}
+
+# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.microvariable.micro
+resource "aws_instance" "ec2instance" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+  key_name      = "micro"
+}
+
+# output block, get EC2 Instance Public IP from vm_instance_ip
+output "ec2_instance_ip" {
+  value = "${aws_instance.ec2instance.public_ip}"
+}
+

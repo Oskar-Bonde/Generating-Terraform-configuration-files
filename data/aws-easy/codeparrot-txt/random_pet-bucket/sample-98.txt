@@ -1,0 +1,22 @@
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# AWS provider block with AWS
+provider "aws" {
+  alias  = "files"
+  region = "us-east-1"
+}
+
+# Resource block to create a random pet namevariable
+resource "random_pet_name" "test" {
+  length  = 5
+  special = false
+}
+
+# Create AWS S3 bucketvariable
+resource "aws_s3_bucket" "test" {
+  bucket = "test.terraform.state"
+}
+

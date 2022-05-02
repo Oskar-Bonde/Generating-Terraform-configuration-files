@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resourcevariable
+resource "azurerm_resource_group" "tf_rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# data block, azurem client config
+data "azurerm_subscription" "current" {}
+
+# Create a resource group
+resource "azurerm_resource_group" "tf_rg_1" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create bot channels registration resource
+
+}
+

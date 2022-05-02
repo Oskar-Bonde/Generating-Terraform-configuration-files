@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+  region = "us-central1"
+  node_type = "n1-standard-1"
+  can_ip_forward = true
+  tags = ["foo", "bar"]
+}
+
+# create a compute node group resource
+}
+

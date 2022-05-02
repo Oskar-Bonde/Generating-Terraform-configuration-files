@@ -1,0 +1,47 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# ml engine model resource
+resource "google_ml_engine_model" "my_model" {
+  name = "my-ml-engine-model"
+  region = "us-central1"
+  description = "my model"
+  training_budget = "2000"
+  is_causal = "false"
+  is_president = "true"
+  is_sensitive = "false"
+  is_upgradable = "false"
+  is_retail = "true"
+  is_visual_inspection = "true"
+  is_visual_inspection_is_computed = "true"
+  is_user_defined_function = "true"
+  is_x_ray_tracing = "true"
+  is_x_ray_tracing_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+  is_x_ray_tracing_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed_is_computed = "true"
+ 
+}
+

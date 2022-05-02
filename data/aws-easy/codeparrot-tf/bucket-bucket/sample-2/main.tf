@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,23 +7,29 @@ terraform {
   }
 }
 
-# Provider Block 
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create S3 Bucket Resource
+# Create S3 Bucket Resource for Module
 resource "aws_s3_bucket" "name_0" {
-  bucket = "terraform-state"
+  bucket = "terraform-state-lock"
   acl    = "private"
+
+  tags {
+    Name = "terraform-state-lock"
+  }
 }
 
-# Create S3 Bucket 
-resource
-aws_s3_bucket" "terraform_state_s3" {
-  bucket = "terraform-state-s3"
+# Create S3 Bucket object
+resource "aws_s3_bucket" "name_1" {
+  bucket = "terraform-state-lock"
   acl    = "private"
-  force_destroy = true
+
+  tags {
+    Name = "terraform-state-lock"
+  }
 }
 

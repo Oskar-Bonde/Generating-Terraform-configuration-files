@@ -1,0 +1,66 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+}
+
+# create a compute ha vpn gatewayvariable
+resource "google_compute_ha_vpn_gateway" "ha_gateway" {
+  name = "my-ha-vpn-gw-${random_suffix}"
+  network = google_compute_network.default.id
+  region = "us-central1"
+  vpn_gateway_interface = "eth-1"
+  # Do not create a VPN gateway if the gateway is created before
+  # the VPN tunnel is created.
+  # Set this variable to "true" to use the VPN gateway.
+  # Do not set vpn_gateway_interface to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Set this variable to "true" to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Set this variable to "true" to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Set this variable to "true" to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not set vpn_gateway_ip_range to use the VPN gateway.
+  # Do not set vpn_gateway_interface_options to use the VPN gateway.
+  # Do not
+}
+

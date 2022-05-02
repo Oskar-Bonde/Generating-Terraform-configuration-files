@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# data block with google compute zones
+data "google_compute_zones" "available" {
+  region = "us-central1"
+}
+
+# make a compute instancevariable
+resource "google_compute_instance_variable" "instance_var" {
+  name = "my-instance-var-${random_suffix}"
+  type = "string"
+  value = "my-instance-value"
+}
+

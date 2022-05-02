@@ -6,15 +6,36 @@ terraform {
   }
 }
 
-# Provider AWS
-provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
+# Provider AWS security group
+# IAM Role: Allow the VPC to read from S3
+resource "aws_security_group" "ec2demo" {
+  name        = "ec2demo"
+  description = "Allow the VPC to read from S3"
+  vpc_id      = "${aws_vpc.demo.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 # create wafv2 ip set
-resource "aws_eip" "wafv2" {
-  instance = aws_instance.ec2demo.id
-  vpc      = true
+resource "terraform_remote_state" "wafv2" {
+  backend = "s3"
+
+  config {
+    bucket = "terraform-state"
+    key    = "wafv2/terraform.tfstate"
+    region = "us-east-1"
+  }
 }
 

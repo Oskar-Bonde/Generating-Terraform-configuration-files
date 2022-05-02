@@ -6,67 +6,43 @@ terraform {
   }
 }
 
-# Provider Block AWS
+# Provider Block AWS provider
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create variable 
-variable "instance_name" {
-  description = "Name of the instance"
-  default     = "terraform-example"
+# Create variable "ami" with AMI reference
+variable "ami" {
+  type = "map"
+  default = {
+    ap-northeast-1 = "ami-0ff8a91507f77f867"
+    ap-southeast-1 = "ami-0a1e7c6b6"
+    ap-southeast-2 = "ami-0a1e7c6d7"
+    eu-central-1 = "ami-0d1c2007"
+    eu-west-1 = "ami-0d1c2007"
+    sa-east-1 = "ami-0d11a2007"
+    us-east-1 = "ami-0d11a2007"
+    us-west-1 = "ami-0d11a2007"
+    us-west-2 = "ami-0d11a2007"
+  }
 }
 
 # variable block
-variable
-variable "instance_type" {
-  description = "Instance type"
-  default     = "t2.micro"
 }
 
 # make variable
-variable
-variable "key_name" {
-  description = "Name of the SSH keypair to use in AWS."
-  default     = "terraform-example"
 }
 
 # create variable block
-variablevariable "instance_data" {
-  description = "Data to pass to instance"
-  default     = "#!/bin/bash\necho ECS_CLUSTER=example-cluster >> /etc/ecs/ecs.config"
 }
 
 # Create Security Group
-resource
-aws_security_group" "terraform-example" {
-  name        = "terraform-example"
-  description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.terraform-example.id}"
-
-  # SSH access from anywhere
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 # Create Security Group
-resource
 }
 
 # Create EC2 Instance
-resource
 }
 

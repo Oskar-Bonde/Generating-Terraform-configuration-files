@@ -1,4 +1,6 @@
 import logging
+import os
+import time
 from argparse import Namespace
 from pathlib import Path
 
@@ -9,15 +11,12 @@ from torch.utils.data import IterableDataset
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-#import nvidia_smi
 import transformers
-#import wandb
-from accelerate import Accelerator
+from accelerate import Accelerator, DistributedType
 from arguments import TrainingArguments
 from huggingface_hub import Repository
 from transformers import AdamW, AutoModelForCausalLM, AutoTokenizer, HfArgumentParser, get_scheduler, set_seed
 
-#nvidia_smi.nvmlInit()
 
 class ConstantLengthDataset(IterableDataset):
     """
@@ -31,7 +30,9 @@ class ConstantLengthDataset(IterableDataset):
             chars_per_token: Number of characters per token used to estimate number of tokens in text buffer.
     """
 
-    def __init__(self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=64, chars_per_token=3.6):
+    def __init__(
+        self, tokenizer, dataset, infinite=False, seq_length=1024, num_of_sequences=1024, chars_per_token=3.6
+    ):
         self.tokenizer = tokenizer
         self.concat_token_id = tokenizer.bos_token_id
         self.dataset = dataset
@@ -39,6 +40,7 @@ class ConstantLengthDataset(IterableDataset):
         self.input_characters = seq_length * chars_per_token * num_of_sequences
         self.epoch = 0
         self.infinite = infinite
+        self.current_size = 0
 
     def __iter__(self):
         iterator = iter(self.dataset)
@@ -66,6 +68,7 @@ class ConstantLengthDataset(IterableDataset):
             for i in range(0, len(all_token_ids), self.seq_length):
                 input_ids = all_token_ids[i : i + self.seq_length]
                 if len(input_ids) == self.seq_length:
+                    self.current_size += 1
                     yield torch.tensor(input_ids)
 
 
@@ -99,10 +102,11 @@ def setup_logging(args):
 
 
 def create_dataloaders(args):
-    train_data = load_dataset(args.dataset_name_train, split="train", streaming=True)
+    ds_kwargs = {"streaming": True}
+    train_data = load_dataset(args.dataset_name_train, split="train", **ds_kwargs)
     train_data = train_data.shuffle(buffer_size=args.shuffle_buffer, seed=args.seed)
-    valid_data = load_dataset(args.dataset_name_valid, split="validation", streaming=True)
-    train_dataset = ConstantLengthDataset(tokenizer, train_data, infinite=True, seq_length=args.seq_length, num_of_sequences= 2*args.train_batch_size)
+    valid_data = load_dataset(args.dataset_name_valid, split="validation", **ds_kwargs)
+    train_dataset = ConstantLengthDataset(tokenizer, train_data, infinite=True, seq_length=args.seq_length)
     valid_dataset = ConstantLengthDataset(tokenizer, valid_data, infinite=False, seq_length=args.seq_length)
     train_dataloader = DataLoader(train_dataset, batch_size=args.train_batch_size)
     eval_dataloader = DataLoader(valid_dataset, batch_size=args.valid_batch_size)
@@ -129,6 +133,21 @@ def log_metrics(step, metrics):
         [tb_writer.add_scalar(k, v, step) for k, v in metrics.items()]
 
 
+def compute_tflops(elapsed_time, accelerator, args):
+    # TFLOPs formula (from Equation 3 in Section 5.1 of https://arxiv.org/pdf/2104.04473.pdf).
+    config_model = accelerator.unwrap_model(model).config
+    checkpoint_factor = 4 if args.gradient_checkpointing else 3
+    batch_size = args.train_batch_size * accelerator.state.num_processes * args.gradient_accumulation_steps
+    factor = 24 * checkpoint_factor * batch_size * args.seq_length * config_model.n_layer * (config_model.n_embd**2)
+    flops_per_iteration = factor * (
+        1.0
+        + (args.seq_length / (6.0 * config_model.n_embd))
+        + (tokenizer.vocab_size / (16.0 * config_model.n_layer * config_model.n_embd))
+    )
+    tflops = flops_per_iteration / (elapsed_time * accelerator.state.num_processes * (10**12))
+    return tflops
+
+
 def evaluate(args):
     model.eval()
     losses = []
@@ -139,15 +158,17 @@ def evaluate(args):
         losses.append(accelerator.gather(loss))
         if args.max_eval_steps > 0 and step >= args.max_eval_steps:
             break
-    loss = torch.mean(torch.cat(losses))
+    losses = torch.cat(losses)
+    loss = losses[: eval_dataloader.dataset.current_size].mean()
     try:
         perplexity = torch.exp(loss)
     except OverflowError:
         perplexity = float("inf")
     return loss.item(), perplexity.item()
 
+
 # Accelerator
-accelerator = Accelerator()
+accelerator = Accelerator() # 
 acc_state = {str(k): str(v) for k, v in accelerator.state.__dict__.items()}
 
 # Settings
@@ -161,7 +182,6 @@ set_seed(args.seed)
 # Logging
 logger, tb_writer, run_name = setup_logging(args)
 logger.info(accelerator.state)
-
 """
 # Clone model repository
 if accelerator.is_main_process:
@@ -172,11 +192,13 @@ if accelerator.is_main_process:
     hf_repo.git_checkout(run_name, create_branch_ok=True)
 """
 # Load model and tokenizer
-model = AutoModelForCausalLM.from_pretrained("lvwerra/codeparrot-small")
-tokenizer = AutoTokenizer.from_pretrained("lvwerra/codeparrot-small")
+model = AutoModelForCausalLM.from_pretrained(args.model_ckpt)
+if args.gradient_checkpointing:
+    model.gradient_checkpointing_enable()
+tokenizer = AutoTokenizer.from_pretrained('lvwerra/codeparrot')
 
 # Load dataset and dataloader
-train_dataloader, eval_dataloader= create_dataloaders(args)
+train_dataloader, eval_dataloader = create_dataloaders(args)
 
 # Prepare the optimizer and learning rate scheduler
 optimizer = AdamW(get_grouped_params(model, args), lr=args.learning_rate)
@@ -186,52 +208,78 @@ lr_scheduler = get_scheduler(
     num_warmup_steps=args.num_warmup_steps,
     num_training_steps=args.max_train_steps,
 )
+accelerator.register_for_checkpointing(lr_scheduler)
+
 
 def get_lr():
     return optimizer.param_groups[0]["lr"]
 
-print('Prepare accelerator')
+
 # Prepare everything with our `accelerator`.
 model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(
-    model, optimizer, train_dataloader, eval_dataloader)
+    model, optimizer, train_dataloader, eval_dataloader
+)
 
+# load in the weights and states from a previous save
+if args.resume_from_checkpoint:
+    if args.resume_from_checkpoint is not None or args.resume_from_checkpoint != "":
+        accelerator.print(f"Resumed from checkpoint: {args.resume_from_checkpoint}")
+        accelerator.load_state(args.resume_from_checkpoint)
+        path = os.path.basename(args.resume_from_checkpoint)
+    else:
+        # Get the most recent checkpoint
+        dirs = [f.name for f in os.scandir(args.save_dir) if f.is_dir() and "step" in str(f)]
+        dirs.sort(key=os.path.getctime)
+        path = dirs[-1]  # Sorts folders by date modified, most recent checkpoint is the last
+    # Extract the step of the checkpoint to continue from there
+    training_difference = os.path.splitext(path)[0]
+    resume_step = int(training_difference.replace("step_", ""))
 
-print('Train model')
 # Train model
 model.train()
 completed_steps = 0
+t_start = time.time()
+print('Start training')
 for step, batch in enumerate(train_dataloader, start=1):
-    """
-    print('Calculate loss')
-    print(batch.size())
-    handle = nvidia_smi.nvmlDeviceGetHandleByIndex(0)
-    info = nvidia_smi.nvmlDeviceGetMemoryInfo(handle)
-    print("Total memory:", info.total)
-    print("Free memory:", info.free)
-    print("Used memory:", info.used)
-    """
+    if args.resume_from_checkpoint and step < resume_step:
+        continue  # we need to skip steps until we reach the resumed step
     loss = model(batch, labels=batch, use_cache=False).loss
-    if completed_steps % 500 == 0:
-        log_metrics(
-            step, {"lr": get_lr(), "samples": step * samples_per_step, "steps": completed_steps, "loss/train": loss.item()})
+    if step % 100 == 0:
+        if accelerator.is_main_process:
+            log_metrics(step, {"lr": get_lr(), "samples": step * samples_per_step, "steps": completed_steps, "loss/train": loss.item()})
     loss = loss / args.gradient_accumulation_steps
-    #print('Begin backpropagation')
-    accelerator.backward(loss)
-    if step % args.gradient_accumulation_steps == 0:
+    if step % args.gradient_accumulation_steps != 0:
+        # Prevent backward from doing gradient all_reduce in every step
+        if accelerator.distributed_type == DistributedType.MULTI_GPU:
+            with model.no_sync():
+                accelerator.backward(loss)
+        else:
+            accelerator.backward(loss)
+    else:
+        accelerator.backward(loss)
         accelerator.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
         lr_scheduler.step()
         optimizer.zero_grad()
         completed_steps += 1
+        elapsed_time = time.time() - t_start
+        #tflops = compute_tflops(elapsed_time, accelerator, args)
+        #log_metrics(step, {"steps": completed_steps, "tflops": tflops, "time_per_iteration": elapsed_time})
+        t_start = time.time()
     if step % args.save_checkpoint_steps == 0:
         logger.info("Evaluating and saving model checkpoint")
         eval_loss, perplexity = evaluate(args)
         log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
         accelerator.wait_for_everyone()
         unwrapped_model = accelerator.unwrap_model(model)
+        """
+        save_path = f'{args.save_dir}/step_{step}'
+        if accelerator.is_main_process:
+            if not os.path.exists(save_path):
+                os.makedirs(save_path)
+        accelerator.wait_for_everyone()
+        """
         unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
-        #if accelerator.is_main_process:
-        #    hf_repo.push_to_hub(commit_message=f"step {step}")
         model.train()
     if completed_steps >= args.max_train_steps:
         break
@@ -243,3 +291,7 @@ log_metrics(step, {"loss/eval": eval_loss, "perplexity": perplexity})
 accelerator.wait_for_everyone()
 unwrapped_model = accelerator.unwrap_model(model)
 unwrapped_model.save_pretrained(args.save_dir, save_function=accelerator.save)
+save_dir = os.path.join(args.save_dir, f"step_{step}")
+accelerator.save_state(save_dir)
+#if accelerator.is_main_process:
+#    hf_repo.push_to_hub(commit_message="final model")

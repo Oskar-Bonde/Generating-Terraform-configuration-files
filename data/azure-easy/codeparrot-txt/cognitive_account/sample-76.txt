@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# make resource group 
+resource "azurerm_resource_group" "myRG" {
+  name     = "myTFRG"
+  location = "westus2"
+}
+
+# create cognitive account resourcevariable
+resource "azurerm_resource_group" "tfResourceGroup" {
+  name     = "tfRG"
+  location = "westus2"
+}
+

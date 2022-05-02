@@ -12,7 +12,7 @@ terraform {
 provider "google" {
 }
 
-# a compute instance that has machine type f1-micro, debian-9 image and default network
+# a compute instance that has machine type f1-micro, debian-9 image and default network interface
 resource "google_compute_instance" "vm_instance" {
   name = "my-compute-instance-%%{random_suffix}"
   machine_type = "f1-micro"

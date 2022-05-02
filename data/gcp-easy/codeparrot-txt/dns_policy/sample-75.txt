@@ -1,0 +1,62 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "my-dns-policy"
+  zone = "us-central1-a"
+  description = "Terraform dns policy"
+
+  # DNS Policy
+  rules {
+    # The name of the rule is not important.
+    # You can use the string [this] to denote the end of the name.
+    # You can also provide a list of multiple rules.
+    # Below are examples of each type of rule.
+    # - "ssl_policy" - This is the name of the SSL policy.
+    # - "logging_policy" - This is the name of the logging policy.
+    # - "monitoring_policy" - This is the name of the monitoring policy.
+    # - "http_policy" - This is the name of the HTTP policy.
+    # - "https_policy" - This is the name of the HTTPS policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_rule" - This is the name of the logging rule.
+    # - "ping_policy" - This is the name of the ping policy.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "ssh_policy" - This is the name of the ssh policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "ping_ssh_policy" - This is the name of the ping ssh policy.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_ssh_policy" - This is the name of the logging ssh policy.
+    # - "monitoring_ssh_policy" - This is the name of the monitoring ssh policy.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_ssh_rule" - This is the name of the logging ssh rule.
+    # - "ping_ssh_rule" - This is the name of the ping ssh rule.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_ssh_rule" - This is the name of the logging ssh rule.
+    # - "ping_ssh_rule" - This is the name of the ping ssh rule.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_ssh_rule" - This is the name of the logging ssh rule.
+    # - "ping_policy" - This is the name of the ping policy.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_policy" - This is the name of the logging policy.
+    # - "monitoring_policy" - This is the name of the monitoring policy.
+    # - "dns_policy" - This is the name of the dns policy.
+    # - "outbound_rule" - This is the name of the outbound rule.
+    # - "logging_ssh_policy" - This is the name of the logging ssh policy.
+    # - "monitoring_ssh_policy" - This is the name of the monitoring
+}
+

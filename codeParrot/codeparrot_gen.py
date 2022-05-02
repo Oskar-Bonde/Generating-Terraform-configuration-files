@@ -47,7 +47,7 @@ def dataset_dict(provider='aws', block_context=False):
             task_name[n_tasks] = filename[:-4]
             n_tasks += 1
     print(n_tasks, ' tasks')
-    print(data_list[0])
+    #print(data_list[0])
     return data_list, task_name
 
 class EndOfFunctionCriteria(StoppingCriteria):
@@ -116,10 +116,11 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.model_max_length = 1024
     # Generation settings
-    comment_token = tokenizer(['#','//','\n/', '/*', '*/'], add_special_tokens=False).input_ids
+    """comment_token = tokenizer(['#','//','\n/', '/*', '*/'], add_special_tokens=False).input_ids
     block_token = tokenizer(['ter', 'provider', 'resource', 'data', 'variable', 'output', 'module'], add_special_tokens=False).input_ids
     print(f'Comment tokens {comment_token}')
     print(f'Block tokens {block_token}')
+    """
     gen_kwargs = {
         "do_sample": args.do_sample,
         "temperature": args.temperature,
@@ -177,11 +178,8 @@ def main():
                         code[s]='terraform '+code[s]
                     sample_file = open(f'{file_path}/sample-{s}.txt', "w", encoding='utf-8', errors='ignore')
                     sample_file.write(code[s])
-                print('Saved ', task_name[i])  
+                #print('Saved ', task_name[i])  
                 
-
-
-
 
 if __name__ == "__main__":
     main()

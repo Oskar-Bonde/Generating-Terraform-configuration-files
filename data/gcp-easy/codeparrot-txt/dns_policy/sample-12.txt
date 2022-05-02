@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "dns-policy-${local.name_suffix}"
+  zone = "us-central1-a"
+  description = "DNS policy for ${local.name_suffix}"
+
+  # DNS policy
+  rule {
+    action = "deny"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+    }
+  }
+
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+    }
+  }
+}
+

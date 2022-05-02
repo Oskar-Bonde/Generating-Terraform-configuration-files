@@ -1,0 +1,67 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example-resources" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group.
+resource "azurerm_cosmosdb_account" "scott" {
+  name                = "scott"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  account_tier         = "Standard"
+  account_replication_type = "GRS"
+}
+
+# data block, azurem client config block
+data "template_file" "tf_config" {
+  template = file("${path.module}/files/tf_config.tpl")
+
+  vars = {
+    azurerm_account_name = azurerm_cosmosdb_account.scott.name
+    azurerm_resource_group_name = azurerm_resource_group.rg.name
+    azurerm_storage_account_name = azurerm_cosmosdb_account.scott.name
+    azurerm_storage_container_name = azurerm_storage_account.scott.name
+    azurerm_resource_group_name = azurerm_resource_group.example-resources.name
+    azurerm_storage_account_key = azurerm_cosmosdb_account.scott.primary_access_key
+    azurerm_storage_container_access_key = azurerm_storage_account.scott.primary_access_key
+  }
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name as cognitive account.
+resource "azurerm_bot_application_registration" "tf_bot_registration" {
+  name                = "tf_bot_registration"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  sku                 = "West US"
+  app_id              = azurerm_bot_application_registration.tf_bot_registration.app_id
+  client_id            = azurerm_bot_application_registration.tf_bot_registration.client_id
+  client_secret        = azurerm_bot_application_registration.tf_bot_registration.client_secret
+  allowed_audiences     = ["https://cloud.google.com/cognitive-services/docs/cognitive-services-guide#real-time-and-privacy-policy-based-access-control"]
+}
+
+# resource block called bot channel direct line speech. Use name and location from bot_channels_registration. For cognitive service location and access key use cognitive account. Assign resource group name as cognitive account.
+resource "azurerm_bot_channel" "tf_bot_channel" {
+  name                = "tf_bot_channel"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus"
+  sku                 = "West US"
+  app_id              = azurerm_bot_application_registration.tf_bot_registration.app_id
+  client_id            = azurerm_bot_application_registration.tf_bot_registration.client_id
+  client_secret        = azurerm_bot_application_registration.tf_bot_registration.client_secret
+  allowed_audiences     = ["https://cloud.google.com/cognitive-services/docs/cognitive-services-guide#real-time-and-privacy-policy-based-access-
+}
+

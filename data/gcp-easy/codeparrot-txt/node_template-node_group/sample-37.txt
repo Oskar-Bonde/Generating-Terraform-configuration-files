@@ -1,0 +1,46 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+  can_ip_forward = true
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_instance_group_manager" "node_group_manager" {
+  name = "my-node-group-manager"
+  zone = "us-central1-a"
+
+  tags = ["foo", "bar"]
+
+  # create the node template
+  node_template = google_compute_instance_template.node_template.id
+
+  # create the node group
+  node_group = google_compute_instance_group.node_group.id
+
+  # create the node
+  depends_on = [google_compute_instance.vm_instance]
+}
+

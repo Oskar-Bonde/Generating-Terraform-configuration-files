@@ -1,0 +1,81 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  # install nginx and serve a simple web page
+  metadata = {
+    startup-script = <<-EOF1
+      #! /bin/bash
+      set -euo pipefail
+
+      export DEBIAN_FRONTEND=noninteractive
+      apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=node-template
+      IP=static
+      LOCATION=public
+      MACHINE_URL=http://node-template-internal.example.com:8080
+      EXTERNAL_DOMAIN=${google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip}
+
+      # install nginx
+      nginx -s /bin/bash
+      service nginx start
+      EOF
+    EOF1
+  }
+
+  # install sample application
+  metadata = {
+    startup-script = <<-EOF
+        #! /bin/bash
+        set -euo pipefail
+
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get update
+        apt-get install -y nginx-light jq
+
+        NAME=sample-application
+        IP=sample-application.ip_address
+        LOCATION=public
+        MACHINE_URL=http://sample-application-internal.example.com:8080
+        EXTERNAL_DOMAIN=${google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip}
+
+        # install sample application
+        nginx -s /bin/bash
+        service nginx start
+        EOF
+    EOF1
+  }
+
+  service_account {
+    email  = google_service_account.default.email
+    scopes = ["cloud-platform"]
+  }
+}
+

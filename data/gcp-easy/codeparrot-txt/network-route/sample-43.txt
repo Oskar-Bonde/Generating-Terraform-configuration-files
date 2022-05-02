@@ -1,0 +1,27 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# a compute network resource
+resource "google_compute_network" "my_custom_network" {
+  name = "my-custom-network-${local.name_suffix}"
+  auto_create_subnetworks = false
+}
+
+# compute route resource 
+resource "google_compute_route" "route1" {
+  name       = "route1-${local.name_suffix}"
+  dest_range = "0.0.0.0/0"
+  network    = google_compute_network.my_custom_network.self_link
+  next_hop_ilb = "default-internet-gateway"
+  next_hop_vpn_tunnel = google_compute_vpn_tunnel.my_tunnel.self_link
+}
+

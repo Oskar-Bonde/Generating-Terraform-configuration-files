@@ -12,19 +12,11 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Create Security Group
+# Create Security Groupvariable for the ELB so it is accessible via the web
 resource "aws_security_group" "name_0" {
-  name        = "ec2demo"
-  description = "Security group for the EC2 Demo server instance"
+  name_prefix = "elb_sg"
+  description = "Used in the terraform"
   vpc_id      = "${aws_vpc.default.id}"
-
-  # SSH access from anywhere
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   # HTTP access from anywhere
   ingress {
@@ -43,9 +35,9 @@ resource "aws_security_group" "name_0" {
   }
 }
 
-# Create EC2 Instance 
+# Create EC2 Instance
 resource "aws_instance" "name_1" {
-  ami           = "ami-0ff8a91507f77f867"
+  ami           = "ami-0ff8a91507f77f867" 
   instance_type = "t2.micro"
 }
 

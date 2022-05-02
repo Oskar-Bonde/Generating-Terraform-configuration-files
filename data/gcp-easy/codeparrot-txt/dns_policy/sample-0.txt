@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "dns_policy" {
+  name = "dns-policy"
+  zone = "us-central1-a"
+
+  # dns_policy {
+  #   comment = "Terraform managed."
+  #   policy = "allow"
+  # }
+
+  network = "default"
+  project = "my-project-id"
+}
+

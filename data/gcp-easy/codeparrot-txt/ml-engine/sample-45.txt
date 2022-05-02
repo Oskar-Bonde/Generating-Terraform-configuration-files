@@ -1,0 +1,124 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# ml engine model resource
+resource "google_ml_engine_model" "my_model" {
+  name = "my-ml-engine-model"
+  region = "us-central1"
+  initial_node_count = 1
+  max_pods_per_node = 1
+  max_nodes_per_engine = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  node_count = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  network_config {
+    subnetwork = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+  subnetwork_project = var.subnetwork_project
+  # use default node pool for multi-zone deployments
+  zone = "us-central1-f"
+  initial_node_count = 1
+  # use default node pool for multi-zone deployments
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  node_count = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  network_config {
+    subnetwork = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+  subnetwork_project = var.subnetwork_project
+  # use default node pool for multi-zone deployments
+  zone = "us-central1-b"
+  initial_node_count = 1
+  # use default node pool for multi-zone deployments
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  node_count = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  network_config {
+    subnetwork = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+  subnetwork_project = var.subnetwork_project
+  # use default node pool for multi-zone deployments
+  zone = "us-central1-c"
+  initial_node_count = 1
+  # use default node pool for multi-zone deployments
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  node_count = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  network_config {
+    subnetwork = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+  subnetwork_project = var.subnetwork_project
+  # use default node pool for multi-zone deployments
+  zone = "us-central1-d"
+  initial_node_count = 1
+  # use default node pool for multi-zone deployments
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  node_count = 1
+  node_config {
+    machine_type = "e2-medium"
+    disk_size_gb = 100
+  }
+  network_config {
+    subnetwork = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+  subnetwork_project = var.subnetwork_project
+  # use default node pool for multi-zone deployments
+  zone = "us-central1-e"
+  initial_node_count = 1
+  # use default node pool for multi-zone deployments
+  node_config {
+    machine_type = "e2-medium"
+    disk_size
+}
+

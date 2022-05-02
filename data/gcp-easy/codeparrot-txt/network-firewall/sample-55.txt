@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "default" {
+  name = "my-network-${local.name_suffix}"
+}
+
+# create compute firewallvariable
+resource "google_compute_firewall_rule" "default" {
+  name        = "my-allow-rule-${local.name_suffix}"
+  network     = google_compute_network.default.self_link
+  source_ranges = ["0.0.0.0/0"]
+  direction   = "INGRESS"
+  priority    = 1000
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  target_tags = ["allow-health-check"]
+}
+

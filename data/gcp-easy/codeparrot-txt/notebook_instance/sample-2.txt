@@ -1,0 +1,95 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a notebook instance 
+resource "google_notebooks_instance" "notebook_instance" {
+  name = "my-notebook-instance-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  notebook_contents {
+    notebook_name = "my-notebook-instance-name"
+  }
+
+  # create a compute instance
+  create_before_destroy = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for the notebook to be ready
+  # to use the notebook instance
+  wait_for_instances_to_be_ready_no_ack_no_update_no_ack = true
+
+  # optionally, wait for
+}
+

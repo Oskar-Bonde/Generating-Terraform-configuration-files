@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network resource 
+resource "google_compute_network" "my_network" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+  routing_mode = "GLOBAL"
+  project = google_project.project.project_id
+
+  depends_on = [
+    google_project_service.compute_api,
+    google_project_service.container_api,
+    google_project_service.container_registry,
+  ]
+}
+
+# resource block: create a compute router
+resource "google_compute_router" "router" {
+  name    = "my-router-${random_suffix}"
+  network = google_compute_network.my_network.name
+  region  = "us-central1"
+  bgp {
+    asn = 64514
+  }
+}
+

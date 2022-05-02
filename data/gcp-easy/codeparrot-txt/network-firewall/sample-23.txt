@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+}
+
+# create compute firewallvariable
+resource "google_compute_firewall_rule" "default" {
+  name = "my-firewall-rule-${random_suffix}"
+  network = "${google_compute_network.default.self_link}"
+  source_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
+
+  target_tags = ["web"]
+}
+

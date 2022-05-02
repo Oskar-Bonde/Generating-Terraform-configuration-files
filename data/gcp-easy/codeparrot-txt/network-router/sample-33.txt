@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network resource 
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
+}
+
+# resource block: create a compute router
+resource "google_compute_router" "router" {
+  name    = "my-router-${random_suffix}"
+  network = google_compute_network.default.id
+  region  = "us-central1"
+  bgp {
+    asn = 64514
+  }
+}
+

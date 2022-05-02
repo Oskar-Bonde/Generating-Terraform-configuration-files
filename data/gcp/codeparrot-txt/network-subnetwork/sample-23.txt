@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create compute network with name surfly-name
+resource "google_compute_network" "surfly-name" {
+  name = "surfly-name"
+}
+
+# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use compute network surf id
+resource "google_compute_subnetwork" "surfly-subnet" {
+  name          = "surfly-subnet"
+  ip_cidr_range = "10.0.0.0/16"
+  network       = google_compute_network.surfly-name.self_link
+  region        = "europe-west1"
+  network_tier = "STANDARD"
+}
+

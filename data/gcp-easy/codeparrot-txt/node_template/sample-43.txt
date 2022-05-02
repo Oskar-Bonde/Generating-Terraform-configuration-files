@@ -1,0 +1,19 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+
+  provider = google.target
+}
+

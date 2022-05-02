@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create resource group with storage account
+resource "azurerm_resource_group" "storage" {
+  name     = "myTFStorageGroup"
+  location = "westus2"
+}
+
+# create storage account resource group
+resource "azurerm_storage_account" "stor" {
+  name                     = "myTFStorageAccount"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create advanced threat protection resource group
+resource "azurerm_storage_account" "storage_account_advanced" {
+  name                     = "myTFStorageAccountAdvanced"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
