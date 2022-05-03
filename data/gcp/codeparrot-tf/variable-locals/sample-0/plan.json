@@ -1,0 +1,1 @@
+{"format_version":"1.0","terraform_version":"1.1.7","variables":{"name_0":{"value":"0"},"name_1":{"value":null}},"planned_values":{"root_module":{}},"configuration":{"provider_config":{"google":{"name":"google"}},"root_module":{"variables":{"name_0":{},"name_1":{"default":null}}}}}
