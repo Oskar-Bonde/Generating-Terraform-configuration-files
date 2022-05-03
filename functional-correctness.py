@@ -124,10 +124,10 @@ def pass1(provider, model):
     
 def compile_check(provider, model):
     task_names = []
-    out_txt = open(f'data/{provider}-easy/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
+    out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
-    for task in sorted(os.listdir(f'data/{provider}-easy/human-tf')):
+    for task in sorted(os.listdir(f'data/{provider}/human-tf')):
         task_names.append(task)
         n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
         # find the number of duplicates
@@ -146,26 +146,27 @@ def compile_check(provider, model):
         # calculate success rate on tasks
         success_rate=[0]*n_samples
         errors = []
-        human_file = open(f'data/{provider}-easy/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
+        human_file = open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
         human_plan = human_file.readlines()
-        for sample in sorted(os.listdir(f'data/{provider}-easy/{model}-tf/{task}')):
+        for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
             correct = distr[sample_to_int[sample]]
-            model_file = open(f'data/{provider}-easy/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore')
-            model_plan = model_file.readlines()
-            for i in range(len(human_plan)-1):
-                line_human = json.loads(human_plan[i])
-                if line_human['@level'] =='info':
-                    if len(model_plan) > i and '{' in model_plan[i]:
-                        line_model = json.loads(model_plan[i])
-                        if remove_brackets(line_model['@message']) != remove_brackets(line_human['@message']):
+            if os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json'):
+                model_file = open(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore')
+                model_plan = model_file.readlines()
+                for i in range(len(human_plan)-1):
+                    line_human = json.loads(human_plan[i])
+                    if line_human['@level'] =='info':
+                        if len(model_plan) > i and '{' in model_plan[i]:
+                            line_model = json.loads(model_plan[i])
+                            if remove_brackets(line_model['@message']) != remove_brackets(line_human['@message']):
+                                correct = 0
+                                if int(sample[7:]) not in errors:
+                                    errors.append(int(sample[7:]))
+                        else:
                             correct = 0
                             if int(sample[7:]) not in errors:
-                                errors.append(int(sample[7:]))
-                    else:
-                        correct = 0
-                        if int(sample[7:]) not in errors:
-                                errors.append(int(sample[7:]))
-                        #print('length error')
+                                    errors.append(int(sample[7:]))
+                            #print('length error')
             success_rate.append(correct)
             
         if success_rate == []: success_rate=[0]
@@ -224,8 +225,10 @@ if __name__ == "__main__":
     model = 'codeparrot'
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'aws', 'aws-easy']:
         print(f'-----------------------------------------\n{provider}')
-        make_json_human(provider)
+        #make_json_human(provider)
         make_json_model(provider, 'codeparrot')
+        """
+        
         easy = True if 'easy' in provider else False
         if not easy:
             pass1(provider, model)

@@ -18,6 +18,7 @@ zip -r model.zip model-1
 gsutil cp /home/oskar_bonde/cloud-codeparrot/models/model-2.zip gs://terraform-models 
 gsutil cp /home/oskar_bonde_ericsson_com/codeparrot.zip gs://terraform-models 
 gsutil cp gs://terraform-models/codeparrot.zip /home/oskar_bonde/
+gsutil cp /home/oskar_bonde/cloud-codeparrot/gpt2_data.zip gs://terraform-models 
 
 # codeparrot small
 nohup accelerate launch codeparrot_training.py --save_dir ./models/model-2 --learning_rate 5e-5
