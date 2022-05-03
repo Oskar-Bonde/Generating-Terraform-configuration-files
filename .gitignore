@@ -129,7 +129,8 @@ dmypy.json
 .pyre/
 
 # terraform
-.terraform/
+**/.terraform**
+**binary
 raw-data/
 data/train-raw/
 models/
