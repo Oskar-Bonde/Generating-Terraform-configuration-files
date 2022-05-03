@@ -220,6 +220,7 @@ def make_json_model(provider, model):
                     tf_file = open(f'{tf_path}/{sample}/{duplicate}.txt', 'w', encoding='utf-8', errors='ignore')
 
 if __name__ == "__main__":
+    """
     model = 'codeparrot'
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'aws', 'aws-easy']:
         print(f'-----------------------------------------\n{provider}')
@@ -230,4 +231,10 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-            
+    """
+    provider = 'aws'
+    for model in ['codex-0','codex-0.2', 'codex-0.4']:
+        print(f'-----------------------------------------\n{model}')
+        make_json_human(provider)
+        make_json_model(provider, model)
+        pass1(provider, model)

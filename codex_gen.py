@@ -5,18 +5,18 @@ import time
 # sample is a dict with index key. It contains a list of touples with promt and solution
 
 class CodexModel:
-    def __init__(self, provider, n_samples=3, wait=5, temperature=0.2, file_name = ''):
+    def __init__(self, provider, n_samples=3, wait=5, temperature=0.2, batch_size=10, file_name = ''):
         openai.api_key = "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"#os.getenv("KEY")
         self.provider = provider 
         self.n_samples = n_samples
         self.wait = wait
         self.temperature = temperature
         self.file_name = file_name
-        self.batch_size = 20
+        self.batch_size = batch_size
         self.batch_wait = wait // 3
         self.path = f"data/{provider}/human-txt"
         self.files = {}
-        if not os.path.exists(f'data/{provider}/codex-txt{file_name}'): os.makedirs(f'data/{provider}/codex-txt{file_name}')
+        if not os.path.exists(f'data/{provider}/codex{file_name}-txt'): os.makedirs(f'data/{provider}/codex{file_name}-txt')
         self.read_files()
         
     def read_files(self):
@@ -37,13 +37,10 @@ class CodexModel:
 
     def generate_samples(self):
         for key in sorted(self.files.keys(), reverse=False):
-            #print(key)
-            save_path = f'data/{self.provider}/codex-txt{self.file_name}/{key}'
+            save_path = f'data/{self.provider}/codex{self.file_name}-txt/{key}'
             if not os.path.exists(save_path):
-                os.makedirs(save_path)
+                print(key)
                 self.generate_tf(key, f"data/context-{self.provider}.txt")
-                print(f'Wait {self.wait}s')
-                time.sleep(self.wait)
 
     def generate_tf(self, key, context):
         context_file = open(context, "r")
@@ -59,29 +56,28 @@ class CodexModel:
                 input[i+batch*batch_size] = generated["choices"][i]["text"]+"\n}\n\n"
                 
         for prompt in self.files[key][0][1:]:
-            #print("new prompt")
-            time.sleep(self.wait)
+
             for i in range(self.n_samples):
                 input[i] = input[i] + prompt
             for batch in range(self.n_samples // batch_size):
                 generated = self.codex(input[batch*batch_size: (batch+1)*batch_size], 1) # 150 000 tokens per min
-                time.sleep(self.batch_wait)
                 for j in range(batch_size):
                     input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"\n}\n\n"
                     if generated["choices"][j]["finish_reason"] == "length":
                         print(f"Finish reason length index {batch*batch_size+j}")
                         print(key)
-
+        os.makedirs(f'data/{self.provider}/codex{self.file_name}-txt/{key}')
         for i in range(self.n_samples):
-            file_path = f'data/{self.provider}/codex-txt{self.file_name}/{key}/sample-{i}.txt'
+            file_path = f'data/{self.provider}/codex{self.file_name}-txt/{key}/sample-{i}.txt'
             sample_file = open(file_path, "w")
             sample_file.write(input[i])
         
     def codex(self, input, samples):
+        time.sleep(self.wait)
         generated = openai.Completion.create(
                 engine="code-davinci-002", #  code-cushman-001
                 prompt= input,
-                max_tokens = 1024, # 512
+                max_tokens = 512, # 512
                 top_p = 0.95,
                 temperature=0.2,
                 n = samples,
@@ -93,5 +89,13 @@ def main():
     model = CodexModel("aws", n_samples=3, wait=5, temperature=0.2, file_name='')
     model.generate_samples()
 
+def all_providers():
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        print(provider)
+        model = CodexModel(provider, n_samples=60, wait=20, temperature=0.2, batch_size=20, file_name='' )
+        model.generate_samples()
+
+
 if __name__ == "__main__":
-    main()
+    all_providers()
+    #main()

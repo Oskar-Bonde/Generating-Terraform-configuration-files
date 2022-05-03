@@ -19,6 +19,6 @@ resource "aws_instance" "example" {
 
 # Output block, create public DNS URL from vm
 output "public_dns" {
-  value = "${aws_instance.example.public_dns}"
+  value = aws_instance.example.public_dns
 }
 

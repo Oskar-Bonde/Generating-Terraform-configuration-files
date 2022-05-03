@@ -4,7 +4,7 @@ terraform {
       source  = "hashicorp/aws"
     }
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
     }
   }
 }
@@ -22,6 +22,7 @@ resource "aws_instance" "example" {
 
 # Time sleep resource block, Wait for 90 seconds after creating ec2 instance
 resource "time_sleep" "example" {
-  delay = 90
+  for_each = aws_instance.example
+  duration = 90
 }
 

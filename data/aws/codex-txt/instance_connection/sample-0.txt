@@ -13,14 +13,15 @@ provider "aws" {
 }
 
 # Create EC2 Instance with ami-0ff8a91507f77f867 instance type t2.micro. Connection Block for ssh with the public ip
-resource "aws_instance" "example" {
+resource "aws_instance" "myec2" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"
-  tags = {
-    Name = "HelloWorld"
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/.ssh/terraform.pem")
+    host        = self.public_ip
   }
-  vpc_security_group_ids = ["${aws_security_group.example.id}"]
-  subnet_id = "${aws_subnet.example.id}"
-  depends_on = ["aws_internet_gateway.example"]
 }
 

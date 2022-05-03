@@ -1,0 +1,50 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC resource with private network 10.0.0.0/16
+resource "aws_vpc" "private" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support = true
+  tags = {
+    Name = "terraform-vpc"
+  }
+}
+
+# AWS Internet Gateway with vpc id 
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.private.id
+  tags = {
+    Name = "terraform-igw"
+  }
+}
+
+# Create AWS route table with vpc id
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.private.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+  tags = {
+    Name = "terraform-rt"
+  }
+}
+
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+resource "aws_route" "private" {
+  route_table_id = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gw.id
+}
+
