@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group, use name example-resources and set location to West Europe# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group

@@ -154,9 +154,9 @@ def compile_check(provider, model):
             else:
                 distr[i] +=1
             i+=1
-        print('Distribution ', distr)
         # calculate success rate on tasks
         success_rate=[0]*n_samples
+        t=0
         errors = []
         human_file = open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
         human_plan = human_file.readlines()
@@ -179,8 +179,9 @@ def compile_check(provider, model):
                         correct = 0
                         if int(sample[7:]) not in errors:
                                 errors.append(int(sample[7:]))
-            success_rate.append(correct)
-            
+            success_rate[t] = correct
+            t +=1
+
         if success_rate == []: success_rate=[0]
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
@@ -231,9 +232,10 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     
-    model = 'codex'
-    
-    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws',
+    #model = 'codex'
+    model = 'codeparrot-small'
+    #model = 'codeparrot'
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: 
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
