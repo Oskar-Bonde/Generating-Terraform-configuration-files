@@ -1,1 +1,0 @@
- Provider block with features block# create resource group, use name example-resources and set location to West Europe# data block, azurem client config

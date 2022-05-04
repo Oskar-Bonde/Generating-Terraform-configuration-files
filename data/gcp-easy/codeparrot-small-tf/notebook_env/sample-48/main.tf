@@ -1,1 +1,0 @@
- google provider block# create google notebooks enviroment

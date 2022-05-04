@@ -1,1 +1,0 @@
- google provider block# create a firewall policy

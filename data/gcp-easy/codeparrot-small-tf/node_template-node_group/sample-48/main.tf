@@ -1,1 +1,0 @@
- google provider block# create a node template# create a compute node group resource

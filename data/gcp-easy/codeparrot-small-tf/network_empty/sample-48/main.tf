@@ -1,1 +1,0 @@
- google provider block# a google compute network resource

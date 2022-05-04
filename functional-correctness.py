@@ -22,6 +22,7 @@ def make_tf(tf_path, easy, human=False):
         if stringPlan == '':
             shutil.rmtree(tf_path)
             sys.exit('Error '+tf_path)
+    
     try:
         shutil.rmtree(f'{tf_path}/.terraform')
     except:
@@ -232,10 +233,10 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     
-    model = 'codex'
-    #model = 'codeparrot-small'
+    #model = 'codex'
+    model = 'codeparrot-small'
     #model = 'codeparrot'
-    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws', 
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)

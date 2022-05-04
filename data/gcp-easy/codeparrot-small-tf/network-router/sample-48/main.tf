@@ -1,1 +1,0 @@
- google provider block# create compute network resource# resource block: create a compute router

@@ -1,1 +1,0 @@
- Provider block with features block# create resource group, use name example in location West Europe# resource block. Create image in location west us and assign resource group name. In os disc block, assign os type Linux, generatlized state, and size 30 gb

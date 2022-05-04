@@ -1,1 +1,0 @@
- google provider block# resource block, sql database instance# create a sql database
