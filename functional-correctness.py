@@ -122,7 +122,15 @@ def pass1(provider, model):
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
-    
+
+def clean_plan(plan):
+    cleaned_plan = []
+    for i in range(1, len(plan)):
+        if '"@level":"info"' in plan[i]:
+            cleaned_plan.append(plan[i])
+    return cleaned_plan
+            
+
 def compile_check(provider, model):
     task_names = []
     out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
@@ -152,25 +160,25 @@ def compile_check(provider, model):
         errors = []
         human_file = open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
         human_plan = human_file.readlines()
+        human_plan = clean_plan(human_plan)
         for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
             correct = distr[sample_to_int[sample]]
             if os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json'):
                 model_file = open(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore')
                 model_plan = model_file.readlines()
-                for i in range(len(human_plan)-1):
+                model_plan = clean_plan(model_plan)
+                for i in range(len(human_plan)):
                     line_human = json.loads(human_plan[i])
-                    if line_human['@level'] =='info':
-                        if len(model_plan) > i and '{' in model_plan[i]:
-                            line_model = json.loads(model_plan[i])
-                            if remove_brackets(line_model['@message']) != remove_brackets(line_human['@message']):
-                                correct = 0
-                                if int(sample[7:]) not in errors:
-                                    errors.append(int(sample[7:]))
-                        else:
+                    if len(model_plan) > i:
+                        line_model = json.loads(model_plan[i])
+                        if remove_brackets(line_model['@message']) != remove_brackets(line_human['@message']):
                             correct = 0
                             if int(sample[7:]) not in errors:
-                                    errors.append(int(sample[7:]))
-                            #print('length error')
+                                errors.append(int(sample[7:]))
+                    else:
+                        correct = 0
+                        if int(sample[7:]) not in errors:
+                                errors.append(int(sample[7:]))
             success_rate.append(correct)
             
         if success_rate == []: success_rate=[0]
@@ -223,27 +231,20 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
 
-    """
-    model = 'codeparrot'
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'aws', 'aws-easy']:
-        print(f'-----------------------------------------\n{provider}')
-        #make_json_human(provider)
-        make_json_model(provider, 'codeparrot')
-    
     model = 'codeparrot-small'
-    #clean_terraform(model)
+    
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
-        
         
         easy = True if 'easy' in provider else False
         if not easy:
             pass1(provider, model)
         else:
             compile_check(provider, model)
-        """
+    clean_terraform(model)
+        
     """
     provider = 'aws'
     for model in ['codex-0','codex-0.2', 'codex-0.4']:
@@ -252,3 +253,4 @@ if __name__ == "__main__":
         #make_json_model(provider, model)
         pass1(provider, model)
     """
+    
