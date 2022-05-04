@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 # data block: Get latest AMI ID for Amazon Linux2 OS
-data "aws_ami" "aws_linux2_ami" {
+data "aws_ami" "aws_ami_linux2" {
   most_recent = true
   owners      = ["amazon"]
   filter {

@@ -14,10 +14,11 @@ provider "aws" {
 # Create Security Group called vpc-web. It allows port 80 and 443 ingress and all ports and ip egress
 resource "aws_security_group" "vpc-web" {
   name        = "vpc-web"
-  description = "Allow web traffic"
+  description = "Allow http and https traffic"
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
+    description = "http"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -25,6 +26,7 @@ resource "aws_security_group" "vpc-web" {
   }
 
   ingress {
+    description = "https"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"

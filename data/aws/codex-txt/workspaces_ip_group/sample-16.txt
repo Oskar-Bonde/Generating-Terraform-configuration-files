@@ -12,12 +12,12 @@ provider "aws" {
 }
 
 # create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
-resource "aws_workspaces_ip_group" "ip_group" {
-  name        = "terraform-ip-group"
-  description = "LA"
+resource "aws_workspaces_ip_group" "ipgroup" {
+  name = "ipgroup"
 
-  rules {
+  rule {
     source = "150.24.14.0/24"
+    description = "LA"
   }
 }
 

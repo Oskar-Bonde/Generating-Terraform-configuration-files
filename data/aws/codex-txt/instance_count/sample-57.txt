@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # resource block: create 5 EC2 instances with ami-047a51fa27710816e and t2.micro 
-resource "aws_instance" "example" {
+resource "aws_instance" "my_instance" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
   count         = 5

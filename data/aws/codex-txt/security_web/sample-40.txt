@@ -15,7 +15,7 @@ provider "aws" {
 resource "aws_security_group" "vpc-web" {
   name        = "vpc-web"
   description = "Allow port 80 and 443 ingress and all ports and ip egress"
-  vpc_id      = "vpc-0b5e5d5b5e5d5b5e5"
+  vpc_id      = "vpc-0c7a4a4f4c9b9e8a8"
 
   ingress {
     from_port   = 80

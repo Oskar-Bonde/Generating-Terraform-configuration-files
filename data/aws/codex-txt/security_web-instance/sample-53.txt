@@ -14,8 +14,8 @@ provider "aws" {
 # Create Security Group that allows port 80, 443 inbound and all ports outbound
 resource "aws_security_group" "web" {
   name        = "web"
-  description = "Allow HTTP and HTTPS access"
-  vpc_id      = "vpc-0c7b3f8a0d8f8f3f3"
+  description = "Allow HTTP and HTTPS inbound traffic"
+  vpc_id      = "vpc-0a9a9a9a9a9a9a9a9"
 
   ingress {
     description = "HTTP from VPC"

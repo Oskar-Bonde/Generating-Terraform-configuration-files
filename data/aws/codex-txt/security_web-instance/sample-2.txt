@@ -12,9 +12,9 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 80, 443 inbound and all ports outbound
-resource "aws_security_group" "sg" {
-  name        = "terraform-sg"
-  description = "Security Group for terraform"
+resource "aws_security_group" "web_sg" {
+  name        = "web_sg"
+  description = "Security Group for web servers"
 
   ingress {
     from_port   = 80
@@ -38,18 +38,18 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "terraform-sg"
+    Name = "web_sg"
   }
 }
 
 # Create EC2 Instance with ami set to ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc web security group id
-resource "aws_instance" "web" {
+resource "aws_instance" "web_server" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.sg.id]
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
 
   tags = {
-    Name = "terraform-web"
+    Name = "web_server"
   }
 }
 

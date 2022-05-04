@@ -15,7 +15,7 @@ provider "aws" {
 resource "aws_security_group" "vpc-web" {
   name        = "vpc-web"
   description = "Allow web traffic"
-  vpc_id      = "vpc-0b7f5c5f5f7d5c5e5"
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     from_port   = 80

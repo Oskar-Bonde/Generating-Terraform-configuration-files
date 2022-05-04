@@ -12,8 +12,7 @@ provider "aws" {
 }
 
 # Create AWS IAM user resource for each TJack, TJames, TMadhu and TDave
-resource "aws_iam_user" "users" {
-  count = length(var.users)
-  name  = var.users[count.index]
+resource "aws_iam_user" "tjack" {
+  name = "tjack"
 }
 

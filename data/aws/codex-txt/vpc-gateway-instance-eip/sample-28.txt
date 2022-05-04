@@ -33,11 +33,9 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_instance" "web" {
   ami = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-  subnet_id = aws_subnet.public.id
-  associate_public_ip_address = true
+  subnet_id = aws_vpc.main.id
   tags = {
-    Name = "terraform-ec2"
+    Name = "terraform-instance"
   }
 }
 

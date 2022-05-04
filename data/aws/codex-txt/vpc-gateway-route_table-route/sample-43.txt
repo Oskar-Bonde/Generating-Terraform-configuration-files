@@ -28,8 +28,8 @@ resource "aws_route_table" "routetable" {
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
 resource "aws_route" "route" {
-  route_table_id         = aws_route_table.routetable.id
+  route_table_id = aws_route_table.routetable.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.gw.id
+  gateway_id = aws_internet_gateway.gw.id
 }
 

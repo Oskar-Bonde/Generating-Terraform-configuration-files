@@ -12,13 +12,11 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 22 inbound and all outbound ports
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow SSH inbound traffic"
-  vpc_id      = "vpc-0b5f5c9d5f5b5c5c5"
+resource "aws_security_group" "sg" {
+  name        = "terraform-sg"
+  description = "Allow port 22 inbound and all outbound ports"
 
   ingress {
-    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -33,18 +31,15 @@ resource "aws_security_group" "allow_ssh" {
   }
 
   tags = {
-    Name = "allow_ssh"
+    Name = "terraform-sg"
   }
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
-resource "aws_instance" "web" {
+resource "aws_instance" "instance" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-
-  tags = {
-    Name = "web"
-  }
+  key_name      = "terraform"
+  security_groups = [aws_security_group.sg.id]
 }
 

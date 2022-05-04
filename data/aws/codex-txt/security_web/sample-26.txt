@@ -14,8 +14,8 @@ provider "aws" {
 # Create Security Group called vpc-web. It allows port 80 and 443 ingress and all ports and ip egress
 resource "aws_security_group" "vpc-web" {
   name        = "vpc-web"
-  description = "Allow port 80 and 443 ingress and all ports and ip egress"
-  vpc_id      = "vpc-0c8d8b6e9c9f9e9c8"
+  description = "Allow web traffic"
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     from_port   = 80

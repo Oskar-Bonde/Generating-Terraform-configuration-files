@@ -14,8 +14,6 @@ provider "aws" {
 # Create a AWS VPC resource with private network 10.0.0.0/16
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support = true
   tags = {
     Name = "terraform-vpc"
   }
@@ -25,8 +23,8 @@ resource "aws_vpc" "main" {
 resource "aws_default_network_acl" "default" {
   default_network_acl_id = aws_vpc.main.default_network_acl_id
   ingress {
-    protocol = "-1"
-    rule_number = 100
+    protocol = -1
+    rule_no = 100
     cidr_block = "0.0.0.0/0"
     from_port = 83
     to_port = 0

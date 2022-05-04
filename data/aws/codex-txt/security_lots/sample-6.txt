@@ -12,13 +12,11 @@ provider "aws" {
 }
 
 # Resource, an aws security group with the following ingress ports: 80, 443, 8080, 8081, 7080, 7081. All use cidr block 0.0.0.0/0
-resource "aws_security_group" "bastion_sg" {
-  name        = "bastion_sg"
-  description = "Allow SSH access from anywhere"
-  vpc_id      = "vpc-0d9e9c7f8b7c0a1f1"
+resource "aws_security_group" "allow_http_https_7080_8080" {
+  name        = "allow_http_https_7080_8080"
+  description = "Allow http, https, 7080, 8080"
 
   ingress {
-    description = "HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -26,7 +24,6 @@ resource "aws_security_group" "bastion_sg" {
   }
 
   ingress {
-    description = "HTTPS"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -34,23 +31,6 @@ resource "aws_security_group" "bastion_sg" {
   }
 
   ingress {
-    description = "HTTP"
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTPS"
-    from_port   = 8081
-    to_port     = 8081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTP"
     from_port   = 7080
     to_port     = 7080
     protocol    = "tcp"
@@ -58,9 +38,8 @@ resource "aws_security_group" "bastion_sg" {
   }
 
   ingress {
-    description = "HTTPS"
-    from_port   = 7081
-    to_port     = 7081
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -73,7 +52,7 @@ resource "aws_security_group" "bastion_sg" {
   }
 
   tags = {
-    Name = "bastion_sg"
+    Name = "allow_http_https_7080_8080"
   }
 }
 

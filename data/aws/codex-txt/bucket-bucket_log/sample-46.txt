@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block: aws in us east 1 
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
 }
 
 # create an s3 bucket, set bucket to "my-tf-log-bucket" and acl to "log-delivery-write"

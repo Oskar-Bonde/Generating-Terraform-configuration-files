@@ -37,14 +37,14 @@ resource "aws_security_group" "sg" {
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
-resource "aws_instance" "ec2" {
+resource "aws_instance" "instance" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
   key_name      = "terraform-key"
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {
-    Name = "terraform-ec2"
+    Name = "terraform-instance"
   }
 }
 

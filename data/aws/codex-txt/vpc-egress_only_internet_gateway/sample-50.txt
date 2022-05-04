@@ -18,7 +18,7 @@ resource "aws_vpc" "vpc" {
 }
 
 # create an egress only internet gateway, use vpc id
-resource "aws_egress_only_internet_gateway" "egress_only_internet_gateway" {
+resource "aws_egress_only_internet_gateway" "egress_only_igw" {
   vpc_id = aws_vpc.vpc.id
 }
 

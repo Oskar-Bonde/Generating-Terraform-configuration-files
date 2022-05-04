@@ -12,15 +12,12 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "main" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
-  tags = {
-    Name = "terraform-vpc"
-  }
 }
 
 # create internet gateway and use vpc id
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.vpc.id
 }
 

@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 22 inbound and all outbound ports
-resource "aws_security_group" "default" {
+resource "aws_security_group" "sg" {
   name        = "terraform-example-security-group"
   description = "Used in the terraform"
 
@@ -40,6 +40,6 @@ resource "aws_security_group" "default" {
 resource "aws_instance" "example" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
-  security_groups = [aws_security_group.default.id]
+  security_groups = [aws_security_group.sg.id]
 }
 

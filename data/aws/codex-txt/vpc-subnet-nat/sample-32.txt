@@ -24,8 +24,8 @@ resource "aws_subnet" "subnet" {
 }
 
 # create a nat gateway, use private connectivity type and subnet id
-resource "aws_nat_gateway" "nat_gateway" {
+resource "aws_nat_gateway" "nat" {
   subnet_id = aws_subnet.subnet.id
-  allocation_id = aws_eip.nat_eip.id
+  allocation_id = aws_eip.eip.id
 }
 

@@ -15,7 +15,7 @@ provider "aws" {
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow SSH access"
-  vpc_id      = "vpc-0a9f9e4c9e4c8a4d4"
+  vpc_id      = "vpc-0f7d1e2b1c7b9e9b8"
 
   ingress {
     description = "SSH"
@@ -38,13 +38,13 @@ resource "aws_security_group" "allow_ssh" {
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "web" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-  key_name = "mykey"
+
   tags = {
-    Name = "ec2_instance"
+    Name = "web"
   }
 }
 

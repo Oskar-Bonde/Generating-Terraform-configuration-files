@@ -18,7 +18,7 @@ variable "ec2_ami_id" {
   type = string
   validation {
     condition     = length(var.ec2_ami_id) == 12
-    error_message = "The AMI ID must be 12 characters long."
+    error_message = "ec2_ami_id must be 12 characters long, received ${var.ec2_ami_id}"
   }
 }
 

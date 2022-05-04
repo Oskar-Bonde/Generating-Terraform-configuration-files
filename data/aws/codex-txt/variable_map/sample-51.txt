@@ -15,8 +15,8 @@ provider "aws" {
 variable "environment" {
   type = map(string)
   default = {
-    terraform = "true"
-    environment = "dev"
+    Terraform = "true"
+    Environment = "dev"
   }
 }
 

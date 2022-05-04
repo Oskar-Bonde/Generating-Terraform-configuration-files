@@ -232,10 +232,10 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     
-    #model = 'codex'
-    model = 'codeparrot-small'
+    model = 'codex'
+    #model = 'codeparrot-small'
     #model = 'codeparrot'
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: 
+    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws', 
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)

@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create Database instance
+resource "aws_db_instance" "name_0" {
+  allocated_storage    = 10
+  engine               = "mysql"
+  engine_version       = "5.7.mysql_aurora.2.03.2"
+  instance_class       = "db.t2.micro"
+  name                 = "mydb"
+  username             = "foo"
+  password             = "bar"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+}
+

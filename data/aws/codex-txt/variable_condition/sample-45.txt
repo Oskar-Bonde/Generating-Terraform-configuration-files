@@ -16,9 +16,6 @@ variable "ec2_ami_id" {
   default = "ami-0915bcb5fa77e4892"
   description = "The AMI ID to use for the EC2 instance"
   type = string
-  validation {
-    condition     = length(var.ec2_ami_id) == 12
-    error_message = "The AMI ID must be 12 characters long."
-  }
+  condition = regex("^ami-", var.ec2_ami_id)
 }
 

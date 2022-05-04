@@ -15,13 +15,13 @@ provider "aws" {
 }
 
 # Resource block to create a random pet name of length 5 with separator -
-resource "random_pet" "my_pet" {
+resource "random_pet" "pet" {
   length  = 5
   separator = "-"
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
-resource "aws_s3_bucket" "my_bucket" {
-  bucket = random_pet.my_pet.id
+resource "aws_s3_bucket" "bucket" {
+  bucket = random_pet.pet.id
 }
 

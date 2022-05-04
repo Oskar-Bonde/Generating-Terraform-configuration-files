@@ -12,13 +12,22 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 80, 443 inbound and all ports outbound
-resource "aws_security_group" "web_sg" {
-  name        = "web_sg"
-  description = "Allow port 80, 443 inbound and all ports outbound"
+resource "aws_security_group" "web" {
+  name        = "web"
+  description = "Allow HTTP and HTTPS traffic"
+  vpc_id      = "vpc-0b5e5d5d5e5d5d5d5"
 
   ingress {
-    description = "Allow port 80, 443 inbound"
+    description = "HTTP"
     from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
@@ -32,7 +41,7 @@ resource "aws_security_group" "web_sg" {
   }
 
   tags = {
-    Name = "web_sg"
+    Name = "web"
   }
 }
 
@@ -40,7 +49,8 @@ resource "aws_security_group" "web_sg" {
 resource "aws_instance" "web" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
-  security_groups = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [aws_security_group.web.id]
+
   tags = {
     Name = "web"
   }

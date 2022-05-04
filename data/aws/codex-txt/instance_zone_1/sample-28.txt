@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # Resource block that creates an ec2 instance with ami-047a51fa27710816e, instance type t2.micro in zone us west 1a
-resource "aws_instance" "example" {
+resource "aws_instance" "web" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
   availability_zone = "us-west-1a"

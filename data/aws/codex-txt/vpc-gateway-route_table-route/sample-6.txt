@@ -12,33 +12,24 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "vpc_name" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
-  tags = {
-    Name = "terraform-vpc"
-  }
 }
 
 # AWS Internet Gateway with vpc id 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc_name.id
-  tags = {
-    Name = "terraform-igw"
-  }
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vpc.id
 }
 
 # Create AWS route table with vpc id
-resource "aws_route_table" "rt" {
-  vpc_id = aws_vpc.vpc_name.id
-  tags = {
-    Name = "terraform-rt"
-  }
+resource "aws_route_table" "routetable" {
+  vpc_id = aws_vpc.vpc.id
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
 resource "aws_route" "route" {
-  route_table_id = aws_route_table.rt.id
+  route_table_id = aws_route_table.routetable.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.igw.id
+  gateway_id = aws_internet_gateway.gw.id
 }
 

@@ -15,10 +15,9 @@ provider "aws" {
 resource "aws_security_group" "vpc-ssh" {
   name        = "vpc-ssh"
   description = "Allow SSH access"
-  vpc_id      = "vpc-0b0c0d0e0f0g0h0i0j"
+  vpc_id      = "vpc-0a4f9e8c8f8a8b1a1"
 
   ingress {
-    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

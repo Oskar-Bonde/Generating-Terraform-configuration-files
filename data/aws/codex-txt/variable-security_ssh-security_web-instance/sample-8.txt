@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -36,13 +36,12 @@ variable "ec2_instance_type" {
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "ec2_security_group" {
-  name        = "ec2_security_group"
-  description = "Allow SSH traffic from anywhere"
-  vpc_id      = "vpc-0e7d1c8a6d9d5b5c6"
+resource "aws_security_group" "sg_ssh" {
+  name        = "sg_ssh"
+  description = "Allow SSH traffic"
 
   ingress {
-    description = "SSH traffic"
+    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -57,18 +56,17 @@ resource "aws_security_group" "ec2_security_group" {
   }
 
   tags = {
-    Name = "ec2_security_group"
+    Name = "sg_ssh"
   }
 }
 
 # Create Security Group for web traffic
-resource "aws_security_group" "web_security_group" {
-  name        = "web_security_group"
-  description = "Allow HTTP traffic from anywhere"
-  vpc_id      = "vpc-0e7d1c8a6d9d5b5c6"
+resource "aws_security_group" "sg_web" {
+  name        = "sg_web"
+  description = "Allow HTTP traffic"
 
   ingress {
-    description = "HTTP traffic"
+    description = "HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -83,7 +81,7 @@ resource "aws_security_group" "web_security_group" {
   }
 
   tags = {
-    Name = "web_security_group"
+    Name = "sg_web"
   }
 }
 
@@ -92,7 +90,9 @@ resource "aws_instance" "ec2_instance" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
-  vpc_security_group_ids = [aws_security_group.ec2_security_group.id, aws_security_group.web_security_group.id]
+
+  vpc_security_group_ids = [aws_security_group.sg_ssh.id, aws_security_group.sg_web.id]
+
   tags = {
     Name = "ec2_instance"
   }

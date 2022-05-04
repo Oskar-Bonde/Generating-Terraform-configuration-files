@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -36,12 +36,12 @@ variable "ec2_instance_type" {
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "ssh_access" {
-  name        = "ssh_access"
-  description = "Allow SSH access from anywhere"
+resource "aws_security_group" "sg_ssh" {
+  name        = "sg_ssh"
+  description = "Security Group for SSH Traffic"
 
   ingress {
-    description = "SSH from anywhere"
+    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -56,17 +56,17 @@ resource "aws_security_group" "ssh_access" {
   }
 
   tags = {
-    Name = "ssh_access"
+    Name = "sg_ssh"
   }
 }
 
 # Create Security Group for web traffic
-resource "aws_security_group" "web_access" {
-  name        = "web_access"
-  description = "Allow web access from anywhere"
+resource "aws_security_group" "sg_web" {
+  name        = "sg_web"
+  description = "Security Group for web traffic"
 
   ingress {
-    description = "HTTP from anywhere"
+    description = "HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -81,20 +81,20 @@ resource "aws_security_group" "web_access" {
   }
 
   tags = {
-    Name = "web_access"
+    Name = "sg_web"
   }
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "web_server" {
+resource "aws_instance" "ec2_instance" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
 
-  vpc_security_group_ids = [aws_security_group.ssh_access.id, aws_security_group.web_access.id]
+  vpc_security_group_ids = [aws_security_group.sg_ssh.id, aws_security_group.sg_web.id]
 
   tags = {
-    Name = "web_server"
+    Name = "ec2_instance"
   }
 }
 

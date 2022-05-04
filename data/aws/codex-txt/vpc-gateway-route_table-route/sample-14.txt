@@ -12,23 +12,32 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "vpc" {
+resource "aws_vpc" "vpc_demo" {
   cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "vpc_demo"
+  }
 }
 
 # AWS Internet Gateway with vpc id 
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc_demo.id
+  tags = {
+    Name = "gw"
+  }
 }
 
 # Create AWS route table with vpc id
-resource "aws_route_table" "routetable" {
-  vpc_id = aws_vpc.vpc.id
+resource "aws_route_table" "rt" {
+  vpc_id = aws_vpc.vpc_demo.id
+  tags = {
+    Name = "rt"
+  }
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
-resource "aws_route" "route" {
-  route_table_id = aws_route_table.routetable.id
+resource "aws_route" "r" {
+  route_table_id = aws_route_table.rt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.gw.id
 }

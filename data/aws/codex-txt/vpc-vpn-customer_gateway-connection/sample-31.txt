@@ -12,13 +12,13 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with cidr block 10.0.0.0/16
-resource "aws_vpc" "main" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
 }
 
 # make a vpn gateway with the vpc id
 resource "aws_vpn_gateway" "vpn_gateway" {
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
 }
 
 # create a customer gateway with BGP ASN set to 65000, ip address 172.0.0.1 and type ipsec.1

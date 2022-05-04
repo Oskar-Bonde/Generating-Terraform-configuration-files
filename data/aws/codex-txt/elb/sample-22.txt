@@ -12,9 +12,9 @@ provider "aws" {
 }
 
 # Resource, create AWS ELB that listens for instance port 80 and lb port 80
-resource "aws_elb" "myelb" {
-  name = "myelb"
-  availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+resource "aws_elb" "elb" {
+  name = "terraform-elb"
+  availability_zones = ["us-east-1a"]
 
   listener {
     instance_port = 80
@@ -26,8 +26,8 @@ resource "aws_elb" "myelb" {
   health_check {
     healthy_threshold = 2
     unhealthy_threshold = 2
-    target = "HTTP:80/"
     timeout = 3
+    target = "HTTP:80/"
     interval = 30
   }
 }

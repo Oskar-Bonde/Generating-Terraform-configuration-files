@@ -13,12 +13,12 @@ provider "aws" {
 }
 
 # data block: Get latest AMI ID for Amazon Linux2 OS
-data "aws_ami" "aws_ami_linux2" {
+data "aws_ami" "aws_linux2_ami" {
   most_recent = true
   owners      = ["amazon"]
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-2.0.????????-x86_64-gp2"]
+    values = ["amzn2-ami-hvm-2.0.????????.?-x86_64-gp2"]
   }
 }
 

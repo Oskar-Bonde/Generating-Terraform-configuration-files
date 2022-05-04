@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create Database instance
+resource "aws_db_instance" "name_0" {
+  identifier = "mydbinstance"
+  allocated_storage = 20
+  storage_type = "gp2"
+  engine = "mysql"
+  engine_version = "5.7.19"
+  instance_class = "db.t2.micro"
+  name = "mydb"
+  username = "foo"
+  password = "bar"
+  parameter_group_name = "default.mysql5.7"
+  backup_retention_period = 5
+  backup_window = "07:00-09:00"
+  skip_final_snapshot = true
+  vpc_security_group_ids = ["sg-0f8f6e65c6d5a6fdb"]
+  subnet_group_name = "default"
+  apply_immediately = true
+}
+

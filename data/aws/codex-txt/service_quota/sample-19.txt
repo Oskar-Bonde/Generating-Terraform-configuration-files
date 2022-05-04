@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # create a service quota resource. Use quota code "L-F678F1CE" and service code "vpc". Use value 75
-resource "aws_servicequotas_service_quota" "vpc" {
+resource "aws_servicequotas_service_quota" "vpc_quota" {
   quota_code = "L-F678F1CE"
   service_code = "vpc"
   value = 75

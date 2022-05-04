@@ -12,12 +12,12 @@ provider "aws" {
 }
 
 # Resource, an aws security group with the following ingress ports: 80, 443, 8080, 8081, 7080, 7081. All use cidr block 0.0.0.0/0
-resource "aws_security_group" "sg" {
-  name        = "terraform-sg"
+resource "aws_security_group" "security_group" {
+  name        = "security_group"
   description = "Allow http, https, and custom ports"
 
   ingress {
-    description = "HTTP"
+    description = "HTTP from anywhere"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -25,7 +25,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "HTTPS"
+    description = "HTTPS from anywhere"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -33,7 +33,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "Custom Port 1"
+    description = "Custom Port from anywhere"
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
@@ -41,7 +41,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "Custom Port 2"
+    description = "Custom Port from anywhere"
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
@@ -49,7 +49,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "Custom Port 3"
+    description = "Custom Port from anywhere"
     from_port   = 7080
     to_port     = 7080
     protocol    = "tcp"
@@ -57,7 +57,7 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    description = "Custom Port 4"
+    description = "Custom Port from anywhere"
     from_port   = 7081
     to_port     = 7081
     protocol    = "tcp"

@@ -12,8 +12,8 @@ provider "aws" {
 }
 
 # Resource, create AWS ELB that listens for instance port 80 and lb port 80
-resource "aws_elb" "my-elb" {
-  name = "my-elb"
+resource "aws_elb" "my_elb" {
+  name = "my_elb"
   availability_zones = ["us-east-1a"]
   listener {
     instance_port = 80

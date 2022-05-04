@@ -8,11 +8,13 @@ terraform {
 
 # Provider Block AWS us east 1
 provider "aws" {
-  region = "us-east-1"
+  region                  = "us-east-1"
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "default"
 }
 
 # Create EC2 Instance ami-0915bcb5fa77e4892, instance type t2.micro and the lifecycle prevent destroy set true
-resource "aws_instance" "example" {
+resource "aws_instance" "my_instance" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t2.micro"
   lifecycle {

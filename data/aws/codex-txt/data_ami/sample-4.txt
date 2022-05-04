@@ -8,13 +8,14 @@ terraform {
 
 # Provider AWS block with region set to us-east-1 and default profile
 provider "aws" {
-  region     = "us-east-1"
-  profile    = "default"
+  region = "us-east-1"
+  profile = "default"
 }
 
 # data block: Get latest AMI ID for Amazon Linux2 OS
-data "aws_ami" "aws_linux2_ami" {
+data "aws_ami" "amazon_linux2" {
   most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name   = "name"
@@ -25,7 +26,5 @@ data "aws_ami" "aws_linux2_ami" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
-  owners = ["amazon"]
 }
 

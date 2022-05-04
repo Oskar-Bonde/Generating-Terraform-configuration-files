@@ -13,24 +13,24 @@ provider "aws" {
 
 # Create Security Group that allows port 80, 443 inbound and all ports outbound
 resource "aws_security_group" "web" {
-  name        = "web"
-  description = "Allow HTTP and HTTPS traffic inbound and all traffic outbound"
-  vpc_id      = "vpc-0f8d6c7b0d8a8c8c8"
+  name        = "terraform-example-web"
+  description = "Allow HTTP and HTTPS inbound traffic"
+  vpc_id      = "vpc-0c5d9b4f4c3c8d8e2"
 
   ingress {
-    description = "HTTP"
+    description = "HTTP from VPC"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   ingress {
-    description = "HTTPS"
+    description = "HTTPS from VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   egress {
@@ -41,7 +41,7 @@ resource "aws_security_group" "web" {
   }
 
   tags = {
-    Name = "web"
+    Name = "terraform-example-web"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.web.id]
 
   tags = {
-    Name = "web"
+    Name = "terraform-example-web"
   }
 }
 

@@ -17,7 +17,7 @@ resource "aws_vpc" "vpc" {
 }
 
 # AWS Internet Gateway with vpc id
-resource "aws_internet_gateway" "igw" {
+resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.vpc.id
 }
 
@@ -26,9 +26,10 @@ resource "aws_instance" "web" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.sg.id]
-  subnet_id = aws_subnet.subnet.id
+  subnet_id = aws_subnet.public.id
+  key_name = "mykey"
   tags = {
-    Name = "terraform-example"
+    Name = "web"
   }
 }
 
@@ -36,6 +37,6 @@ resource "aws_instance" "web" {
 resource "aws_eip" "ip" {
   vpc = true
   instance = aws_instance.web.id
-  depends_on = [aws_internet_gateway.igw]
+  depends_on = [aws_internet_gateway.gw]
 }
 

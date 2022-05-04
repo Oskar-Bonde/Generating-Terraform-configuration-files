@@ -18,10 +18,10 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
 
   connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    private_key = file("/Users/saurabh/.ssh/id_rsa")
-    host     = self.public_ip
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.public_ip
   }
 }
 

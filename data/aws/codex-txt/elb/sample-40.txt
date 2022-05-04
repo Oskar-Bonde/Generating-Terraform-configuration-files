@@ -12,23 +12,24 @@ provider "aws" {
 }
 
 # Resource, create AWS ELB that listens for instance port 80 and lb port 80
-resource "aws_elb" "default" {
-  name = "terraform-example-elb"
+resource "aws_elb" "example" {
+  name = "example"
+
   availability_zones = ["us-east-1a"]
 
   listener {
-    instance_port = 80
+    instance_port     = 80
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
   }
 
   health_check {
-    healthy_threshold = 2
+    healthy_threshold   = 2
     unhealthy_threshold = 2
-    target = "HTTP:80/"
-    timeout = 3
-    interval = 30
+    timeout             = 3
+    target              = "HTTP:80/"
+    interval            = 30
   }
 }
 

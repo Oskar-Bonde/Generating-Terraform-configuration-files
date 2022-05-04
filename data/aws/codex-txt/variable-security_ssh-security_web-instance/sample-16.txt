@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -62,7 +62,7 @@ resource "aws_security_group" "ssh_sg" {
 # Create Security Group for web traffic
 resource "aws_security_group" "web_sg" {
   name        = "web_sg"
-  description = "Allow web traffic"
+  description = "Allow HTTP traffic"
 
   ingress {
     from_port   = 80
@@ -84,18 +84,15 @@ resource "aws_security_group" "web_sg" {
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "web_server" {
+resource "aws_instance" "web" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
 
-  security_groups = [
-    aws_security_group.ssh_sg.id,
-    aws_security_group.web_sg.id,
-  ]
+  vpc_security_group_ids = [aws_security_group.ssh_sg.id, aws_security_group.web_sg.id]
 
   tags = {
-    Name = "web_server"
+    Name = "web"
   }
 }
 

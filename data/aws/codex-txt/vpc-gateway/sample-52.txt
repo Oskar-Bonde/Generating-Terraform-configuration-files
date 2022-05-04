@@ -12,20 +12,12 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "vpc_main" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support = true
-  tags = {
-    Name = "vpc_main"
-  }
 }
 
 # create internet gateway and use vpc id
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc_main.id
-  tags = {
-    Name = "igw"
-  }
+  vpc_id = aws_vpc.vpc.id
 }
 

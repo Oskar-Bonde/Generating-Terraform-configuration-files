@@ -12,24 +12,18 @@ provider "aws" {
 }
 
 # data block: Get latest AMI ID for Amazon Linux2 OS
-data "aws_ami" "amazon_linux_2" {
+data "aws_ami" "aws_ami_linux2" {
   most_recent = true
   owners      = ["amazon"]
-
   filter {
     name   = "name"
     values = ["amzn2-ami-hvm-2.0.????????-x86_64-gp2"]
   }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
 }
 
 # Create AWS instance with data ami id and t2.micro
-resource "aws_instance" "example" {
-  ami           = data.aws_ami.amazon_linux_2.id
+resource "aws_instance" "aws_instance_linux2" {
+  ami           = data.aws_ami.aws_ami_linux2.id
   instance_type = "t2.micro"
 }
 

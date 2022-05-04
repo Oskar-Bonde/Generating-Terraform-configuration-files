@@ -12,10 +12,10 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 22 inbound and all outbound ports
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
+resource "aws_security_group" "sg_ssh" {
+  name        = "sg_ssh"
   description = "Allow SSH access"
-  vpc_id      = "vpc-0d9b9f6c2f8d8c8b4"
+  vpc_id      = "vpc-0d9a9a6c"
 
   ingress {
     description = "SSH"
@@ -33,18 +33,19 @@ resource "aws_security_group" "allow_ssh" {
   }
 
   tags = {
-    Name = "allow_ssh"
+    Name = "sg_ssh"
   }
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
-resource "aws_instance" "web" {
+resource "aws_instance" "ec2_instance" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-
+  key_name      = "ec2-keypair"
+  vpc_security_group_ids = [aws_security_group.sg_ssh.id]
+  subnet_id = "subnet-0b9b9a6c"
   tags = {
-    Name = "web"
+    Name = "ec2-instance"
   }
 }
 

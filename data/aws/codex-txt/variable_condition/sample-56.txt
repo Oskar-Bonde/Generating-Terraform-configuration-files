@@ -13,11 +13,8 @@ provider "aws" {
 
 # varaible called ec2_ami_id with default ami-0915bcb5fa77e4892 and a condition to make sure string is an AMI id
 variable "ec2_ami_id" {
-  type = string
   default = "ami-0915bcb5fa77e4892"
-  validation {
-    condition     = length(var.ec2_ami_id) == 12
-    error_message = "ec2_ami_id must be 12 characters long, received ${var.ec2_ami_id}"
-  }
+  description = "AMI ID of the EC2 instance"
+  condition = regex("^ami-", var.ec2_ami_id)
 }
 

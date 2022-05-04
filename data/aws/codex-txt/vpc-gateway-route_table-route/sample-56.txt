@@ -27,7 +27,7 @@ resource "aws_route_table" "rt" {
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
-resource "aws_route" "r" {
+resource "aws_route" "route" {
   route_table_id = aws_route_table.rt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id

@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # data block: Get latest AMI ID for Amazon Linux2 OS
-data "aws_ami" "aws_ami_id" {
+data "aws_ami" "aws_linux2_ami" {
   most_recent = true
   owners      = ["amazon"]
   filter {
@@ -23,7 +23,7 @@ data "aws_ami" "aws_ami_id" {
 
 # Create AWS instance with data ami id and t2.micro
 resource "aws_instance" "aws_instance" {
-  ami           = data.aws_ami.aws_ami_id.id
+  ami           = data.aws_ami.aws_linux2_ami.id
   instance_type = "t2.micro"
 }
 

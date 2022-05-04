@@ -18,8 +18,8 @@ resource "aws_s3_bucket" "cookie" {
 
 # Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
 resource "aws_s3_bucket_object" "index" {
-  bucket = aws_s3_bucket.cookie.id
   key    = "index.html"
+  bucket = aws_s3_bucket.cookie.id
   source = "index.html"
 }
 

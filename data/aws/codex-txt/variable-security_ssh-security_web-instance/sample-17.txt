@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region  = var.aws_region
+  region = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -41,7 +41,7 @@ resource "aws_security_group" "ssh_access" {
   description = "Allow SSH access from anywhere"
 
   ingress {
-    description = "SSH"
+    description = "SSH from anywhere"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -66,7 +66,7 @@ resource "aws_security_group" "web_access" {
   description = "Allow HTTP access from anywhere"
 
   ingress {
-    description = "HTTP"
+    description = "HTTP from anywhere"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"

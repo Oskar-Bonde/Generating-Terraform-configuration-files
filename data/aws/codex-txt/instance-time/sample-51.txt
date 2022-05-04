@@ -22,7 +22,7 @@ resource "aws_instance" "example" {
 
 # Time sleep resource block, Wait for 90 seconds after creating ec2 instance
 resource "time_sleep" "example" {
-  for_each = aws_instance.example
+  for_each = toset(aws_instance.example.*.id)
   duration = 90
 }
 

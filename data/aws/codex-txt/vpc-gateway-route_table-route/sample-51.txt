@@ -22,13 +22,13 @@ resource "aws_internet_gateway" "igw" {
 }
 
 # Create AWS route table with vpc id
-resource "aws_route_table" "rtb" {
+resource "aws_route_table" "rt" {
   vpc_id = aws_vpc.vpc.id
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
-resource "aws_route" "rte" {
-  route_table_id = aws_route_table.rtb.id
+resource "aws_route" "route" {
+  route_table_id = aws_route_table.rt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.igw.id
 }

@@ -13,11 +13,12 @@ provider "aws" {
 
 # create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
 resource "aws_workspaces_ip_group" "ip_group" {
-  name        = "ip_group"
+  name        = "LA"
   description = "LA"
 
   rules {
-    source = "150.24.14.0/24"
+    source      = "150.24.14.0/24"
+    description = "LA"
   }
 }
 

@@ -1,0 +1,27 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create Database instance
+resource "aws_db_instance" "name_0" {
+  allocated_storage    = 10
+  storage_type         = "gp2"
+  engine               = "postgres"
+  engine_version       = "9.6.2"
+  instance_class       = "db.t2.micro"
+  name                 = "mydb"
+  username             = "postgres"
+  password             = "postgres"
+  parameter_group_name = "default.postgres9.6"
+  skip_final_snapshot  = true
+}
+

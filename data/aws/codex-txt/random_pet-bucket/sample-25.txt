@@ -21,7 +21,7 @@ resource "random_pet" "pet" {
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
-resource "aws_s3_bucket" "bucket" {
-  bucket = "${random_pet.pet.id}"
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = random_pet.pet.id
 }
 

@@ -12,27 +12,34 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "default" {
+resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "main"
+  }
 }
 
 # AWS Internet Gateway with vpc id
-resource "aws_internet_gateway" "default" {
-  vpc_id = aws_vpc.default.id
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
 }
 
 # Create EC2 Instance, use ami-047a51fa27710816e and t2.micro
-resource "aws_instance" "example" {
+resource "aws_instance" "web" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.default.id]
-  subnet_id = aws_subnet.default.id
+  vpc_security_group_ids = [aws_security_group.allow_all.id]
+  subnet_id = aws_subnet.public.id
+  associate_public_ip_address = true
+  tags = {
+    Name = "web"
+  }
 }
 
 # Resource block: Create Elastic IP that uses vpc, ec2 instance id and depends on internet gateway
-resource "aws_eip" "default" {
+resource "aws_eip" "ip" {
   vpc = true
-  instance = aws_instance.example.id
-  depends_on = [aws_internet_gateway.default]
+  instance = aws_instance.web.id
+  depends_on = [aws_internet_gateway.gw]
 }
 

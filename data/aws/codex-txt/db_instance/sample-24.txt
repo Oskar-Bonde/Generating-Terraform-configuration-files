@@ -12,15 +12,14 @@ provider "aws" {
 }
 
 # Create RDS MySQL Database with 5 allocated storage and username foo and password barbaz. Instance class t2 micro and skip final snapshot
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "foo" {
   allocated_storage    = 5
-  storage_type         = "gp2"
   engine               = "MySQL"
-  engine_version       = "5.7.mysql_aurora.2.03.2"
+  engine_version       = "5.6.21"
   instance_class       = "db.t2.micro"
-  name                 = "mydb"
-  username             = "foo"
+  name                 = "baz"
   password             = "barbaz"
+  username             = "foo"
   skip_final_snapshot  = true
 }
 

@@ -25,12 +25,12 @@ resource "aws_vpc" "main" {
 resource "aws_default_network_acl" "default" {
   default_network_acl_id = aws_vpc.main.default_network_acl_id
   ingress {
-    protocol = "-1"
+    protocol    = "-1"
     rule_number = 100
-    cidr_block = "0.0.0.0/0"
-    from_port = 83
-    to_port = 0
-    action = "allow"
+    cidr_block  = "0.0.0.0/0"
+    from_port   = 83
+    to_port     = 0
+    action      = "allow"
   }
 }
 

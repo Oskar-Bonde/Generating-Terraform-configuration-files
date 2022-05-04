@@ -8,16 +8,14 @@ terraform {
 
 # AWS provider block with variable region
 provider "aws" {
-  region = var.region
+  region = var.aws_region
 }
 
 # varaible called ec2_ami_id with default ami-0915bcb5fa77e4892 and a condition to make sure string is an AMI id
 variable "ec2_ami_id" {
   default = "ami-0915bcb5fa77e4892"
-  type    = string
-  validation {
-    condition     = length(var.ec2_ami_id) == 12
-    error_message = "ec2_ami_id must be 12 characters long"
-  }
+  description = "The AMI ID to use for the EC2 instance"
+  type = string
+  condition = can(aws_ami.ubuntu_ami)
 }
 

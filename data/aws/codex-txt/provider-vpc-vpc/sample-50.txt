@@ -8,25 +8,31 @@ terraform {
 
 # Provider block with AWS in us-east-1 region and profile set as default
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
   profile = "default"
 }
 
 # Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1
 provider "aws" {
-  alias   = "aws-west-1"
-  region  = "us-west-1"
+  alias  = "aws-west-1"
+  region = "us-west-1"
   profile = "default"
 }
 
 # Resource block to Create VPC called vpc-us-east-1 which uses private network 10.1.0.0/16
 resource "aws_vpc" "vpc-us-east-1" {
   cidr_block = "10.1.0.0/16"
+  tags = {
+    Name = "vpc-us-east-1"
+  }
 }
 
 # Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1
 resource "aws_vpc" "vpc-us-west-1" {
   provider = aws.aws-west-1
   cidr_block = "10.1.0.0/16"
+  tags = {
+    Name = "vpc-us-west-1"
+  }
 }
 
