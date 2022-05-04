@@ -230,10 +230,10 @@ def make_json_model(provider, model):
                     tf_file.close()
 
 if __name__ == "__main__":
-
-    model = 'codeparrot-small'
     
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+    model = 'codex'
+    
+    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws',
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
