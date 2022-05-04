@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create EC2 Instance 
+resource "aws_instance" "my_instance" {
+  ami           = "ami-0b33d91d"
+  instance_type = "t2.micro"
+}
+
+# Output block
+output "public_ip" {
+  value = aws_instance.my_instance.public_ip
+}
+

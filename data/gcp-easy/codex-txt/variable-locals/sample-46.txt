@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  project = var.project
+  region  = var.region
+  zone    = var.zone
+}
+
+# variable block
+variable "project" {
+  type = string
+}
+
+# local block
+locals {
+  env = "dev"
+}
+

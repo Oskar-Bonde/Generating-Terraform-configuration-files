@@ -1,0 +1,80 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "my-rg"
+  location = "westus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cog" {
+  name                = "my-cog-account"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create cognitive account key
+resource "azurerm_cognitive_account_key" "cog_key" {
+  name                = azurerm_cognitive_account.cog.name
+  resource_group_name = azurerm_resource_group.rg.name
+  key_name            = "key1"
+  key_value           = data.azurerm_client_config.current.object_id
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "my-bot"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name            = "F0"
+  kind                = "sdk"
+  endpoint            = "https://my-bot.azurewebsites.net/api/messages"
+  msi_endpoint        = "https://my-bot.azurewebsites.net/api/messages"
+  msi_secret          = "secret"
+  app_id              = "app-id"
+  app_password        = "app-password"
+  developer_app_insights_key = "app-insights-key"
+  developer_app_insights_api_key = "app-insights-api-key"
+  cognitive_models {
+    dispatch_model_id = "dispatch-model-id"
+    language_model_id = "language-model-id"
+  }
+  tags = {
+    environment = "Production"
+  }
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_line_speech" "bot_channel_direct_line_speech" {
+  name                = "my-bot-channel-direct-line-speech"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_name            = azurerm_bot_channels_registration.bot.name
+  bot_resource_group  = azurerm_bot_channels_registration.bot.resource_group_name
+  cognitive_models {
+    dispatch_model_id = "dispatch-model-id"
+    language_model_id = "language-model-id"
+  }
+  cognitive_account_id = azurerm_cognitive_account.cog.id
+  cognitive_account_key = azurerm_cognitive_account_key.cog_key.key_value
+  tags = {
+    environment = "Production"
+  }
+}
+

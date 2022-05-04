@@ -1,0 +1,50 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
+resource "google_privateca_certificate_authority" "ca_pool" {
+  provider = google-beta
+  name     = "ca_pool"
+  type     = "SUBORDINATE"
+  config {
+    key_spec = "EC_P256"
+    reuse_key = true
+    lifetime {
+      lifetime = "P90D"
+    }
+    issuing_options {
+      allowed_common_names = ["*.example.com"]
+      allowed_dns_names = ["*.example.com"]
+      allowed_email_addresses = ["example@example.com"]
+      allowed_ip_addresses = ["10.0.0.0/8"]
+      allowed_uris = ["https://example.com"]
+      allowed_x509_extensions = ["key_usage", "extended_key_usage"]
+      allowed_custom_oid_values = ["1.2.3.4"]
+      allowed_custom_oid_values = ["1.2.3.5"]
+      allowed_custom_oid_values = ["1.2.3.6"]
+      allowed_custom_oid_values = ["1.2.3.7"]
+      allowed_custom_oid_values = ["1.2.3.8"]
+      allowed_custom_oid_values = ["1.2.3.9"]
+      allowed_custom_oid_values = ["1.2.3.10"]
+      allowed_custom_oid_values = ["1.2.3.11"]
+      allowed_custom_oid_values = ["1.2.3.12"]
+      allowed_custom_oid_values = ["1.2.3.13"]
+      allowed_custom_oid_values = ["1.2.3.14"]
+      allowed_custom_oid_values = ["1.2.3.15"]
+      allowed_custom_oid_values = ["1.2.3.16"]
+      allowed_custom_oid_values = ["1.2.3.17"]
+      allowed_custom_oid_values = ["1.2.3.18"]
+      allowed_custom_oid_values = ["1.2.3.19"]
+      allowed_custom_oid_values = ["1
+}
+

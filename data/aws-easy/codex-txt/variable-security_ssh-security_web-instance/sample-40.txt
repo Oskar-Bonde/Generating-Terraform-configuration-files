@@ -1,0 +1,113 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable block
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+# make variable
+variable "ami_id" {
+  default = "ami-0ac019f4fcb7cb7e6"
+}
+
+# create variable block
+variable "key_name" {
+  default = "terraform-key"
+}
+
+# Create Security Group
+resource "aws_security_group" "terraform_sg" {
+  name = "terraform_sg"
+  description = "Allow SSH and HTTP traffic"
+  vpc_id = "vpc-0b9f9f7f8d8b8c7f2"
+
+  ingress {
+    description = "SSH"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform_sg"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "terraform_sg_2" {
+  name = "terraform_sg_2"
+  description = "Allow SSH and HTTP traffic"
+  vpc_id = "vpc-0b9f9f7f8d8b8c7f2"
+
+  ingress {
+    description = "SSH"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform_sg_2"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "terraform_instance" {
+  ami = var.ami_id
+  instance_type = var.instance_type
+  key_name = var.key_name
+  security_groups = [aws_security_group.terraform_sg.name]
+  subnet_id = "subnet-0b9f9f7f8d8b8c7f2"
+  tags = {
+    Name = "terraform_instance"
+  }
+}
+

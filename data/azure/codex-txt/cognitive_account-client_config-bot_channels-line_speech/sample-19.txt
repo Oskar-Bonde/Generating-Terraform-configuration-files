@@ -1,0 +1,59 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group
+resource "azurerm_cognitive_account" "example" {
+  name                = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  kind                = "SpeechServices"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create cognitive speech resource. Use name and location from cognitive account. Use client id and client secret from data block.
+resource "azurerm_cognitive_speech_resource" "example" {
+  name                = azurerm_cognitive_account.example.name
+  location            = azurerm_cognitive_account.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  cognitive_account_id = azurerm_cognitive_account.example.id
+  client_id           = data.azurerm_client_config.current.client_id
+  client_secret       = data.azurerm_client_config.current.client_secret
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+resource "azurerm_bot_channels_registration" "example" {
+  location            = "global"
+  sku                 = "F0"
+  microsoft_app_id    = data.azurerm_client_config.current.object_id
+  name                = "example-bot"
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+# resource block called bot channel direct line speech. Use name and location from bot_channels_registration. For cognitive service location and access key use cognitive account. Assign resource group name
+resource "azurerm_bot_channel_direct_line_speech" "example" {
+  name                = azurerm_bot_channels_registration.example.name
+  location            = azurerm_bot_channels_registration.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  cognitive_service_location = azurerm_cognitive_account.example.location
+  cognitive_service_access_key = azurerm_cognitive_speech_resource.example.primary_access_key
+}
+

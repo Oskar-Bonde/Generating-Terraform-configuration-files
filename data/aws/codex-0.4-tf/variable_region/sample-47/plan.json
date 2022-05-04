@@ -1,0 +1,13 @@
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mVersion constraints inside provider configuration blocks are deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 11, in provider "aws":
+[33m│[0m [0m  11:   version = [4m"~&gt; 2.0"[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mTerraform 0.13 and earlier allowed provider version constraints
+[33m│[0m [0minside the provider configuration block, but that is now
+[33m│[0m [0mdeprecated and will be removed in a future version of Terraform.
+[33m│[0m [0mTo silence this warning, move the provider version constraint
+[33m│[0m [0minto the required_providers block.
+[33m╵[0m[0m
+[0m[0m

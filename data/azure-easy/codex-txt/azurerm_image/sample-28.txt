@@ -1,0 +1,30 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-name"
+  location = "westus"
+}
+
+# resource block. Create azurerm image 
+resource "azurerm_image" "image" {
+  name                = "image-name"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  os_disk {
+    storage_account_type = "Standard_LRS"
+    blob_uri             = "https://storage-account-name.blob.core.windows.net/vhds/osdisk.vhd"
+  }
+}
+

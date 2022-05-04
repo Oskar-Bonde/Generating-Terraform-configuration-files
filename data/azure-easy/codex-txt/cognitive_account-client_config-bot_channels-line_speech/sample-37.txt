@@ -1,0 +1,65 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myResourceGroup"
+  location = "westus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cog" {
+  name                = "myCognitiveAccount"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create cognitive account key
+resource "azurerm_cognitive_account_key" "cogkey" {
+  name                = azurerm_cognitive_account.cog.name
+  resource_group_name = azurerm_resource_group.rg.name
+  key_name            = "key1"
+  key_value           = data.azurerm_client_config.current.object_id
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "myBot"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  microsoft_app_id    = "myAppId"
+  microsoft_app_password = "myAppPassword"
+  endpoint            = "https://myBot.azurewebsites.net/api/messages"
+  tags                = {
+    environment = "staging"
+  }
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_line_speech" "bot" {
+  name                = "myBotChannel"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_name            = azurerm_bot_channels_registration.bot.name
+  cognitive_services_account_name = azurerm_cognitive_account.cog.name
+  cognitive_services_account_key  = azurerm_cognitive_account_key.cogkey.key_value
+  speech_subscription_key         = "mySpeechSubscriptionKey"
+  speech_region                   = "westus"
+}
+

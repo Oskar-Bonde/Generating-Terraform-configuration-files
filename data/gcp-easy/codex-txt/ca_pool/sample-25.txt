@@ -1,0 +1,30 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("account.json")
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create a CaPool resource
+resource "google_compute_region_autoscaler" "my-autoscaler" {
+  name                    = "my-autoscaler"
+  region                  = "us-central1"
+  target                  = google_compute_instance_group_manager.my-instance-group-manager.self_link
+  autoscaling_policy_body = <<EOF
+{
+  "maxNumReplicas": 10,
+  "minNumReplicas": 1,
+  "cooldownPeriodSec": 60,
+  "cpuUtilization": {
+    "utilizationTarget": 0.6
+  }
+}
+

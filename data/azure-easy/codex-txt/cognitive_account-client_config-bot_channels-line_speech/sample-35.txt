@@ -1,0 +1,63 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-terraform-demo"
+  location = "eastus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cog" {
+  name                = "cog-terraform-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "current" {}
+
+# data block, azurem tenant
+data "azurerm_tenant" "current" {}
+
+# data block, azurem resource group
+data "azurerm_resource_group" "rg" {
+  name = azurerm_resource_group.rg.name
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "bot-terraform-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  kind                = "sdk"
+  microsoft_app_id    = "00000000-0000-0000-0000-000000000000"
+  microsoft_app_password = "password"
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_directline_speech" "bot" {
+  name                = "bot-terraform-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_name            = azurerm_bot_channels_registration.bot.name
+  cognitive_services_authoring_key = azurerm_cognitive_account.cog.primary_access_key
+  cognitive_services_authoring_region = azurerm_cognitive_account.cog.location
+}
+

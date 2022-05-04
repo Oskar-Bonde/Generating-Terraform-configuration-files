@@ -1,0 +1,71 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myResourceGroup"
+  location = "eastus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cog" {
+  name                = "mycognitiveaccount"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create cognitive account key
+resource "azurerm_cognitive_account_key" "cog_key" {
+  name                = azurerm_cognitive_account.cog.name
+  resource_group_name = azurerm_resource_group.rg.name
+  key_name            = "key1"
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "mybot"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  microsoft_app_id    = "00000000-0000-0000-0000-000000000000"
+  microsoft_app_password = "password"
+  endpoint            = "https://mybot.azurewebsites.net/api/messages"
+  tags                = {
+    environment = "production"
+  }
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_line_speech" "bot_speech" {
+  name                = "mybot-directlinespeech"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_name            = azurerm_bot_channels_registration.bot.name
+  bot_resource_group  = azurerm_bot_channels_registration.bot.resource_group_name
+  cognitive_models    = [
+    {
+      locale = "en-us"
+      model  = "builtin/conversational"
+    },
+  ]
+  speech_recognition_language = "en-US"
+  subscription_key            = data.azurerm_client_config.current.subscription_id
+  client_id                   = azurerm_cognitive_account.cog.id
+  client_secret               = azurerm_cognitive_account_key.cog_key.value
+}
+

@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+    time = {
+      source  = "hashicorp/time"
+    }
+  }
+}
+
+# Provider block AWS
+provider "aws" {
+  region = var.region
+}
+
+# Resource block with an EC2 instance
+resource "aws_instance" "example" {
+  ami           = var.ami
+  instance_type = var.instance_type
+
+  tags = {
+    Name = "Terraform-Example"
+  }
+}
+
+# Time sleep resource block
+resource "time_sleep" "example" {
+  for_each = aws_instance.example
+  duration = "5m"
+}
+

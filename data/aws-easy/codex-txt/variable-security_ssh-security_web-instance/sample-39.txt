@@ -1,0 +1,117 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable block
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+
+# Create a resource
+resource "aws_instance" "my_instance" {
+  ami           = "ami-0b898040803850657"
+  instance_type = "t2.micro"
+}
+
+# make variable
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+# create variable block
+variable "ami" {
+  default = "ami-0b898040803850657"
+}
+
+# Create Security Group
+resource "aws_security_group" "my_security_group" {
+  name        = "my_security_group"
+  description = "Allow SSH and HTTP traffic"
+  vpc_id      = "vpc-0b898040803850657"
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "my_security_group"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "my_security_group" {
+  name        = "my_security_group"
+  description = "Allow SSH and HTTP traffic"
+  vpc_id      = "vpc-0b898040803850657"
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "my_security_group"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "my_instance" {
+  ami           = "ami-0b898040803850657"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.my_security_group.id]
+
+  tags = {
+    Name = "my_instance"
+  }
+}
+

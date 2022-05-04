@@ -1,0 +1,37 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myResourceGroup"
+  location = "West Europe"
+}
+
+# make iothub resource
+resource "azurerm_iothub" "iothub" {
+  name                = "myiothub"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "S1"
+}
+
+# iot security solution resource
+resource "azurerm_iothub_security_solution" "iothub_security_solution" {
+  name                = "myiothubsecuritysolution"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  iothub_name         = azurerm_iothub.iothub.name
+  solution_name       = "AzureSecurityInsights"
+  workspace_resource_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.OperationalInsights/workspaces/myworkspace"
+}
+

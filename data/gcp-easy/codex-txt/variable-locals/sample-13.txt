@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("${path.module}/credentials.json")
+  project     = var.project
+  region      = var.region
+}
+
+# variable block
+variable "project" {
+  type = string
+}
+
+# local block
+locals {
+  network_name = "terraform-network"
+  subnet_name  = "terraform-subnet"
+}
+

@@ -1,0 +1,114 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "name" {
+  type = string
+}
+
+# variable block
+variable "ami" {
+  type = string
+}
+
+# make variable
+variable "instance_type" {
+  type = string
+}
+
+# create variable block
+variable "key_name" {
+  type = string
+}
+
+# Create Security Group
+resource "aws_security_group" "web" {
+  name        = "web"
+  description = "Allow HTTP and SSH access"
+  vpc_id      = "vpc-0c5f5f3d7f8a4a8a7"
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "web"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "db" {
+  name        = "db"
+  description = "Allow HTTP and SSH access"
+  vpc_id      = "vpc-0c5f5f3d7f8a4a8a7"
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "db"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "web" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  subnet_id     = "subnet-0c3a8a7b0c9e9d8e8"
+  vpc_security_group_ids = [aws_security_group.web.id]
+
+  tags = {
+    Name = "web"
+  }
+}
+
