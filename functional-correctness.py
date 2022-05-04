@@ -62,7 +62,7 @@ def remove_identifiers(txt_file):
     
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value)":".+?"','', input)
+    input = re.sub('"(description|name|constant_value|terraform_version)":".+?"','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
 
 def remove_brackets(input):
