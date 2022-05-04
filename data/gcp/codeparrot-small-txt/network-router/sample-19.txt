@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-west1"
+}
+
+# create compute network resource. Give it the name foobar and don't auto create subnetworks
+resource "google_compute_network" "foobar" {
+  name = "foobar"
+}
+
+# resource block: create a compute router for the foobar network. Make a bgp block, use asn 64514, advertise mode custom, advertise groups all subnets and set advertised ip ranges to 1.2.3.4 and 6.7.0.0/16
+resource "google_compute_router" "foobar" {
+  name    = "foobar"
+  network = google_compute_network.foobar.name
+  bgp {
+    advertise_mode = "CUSTOM"
+    advertised_groups = ["ALL_SUBNETS"]
+  }
+}
+

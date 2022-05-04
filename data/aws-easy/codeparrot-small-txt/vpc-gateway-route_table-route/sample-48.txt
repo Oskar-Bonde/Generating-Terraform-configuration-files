@@ -1,0 +1,1 @@
+ Provider Block# Create a AWS VPC resource# AWS Internet Gateway# Create AWS route table# Create route resource

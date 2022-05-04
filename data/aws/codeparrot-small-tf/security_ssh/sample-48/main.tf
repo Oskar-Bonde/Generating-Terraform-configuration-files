@@ -1,0 +1,1 @@
+ AWS provider block in region us-east-1# Create Security Group called vpc-ssh. It allows port 22 ingress and all ports and ip egress

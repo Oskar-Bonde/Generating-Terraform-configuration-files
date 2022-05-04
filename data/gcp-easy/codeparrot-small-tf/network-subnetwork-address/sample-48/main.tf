@@ -1,0 +1,1 @@
+ google provider block# create compute network# create compute subnetwork# make a compute address resource

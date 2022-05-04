@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group, use name example in location West Europe# iothub with sku name S1 and capacity 1. Use resource group name and location# iot security solution, assign display name and name. Use iothub id and resrouce group name and location

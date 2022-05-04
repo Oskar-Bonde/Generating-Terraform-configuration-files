@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# make resource groupresource group accessible
+resource "azurerm_resource_group" "rg_resource_group" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create cognitive account resource
+resource "azurerm_resource_group" "cognitive_account_rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+

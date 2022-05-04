@@ -1,0 +1,43 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "rg" {
+  name     = "example-resources"
+  location = "westus2"
+}
+
+# data block, azurem client configresource block
+data "azurerm_client_config" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "stor" {
+  name                     = "myazurestorageaccount"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+resource "azurerm_channel_registration" "registration" {
+  name                = "mychannelregistration"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Standard"
+  client_id            = azurerm_client_config.current.client_id
+  client_secret        = azurerm_client_config.current.client_secret
+  subscription_id     = azurerm_channel_registration.registration.id
+  custom_data          = data.azurerm_client_config.current.azure_client_config.default_data
+}
+

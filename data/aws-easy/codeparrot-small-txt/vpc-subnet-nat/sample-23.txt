@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with the AWS instance
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "default" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# Create AWS subnets resource
+resource "aws_subnet" "default" {
+  vpc_id            = "${aws_vpc.default.id}"
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "eu-west-1a"
+}
+
+# create a nat gateway
+resource "aws_eip" "nat" {
+  vpc = true
+}
+

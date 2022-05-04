@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# kubernetes cluster resource

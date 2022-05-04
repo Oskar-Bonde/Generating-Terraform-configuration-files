@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "name_0" {
+  name = "my-dns-policy"
+  description = "Terraform managed."
+  policy_data = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "dns.rrset",
+        "dns.rrset_add",
+        "dns.rrset_delete",
+        "dns.rrset_get",
+        "dns.rrset_get_default",
+        "dns.rrset_get_all",
+        "dns.rrset_update",
+        "dns.rrset_update_default",
+        "dns.rrset_update_default_ssl_certs",
+        "dns.rrset_update_default_ssl_certs",
+        "dns.rrset_update_default_ssl_certs",
+        "dns.rrset_delete_default_ssl_certs",
+        "dns.rrset_delete_default_ssl_certs",
+        "dns.rrset_get_default_ssl_certs",
+        "dns.rrset_get_all_default_ssl_certs",
+        "dns.rrset_get_default_ssl_certs",
+        "dns.rrset_get_all_default_ssl_certs",
+        "dns.rrset_set_set_default_ssl_certs",
+        "dns.rrset_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_set_set_default_ssl_certs",
+        "dns.rrset_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set_set
+}
+

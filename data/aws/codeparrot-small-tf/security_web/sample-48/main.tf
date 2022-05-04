@@ -1,0 +1,1 @@
+ AWS provider block in region us-east-1# Create Security Group called vpc-web. It allows port 80 and 443 ingress and all ports and ip egress

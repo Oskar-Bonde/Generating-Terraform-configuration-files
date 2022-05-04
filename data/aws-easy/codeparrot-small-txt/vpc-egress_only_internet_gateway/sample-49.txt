@@ -1,0 +1,1 @@
+ Provider block# create vpc resource# create an egress only internet gateway

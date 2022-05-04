@@ -1,0 +1,1 @@
+ Provider Block# Create a AWS VPC resource# Create AWS subnets resource

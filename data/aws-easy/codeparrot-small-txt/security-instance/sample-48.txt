@@ -1,0 +1,1 @@
+ Provider AWS block# Create Security Group# Create EC2 Instance

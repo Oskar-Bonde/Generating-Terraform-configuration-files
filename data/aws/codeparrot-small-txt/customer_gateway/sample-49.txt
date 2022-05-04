@@ -1,0 +1,1 @@
+ Provider Block: aws in us east 1# create customer gateway with bgp asn 65000, use ip address 172.0.0.1 and type ipsec.1

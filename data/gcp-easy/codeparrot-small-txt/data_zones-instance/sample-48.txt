@@ -1,0 +1,1 @@
+ google provider block# data block with google compute zones# make a compute instance

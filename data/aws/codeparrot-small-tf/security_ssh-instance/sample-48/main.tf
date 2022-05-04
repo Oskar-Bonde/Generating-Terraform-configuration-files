@@ -1,0 +1,1 @@
+ Provider AWS in region "us-east-1"# Create Security Group that allows port 22 inbound and all outbound ports# Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id

@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# a google compute network resource with name terraform network

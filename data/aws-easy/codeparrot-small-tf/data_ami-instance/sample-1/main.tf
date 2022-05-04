@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -15,13 +16,16 @@ provider "aws" {
 # data AMI ID block
 data "aws_ami" "name_0" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
 }
 
-# Create AWS instance
-resource
-aws_instance" "instance" {
-  ami           = data.aws_ami.name_0.id
-  instance_type = "t2.micro"
+# Create AWS instance profile
+resource "aws_iam_instance_profile" "name_1" {
+  name = "ec2demo"
 }
 

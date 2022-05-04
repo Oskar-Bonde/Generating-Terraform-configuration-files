@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group, use name myTFResourceGroup in location westus2

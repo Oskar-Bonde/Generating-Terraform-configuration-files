@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# a compute network resource 
+resource "google_compute_network" "default" {
+  name = "my-compute-network"
+}
+
+# compute route resource
+resource "google_compute_route" "default" {
+  name = "my-compute-route"
+}
+

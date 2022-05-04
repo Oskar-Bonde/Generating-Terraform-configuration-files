@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -14,9 +14,9 @@ provider "aws" {
 
 # create AWS ELB resource
 resource "aws_elb" "name_0" {
-  name            = "elbdemo"
-  subnets         = ["${aws_subnet.public.*.id}"]
-  security_groups = ["${aws_security_group.elb.id}"]
+  name            = "terraform-example-elb"
+  security_groups = [aws_security_group.default.id]
+  subnets         = [aws_subnet.public.id]
 
   listener {
     instance_port     = 80
@@ -31,6 +31,10 @@ resource "aws_elb" "name_0" {
     timeout             = 3
     target              = "HTTP:80/"
     interval            = 30
+  }
+
+  tags = {
+    Name = "terraform-example-elb"
   }
 }
 

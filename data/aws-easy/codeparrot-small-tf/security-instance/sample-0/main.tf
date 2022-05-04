@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with the AWS credentials
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -43,9 +43,6 @@ resource "aws_security_group" "name_0" {
   }
 }
 
-# Create EC2 Instance 
-resourceresource "aws_instance" "ec2demo" {
-  ami           = "ami-0ff8a91507f77f867" 
-  instance_type = "t2.micro"
+# Create EC2 Instance
 }
 

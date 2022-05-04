@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create a node template. Assign a name, set node type to n1-node-96-624

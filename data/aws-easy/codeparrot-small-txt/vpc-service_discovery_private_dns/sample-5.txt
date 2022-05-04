@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,11 +18,7 @@ resource "aws_vpc" "default" {
 }
 
 # Make a service discovery private dns namespace resource
-resource "aws_route53_record" "default" {
-  zone_id = "${data.aws_route53_zone.default.zone_id}"
-  name    = "default"
-  type    = "CNAME"
-  ttl     = "300"
-  records = ["${aws_vpc.default.cidr_block}"]
+resource "aws_route53_zone" "default" {
+  name = "hashicorp.com"
 }
 

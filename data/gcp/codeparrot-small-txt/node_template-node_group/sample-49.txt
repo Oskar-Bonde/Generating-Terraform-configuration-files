@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create a node template. Assign a name, set node type to n1-node-96-624# create a compute node group resource. Set size to 1 and use the node template resource id

@@ -1,0 +1,1 @@
+ AWS provider block# Resource block with an amazon VPC

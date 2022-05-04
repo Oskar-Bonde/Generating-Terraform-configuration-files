@@ -1,0 +1,10 @@
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mQuoted references are deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on F:\Code\Generating-Terraform-configuration-files\data\aws\codeparrot-small-tf\vpc-subnet-nat\sample-20\main.tf line 36, in resource "aws_nat_gateway" "name_2":
+[33m│[0m [0m  36:   depends_on = [[4m"aws_internet_gateway.main"[0m][0m
+[33m│[0m [0m
+[33m│[0m [0mIn this context, references are expected literally rather than in quotes. Terraform 0.11 and earlier required quotes, but quoted references are now deprecated and will be removed in a future
+[33m│[0m [0mversion of Terraform. Remove the quotes surrounding this reference to silence this warning.
+[33m╵[0m[0m
+[0m[0m

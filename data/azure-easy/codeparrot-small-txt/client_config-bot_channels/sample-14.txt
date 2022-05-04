@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_test" {
+  name     = "myTFResourceGroup_test"
+  location = "westus2"
+}
+
+# data block, azurem client configresource
+data "azurerm_client_config" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "test" {
+  name                     = "test"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}
+
+# create bot channels registration resource
+resource "azurerm_channel_registration" "test" {
+  channel_id                 = azurerm_channel_registration.test.id
+  client_id                  = azurerm_client_config.current.client_id
+  client_secret             = data.azurerm_client_config.current.client_secret
+  client_secret_version    = "2.0"
+}
+

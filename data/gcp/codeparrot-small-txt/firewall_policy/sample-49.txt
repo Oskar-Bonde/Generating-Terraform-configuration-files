@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create a firewall policy. Set parent to "organizations/12345" and set short name to my policy

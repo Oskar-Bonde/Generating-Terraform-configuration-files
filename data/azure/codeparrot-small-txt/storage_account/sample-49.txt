@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group and name it atp example. Set location to west europe# create storage account resource. Use resource group name and location from atp-example. Use account tier standard and replication type to LRS

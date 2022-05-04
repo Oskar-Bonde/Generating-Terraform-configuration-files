@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -30,9 +30,5 @@ resource "aws_elb" "name_0" {
     target              = "HTTP:80/"
     interval            = 30
   }
-  cross_zone_load_balancing = true
-  idle_timeout                = 400
-  connection_draining       = true
-  connection_draining_timeout = 400
 }
 

@@ -1,0 +1,77 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# resource block, sql database instance
+resource "google_sql_database_instance" "vm_instance" {
+  name = "my-sql-instance-${random_suffix}"
+  region = "us-central1"
+  database_version = "POSTGRES_12"
+  settings {
+    tier = "db-f1-micro"
+    ip_configuration {
+      authorized_networks = [
+        "10.128.0.0/16",
+        "10.128.64.0/16",
+        "10.128.128.0/20",
+        "10.128.192.0/20",
+        "10.128.224.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20"
+      ]
+      authorized_networks = [
+        "10.128.0.0/16",
+        "10.128.64.0/16",
+        "10.128.128.0/20",
+        "10.128.192.0/20",
+        "10.128.224.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20"
+      ]
+      authorized_networks = [
+        "10.128.0.0/16",
+        "10.128.64.0/16",
+        "10.128.128.0/20",
+        "10.128.192.0/20",
+        "10.128.224.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20"
+      ]
+      authorized_networks = [
+        "10.128.0.0/16",
+        "10.128.64.0/16",
+        "10.128.128.0/20",
+        "10.128.192.0/20",
+        "10.128.224.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20"
+      ]
+      authorized_networks = [
+        "10.128.0.0/16",
+        "10.128.64.0/16",
+        "10.128.128.0/20",
+        "10.128.192.0/20",
+        "10.128.224.0/20",
+        "10.128.240.0/20",
+        "10.128.240.0/20"
+      ]
+      service_account = {
+        email  = "my-service-account"
+        scopes = ["cloud-platform"]
+      }
+    }
+  }
+}
+
+# create a sql database
+}
+

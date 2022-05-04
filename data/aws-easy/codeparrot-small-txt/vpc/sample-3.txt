@@ -6,10 +6,10 @@ terraform {
   }
 }
 
-# AWS provider block
+# AWS provider block with the following settings
 provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
+  alias  = "files"
+  region = "us-east-1"
 }
 
 # Resource block with an amazon VPC

@@ -1,0 +1,47 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "rg" {
+  name     = "example"
+  location = "westus2"
+}
+
+# iothub with sku name S1 and capacity 1. Use resource group name and locationresource group name
+resource "azurerm_resource_group" "iothub" {
+  name     = "example"
+  location = "westus2"
+}
+
+# iot security solution, assign display name and name. Use iothub id and resrouce group name and location
+# azurerm_resource_group "iothub" {
+#   name = "example"
+#   location = "westus2"
+# }
+
+# Create virtual network
+resource "azurerm_virtual_network" "vnet" {
+  name                = "example"
+  address_space       = ["10.0.0.0/16"]
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "example"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.pubIP.id
+    load_balancer_backend_address_pools_ids = [azurerm_lb_backend_address_pool.backendPool1.id]
+  }
+}
+

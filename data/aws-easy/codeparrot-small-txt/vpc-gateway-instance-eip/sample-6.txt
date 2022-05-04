@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,7 +17,7 @@ resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
-# AWS Internet Gateway 
+# AWS Internet Gateway
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
 }
@@ -28,8 +28,8 @@ resource "aws_instance" "ec2demo" {
   instance_type = "t2.micro"
 }
 
-# Resource block: Create Elastic IP
-resource "aws_eip" "default" {
-  vpc = true
+# Resource block: Create Elastic IPresource
+resource "aws_eip" "ip" {
+  instance = "${aws_instance.ec2demo.id}"
 }
 

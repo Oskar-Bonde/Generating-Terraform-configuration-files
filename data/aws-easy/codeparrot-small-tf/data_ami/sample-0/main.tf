@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -15,6 +16,10 @@ provider "aws" {
 # data AMI ID block
 data "aws_ami" "name_0" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
 }
 

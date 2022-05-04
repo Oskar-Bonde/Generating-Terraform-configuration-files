@@ -1,0 +1,1 @@
+ Provider Block# Create a AWS VPC# Create AWS subnets resource# Create EC2 Instance

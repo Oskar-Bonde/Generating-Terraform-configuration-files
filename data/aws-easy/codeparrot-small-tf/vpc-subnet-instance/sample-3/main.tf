@@ -6,25 +6,31 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create a AWS VPC
-resource "aws_vpc" "name_0" {
-  cidr_block = "10.0.0.0/16"
+# Create a AWS VPCvariable with the VPC
+resource "aws_vpc_variable" "name_0" {
+  # VPC variables are defined as environment variables in terraform.tfvars
+  # https://www.terraform.io/docs/configuration/variables.html
+  # https://www.terraform.io/docs/configuration/variables.html
+  key_name = "default"
+  subnet_id = "subnet-11ac0174"
 }
 
 # Create AWS subnets resource
 resource "aws_subnet" "name_1" {
-  vpc_id            = "${aws_vpc.name_0.id}"
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "eu-west-1a"
+  # 1st available AZ
+  availability_zone = "us-east-1a"
+  # 1st available AZ + 1st available AZ + 2nd available AZ
+  cidr_block = "10.0.1.0/24"
+  vpc_id = "${aws_vpc_variable.name_0.id}"
 }
 
-# Create EC2 Instance
+# Create EC2 Instancevariable with the VPC
 resource "aws_instance" "name_2" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

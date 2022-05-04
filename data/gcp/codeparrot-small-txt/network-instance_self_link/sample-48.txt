@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# compute network that auto creates subnetworks# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name

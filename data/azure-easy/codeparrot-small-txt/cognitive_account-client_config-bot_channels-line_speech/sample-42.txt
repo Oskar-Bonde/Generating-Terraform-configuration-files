@@ -1,0 +1,59 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource groupresource
+resource "azurerm_resource_group" "rgresource" {
+  name     = "myTFResourceGroupResourceGroup"
+  location = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+# create cognitive account resourcevariable
+resource "azurerm_storage_account" "sa" {
+  name                     = "tf-test-storage-account"
+  resource_group_name      = azurerm_resource_group.rgresource.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# data block, azurem client configresource
+data "azurerm_client_config" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "sa" {
+  name                     = "tf-test-storage-account"
+  resource_group_name      = azurerm_resource_group.rgresource.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource
+resource "azurerm_channel_registration" "registration" {
+  name                = "tf-test-channel-registration"
+  resource_group_name = azurerm_resource_group.rgresource.name
+  location            = "westus2"
+  account_tier           = "Standard"
+  account_replication_type = "LRS"
+}
+
+# resource block called bot channel direct line speechvariable
+resource "azurerm_speech_track" "tf" {
+  name                = "tf-test-speech-track"
+  resource_group_name = azurerm_resource_group.rgresource.name
+  location            = "westus2"
+  account_tier           = "Standard"
+  account_replication_type = "LRS"
+}
+

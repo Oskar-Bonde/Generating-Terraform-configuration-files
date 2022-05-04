@@ -1,0 +1,2 @@
+Task | Success rate | Errors
+Average success rate nan%

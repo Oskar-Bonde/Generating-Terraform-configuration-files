@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# ml engine model resource. With default name and in europe west 4 regions
+resource "google_compute_instance" "ml_instance" {
+  name = "ml-instance-%{random_suffix}"
+  machine_type = "europe-west4"
+  zone = "europe-west1-b"
+
+  boot_disk {
+    initialize_params {
+      image = "ml-cloud/ml-0"
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+}
+

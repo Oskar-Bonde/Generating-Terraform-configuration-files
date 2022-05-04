@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,13 +7,13 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with the following settings
 provider "aws" {
-  profile = "default"
+  alias  = "us-east-1"
   region  = "us-east-1"
 }
 
-# Create EC2 Instance 
+# Create EC2 Instances in AWS
 resource "aws_instance" "name_0" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

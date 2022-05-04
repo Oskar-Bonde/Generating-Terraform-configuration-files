@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,14 +17,13 @@ resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
-# make a vpn gateway
+# make a vpn gateway to the VPC
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
 }
 
-# create a customer gateway
-resource "aws_vpn_gateway" "default" {
+# create a customer gateway to the VPC
+resource "aws_customer_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
-  # the customer gateway is created in the aws provider block above
 }
 

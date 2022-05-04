@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create variable with default value
+variable "default" {
+  default = "hello"
+}
+
+# variable block
+variable "block" {
+  default = "hello"
+}
+
+# make variable
+variable "variable" {
+  default = "hello"
+}
+
+# create variable blockresource
+resource "aws_instance" "test" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# Create Security Group
+resource "aws_security_group" "test" {
+  name        = "test"
+  description = "test"
+  vpc_id      = "${aws_vpc.default.id}"
+}
+
+# Create Security Group
+resource "aws_security_group" "test_ssh" {
+  name        = "test_ssh"
+  description = "test_ssh"
+  vpc_id      = "${aws_vpc.default.id}"
+}
+
+# Create EC2 Instance
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+

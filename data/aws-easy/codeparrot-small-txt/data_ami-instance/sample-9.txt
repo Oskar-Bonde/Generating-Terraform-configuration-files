@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -19,9 +20,14 @@ data "aws_ami" "ami" {
 }
 
 # Create AWS instance
-resource
-aws_instance" "example" {
+resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
   instance_type = "t2.micro"
+  key_name      = var.key_name
+  vpc_security_group_ids = [aws_security_group.default.id]
+  subnet_id = aws_subnet.default.id
+  tags = {
+    Name = "terraform-example"
+  }
 }
 

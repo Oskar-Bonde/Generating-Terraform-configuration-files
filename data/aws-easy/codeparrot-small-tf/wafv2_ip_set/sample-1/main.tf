@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider AWS
+# Provider AWS instance
 provider "aws" {
   profile = "default"
   region  = "us-east-1"

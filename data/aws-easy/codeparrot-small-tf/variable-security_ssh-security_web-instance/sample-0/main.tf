@@ -12,43 +12,46 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Create variable 
-variable "name_0" {
-  description = "Name of the instance"
-  default     = "terraform-example"
+# Create variable with default value
+variable "name_3" {
+  default = "hello"
 }
 
-# variable block
-variable
-variable "name_1" {
-  description = "Instance type"
-  default     = "t2.micro"
+# variable blockresource for resource
+resource "aws_instance" "name_1" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
 }
 
-# make variable
-variable
-variable "name_2" {
-  description = "Name of the SSH keypair to use in AWS."
-  default     = "terraform-example"
+# make variable block resource
+resource "aws_instance" "name_2" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
 }
 
-# create variable block
-variablevariable "instance_data" {
-  description = "Data to pass to instance"
-  default     = "#!/bin/bash\necho ECS_CLUSTER=example-cluster >> /etc/ecs/ecs.config"
+# create variable block resource with default value
+variable "name_3" {
+  default = "hello"
 }
 
 # Create Security Group
-resource
-aws_security_group" "terraform-example" {
-  name        = "terraform-example"
+resource "aws_security_group" "name_4" {
+  name        = "terraform_example"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.terraform-example.id}"
+  vpc_id      = "${aws_vpc.default.id}"
 
   # SSH access from anywhere
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -63,10 +66,14 @@ aws_security_group" "terraform-example" {
 }
 
 # Create Security Group
-resource
+resource "aws_security_group" "name_5" {
+  name        = "terraform_example_sg"
+  description = "Used in the terraform"
+  vpc_id      = "${aws_vpc.default.id}"
+
+  # SSH access from anywhere
 }
 
 # Create EC2 Instance
-resource
 }
 

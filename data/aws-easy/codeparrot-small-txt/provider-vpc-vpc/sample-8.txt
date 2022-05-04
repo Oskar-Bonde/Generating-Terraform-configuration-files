@@ -6,25 +6,24 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Provider block
+# Provider block with the AWS provider
 provider "aws" {
   alias  = "us-east-1"
   region  = "us-east-1"
 }
 
-# Resource block to Create VPC 
+# Resource block to Create VPC
 resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
 # Resource block with VPC
-resource
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
 }

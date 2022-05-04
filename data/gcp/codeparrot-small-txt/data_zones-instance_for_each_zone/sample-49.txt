@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# data block with available google compute zones in europe west4. The status must be UP and project is terraform-338909# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name

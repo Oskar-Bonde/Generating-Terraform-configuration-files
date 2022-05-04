@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,10 +19,9 @@ data "aws_ami" "name_0" {
   owners      = ["099720109477"] # Canonical
 }
 
-# Create AWS instance
-resource
-aws_instance" "instance" {
-  ami           = data.aws_ami.name_0.id
+# Create AWS instancevariable
+resource "aws_instance" "name_1" {
+  ami           = "${data.aws_ami.name_0.id}"
   instance_type = "t2.micro"
 }
 

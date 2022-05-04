@@ -1,0 +1,50 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create variable with default value
+variable "default" {
+  default = "hello"
+}
+
+# variable block
+variable "block" {
+  default = "hello"
+}
+
+# make variable
+variable "variable" {
+  default = "hello"
+}
+
+# create variable block
+variable "block_variable" {
+  default = "hello"
+}
+
+# Create Security Groupvariable
+variable "sg_variable" {
+  default = "sg-1"
+}
+
+# Create Security Groupresource
+variable "sg_resource" {
+  default = "sg-1"
+}
+
+# Create EC2 Instance
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

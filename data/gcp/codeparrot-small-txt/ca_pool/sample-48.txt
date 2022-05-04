@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true

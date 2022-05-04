@@ -1,3 +1,4 @@
+rovider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -14,12 +15,14 @@ provider "aws" {
 
 # Create Database instance
 resource "aws_db_instance" "name_0" {
-  engine            = "mysql"
   allocated_storage = 10
+  engine            = "mysql"
+  engine_version    = "5.6.27"
   instance_class    = "db.t2.micro"
-  name               = "example"
+  name              = "example"
   username          = "admin"
   password          = "admin"
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  vpc_security_group_ids = ["${aws_security_group.example.id}"]
+  db_subnet_group_name = "${aws_db_subnet_group.example.id}"
 }
 

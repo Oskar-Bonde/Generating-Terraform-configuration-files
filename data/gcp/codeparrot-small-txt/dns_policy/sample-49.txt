@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create dns policy, enable inbound forwarding and enable logging

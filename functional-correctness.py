@@ -60,6 +60,18 @@ def remove_identifiers(txt_file):
         text = text.replace(k, reference[k])
     return text
     
+def clean_terraform(model):
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        print(f'Cleaning {provider}')
+        for task in sorted(os.listdir(f'data/{provider}/human-tf')):
+            if os.path.exists(f'data/{provider}/human-tf/{task}/.terraform'):
+                shutil.rmtree(f'data/{provider}/human-tf/{task}/.terraform')
+            
+        for task in sorted(os.listdir(f'data/{provider}/{model}-tf')):
+            for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
+                if os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/.terraform'):
+                    shutil.rmtree(f'data/{provider}/{model}-tf/{task}/{sample}/.terraform')
+
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
     input = re.sub('"(description|name|constant_value|terraform_version)":".+?"','', input)
@@ -217,6 +229,13 @@ if __name__ == "__main__":
         print(f'-----------------------------------------\n{provider}')
         #make_json_human(provider)
         make_json_model(provider, 'codeparrot')
+    
+    model = 'codeparrot-small'
+    #clean_terraform(model)
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        print(f'-----------------------------------------\n{provider}')
+        make_json_human(provider)
+        make_json_model(provider, model)
         
         
         easy = True if 'easy' in provider else False
@@ -225,10 +244,11 @@ if __name__ == "__main__":
         else:
             compile_check(provider, model)
         """
-    
+    """
     provider = 'aws'
     for model in ['codex-0','codex-0.2', 'codex-0.4']:
         print(f'-----------------------------------------\n{model}')
         #make_json_human(provider)
         #make_json_model(provider, model)
         pass1(provider, model)
+    """

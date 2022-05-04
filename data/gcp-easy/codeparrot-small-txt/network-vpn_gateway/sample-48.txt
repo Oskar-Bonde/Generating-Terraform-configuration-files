@@ -1,0 +1,1 @@
+ google provider block# create compute network# create a compute ha vpn gateway

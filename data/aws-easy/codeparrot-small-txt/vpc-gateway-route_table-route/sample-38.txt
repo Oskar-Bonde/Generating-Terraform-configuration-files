@@ -1,0 +1,35 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create a AWS VPC resourceresource block
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# AWS Internet Gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = "${aws_vpc.main.id}"
+}
+
+# Create AWS route table for public subnets
+resource "aws_route_table" "public" {
+  vpc_id = "${aws_vpc.main.id}"
+}
+
+# Create route resourcevariable for public subnets
+resource "aws_route_variable" "public" {
+  route_table_id = "${aws_route_table.public.id}"
+  value = "${aws_vpc.main.default_route_table_id}"
+}
+

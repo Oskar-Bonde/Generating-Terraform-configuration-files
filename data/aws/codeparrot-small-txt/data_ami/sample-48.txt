@@ -1,0 +1,1 @@
+ Provider AWS block with region set to us-east-1 and default profile# data block: Get latest AMI ID for Amazon Linux2 OS

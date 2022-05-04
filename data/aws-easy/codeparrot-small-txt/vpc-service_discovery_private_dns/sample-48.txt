@@ -1,0 +1,1 @@
+ Provider Block# Create a VPC resource# Make a service discovery private dns namespace resource

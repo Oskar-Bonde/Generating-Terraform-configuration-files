@@ -6,17 +6,17 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # create customer gateway
-resource "aws_customer_gateway" "customer_gateway" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_customer_gateway" "example" {
+  vpc_id = "${aws_vpc.example.id}"
   tags {
-    Name = "customer_gateway"
+    Name = "example"
   }
 }
 

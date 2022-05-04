@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with the AWS provider
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,12 +17,12 @@ resource "aws_vpc" "name_0" {
   cidr_block = "10.0.0.0/16"
 }
 
-# AWS Internet Gateway 
+# AWS Internet Gateway
 resource "aws_internet_gateway" "name_1" {
   vpc_id = "${aws_vpc.name_0.id}"
 }
 
-# Create EC2 Instance
+# Create EC2 Instances in the VPC
 resource "aws_instance" "name_2" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

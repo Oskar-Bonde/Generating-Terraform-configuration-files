@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# create customer gateway
+resource "aws_customer_gateway" "name_0" {
+  bgp_asn    = 65000
+  ip_address = "10.0.0.0"
+  type       = "ipsec.1"
+  tags       = {
+    Name = "customer-gateway"
+  }
+}
+

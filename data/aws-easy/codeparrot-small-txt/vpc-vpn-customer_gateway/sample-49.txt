@@ -1,0 +1,1 @@
+ Provider Block# Create a AWS VPC resource# make a vpn gateway# create a customer gateway

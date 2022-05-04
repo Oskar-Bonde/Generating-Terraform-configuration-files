@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_test" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create container registry resourceresource group
+resource "azurerm_resource_group" "rg_test_container_registry" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+

@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# create compute network with global routing mode and set auto create subnetworks to false# resource compute ha vpn gateway, in the us central1 region and use the compute network id

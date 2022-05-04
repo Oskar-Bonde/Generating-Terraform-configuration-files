@@ -1,0 +1,35 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_dev" {
+  name     = "myTFResourceGroup_dev"
+  location = "westus2"
+}
+
+# create public ip resource
+resource "azurerm_public_ip" "pubIP" {
+  name                         = "myTFPublicIP"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+  domain_name_label            = "mytfpublicip"
+}
+
+# make a lb resourceresource group
+resource "azurerm_lb_resource_group" "rg_dev_lb" {
+  name     = "myTFLBResourceGroup"
+  location = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+

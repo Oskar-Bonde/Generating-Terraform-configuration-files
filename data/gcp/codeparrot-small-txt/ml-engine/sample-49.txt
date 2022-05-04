@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# ml engine model resource. With default name and in europe west 4 regions

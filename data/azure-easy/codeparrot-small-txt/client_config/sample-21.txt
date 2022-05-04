@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_test" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# data block, azurem client configvariable
+data "azurerm_client_configvariable" "current" {}
+
+# AzureRM resource group
+resource "azurerm_resource_group" "rg_test" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+

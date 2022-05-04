@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,18 +7,17 @@ terraform {
   }
 }
 
-# AWS provider block
+# AWS provider block with AWS
 provider "aws" {
-  alias  = "files"
-  region = "us-east-1"
+  alias  = "us-east-1"
+  region  = "us-east-1"
 }
 
-# Create Security Group 
-resource
-aws_security_group" "ec2demo" {
-  name        = "ec2demo"
+# Create Security Group
+resource "aws_security_group" "name_0" {
+  name        = "terraform_example"
   description = "Used in the terraform"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = "${aws_vpc.default.id}"
 
   # SSH access from anywhere
   ingress {

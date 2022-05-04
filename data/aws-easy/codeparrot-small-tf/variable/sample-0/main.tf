@@ -6,15 +6,14 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create variable
+# Create variable with default value
 variable "name_0" {
-  description = "Name of the instance"
-  default     = "terraform-example"
+  default = "hello"
 }
 

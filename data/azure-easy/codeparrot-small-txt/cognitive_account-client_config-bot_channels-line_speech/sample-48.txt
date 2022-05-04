@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# create cognitive account resource# data block, azurem client config# create bot channels registration resource# resource block called bot channel direct line speech

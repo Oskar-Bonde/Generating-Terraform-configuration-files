@@ -1,0 +1,25 @@
+rovider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block with the following settings
+provider "aws" {
+  alias   = "us-east-1"
+  region  = "us-east-1"
+}
+
+# Create Database instance
+resource "aws_db_instance" "example" {
+  engine            = "mysql"
+  allocated_storage = 10
+  instance_class    = "db.t2.micro"
+  name              = "example"
+  username          = "admin"
+  password          = "changeme"
+}
+

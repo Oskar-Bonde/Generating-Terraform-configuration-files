@@ -12,39 +12,37 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Create variable 
+# Create variable with default value
 variable "name_0" {
-  description = "Name of the instance"
-  default     = "terraform-example"
+  default = "hello"
 }
 
-# variable block
-variable
-variable "name_1" {
-  description = "Instance type"
-  default     = "t2.micro"
+# variable blockresource for resource
+resource "aws_instance" "name_3" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
 }
 
-# make variable
-variable
-variable "name_2" {
-  description = "Name of the SSH keypair to use in AWS."
-  default     = "terraform-example"
+# make variable block resource block
+resource "aws_block_device" "name_2" {
+  device_name = "/dev/xvdb"
+  volume_size = "10"
+  delete_on_termination = true
 }
 
-# create variable block
-variable
-variable "name_3" {
-  description = "Data to pass to instance"
-  default     = "#!/bin/bash\necho ECS_CLUSTER=example-ecs-cluster --cluster=example-ecs-cluster --key-name=${var.name_2} --cluster=example-ecs-cluster --data-dir=/var/lib/ecs/ecs.json --name=my-instance"
+# create variable block resource block
+resource "aws_instance" "name_3" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
 }
 
 # Create Security Group
 resource "aws_security_group" "name_4" {
-  name        = "terraform-example-sg"
+  name        = "terraform_example"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.example.id}"
+  vpc_id      = "${aws_vpc.default.id}"
 
+  # SSH access from anywhere
   ingress {
     from_port   = 22
     to_port     = 22
@@ -52,6 +50,7 @@ resource "aws_security_group" "name_4" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # HTTP access from anywhere
   ingress {
     from_port   = 80
     to_port     = 80
@@ -59,87 +58,24 @@ resource "aws_security_group" "name_4" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 8
-    to_port     = 8
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
+  # outbound internet access
+  egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-
 }
 
 # Create Security Group
-resource
+resource "aws_security_group" "name_5" {
+  name        = "terraform_example_elb"
+  description = "Used in the terraform"
+  vpc_id      = "${aws_vpc.default.id}"
+
+  # HTTP access from anywhere
 }
 
 # Create EC2 Instance
-resource
 }
 

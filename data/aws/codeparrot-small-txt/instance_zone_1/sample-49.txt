@@ -1,0 +1,1 @@
+ Provider Block aws in us-east-1# Resource block that creates an ec2 instance with ami-047a51fa27710816e, instance type t2.micro in zone us west 1a

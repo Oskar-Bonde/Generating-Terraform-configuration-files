@@ -1,0 +1,1 @@
+ Provider Block with region us-east-1# Create S3 Bucket Resource. Set bucket to cookie# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id

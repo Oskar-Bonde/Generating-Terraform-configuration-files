@@ -1,0 +1,1 @@
+ Provider Block# Create a AWS VPC resource# AWS Internet Gateway# Create EC2 Instance# Resource block: Create Elastic IP

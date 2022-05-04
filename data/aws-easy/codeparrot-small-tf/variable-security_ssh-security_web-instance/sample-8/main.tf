@@ -12,44 +12,44 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Create variable 
+# Create variable with default value
 variable "name_0" {
-  description = "Name of the instance"
-  default     = "terraform-example"
+  default = "terraform-example"
 }
 
 # variable block
-variable
 variable "name_1" {
-  description = "Instance type"
-  default     = "t2.micro"
+  default = "t2.micro"
 }
 
 # make variable
-variable
 variable "name_2" {
-  description = "Name of the SSH keypair to use in AWS."
-  default     = "terraform-example"
+  default = "terraform-example"
 }
 
-# create variable block
-variable
+# create variable blockvariable
 variable "name_3" {
-  description = "Data to pass to instance"
-  default     = "#!/bin/bash\necho ECS_CLUSTER=example-ecs-cluster --region=us-east-1 --instance-type=t2.micro --key-name=${var.name_2}"
+  default = "terraform-example"
 }
 
 # Create Security Group
-resource
-aws_security_group" "example" {
-  name        = "terraform-example"
+resource "aws_security_group" "name_4" {
+  name        = "${var.name_0}-${var.name_2}"
   description = "Used in the terraform"
-  vpc_id      = "${aws_vpc.example.id}"
+  vpc_id      = "${var.vpc_id}"
 
   # SSH access from anywhere
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -64,10 +64,12 @@ aws_security_group" "example" {
 }
 
 # Create Security Group
-resource
+resource "aws_security_group" "name_5" {
+  name        = "${var.name_0}-${var.name_2}"
+  description = "Used in the terraform"
+  vpc_id      = "${var.vpc
 }
 
 # Create EC2 Instance
-resource
 }
 

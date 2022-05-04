@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group and name it example. Set location to west europe# resource block, create automation account. Set location to resource group example and use its name. Set sku name to Basic

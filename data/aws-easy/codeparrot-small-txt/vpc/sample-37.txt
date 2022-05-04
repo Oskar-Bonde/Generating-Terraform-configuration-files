@@ -1,0 +1,19 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block with the following settings
+provider "aws" {
+  alias  = "files"
+  region = "us-east-1"
+}
+
+# Resource block with an amazon VPCvariable
+resource "aws_vpc" "default" {
+  cidr_block = "10.0.0.0/16"
+}
+

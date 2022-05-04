@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# create public ip resource# make a lb resource

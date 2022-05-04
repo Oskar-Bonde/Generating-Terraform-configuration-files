@@ -1,0 +1,1 @@
+ Provider block AWS# Resource block with an EC2 instance# Time sleep resource block

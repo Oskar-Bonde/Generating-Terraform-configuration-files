@@ -6,15 +6,15 @@ terraform {
   }
 }
 
-# Provider AWS
+# Provider AWS instance
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# create wafv2 ip set
-resource "aws_eip" "name_0" {
-  instance = aws_instance.ec2demo.id
-  vpc      = true
+# create wafv2 ip setvariable
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
 }
 

@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# resource block, create automation account

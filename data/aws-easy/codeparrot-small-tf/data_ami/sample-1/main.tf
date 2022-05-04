@@ -1,3 +1,4 @@
+provider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"

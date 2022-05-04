@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# a virtual network resource# create subnet resource

@@ -110,7 +110,7 @@ class HumanEvalArguments:
     device_int: Optional[int] = field(
         default=-1, 
         metadata={"help": "Determine which device to run the `text-generation` Pipeline on. -1 is CPU and any zero or positive number corresponds to which GPU device id to run on."},)
-
+    model_name: Optional[str] = field(default="small",)
 
 @dataclass
 class PreprocessingArguments:

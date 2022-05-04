@@ -1,3 +1,4 @@
+ketch
 terraform {
   required_providers {
     aws = {
@@ -14,11 +15,11 @@ provider "aws" {
 
 # Resource block with an EC2 instance
 resource "aws_instance" "ec2demo" {
-  ami           = "ami-0ff8a91507f77f867"
+  ami           = "ami-0ff8a91507f77f867" 
   instance_type = "t2.micro"
 }
 
-# Time sleep resource block
+# Time sleep resource blockvariable
 resource "aws_instance" "ec2demo" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

@@ -1,0 +1,1 @@
+ Provider block# Create a AWS VPC resource# create a default network acl

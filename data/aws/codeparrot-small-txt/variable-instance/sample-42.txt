@@ -1,0 +1,46 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS in region "us-east-1"
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string "t2.micro"
+variable "ec2_ami_id" {
+  type = "map"
+  default = {
+    us-east-1 = "ami-0915bcb5fa77e4892"
+    us-west-2 = "ami-0ff8a91507f77f867"
+    us-west-1 = "ami-0ff8a91507f77f867"
+  }
+}
+
+# variable called ec2_instance_count which is number type with default 1
+variable "ec2_instance_count" {
+  type = "map"
+  default = {
+    t2.micro = "1"
+    t2.small = "2"
+  }
+}
+
+# Create EC2 Instance with ami set to var.ec2_ami_id, count as var.ec2_instance_count and instance type t3.micro
+resource "aws_instance" "ec2_instance" {
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+  count         = var.ec2_instance_count
+  instance_count  = var.ec2_instance_count
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  subnet_id = var.subnet_id
+  key_name = var.ec2_key_name
+  tags = {
+    Name = var.ec2_instance_name
+  }
+}
+

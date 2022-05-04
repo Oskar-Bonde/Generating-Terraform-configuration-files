@@ -1,0 +1,53 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_test" {
+  name     = "myTFResourceGroup_test"
+  location = "westus2"
+}
+
+# create cognitive account resourceresource group
+resource "azurerm_resource_group" "rg_test_cognitive" {
+  name     = "myTFResourceGroup_test_cognitive"
+  location = "westus2"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "test" {
+  name                     = "test"
+  resource_group_name      = azurerm_resource_group.rg_test.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+
+  tags = {
+    environment = "test"
+  }
+}
+
+# create bot channels registration resourceresource group
+resource "azurerm_resource_group" "rg_test_bot_channels" {
+  name     = "myTFResourceGroup_test_bot_channels"
+  location = "westus2"
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_resource_group" "rg_test_bot_channel_speech" {
+  name     = "myTFResourceGroup_test_bot_channel_speech"
+  location = "westus2"
+}
+

@@ -96,7 +96,7 @@ def main():
     args = parser.parse_args()
     batch_size = args.batch_size
     n_samples = args.n_samples
-  
+    
 
     transformers.logging.set_verbosity_error()
     # enables code execution in code_eval metric
@@ -135,10 +135,12 @@ def main():
     model, data_list, tokenizer = accelerator.prepare(model, data_list, tokenizer) # eval_loader
     
     n_tasks = len(data_list)
+    folder_path = f'data/{args.provider}/codeparrot-{args.model_name}-txt/'
+    if not os.path.exists(folder_path): os.makedirs(folder_path)
     if batch_size > n_samples: batch_size=n_samples
     with torch.no_grad():
         for i in range(n_tasks):
-            file_path = f'data/{args.provider}/codeparrot-txt/{task_name[i]}'
+            file_path = f'{folder_path}/{task_name[i]}'
             if not os.path.exists(file_path):
                 print('Generating ', task_name[i])      
                 code = ['']*n_samples

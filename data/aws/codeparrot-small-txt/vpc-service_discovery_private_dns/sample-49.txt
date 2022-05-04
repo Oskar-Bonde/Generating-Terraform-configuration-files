@@ -1,0 +1,1 @@
+ Provider Block: aws in us east 1# Create a VPC resource with cidr block 10.0.0.0/16. Enable DNS support and DNS hostnames# Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id

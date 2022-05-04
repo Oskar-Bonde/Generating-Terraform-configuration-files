@@ -1,0 +1,1 @@
+ Provider AWS in region "us-east-1"# Create Security Group that allows port 80, 443 inbound and all ports outbound# Create EC2 Instance with ami set to ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc web security group id

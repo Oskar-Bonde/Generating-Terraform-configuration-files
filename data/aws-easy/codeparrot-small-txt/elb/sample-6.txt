@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,7 +17,6 @@ resource "aws_elb" "elbdemo" {
   name            = "elbdemo"
   subnets         = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.elb.id}"]
-  instances       = ["${aws_instance.ec2demo.id}"]
 
   listener {
     instance_port     = 80

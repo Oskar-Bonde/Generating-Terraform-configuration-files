@@ -1,3 +1,4 @@
+rovider
 terraform {
   required_providers {
     aws = {
@@ -6,7 +7,7 @@ terraform {
   }
 }
 
-# Provider AWS block
+# Provider AWS block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -21,16 +22,18 @@ resource "aws_db_instance" "name_0" {
   name                 = "example"
   username             = "admin"
   password             = "changeme"
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
-  db_subnet_group_name   = "${aws_db_subnet_group.example.id}"
-  skip_final_snapshot    = true
-  skip_final_snapshot_on_destroy = true
-  final_snapshot_identifier = "example"
-  final_snapshot_identifier_type = "gp2"
-  final_snapshot_storage_type = "gp2"
-  final_snapshot_iops = 1
-  final_snapshot_size = 10
-  final_snapshot_tags = {
+  vpc_security_group_ids = [aws_security_group.example.id]
+  db_subnet_group_name   = aws_db_subnet_group.example.name
+  parameter_group_name = "default.mysql5.6"
+  storage_type         = "gp2"
+  multi_az            = false
+  backup_retention_period = 7
+  maintenance_window    = "tue:10:19-tue:11:19"
+  multi_az_threshold   = 2
+  backup_window        = "09:19-09:19"
+  maintenance_window_length = "7"
+  vpc_security_group_ids = [aws_security_group.example.id]
+  tags = {
     Name = "example"
   }
 }

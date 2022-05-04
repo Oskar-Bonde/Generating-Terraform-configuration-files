@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider aws block 
+# Provider aws block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"

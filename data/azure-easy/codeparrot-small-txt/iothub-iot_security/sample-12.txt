@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg_dev" {
+  name     = "myTFResourceGroup_dev"
+  location = "westus2"
+}
+
+# make iothub resource group accessible
+resource "azurerm_resource_group" "rg_iothub" {
+  name     = "myTFResourceGroup_iothub"
+  location = "westus2"
+}
+
+# iot security solution resource
+resource "azurerm_resource_group" "rg_istio" {
+  name     = "myTFResourceGroup_istio"
+  location = "westus2"
+}
+

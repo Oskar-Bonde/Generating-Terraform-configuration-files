@@ -1,0 +1,1 @@
+ Provider AWS region var.aws_region# Create Variable that is a map of strings. The default is that key Terraform maps to true and Environment key maps to dev

@@ -1,0 +1,27 @@
+apse
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Resource block with an EC2 instanceresource
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# Time sleep resource block
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+

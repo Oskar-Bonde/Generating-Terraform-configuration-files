@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -14,7 +14,7 @@ provider "aws" {
 
 # create a service quota resource
 resource "aws_service_quota" "name_0" {
-  service = "ec2demo"
+  service = "serviceusage.googleapis.com"
   #quota_class = "1"
   #quota_unit = "1"
   #quota_value = "1"
@@ -50,8 +50,13 @@ resource "aws_service_quota" "name_0" {
   #quota_value = "1"
   #quota_type = "1"
   #quota_unit = "1"
+  #quota_unit = "1"
   #quota_value = "1"
   #quota_type = "1"
+  #quota_unit = "1"
+  #quota_value = "1"
+  #quota_type = "1"
+  #quota_unit = "1"
   #quota_unit = "1"
   #quota_value = "1"
   #quota_type = "1"
@@ -96,11 +101,6 @@ resource "aws_service_quota" "name_0" {
   #quota_type = "1"
   #quota_unit = "1"
   #quota_value = "1"
-  #quota_type = "1"
-  #quota_unit = "1"
-  #quota_value = "1"
-  #quota_type = "1"
-  #quota_unit = "1"
-  #quota_value =
+ 
 }
 

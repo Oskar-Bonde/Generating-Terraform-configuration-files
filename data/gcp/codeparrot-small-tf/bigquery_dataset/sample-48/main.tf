@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# bigquery dataset resource. Use dataset id example_dataset, use location "EU" and set to expire after 1 hour. The reader role is assigned to hashicorp.com domain

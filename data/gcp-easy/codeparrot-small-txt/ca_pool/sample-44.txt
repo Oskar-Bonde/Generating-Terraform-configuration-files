@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a CaPool resource
+resource "google_compute_instance_pool" "pool" {
+  name = "my-pool-${random_suffix}"
+  auto_healing_policies {
+    health_check = "HTTP:80/health"
+  }
+}
+

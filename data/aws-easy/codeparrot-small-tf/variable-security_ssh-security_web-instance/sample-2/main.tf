@@ -12,34 +12,31 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Create variable 
+# Create variable with default value
 variable "name_0" {
   default = "terraform-example"
 }
 
 # variable block
-variable
 variable "name_1" {
   default = "t2.micro"
 }
 
-# make variable
-variable
+# make variablevariable block
 variable "name_2" {
-  default = "terraform"
+  default = "terraform-example"
 }
 
-# create variable block
-variable
+# create variable blockvariable with default value
 variable "name_3" {
-  default = "terraform"
+  default = "terraform-example"
 }
 
-# Create Security Group
-resourceresource "aws_security_group" "terraform_example" {
-  name        = "${var.name_0}"
+# Create Security Groupresource block
+resource "aws_security_group" "name_4" {
+  name        = "terraform-example"
   description = "Used in the terraform"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = "${aws_vpc.default.id}"
 
   # SSH access from anywhere
   ingress {
@@ -67,10 +64,14 @@ resourceresource "aws_security_group" "terraform_example" {
 }
 
 # Create Security Group
-resource
+resource "aws_security_group" "name_5" {
+  name        = "terraform-example-elb"
+  description = "Used in the terraform"
+  vpc_id      = "${aws_vpc.default.id}"
+
+  # HTTP access from anywhere
 }
 
 # Create EC2 Instance
-resource
 }
 

@@ -1,0 +1,49 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS in us-east-1 region and default profile
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Resource, create AWS ELB that listens for instance port 80 and lb port 80
+resource "aws_elb" "ec2demo" {
+  name            = "terraform-example-elb"
+  subnets         = ["${aws_subnet.ec2demo.*.id}"]
+  security_groups = ["${aws_security_group.ec2demo.id}"]
+  internal        = false
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 443
+    lb_protocol       = "https"
+    ssl_certificate_id = "${var.aws_cert}"
+  }
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:80/"
+    interval            = 30
+  }
+
+  tags {
+    Name = "terraform-example-elb"
+  }
+}
+

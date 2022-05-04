@@ -1,0 +1,1 @@
+ google provider block with only region set to europe north1# a compute instance that has a name, machine type f1-micro, debian-9 image and default network# output the cpu platform used by the compute instance

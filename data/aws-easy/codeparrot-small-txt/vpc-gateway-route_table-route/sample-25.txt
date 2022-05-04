@@ -1,0 +1,41 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# AWS Internet Gatewayresource
+resource "aws_internet_gateway" "main" {
+  vpc_id = "${aws_vpc.main.id}"
+}
+
+# Create AWS route table
+resource "aws_route_table" "main" {
+  vpc_id = "${aws_vpc.main.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.main.id}"
+  }
+}
+
+# Create route resource for NAT
+resource "aws_route" "nat" {
+  route_table_id         = "${aws_route_table.main.id}"
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = "${aws_nat_gateway.main.id}"
+}
+

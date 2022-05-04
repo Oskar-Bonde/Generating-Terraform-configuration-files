@@ -1,0 +1,48 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-west1"
+}
+
+# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2.0
+# See https://cloud.google.com/composer-api/docs/how-to/install-composer-api-service
+# https://cloud.google.com/composer-api/docs/how-to/install-composer-api-service-container
+
+# Create Cloud Run service
+resource "google_cloud_run_service" "name_0" {
+  name     = "default"
+  location = "us-central1"
+
+  template {
+    spec {
+      containers {
+        image = "debian-cloud/debian-9"
+      }
+      container_concurrency = 1
+    }
+
+    metadata {
+      labels = {
+        env = "default"
+      }
+    }
+  }
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+
+  depends_on = [
+    google_compute_instance.vm_instance,
+    google_compute_instance.vm_instance,
+  ]
+}
+

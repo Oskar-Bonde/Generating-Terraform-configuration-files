@@ -7,29 +7,20 @@ terraform {
 }
 
 # AWS provider block
-provider
-aws = {
+provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Resource block to create a random pet name 
-resource
-random_pet = "true"
-
-# Terraform configuration file
-# Terraform block with the AWS provider
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-    }
-  }
+# Resource block to create a random pet name
+resource "random_pet" "name_0" {
+  length = 1
 }
 
-# Create AWS S3 bucket 
-resource "aws_s3_bucket" "name_0" {
+# Create AWS S3 bucketresource
+resource "aws_s3_bucket" "name_1" {
   bucket = "terraform-state"
   acl    = "private"
+  force_destroy = true
 }
 

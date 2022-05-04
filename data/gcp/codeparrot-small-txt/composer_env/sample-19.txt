@@ -1,0 +1,40 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2resource.
+# terraform {
+#   required_providers {
+#     google = {
+#       source = "hashicorp/google"
+#     }
+#   }
+# }
+
+# create a compute instance
+resource "google_compute_instance" "vm_instance" {
+  name = "my-compute-instance-${random_suffix}"
+  machine_type = "e2-micro"
+  zone = "europe-west1-b"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

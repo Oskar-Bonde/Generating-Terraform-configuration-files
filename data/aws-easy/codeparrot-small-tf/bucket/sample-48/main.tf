@@ -1,0 +1,1 @@
+ Provider aws block# Create S3 Bucket resource

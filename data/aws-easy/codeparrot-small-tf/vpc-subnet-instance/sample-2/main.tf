@@ -6,13 +6,13 @@ terraform {
   }
 }
 
-# Provider Block
+# Provider Block with the AWS instance
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create a AWS VPC
+# Create a AWS VPC to launch our instances into
 resource "aws_vpc" "name_0" {
   cidr_block = "10.0.0.0/16"
 }
@@ -24,7 +24,7 @@ resource "aws_subnet" "name_1" {
   availability_zone = "us-east-1a"
 }
 
-# Create EC2 Instance
+# Create EC2 Instancevariable
 resource "aws_instance" "name_2" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

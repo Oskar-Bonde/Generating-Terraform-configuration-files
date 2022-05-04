@@ -6,35 +6,27 @@ terraform {
   }
 }
 
-# Provider block
+# Provider block with AWS
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Provider block
+# Provider block with the AWS provider
 provider "aws" {
   alias  = "us-east-1"
   region  = "us-east-1"
 }
 
-# Resource block to Create VPC 
+# Resource block to Create VPC
 resource "aws_vpc" "name_0" {
   cidr_block = "10.0.0.0/16"
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  tags {
-    Name = "terraform-example-vpc"
-  }
 }
 
 # Resource block with VPC
-resource "aws_vpc" "name_1" {
-  cidr_block = "10.0.0.0/16"
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  tags {
-    Name = "terraform-example-vpc"
-  }
+resource "aws_subnet" "name_1" {
+  vpc_id            = "${aws_vpc.name_0.id}"
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "eu-west-1a"
 }
 
