@@ -1,0 +1,37 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group and name it atp example. Set location to west europe
+resource "azurerm_resource_group" "example" {
+  name     = "atp-example"
+  location = "westeurope"
+}
+
+# create storage account resource. Use resource group name and location from atp-example. Use account tier standard and replication type to LRS
+resource "azurerm_storage_account" "example" {
+  name                     = "atpexample"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create advanced threat protection resource. Set target resource id to storage account id and make enabled true
+resource "azurerm_storage_account_network_rules" "example" {
+  resource_group_name = azurerm_resource_group.example.name
+  storage_account_name = azurerm_storage_account.example.name
+  default_action = "Deny"
+  ip_rules = ["10.0.0.0/8", "192.168.0.0/16"]
+  virtual_network_subnet_ids = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/mySubnet"]
+}
+

@@ -92,7 +92,7 @@ def main():
 def all_providers():
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
         print(provider)
-        model = CodexModel(provider, n_samples=60, wait=20, temperature=0.2, batch_size=20, file_name='' )
+        model = CodexModel(provider, n_samples=60, wait=25, temperature=0.2, batch_size=20, file_name='' )
         model.generate_samples()
 
 

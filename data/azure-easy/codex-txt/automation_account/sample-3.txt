@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  version = "=2.0.0"
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "my-rg"
+  location = "westus"
+}
+
+# resource block, create automation account
+resource "azurerm_automation_account" "automation" {
+  name                = "my-automation"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name            = "Basic"
+}
+

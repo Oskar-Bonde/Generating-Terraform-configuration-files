@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("${path.module}/credentials.json")
+  project     = var.project
+  region      = var.region
+}
+
+# a compute network resource
+resource "google_compute_network" "vpc_network" {
+  name                    = "vpc-network"
+  auto_create_subnetworks = "true"
+}
+
+# compute route resource
+resource "google_compute_route" "vpc_route" {
+  name           = "vpc-route"
+  network        = google_compute_network.vpc_network.self_link
+  destination_range = "10.0.0.0/16"
+  next_hop_instance = "10.0.0.1"
+}
+

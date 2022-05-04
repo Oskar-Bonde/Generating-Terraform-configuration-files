@@ -1,0 +1,27 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = "${file("account.json")}"
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create compute network resource
+resource "google_compute_network" "default" {
+  name                    = "my-network"
+  auto_create_subnetworks = "true"
+}
+
+# resource block: create a compute router 
+resource "google_compute_router" "my-router" {
+  name    = "my-router"
+  network = google_compute_network.default.self_link
+}
+

@@ -1,0 +1,48 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "default" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "terraform-vpc"
+  }
+}
+
+# AWS Internet Gateway 
+resource "aws_internet_gateway" "default" {
+  vpc_id = aws_vpc.default.id
+  tags = {
+    Name = "terraform-igw"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "default" {
+  ami = "ami-0b69ea66ff7391e80"
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.default.id
+  vpc_security_group_ids = [aws_security_group.default.id]
+  tags = {
+    Name = "terraform-instance"
+  }
+}
+
+# Resource block: Create Elastic IP
+resource "aws_eip" "default" {
+  vpc = true
+  tags = {
+    Name = "terraform-eip"
+  }
+}
+

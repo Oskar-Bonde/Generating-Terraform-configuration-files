@@ -1,0 +1,57 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myResourceGroup"
+  location = "West US"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create a storage account
+resource "azurerm_storage_account" "storage" {
+  name                     = "mystorageaccount"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "mybot"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  microsoft_app_id    = "12345678-1234-1234-1234-123456789012"
+  microsoft_app_password = "password"
+
+  endpoint {
+    name = "production"
+    endpoint_url = "https://mybot.azurewebsites.net/api/messages"
+    location = azurerm_resource_group.rg.location
+  }
+
+  endpoint {
+    name = "staging"
+    endpoint_url = "https://mybot-staging.azurewebsites.net/api/messages"
+    location = azurerm_resource_group.rg.location
+  }
+
+  tags = {
+    environment = "production"
+  }
+}
+

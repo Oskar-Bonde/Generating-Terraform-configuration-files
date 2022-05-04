@@ -1,0 +1,80 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "primary" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "selected" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "default" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_default" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_selected" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_primary" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_primary" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_default" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_selected" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_primary" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_default" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_selected" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_current" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "all_non_primary" {}
+
+# data block, azurem subscription
+data "azurerm_subscription" "
+}
+

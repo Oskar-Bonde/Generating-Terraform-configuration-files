@@ -1,0 +1,40 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC resource 
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "terraform-vpc"
+  }
+}
+
+# create a default network acl
+resource "aws_default_network_acl" "default" {
+  default_network_acl_id = aws_vpc.main.default_network_acl_id
+  ingress {
+    action = "allow"
+    protocol = -1
+    cidr_block = "0.0.0.0/0"
+    from_port = 0
+    to_port = 0
+  }
+  egress {
+    action = "allow"
+    protocol = -1
+    cidr_block = "0.0.0.0/0"
+    from_port = 0
+    to_port = 0
+  }
+}
+

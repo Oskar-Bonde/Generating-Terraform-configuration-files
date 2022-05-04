@@ -1,0 +1,41 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "terraform-example-vpc"
+  }
+}
+
+# Create AWS subnets resource
+resource "aws_subnet" "main" {
+  vpc_id = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = "terraform-example-subnet"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "main" {
+  ami = "ami-0b69ea66ff7391e80"
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.main.id
+  tags = {
+    Name = "terraform-example-instance"
+  }
+}
+

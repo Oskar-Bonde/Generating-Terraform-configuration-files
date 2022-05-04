@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+  credentials = file("${path.module}/account.json")
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create storage bucket resource
+resource "google_storage_bucket" "my-bucket" {
+  name = "my-bucket"
+}
+
+# create compute backend bucket
+resource "google_compute_backend_bucket" "my-backend-bucket" {
+  name          = "my-backend-bucket"
+  bucket_name   = google_storage_bucket.my-bucket.name
+  description   = "my-backend-bucket"
+  enable_cdn    = true
+  project       = google_storage_bucket.my-bucket.project
+}
+

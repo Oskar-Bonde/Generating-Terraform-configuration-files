@@ -1,0 +1,98 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS in region var.aws_region and default profile
+provider "aws" {
+  region  = var.aws_region
+}
+
+# Create variable called aws_region with default "us-east-1" and type string
+variable "aws_region" {
+  default = "us-east-1"
+  type    = string
+}
+
+# variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
+variable "ec2_ami_id" {
+  default = "ami-0915bcb5fa77e4892"
+  type    = string
+}
+
+# create number variable called ec2_instance_count with default 1 and type number
+variable "ec2_instance_count" {
+  default = 1
+  type    = number
+}
+
+# creaet variable ec2_instance_type with default t3.micro and type string
+variable "ec2_instance_type" {
+  default = "t3.micro"
+  type    = string
+}
+
+# Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
+resource "aws_security_group" "ssh_sg" {
+  name        = "ssh_sg"
+  description = "Allow SSH Traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ssh_sg"
+  }
+}
+
+# Create Security Group for web traffic
+resource "aws_security_group" "web_sg" {
+  name        = "web_sg"
+  description = "Allow Web Traffic"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "web_sg"
+  }
+}
+
+# Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
+resource "aws_instance" "web_server" {
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+  count         = var.ec2_instance_count
+
+  vpc_security_group_ids = [aws_security_group.ssh_sg.id, aws_security_group.web_sg.id]
+
+  tags = {
+    Name = "web_server"
+  }
+}
+

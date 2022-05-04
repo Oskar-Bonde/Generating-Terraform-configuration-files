@@ -1,0 +1,95 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable block
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+
+# Create a resource
+resource "aws_instance" "example" {
+  ami           = "ami-0d5d9d301c853a04a"
+  instance_type = "t2.micro"
+}
+
+# make variable
+variable "ami" {
+  default = "ami-0d5d9d301c853a04a"
+}
+
+# create variable block
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+# Create Security Group
+resource "aws_security_group" "allow_all" {
+  name        = "allow_all"
+  description = "Allow all inbound traffic"
+  vpc_id      = "vpc-0b8d8b6c0f0e9e6c5"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_all"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "allow_all" {
+  name        = "allow_all"
+  description = "Allow all inbound traffic"
+  vpc_id      = "vpc-0b8d8b6c0f0e9e6c5"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_all"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "example" {
+  ami           = "ami-0d5d9d301c853a04a"
+  instance_type = "t2.micro"
+  security_groups = [aws_security_group.allow_all.name]
+}
+

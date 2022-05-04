@@ -52,29 +52,17 @@ def remove_identifiers(txt_file):
                 identifiers['output '+words[1]] = 'output "name_'+str(i)+'"'
                 i+=1
         file.seek(0)
-        main = file.read()
+        text = file.read()
 
     for k in sorted(identifiers.keys(), reverse=True):
-        main = main.replace(k, identifiers[k])
+        text = text.replace(k, identifiers[k])
     for k in sorted(reference.keys(), reverse=True):
-        main = main.replace(k, reference[k])
-    return main
+        text = text.replace(k, reference[k])
+    return text
     
-
-def compare_json(ref_path, generated):
-    ref_file = open(ref_path, 'r', encoding='utf-8', errors='ignore')
-    reference = ref_file.read()
-    for folder in sorted(os.listdir(generated)):
-        with open(generated+'/'+folder+'/plan.json', 'r', encoding='utf-8', errors='ignore') as file:
-            json_plan = file.read()
-            if json_plan == reference:
-                print(folder+' are identical')
-            else:
-                print(folder+' are different')
-
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value)":".+?"','', input)
+    input = re.sub('"(description|name|constant_value|terraform_version)":".+?"','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
 
 def remove_brackets(input):
@@ -82,10 +70,10 @@ def remove_brackets(input):
     return input
 
 def pass1(provider, model):
-    task_names = []
     out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
+    task_names = []
     for task in sorted(os.listdir(f'data/{provider}/human-tf')):
         task_names.append(task)
         n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
@@ -96,12 +84,14 @@ def pass1(provider, model):
         for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
             sample_to_int[sample]=i
             if not os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json'):
-                duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}')[0]
-                distr[sample_to_int[duplicate]]+=1
+                duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}/{sample}')[0]
+                try:
+                    distr[sample_to_int[duplicate[:-4]]]+=1
+                except:
+                    sys.exit(f'data/{provider}/{model}-tf/{task}/{sample}')
             else:
                 distr[i] +=1
             i+=1
-        print('Distribution ', distr)
         # calculate success rate on tasks
         errors = []
         human_file = open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
@@ -114,10 +104,9 @@ def pass1(provider, model):
                 model_json = model_file.read()
                 model_json = clean_json(model_json)
                 if model_json == human_json:
-                    success_rate[sample_to_int[sample]] += distr[sample_to_int[sample]]
+                    success_rate[sample_to_int[sample]] = distr[sample_to_int[sample]]
                 else: 
                     errors.append(int(sample[7:]))
-
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
@@ -137,8 +126,11 @@ def compile_check(provider, model):
         for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
             sample_to_int[sample]=i
             if not os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json'):
-                duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}')[0]
-                distr[sample_to_int[duplicate]]+=1
+                duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}/{sample}')[0]
+                try:
+                    distr[sample_to_int[duplicate[:-4]]]+=1
+                except:
+                    sys.exit(f'data/{provider}/{model}-tf/{task}/{sample}')
             else:
                 distr[i] +=1
             i+=1
@@ -193,9 +185,7 @@ def make_json_model(provider, model):
     if not os.path.exists(f'data/{provider}/{model}-tf'): os.makedirs(f'data/{provider}/{model}-tf')
     for task in sorted(os.listdir(f'data/{provider}/{model}-txt')):
         print(task)
-
         hash_to_sample = {}
-        sample_to_int = defaultdict(int)
         
         tf_path = f'data/{provider}/{model}-tf/{task}'
         if not os.path.exists(tf_path): 
@@ -214,30 +204,31 @@ def make_json_model(provider, model):
                     tf_file.close()
                     easy = True if 'easy' in provider else False
                     make_tf(f'{tf_path}/{sample}', easy)
-                    sample_to_int[sample] += 1
                 else:
                     duplicate = hash_to_sample[hash(clean_txt)]
-                    sample_to_int[duplicate] += 1
                     tf_file = open(f'{tf_path}/{sample}/{duplicate}.txt', 'w', encoding='utf-8', errors='ignore')
+                    tf_file.close()
 
 if __name__ == "__main__":
+
     """
     model = 'codeparrot'
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'aws', 'aws-easy']:
         print(f'-----------------------------------------\n{provider}')
         #make_json_human(provider)
         make_json_model(provider, 'codeparrot')
-        """
+        
         
         easy = True if 'easy' in provider else False
         if not easy:
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    """
+        """
+    
     provider = 'aws'
     for model in ['codex-0','codex-0.2', 'codex-0.4']:
         print(f'-----------------------------------------\n{model}')
-        make_json_human(provider)
-        make_json_model(provider, model)
+        #make_json_human(provider)
+        #make_json_model(provider, model)
         pass1(provider, model)
