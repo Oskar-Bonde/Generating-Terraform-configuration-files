@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# data block, azurem client config# create bot channels registration resource

@@ -1,0 +1,34 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("${path.module}/credentials.json")
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create a node template
+resource "google_compute_instance_template" "name_0" {
+  name         = "node-template"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  metadata {
+    ssh-keys = "user:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0g+Zuxa8uYzP4NEISl6a1Hnr2SVCLI2NcLw0YwOoW1AJyBjkKXNy8kpmVxQVtp6FqQP3L7Km2lC0EOB7gwM8KSbWv0LwP8qUKwT9mR2tXgWc/TjJllwRpulO2A1ct9x8dg/9Uzp3Y/Y3JZY5D3PpO7FjK5ZV5r1c0UTeymjpiuYrN8Yv7jbX+r0GqwR/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7jzv/I0Si2J1JZBd7cJlV0B/f8im3l7CZ+d7j
+}
+

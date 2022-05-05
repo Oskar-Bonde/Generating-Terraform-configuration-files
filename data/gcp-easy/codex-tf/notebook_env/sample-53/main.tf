@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+  credentials = file("${var.credentials_file}")
+  project     = "${var.project}"
+  region      = "${var.region}"
+}
+
+# create google notebooks enviroment
+resource "google_notebooks_environment" "name_0" {
+  name = "my-notebook-env"
+  zone = "us-central1-a"
+  machine_type = "n1-standard-4"
+  disk_size_gb = 100
+  network = "default"
+  container_image_uri = "gcr.io/deeplearning-platform-release/tf2-cpu.2-0:m39"
+  service_account = "default"
+  boot_disk_size_gb = 100
+  accelerator_type = "NVIDIA_TESLA_P100"
+  accelerator_count = 1
+}
+

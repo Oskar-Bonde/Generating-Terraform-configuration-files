@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# create storage account resource# create advanced threat protection resource

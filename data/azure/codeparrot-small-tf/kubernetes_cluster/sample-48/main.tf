@@ -1,0 +1,1 @@
+ Provider block with features block# create resource group, use name example in location West Europe# kubernetes cluster. Use dns prefix exampleaks1, create a default node pool with 1 node count and vm size Standard_D2_v2. Make identity SystemAssigned

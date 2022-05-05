@@ -1,0 +1,97 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "example"
+  location = "westus2"
+}
+
+# kubernetes cluster. Use dns prefix exampleaks1, create a default node pool with 1 node count and vm size Standard_D2_v2. Make identity SystemAssignedvariable and add to default node pool
+resource "azurerm_kubernetes_cluster" "name_1" {
+  name                = "exampleaks1"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.name_0.name
+  kubernetes_version = "1.8.0"
+
+  # Set Kubernetes version
+  initial_node_count = 1
+
+  # Set Kubernetes version
+  node_config {
+    machine_type = "Standard_D2_v2"
+    disk_size_gb = 100
+  }
+
+  # Set networking mode
+  network_profile {
+    name = "default"
+    primary = true
+
+    # Set networking policy
+    network_policy {
+      enabled = true
+    }
+  }
+
+  # Set initial node count
+  initial_node_count = 1
+
+  # Set node pool
+  node_pool {
+    name = "exampleaks1"
+    vm_size = "Standard_D2_v2"
+    os_disk {
+      name = "myosdisk1"
+      caching = "ReadWrite"
+      create_option = "FromImage"
+    }
+  }
+
+  # Set networking mode
+  network_profile {
+    name = "default"
+    primary = true
+
+    # Set networking policy
+    network_policy {
+      enabled = true
+    }
+  }
+
+  # Set initial node count
+  initial_node_count = 1
+
+  # Set node pool
+  node_pool {
+    name = "exampleaks1"
+    vm_size = "Standard_D2_v2"
+    os_disk {
+      name = "myosdisk1"
+      caching = "ReadWrite"
+      create_option = "FromImage"
+    }
+  }
+
+  # Set networking mode
+  network_profile {
+    name = "default"
+    primary = true
+
+    # Set networking policy
+    network_policy {
+      enabled = true
+    }
+  }
+}
+

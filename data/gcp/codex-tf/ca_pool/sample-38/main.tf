@@ -1,0 +1,76 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
+resource "google_privateca_certificate_authority" "name_0" {
+  provider = google-beta
+  name     = "ca-pool"
+  type     = "SUBORDINATE"
+  tier     = "ENTERPRISE"
+  config {
+    issuing_certificates {
+      allow_csr_key_reuse = true
+    }
+    key_spec {
+      algorithm = "RSA_4096"
+    }
+    lifetime {
+      type  = "RELATIVE"
+      value = "8760"
+    }
+    subject_config {
+      subject {
+        common_name = "ca.example.com"
+      }
+    }
+    signing_algorithm = "SHA256_RSA_PSS_2048_SHA256"
+  }
+  region = "europe-west4"
+  policy {
+    allowed_config_list {
+      allowed_config {
+        name = "allowed_config_1"
+        value = "allowed_config_value_1"
+      }
+    }
+    allowed_subject_alt_names {
+      allowed_dns_names {
+        name = "allowed_dns_name_1"
+        value = "allowed_dns_name_value_1"
+      }
+      allowed_email_addresses {
+        name = "allowed_email_address_1"
+        value = "allowed_email_address_value_1"
+      }
+      allowed_ip_addresses {
+        name = "allowed_ip_address_1"
+        value = "allowed_ip_address_value_1"
+      }
+      allowed_uris {
+        name = "allowed_uri_1"
+        value = "allowed_uri_value_1"
+      }
+    }
+    allowed_uris {
+      name = "allowed_uri_1"
+      value = "allowed_uri_value_1"
+    }
+    allowed_x509_extensions {
+      allowed_x509_extension {
+        name = "allowed_x509_extension_1"
+        value = "allowed_x509_extension_value_1"
+      }
+    }
+    ca_options
+}
+

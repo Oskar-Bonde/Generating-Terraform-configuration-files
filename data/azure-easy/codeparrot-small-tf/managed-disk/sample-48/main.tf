@@ -1,0 +1,1 @@
+ Provider block with azure# create resource group# make managed disk resource

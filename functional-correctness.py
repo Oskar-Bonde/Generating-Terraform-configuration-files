@@ -62,16 +62,16 @@ def remove_identifiers(txt_file):
     return text
     
 def clean_terraform(model):
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
-        print(f'Cleaning {provider}')
-        for task in sorted(os.listdir(f'data/{provider}/human-tf')):
-            if os.path.exists(f'data/{provider}/human-tf/{task}/.terraform'):
-                shutil.rmtree(f'data/{provider}/human-tf/{task}/.terraform')
+    for Provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        print(f'Cleaning {Provider}')
+        for task in sorted(os.listdir(f'data/{Provider}/human-tf')):
+            if os.path.exists(f'data/{Provider}/human-tf/{task}/.terraform'):
+                shutil.rmtree(f'data/{Provider}/human-tf/{task}/.terraform')
             
-        for task in sorted(os.listdir(f'data/{provider}/{model}-tf')):
-            for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
-                if os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/.terraform'):
-                    shutil.rmtree(f'data/{provider}/{model}-tf/{task}/{sample}/.terraform')
+        for task in sorted(os.listdir(f'data/{Provider}/{model}-tf')):
+            for sample in sorted(os.listdir(f'data/{Provider}/{model}-tf/{task}')):
+                if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/'):
+                    shutil.rmtree(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/')
 
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
@@ -233,10 +233,11 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     
-    #model = 'codex'
-    model = 'codeparrot-small'
+    model = 'codex'
+    #model = 'codeparrot-small'
     #model = 'codeparrot'
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #
+    clean_terraform(model)
+    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws', 
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -246,7 +247,13 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    clean_terraform(model)
+    for provider in ['azure', 'azure-easy']:
+        make_json_model(provider, 'codeparrot-small')
+        if not easy:
+            pass1(provider, 'codeparrot-small')
+        else:
+            compile_check(provider, 'codeparrot-small')
+    
         
     """
     provider = 'aws'
