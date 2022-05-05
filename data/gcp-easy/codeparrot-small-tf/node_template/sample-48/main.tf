@@ -1,0 +1,1 @@
+ google provider block# create a node template

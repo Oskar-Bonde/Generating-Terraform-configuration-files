@@ -1,0 +1,1 @@
+ google provider block# create storage bucket resource# create compute backend bucket
