@@ -19,7 +19,7 @@ from arguments import HumanEvalArguments
 from transformers import AutoModelForCausalLM, AutoTokenizer, HfArgumentParser, StoppingCriteria, StoppingCriteriaList
 
 
-EOF_STRINGS = ["\n}\n"]
+EOF_STRINGS = ["\n}\n", "{}\n\n"]
 
 def dataset_dict(provider='aws', block_context=False):
     path = f"data/{provider}/human-txt"
@@ -168,6 +168,8 @@ def main():
                         for b in range(batch_size):
                             gen_code = tokenizer.decode(generated_tokens[b,:], skip_special_tokens=True, clean_up_tokenization_spaces=True)
                             gen_code = gen_code[len(code[batch*batch_size+b]):]
+                            if '{}\n\n' in gen_code:
+                                gen_code = gen_code.partition('{}\n\n')[0] # return only the first block
                             if '\n}\n' in gen_code:
                                 gen_code = gen_code.partition('\n}\n')[0] # return only the first block
                             code[batch*batch_size+b] = code[batch*batch_size+b] + gen_code +'\n}\n\n'

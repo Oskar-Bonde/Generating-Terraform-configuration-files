@@ -75,7 +75,8 @@ def clean_terraform(model):
 
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value|terraform_version)":".+?"','', input)
+    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name)":".+?"','', input)
+    input = re.sub('"(name|description)":{.*?}','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
 
 def remove_brackets(input):
@@ -232,12 +233,9 @@ def make_json_model(provider, model):
                     tf_file.close()
 
 if __name__ == "__main__":
-    
     model = 'codex'
-    #model = 'codeparrot-small'
-    #model = 'codeparrot'
-    clean_terraform(model)
-    for provider in ['aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: #'aws', 
+    
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -247,20 +245,4 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    for provider in ['azure', 'azure-easy']:
-        make_json_model(provider, 'codeparrot-small')
-        if not easy:
-            pass1(provider, 'codeparrot-small')
-        else:
-            compile_check(provider, 'codeparrot-small')
-    
-        
-    """
-    provider = 'aws'
-    for model in ['codex-0','codex-0.2', 'codex-0.4']:
-        print(f'-----------------------------------------\n{model}')
-        #make_json_human(provider)
-        #make_json_model(provider, model)
-        pass1(provider, model)
-    """
-    
+    clean_terraform(model)

@@ -29,11 +29,6 @@ resource "azurerm_cognitive_account" "example" {
 # data block, azurem client config
 data "azurerm_client_config" "current" {}
 
-# create a service principal
-resource "azurerm_service_principal" "example" {
-  application_id = data.azurerm_client_config.current.service_principal_application_id
-}
-
 # create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
 resource "azurerm_bot_channels_registration" "example" {
   location            = "global"

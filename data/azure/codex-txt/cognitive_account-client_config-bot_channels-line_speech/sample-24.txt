@@ -29,22 +29,12 @@ resource "azurerm_cognitive_account" "example" {
 # data block, azurem client config
 data "azurerm_client_config" "current" {}
 
-# create cognitive speech resource. Use name from cognitive account resource and location from resource group.
-# Use client id and client secret from client config data block.
-resource "azurerm_cognitive_speech_resource" "example" {
-  name                = azurerm_cognitive_account.example.name
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  client_id           = data.azurerm_client_config.current.client_id
-  client_secret       = data.azurerm_client_config.current.client_secret
-}
-
 # create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
 resource "azurerm_bot_channels_registration" "example" {
   location            = "global"
   sku                 = "F0"
-  microsoft_app_id    = data.azurerm_client_config.current.client_id
-  name                = "examplebot"
+  microsoft_app_id    = data.azurerm_client_config.current.object_id
+  name                = "example-bot"
   resource_group_name = azurerm_resource_group.example.name
 }
 
@@ -53,7 +43,7 @@ resource "azurerm_bot_channel_direct_line_speech" "example" {
   name                = azurerm_bot_channels_registration.example.name
   location            = azurerm_bot_channels_registration.example.location
   resource_group_name = azurerm_resource_group.example.name
-  cognitive_service_location = azurerm_cognitive_account.example.location
-  cognitive_service_access_key = azurerm_cognitive_account.example.primary_access_key
+  cognitive_services_location = azurerm_cognitive_account.example.location
+  cognitive_services_key      = azurerm_cognitive_account.example.primary_access_key
 }
 

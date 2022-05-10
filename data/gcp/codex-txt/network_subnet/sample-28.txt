@@ -11,9 +11,9 @@ provider "google" {
   region = "europe-north1"
 }
 
-# compute network that auto creates subnetworks
-resource "google_compute_network" "vpc_network" {
-  name                    = "vpc-network"
+# create compute network, give it a name and auto create subnetworks
+resource "google_compute_network" "default" {
+  name                    = "my-vpc"
   auto_create_subnetworks = true
 }
 

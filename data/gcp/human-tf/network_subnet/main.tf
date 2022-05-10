@@ -12,8 +12,8 @@ provider "google" {
   region = "europe-north1"
 }
 
-# compute network that auto creates subnetworks
+# create compute network, give it a name and auto create subnetworks
 resource "google_compute_network" "name_0" {
-  name                    = "terraform-network"
+  name = "test-network"
   auto_create_subnetworks = "true"
 }

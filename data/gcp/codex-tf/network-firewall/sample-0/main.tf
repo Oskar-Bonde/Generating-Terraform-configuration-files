@@ -11,10 +11,10 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create compute network, give it a name
+# create compute network, give it a name and auto create subnetworks
 resource "google_compute_network" "name_0" {
-  name                    = "vpc-network"
-  auto_create_subnetworks = "true"
+  name                    = "terraform-network"
+  auto_create_subnetworks = true
 }
 
 # create compute firewall, give it the name test-firewall. Use the compute network name, allow protocol icmp, also allow tcp in ports 80, 8080 and 1000-2000. Use source tags web

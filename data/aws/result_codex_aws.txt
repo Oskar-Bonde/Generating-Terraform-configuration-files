@@ -47,5 +47,5 @@ vpc-subnet-nat | 0.0% | [0, 2, 3, 4, 7, 10, 13, 15, 18, 19, 20, 21, 28, 29, 30, 
 vpc-vpn-customer_gateway | 100.0% | [] 
 vpc-vpn-customer_gateway-connection | 98.33333333333333% | [36] 
 wafv2_ip_set | 0.0% | [0, 1, 2, 3, 10, 11, 12, 13, 14, 16, 24, 29, 36, 41, 47] 
-workspaces_ip_group | 18.333333333333332% | [0, 1, 7, 10, 11, 13, 14, 15, 16, 17, 27, 28, 29, 32, 34, 50, 52] 
-Average success rate 51.25850340136056%
+workspaces_ip_group | 63.33333333333333% | [7, 10, 11, 13, 14, 15, 16, 17, 32, 34, 50] 
+Average success rate 52.17687074829933%

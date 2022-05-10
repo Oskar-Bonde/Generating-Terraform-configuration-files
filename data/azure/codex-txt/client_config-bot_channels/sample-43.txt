@@ -20,21 +20,13 @@ resource "azurerm_resource_group" "example" {
 # data block, azurem client config
 data "azurerm_client_config" "current" {}
 
-# create storage account, use name examplestorageaccount and set location to West Europe
-resource "azurerm_storage_account" "example" {
-  name                     = "examplestorageaccount"
-  resource_group_name      = azurerm_resource_group.example.name
-  location                 = azurerm_resource_group.example.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
 # create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
 resource "azurerm_bot_channels_registration" "example" {
   location            = "global"
   sku                 = "F0"
   microsoft_app_id    = data.azurerm_client_config.current.object_id
-  resource_group_name = azurerm_resource_group.example.name
+  microsoft_app_password = "test"
   name                = "examplebot"
+  resource_group_name = azurerm_resource_group.example.name
 }
 

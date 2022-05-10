@@ -1,1 +1,0 @@
- google provider block with only region set to europe north1# create a notebook instance in us west 1. Use machine type e2 medium and vm image from deeplearning-platform-release and image familiy tf-latest-cpu

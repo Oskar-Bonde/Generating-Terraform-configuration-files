@@ -11,11 +11,11 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create a notebook instance in us west 1. Use machine type e2 medium and vm image from deeplearning-platform-release and image familiy tf-latest-cpu
-resource "google_compute_instance" "notebook_instance" {
+# create a notebook instance in location us west 1 a. Use machine type e2 medium and vm image from deeplearning-platform-release and image familiy tf-latest-cpu
+resource "google_compute_instance" "notebook" {
   name         = "notebook-instance"
   machine_type = "e2-medium"
-  zone         = "us-west1-b"
+  zone         = "us-west1-a"
 
   boot_disk {
     initialize_params {
@@ -28,7 +28,7 @@ resource "google_compute_instance" "notebook_instance" {
   }
 
   metadata = {
-    startup-script = file("startup-script.sh")
+    startup-script = file("startup.sh")
   }
 }
 

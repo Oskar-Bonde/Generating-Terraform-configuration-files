@@ -1,1 +1,0 @@
- google provider block with region set to europe north1

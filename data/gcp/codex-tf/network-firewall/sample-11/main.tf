@@ -11,23 +11,26 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create compute network, give it a name
+# create compute network, give it a name and auto create subnetworks
 resource "google_compute_network" "name_0" {
-  name                    = "vpc-network"
-  auto_create_subnetworks = "true"
+  name                    = "my-vpc"
+  auto_create_subnetworks = true
 }
 
 # create compute firewall, give it the name test-firewall. Use the compute network name, allow protocol icmp, also allow tcp in ports 80, 8080 and 1000-2000. Use source tags web
 resource "google_compute_firewall" "name_1" {
-  name         = "test-firewall"
-  network      = google_compute_network.name_0.name
+  name    = "test-firewall"
+  network = google_compute_network.name_0.name
+
   allow {
     protocol = "icmp"
   }
+
   allow {
     protocol = "tcp"
     ports    = ["80", "8080", "1000-2000"]
   }
+
   source_tags = ["web"]
 }
 

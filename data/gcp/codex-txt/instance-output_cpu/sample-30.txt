@@ -13,7 +13,7 @@ provider "google" {
 
 # a compute instance that has a name, machine type f1-micro, debian-9 image and default network
 resource "google_compute_instance" "default" {
-  name         = "terraform-instance"
+  name         = "test-instance"
   machine_type = "f1-micro"
   zone         = "europe-north1-a"
 

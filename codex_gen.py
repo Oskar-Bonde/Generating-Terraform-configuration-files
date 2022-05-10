@@ -1,6 +1,7 @@
 import os
 import openai
 import time
+import shutil
 
 # sample is a dict with index key. It contains a list of touples with promt and solution
 
@@ -62,10 +63,15 @@ class CodexModel:
             for batch in range(self.n_samples // batch_size):
                 generated = self.codex(input[batch*batch_size: (batch+1)*batch_size], 1) # 150 000 tokens per min
                 for j in range(batch_size):
-                    input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"\n}\n\n"
+                    if '{' in generated["choices"][j]["text"]:
+                        input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"\n}\n\n"
+                    else:
+                        input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"{}\n\n"
                     if generated["choices"][j]["finish_reason"] == "length":
                         print(f"Finish reason length index {batch*batch_size+j}")
                         print(key)
+                        return
+                        
         os.makedirs(f'data/{self.provider}/codex{self.file_name}-txt/{key}')
         for i in range(self.n_samples):
             file_path = f'data/{self.provider}/codex{self.file_name}-txt/{key}/sample-{i}.txt'
@@ -81,13 +87,10 @@ class CodexModel:
                 top_p = 0.95,
                 temperature=0.2,
                 n = samples,
-                stop = "\n}\n", # {}n
+                stop = ["\n}\n", '{}\n\n'], # {}n
                 echo = False )
         return generated
         # add resource, terraform, data, provider or {}\n\n as end token
-def main():
-    model = CodexModel("aws", n_samples=3, wait=5, temperature=0.2, file_name='')
-    model.generate_samples()
 
 def all_providers():
     for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
@@ -95,7 +98,8 @@ def all_providers():
         model = CodexModel(provider, n_samples=60, wait=25, temperature=0.2, batch_size=20, file_name='' )
         model.generate_samples()
 
-
 if __name__ == "__main__":
     all_providers()
-    #main()
+    
+    #model = CodexModel('azure', n_samples=1, wait=1, temperature=0.2, batch_size=20, file_name='')
+    #model.generate_samples()

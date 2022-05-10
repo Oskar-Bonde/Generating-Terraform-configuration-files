@@ -1,1 +1,0 @@
- google provider block with only region set to europe north1# resource block, sql database instance. Set database version to MYSQL_5_7 and use setting tier db-f1-micro. Also, enable deletion protection# create a sql database. Use the sql database instance name defined in the previous block

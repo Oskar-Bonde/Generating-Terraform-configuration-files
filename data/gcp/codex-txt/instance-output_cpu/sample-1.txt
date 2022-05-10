@@ -12,8 +12,8 @@ provider "google" {
 }
 
 # a compute instance that has a name, machine type f1-micro, debian-9 image and default network
-resource "google_compute_instance" "default" {
-  name         = "instance-test"
+resource "google_compute_instance" "my_instance" {
+  name         = "my-instance"
   machine_type = "f1-micro"
   zone         = "europe-north1-a"
 
@@ -30,6 +30,6 @@ resource "google_compute_instance" "default" {
 
 # output the cpu platform used by the compute instance
 output "cpu_platform" {
-  value = google_compute_instance.default.cpu_platform
+  value = google_compute_instance.my_instance.cpu_platform
 }
 

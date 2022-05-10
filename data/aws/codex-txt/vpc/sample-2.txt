@@ -1,3 +1,4 @@
+# Terraform block with AWS provider
 terraform {
   required_providers {
     aws = {
@@ -11,7 +12,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Resource block with an amazon VPC in private network 10.0.0.0/16
+# a VPC resource with private network 10.0.0.0/16
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 }

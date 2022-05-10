@@ -29,17 +29,6 @@ resource "azurerm_cognitive_account" "example" {
 # data block, azurem client config
 data "azurerm_client_config" "current" {}
 
-# create key vault resource. Use name and location from resource group
-resource "azurerm_key_vault" "example" {
-  name                = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-  soft_delete_enabled = true
-  purge_protection_enabled = true
-}
-
 # create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
 resource "azurerm_bot_channels_registration" "example" {
   location            = "global"
