@@ -66,18 +66,33 @@ def clean_terraform(model):
         print(f'Cleaning {Provider}')
         for task in sorted(os.listdir(f'data/{Provider}/human-tf')):
             if os.path.exists(f'data/{Provider}/human-tf/{task}/.terraform'):
-                shutil.rmtree(f'data/{Provider}/human-tf/{task}/.terraform')
+                try:
+                    shutil.rmtree(f'data/{Provider}/human-tf/{task}/.terraform')
+                except:
+                    print(f'Error {Provider}/human-tf/{task}/.terraform')
+            if os.path.exists(f'data/{Provider}/human-tf/{task}/binary'):
+                os.remove(f'data/{Provider}/human-tf/{task}/binary')
+            if os.path.exists(f'data/{Provider}/human-tf/{task}/.terraform.lock.hcl'):
+                os.remove(f'data/{Provider}/human-tf/{task}/.terraform.lock.hcl')
             
         for task in sorted(os.listdir(f'data/{Provider}/{model}-tf')):
             for sample in sorted(os.listdir(f'data/{Provider}/{model}-tf/{task}')):
                 if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/'):
-                    shutil.rmtree(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/')
+                    try:
+                        shutil.rmtree(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/')
+                    except:
+                        print(f'Error in {Provider}/{model}-tf/{task}/{sample}/.terraform/')
+                if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/binary'):
+                    os.remove(f'data/{Provider}/{model}-tf/{task}/{sample}/binary')
+                if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform.lock.hcl'):
+                    os.remove(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform.lock.hcl')
 
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name)":".+?"','', input)
+    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id)":".+?"','', input)
     input = re.sub('"(name|description)":{.*?}','', input)
-    return  re.sub('({|}|,|[|]|"|:)','', input)
+    input = re.sub('({|}|,|[|]|"|:)','', input)
+    return re.sub('\n','', input)
 
 def remove_brackets(input):
     input = re.sub('\[.+\]','', input)
@@ -117,10 +132,15 @@ def pass1(provider, model):
                 model_file = open(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore')
                 model_json = model_file.read()
                 model_json = clean_json(model_json)
+                if task == 'managed-disk':
+                    print(model_json+'\n')
+                    print(human_json)
+                    print(distr)
                 if model_json == human_json:
                     success_rate[sample_to_int[sample]] = distr[sample_to_int[sample]]
                 else: 
                     errors.append(int(sample[7:]))
+
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
@@ -234,8 +254,10 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     model = 'codex'
-    
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+    pass1('azure', model)
+
+    quit()
+    for provider in ['gcp', 'gcp-easy', 'azure', 'azure-easy']:#'aws', 'aws-easy', 
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -245,4 +267,4 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    clean_terraform(model)
+    #clean_terraform(model)

@@ -5,10 +5,11 @@ string2 = '{"format_version":"1.0","terraform_version":"1.1.7","planned_values":
 
 def remove_ident(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value|terraform_version)":".+?"','', input)
-    input = re.sub('"name":{.*?}','', input)
-    
+    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id)":".+?"','', input)
+    input = re.sub('"(name|description)":{.*?}','', input)
+    input = re.sub('\n','', input)
     return  re.sub('({|}|,|[|]|"|:)','', input)
+    
 
 string1 = remove_ident(string1)
 string2 = remove_ident(string2)
@@ -28,14 +29,13 @@ def remove_brackets(input):
     return input
 #print(remove_brackets(string3))
 
-string4 = '.name_0"]},"name":{"constant_value":"example-cogacct"},"resource_group_name"'
-string5 = '.name_0"]},"name":{"references":["azurerm_resource_group.name_0.name","azurerm_resource_group.name_0"]},"resource_group_name"'
+string4 = ''
+string5 = 'planned_values \n lol'
 string4 = remove_ident(string4)
 string5 = remove_ident(string5)
 
 if string4 == string5:
     print('Success')
-    print(string4)
 
 else:
     print(string4)

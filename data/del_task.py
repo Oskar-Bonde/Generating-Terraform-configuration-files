@@ -9,6 +9,16 @@ def del_tasks(provider, tasks):
                 if os.path.exists(f'data/{provider}/{folder}/{task}'):
                     shutil.rmtree(f'data/{provider}/{folder}/{task}')
                     print(f'Deleted data/{provider}/{folder}/{task}')
+
+def del_binary(provider, tasks):
+    for task in tasks:
+        for folder in sorted(os.listdir(f'data/{provider}/')):
+            if folder != 'human-txt':
+                if os.path.exists(f'data/{provider}/{folder}/{task}/binary'):
+                    shutil.rmtree(f'data/{provider}/{folder}/{task}/binary')
+                    print(f'Deleted data/{provider}/{folder}/{task}')
+                if os.path.exists(f'data/{provider}/{folder}/{task}/.terraform.lock.hcl'):
+                    shutil.rmtree(f'data/{provider}/{folder}/{task}/.terraform.lock.hcl')
             
 if __name__ =='__main__':
     gcp_tasks = ['network-firewall', 'network_subnet', 'notebook_instance', 'provider_not_only', 'sql_instance-sql_database', 'instance', 'instance-output_cpu']
