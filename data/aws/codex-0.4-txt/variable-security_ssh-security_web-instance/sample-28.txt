@@ -36,12 +36,12 @@ variable "ec2_instance_type" {
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "ssh_sg" {
-  name        = "ssh_sg"
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
   description = "Allow SSH traffic"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "SSH traffic"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -56,19 +56,26 @@ resource "aws_security_group" "ssh_sg" {
   }
 
   tags = {
-    Name = "ssh_sg"
+    Name = "allow_ssh"
   }
 }
 
-# Create Security Group for web traffic
-resource "aws_security_group" "web_sg" {
-  name        = "web_sg"
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
+resource "aws_security_group" "allow_web" {
+  name        = "allow_web"
   description = "Allow web traffic"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "Web traffic"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -81,23 +88,15 @@ resource "aws_security_group" "web_sg" {
   }
 
   tags = {
-    Name = "web_sg"
+    Name = "allow_web"
   }
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "web" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
-
-  security_groups = [
-    aws_security_group.ssh_sg.id,
-    aws_security_group.web_sg.id,
-  ]
-
-  tags = {
-    Name = "ec2_instance"
-  }
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id, aws_security_group.allow_web.id]
 }
 

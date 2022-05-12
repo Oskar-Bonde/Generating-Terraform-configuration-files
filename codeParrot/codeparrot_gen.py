@@ -135,7 +135,7 @@ def main():
     model, data_list, tokenizer = accelerator.prepare(model, data_list, tokenizer) # eval_loader
     
     n_tasks = len(data_list)
-    folder_path = f'data/{args.provider}/codeparrot-{args.model_name}-txt/'
+    folder_path = f'data/{args.provider}/{args.model_name}-txt/'
     if not os.path.exists(folder_path): os.makedirs(folder_path)
     if batch_size > n_samples: batch_size=n_samples
     with torch.no_grad():

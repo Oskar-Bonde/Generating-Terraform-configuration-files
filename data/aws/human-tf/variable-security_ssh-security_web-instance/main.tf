@@ -60,7 +60,7 @@ resource "aws_security_group" "name_4" {
   }
 }
 
-# Create Security Group for web traffic
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
 resource "aws_security_group" "name_5" {
   name        = "vpc-web"
   description = "Dev VPC Web"
@@ -94,6 +94,7 @@ resource "aws_security_group" "name_5" {
 resource "aws_instance" "name_6" {
   ami           = var.name_1 
   instance_type = var.name_3
+  count = var.name_2
   vpc_security_group_ids = [aws_security_group.name_4.id, aws_security_group.name_5.id]
 }
 

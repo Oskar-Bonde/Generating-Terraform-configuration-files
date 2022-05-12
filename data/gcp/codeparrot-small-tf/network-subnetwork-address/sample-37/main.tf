@@ -11,20 +11,21 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create compute network with a name surfing
+# create compute network, give it a name and set auto create subnetworks to false
 resource "google_compute_network" "name_0" {
-  name = "my-compute-network"
+  name = "my-network"
+  auto_create_subnetworks = false
 }
 
-# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use previous compute network called surfing
+# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use previous compute network called surf-to-gcs
 resource "google_compute_subnetwork" "name_1" {
-  name          = "my-compute-subnetwork"
+  name          = "my-subnetwork"
   ip_cidr_range = "10.0.0.0/16"
   region        = "europe-north1"
 }
 
 # resource compute address, set subnetwork id. Set address type to internal, use address 10.0.42.42
 resource "google_compute_address" "name_2" {
-  name = "my-compute-address"
+  name = "my-address"
 }
 

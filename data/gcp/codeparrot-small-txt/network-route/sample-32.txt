@@ -11,7 +11,7 @@ provider "google" {
   region = "europe-north1"
 }
 
-# a compute network resource with a name and network interface
+# create compute network, give it a name and auto create subnetworks
 resource "google_compute_network" "network" {
   name = "my-network"
 }

@@ -8,7 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region  = var.aws_region
+  region = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -36,9 +36,10 @@ variable "ec2_instance_type" {
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "sg_ssh" {
-  name        = "sg_ssh"
-  description = "Security Group for SSH Traffic"
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow SSH traffic"
+  vpc_id      = aws_vpc.default.id
 
   ingress {
     description = "SSH"
@@ -56,19 +57,28 @@ resource "aws_security_group" "sg_ssh" {
   }
 
   tags = {
-    Name = "sg_ssh"
+    Name = "allow_ssh"
   }
 }
 
-# Create Security Group for web traffic
-resource "aws_security_group" "sg_web" {
-  name        = "sg_web"
-  description = "Security Group for web traffic"
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
+resource "aws_security_group" "allow_web" {
+  name        = "allow_web"
+  description = "Allow web traffic"
+  vpc_id      = aws_vpc.default.id
 
   ingress {
     description = "HTTP"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -81,20 +91,15 @@ resource "aws_security_group" "sg_web" {
   }
 
   tags = {
-    Name = "sg_web"
+    Name = "allow_web"
   }
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "web" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
-
-  vpc_security_group_ids = [aws_security_group.sg_ssh.id, aws_security_group.sg_web.id]
-
-  tags = {
-    Name = "ec2_instance"
-  }
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id, aws_security_group.allow_web.id]
 }
 

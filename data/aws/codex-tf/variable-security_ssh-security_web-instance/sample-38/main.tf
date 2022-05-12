@@ -37,9 +37,8 @@ variable "name_3" {
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
 resource "aws_security_group" "name_4" {
-  name        = "allow_ssh"
-  description = "Allow SSH traffic"
-  vpc_id      = aws_vpc.main.id
+  name        = "ssh_access"
+  description = "Allow SSH access from anywhere"
 
   ingress {
     description = "SSH from anywhere"
@@ -57,20 +56,27 @@ resource "aws_security_group" "name_4" {
   }
 
   tags = {
-    Name = "allow_ssh"
+    Name = "ssh_access"
   }
 }
 
-# Create Security Group for web traffic
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
 resource "aws_security_group" "name_5" {
-  name        = "allow_web"
-  description = "Allow web traffic"
-  vpc_id      = aws_vpc.main.id
+  name        = "web_access"
+  description = "Allow web access from anywhere"
 
   ingress {
     description = "HTTP from anywhere"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS from anywhere"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -83,7 +89,7 @@ resource "aws_security_group" "name_5" {
   }
 
   tags = {
-    Name = "allow_web"
+    Name = "web_access"
   }
 }
 
@@ -92,6 +98,11 @@ resource "aws_instance" "name_6" {
   ami           = var.name_1
   instance_type = var.name_3
   count         = var.name_2
+
   vpc_security_group_ids = [aws_security_group.name_4.id, aws_security_group.name_5.id]
+
+  tags = {
+    Name = "web_server"
+  }
 }
 

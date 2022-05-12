@@ -37,11 +37,11 @@ variable "name_3" {
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
 resource "aws_security_group" "name_4" {
-  name        = "ssh_sg"
-  description = "Allow SSH traffic"
+  name        = "ssh_access"
+  description = "Allow SSH access from anywhere"
 
   ingress {
-    description = "SSH"
+    description = "SSH access from anywhere"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -56,19 +56,27 @@ resource "aws_security_group" "name_4" {
   }
 
   tags = {
-    Name = "ssh_sg"
+    Name = "ssh_access"
   }
 }
 
-# Create Security Group for web traffic
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
 resource "aws_security_group" "name_5" {
-  name        = "web_sg"
-  description = "Allow web traffic"
+  name        = "web_access"
+  description = "Allow HTTP and HTTPS access from anywhere"
 
   ingress {
-    description = "HTTP"
+    description = "HTTP access from anywhere"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS access from anywhere"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -81,7 +89,7 @@ resource "aws_security_group" "name_5" {
   }
 
   tags = {
-    Name = "web_sg"
+    Name = "web_access"
   }
 }
 

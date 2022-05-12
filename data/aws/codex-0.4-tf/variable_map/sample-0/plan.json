@@ -1,1 +1,0 @@
-{"format_version":"1.0","terraform_version":"1.1.7","variables":{"name_0":{"value":{"Environment":"dev","Terraform":"true"}}},"planned_values":{"root_module":{}},"configuration":{"provider_config":{"aws":{"name":"aws","expressions":{"region":{"references":["var.aws_region"]}}}},"root_module":{"variables":{"name_0":{"default":{"Environment":"dev","Terraform":"true"}}}}}}

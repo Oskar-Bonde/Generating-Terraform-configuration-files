@@ -89,10 +89,12 @@ def clean_terraform(model):
 
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
-    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id)":".+?"','', input)
+    input = re.sub('"constant_value":(true|false)', '', input)
+    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id|bucket_name|network|instance)":".+?"','', input)
+    input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id|bucket_name|network)":null','', input)
     input = re.sub('"(name|description)":{.*?}','', input)
-    input = re.sub('({|}|,|[|]|"|:)','', input)
-    return re.sub('\n','', input)
+    input = re.sub('({|}|,|\[|\]|"|:)','', input)
+    return  re.sub('\n','', input)
 
 def remove_brackets(input):
     input = re.sub('\[.+\]','', input)
@@ -132,10 +134,6 @@ def pass1(provider, model):
                 model_file = open(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json', 'r', encoding='utf-8', errors='ignore')
                 model_json = model_file.read()
                 model_json = clean_json(model_json)
-                if task == 'managed-disk':
-                    print(model_json+'\n')
-                    print(human_json)
-                    print(distr)
                 if model_json == human_json:
                     success_rate[sample_to_int[sample]] = distr[sample_to_int[sample]]
                 else: 
@@ -253,11 +251,8 @@ def make_json_model(provider, model):
                     tf_file.close()
 
 if __name__ == "__main__":
-    model = 'codex'
-    pass1('azure', model)
-
-    quit()
-    for provider in ['gcp', 'gcp-easy', 'azure', 'azure-easy']:#'aws', 'aws-easy', 
+    model = 'codeparrot-small'
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: #'azure', 'azure-easy'
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -267,4 +262,4 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    #clean_terraform(model)
+    clean_terraform(model)

@@ -10,7 +10,7 @@ terraform {
 provider "google" {
 }
 
-# a compute network resource with a nameresource
+# create compute network, give it a name and auto create subnetworksresource
 resource "google_compute_network" "name_0" {
   name = "my-network"
 }
@@ -20,5 +20,6 @@ resource "google_compute_route" "name_1" {
   name = "my-route"
   dest_range = "15.0.0.0/24"
   network = google_compute_network.name_0.id
+  priority = 100
 }
 

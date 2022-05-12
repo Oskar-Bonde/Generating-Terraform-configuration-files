@@ -8,8 +8,7 @@ terraform {
 
 # Provider Block AWS in region var.aws_region and default profile
 provider "aws" {
-  region     = var.aws_region
-  profile    = var.aws_profile
+  region = var.aws_region
 }
 
 # Create variable called aws_region with default "us-east-1" and type string
@@ -37,8 +36,8 @@ variable "ec2_instance_type" {
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "sg_ssh" {
-  name        = "sg_ssh"
+resource "aws_security_group" "ssh_sg" {
+  name        = "ssh_sg"
   description = "Allow SSH traffic"
 
   ingress {
@@ -57,19 +56,27 @@ resource "aws_security_group" "sg_ssh" {
   }
 
   tags = {
-    Name = "sg_ssh"
+    Name = "ssh_sg"
   }
 }
 
-# Create Security Group for web traffic
-resource "aws_security_group" "sg_web" {
-  name        = "sg_web"
-  description = "Allow HTTP traffic"
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
+resource "aws_security_group" "web_sg" {
+  name        = "web_sg"
+  description = "Allow web traffic"
 
   ingress {
     description = "HTTP"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -82,20 +89,20 @@ resource "aws_security_group" "sg_web" {
   }
 
   tags = {
-    Name = "sg_web"
+    Name = "web_sg"
   }
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "web_server" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
 
-  vpc_security_group_ids = [aws_security_group.sg_ssh.id, aws_security_group.sg_web.id]
+  vpc_security_group_ids = [aws_security_group.ssh_sg.id, aws_security_group.web_sg.id]
 
   tags = {
-    Name = "ec2_instance"
+    Name = "web_server"
   }
 }
 

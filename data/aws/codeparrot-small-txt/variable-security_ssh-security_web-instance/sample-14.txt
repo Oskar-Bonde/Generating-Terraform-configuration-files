@@ -18,18 +18,26 @@ variable "aws_region" {
 }
 
 # variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
+variable "ec2_ami_id" {
+  type = string
 }
 
 # create number variable called ec2_instance_count with default 1 and type number
+variable "ec2_instance_count" {
+  type = number
 }
 
 # creaet variable ec2_instance_type with default t3.micro and type string
+variable "ec2_instance_type" {
+  type = string
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
+variable "security_group_id" {
+  type = string
 }
 
-# Create Security Group for web traffic
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids

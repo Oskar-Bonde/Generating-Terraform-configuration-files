@@ -6,14 +6,14 @@ terraform {
   }
 }
 
-# Provider AWS region var.aws_region
+# Provider AWS with region us-east-1
 provider "aws" {
-  region = var.aws_region
+  region = "us-east-1"
 }
 
 # Create Variable that is a map of strings. The default is that key Terraform maps to true and Environment key maps to dev
 variable "environment" {
-  type    = map(string)
+  type = map(string)
   default = {
     Terraform = "true"
     Environment = "dev"

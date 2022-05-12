@@ -1,1 +1,0 @@
- google provider block with only region set to europe north1# create compute network with name surf# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use compute network surf id

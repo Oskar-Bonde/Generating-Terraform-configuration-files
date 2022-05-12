@@ -13,32 +13,33 @@ provider "aws" {
 
 # Create variable called aws_region with default "us-east-1" and type string
 variable "aws_region" {
+  type = string
   default = "us-east-1"
-  type    = string
 }
 
 # variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
 variable "ec2_ami_id" {
+  type = string
   default = "ami-0915bcb5fa77e4892"
-  type    = string
 }
 
 # create number variable called ec2_instance_count with default 1 and type number
 variable "ec2_instance_count" {
+  type = number
   default = 1
-  type    = number
 }
 
 # creaet variable ec2_instance_type with default t3.micro and type string
 variable "ec2_instance_type" {
+  type = string
   default = "t3.micro"
-  type    = string
 }
 
 # Create Security Group for SSH Traffic, allow port 22 ingress and all IP and ports egress
-resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_sg"
+resource "aws_security_group" "ssh_sg" {
+  name        = "ssh_sg"
   description = "Allow SSH traffic"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description = "SSH"
@@ -56,19 +57,28 @@ resource "aws_security_group" "ec2_sg" {
   }
 
   tags = {
-    Name = "ec2_sg"
+    Name = "ssh_sg"
   }
 }
 
-# Create Security Group for web traffic
+# Create Security Group for web traffic, allow port 80 and 443 ingress and all outbound traffic
 resource "aws_security_group" "web_sg" {
   name        = "web_sg"
-  description = "Allow HTTP traffic"
+  description = "Allow web traffic"
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     description = "HTTP"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -86,15 +96,13 @@ resource "aws_security_group" "web_sg" {
 }
 
 # Create EC2 Instance with variable ec2 ami and instance type. Use vpc shh and vpc web security group ids
-resource "aws_instance" "web" {
+resource "aws_instance" "web_server" {
   ami           = var.ec2_ami_id
   instance_type = var.ec2_instance_type
   count         = var.ec2_instance_count
-
-  security_groups = [aws_security_group.ec2_sg.id, aws_security_group.web_sg.id]
-
+  vpc_security_group_ids = [aws_security_group.ssh_sg.id, aws_security_group.web_sg.id]
   tags = {
-    Name = "web"
+    Name = "web_server"
   }
 }
 

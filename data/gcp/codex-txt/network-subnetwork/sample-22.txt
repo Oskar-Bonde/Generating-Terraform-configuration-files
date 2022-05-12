@@ -11,16 +11,16 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create compute network with name surf
-resource "google_compute_network" "surf" {
-  name                    = "surf"
-  auto_create_subnetworks = "true"
+# create compute network, give it a name and set auto create subnetworks to false
+resource "google_compute_network" "default" {
+  name                    = "terraform-network"
+  auto_create_subnetworks = false
 }
 
 # create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use compute network surf id
-resource "google_compute_subnetwork" "surf" {
-  name          = "surf"
+resource "google_compute_subnetwork" "default" {
+  name          = "terraform-subnetwork"
   ip_cidr_range = "10.0.0.0/16"
-  network       = google_compute_network.surf.id
+  network       = google_compute_network.default.self_link
 }
 

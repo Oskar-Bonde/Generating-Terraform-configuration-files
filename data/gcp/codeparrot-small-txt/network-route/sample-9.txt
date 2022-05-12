@@ -10,15 +10,16 @@ terraform {
 provider "google" {
 }
 
-# a compute network resource with a nameresource
-resource "google_compute_network" "network" {
+# create compute network, give it a name and auto create subnetworksresource
+resource "google_compute_network" "my_network" {
   name = "my-network"
 }
 
 # compute route with dest range 15.0.0.0/24 and next hop id 10.132.1.5. Use the compute network id and set priority to 100
-resource "google_compute_route" "default" {
+resource "google_compute_route" "my_route" {
   name = "my-route"
   dest_range = "15.0.0.0/24"
-  network = google_compute_network.network.id
+  network = google_compute_network.my_network.id
+  priority = 100
 }
 

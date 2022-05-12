@@ -12,9 +12,10 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create compute network with a name surf
+# create compute network, give it a name and set auto create subnetworks to false
 resource "google_compute_network" "name_0" {
-  name = "my-network"
+  name = "test-network"
+  auto_create_subnetworks = "false"
 }
 
 # create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use previous compute network called surf

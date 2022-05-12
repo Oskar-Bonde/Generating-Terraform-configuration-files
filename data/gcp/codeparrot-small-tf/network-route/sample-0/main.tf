@@ -11,16 +11,15 @@ provider "google" {
   region = "europe-north1"
 }
 
-# a compute network resource with a name and network interface
+# create compute network, give it a name and auto create subnetworks
 resource "google_compute_network" "name_0" {
   name = "my-network"
 }
 
 # compute route with dest range 15.0.0.0/24 and next hop id 10.132.1.5. Use the compute network id and set priority to 100
 resource "google_compute_route" "name_1" {
-  name = "route"
+  name = "default"
   dest_range = "15.0.0.0/24"
-  network = "default"
-  next_hop_id = "10.132.1.5"
+  network = google_compute_network.name_0.id
 }
 
