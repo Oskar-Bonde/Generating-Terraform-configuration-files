@@ -12,21 +12,22 @@ provider "google" {
 
 # compute network that auto creates subnetworks
 resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  name = "my-network"
 }
 
 # a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name
 resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-${random_suffix}"
+  name = "my-vm2"
   machine_type = "f1-micro"
-  network_interface {
-    network = "default"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
   }
-  # network_ip = "10.0.0.0/16"
-  access_config {
-    # Ephemeral
-    # network_tier = "STANDARD"
+
+  network_interface {
+    network = "default"    
   }
 }
 

@@ -27,17 +27,12 @@ resource "google_compute_instance_template" "node_template" {
     }
   }
 
-  metadata = {
-    startup-script = <<EOF
-    #!/bin/bash
-    sudo apt-get update
-    apt-get install -y nginx
-    sudo service nginx start
-    EOF
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 }
 

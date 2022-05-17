@@ -17,7 +17,7 @@ resource "google_compute_network" "default" {
 }
 
 # a compute instance
-resource "google_compute_instance" "vm_instance" {
+resource "google_compute_instance" "vm_instance2" {
   name = "my-compute-instance-${random_suffix}"
   machine_type = "f1-micro"
 

@@ -14,5 +14,6 @@ provider "google" {
 resource "google_bigquery_dataset" "example_dataset" {
   dataset_id = "example_dataset"
   location = "EU"
+  project = var.project_id
 }
 

@@ -11,10 +11,19 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
-  can_ip_forward = false
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+
+  provider = google.target
+
+  node_type = "n1-standard-1"
+
+  network_interface {
+    network = "default"    
+    access_config {
+      // Ephemeral IP
+    }
+  }
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -22,18 +31,20 @@ resource "google_compute_instance_template" "node_template" {
     boot         = true
   }
 
+  # Add a network interface
   network_interface {
-    network = "default"    
+    network = "default"
     access_config {
+      // Ephemeral IP
     }
   }
 
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  metadata = {
+    foo = "bar"
   }
 
   service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 }
 

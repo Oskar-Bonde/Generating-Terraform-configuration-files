@@ -12,9 +12,45 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "my-dns-policy"
+  name = "dns-policy"
   zone = "europe-west1-b"
-  type = "A"
-  records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+
+  # DNS zone
+  policy = "true"
+
+  # allow outbound tcp traffic on all ports
+  allow {
+    ports = ["22", "80", "443"]
+  }
+
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound icmp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound tcp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound udp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
+
+  # allow outbound icmp traffic on a port range
+  allow {
+    ports = ["1-65535"]
+  }
 }
 

@@ -14,9 +14,12 @@ provider "google" {
 resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
   machine_type = "f1-micro"
+  can_ip_forward = true
 
   disk {
     source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
   }
 
   network_interface {
@@ -24,75 +27,5 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
-
-  # install nginx and serve a simple web page
-  metadata = {
-    startup-script = <<-EOF1
-      #! /bin/bash
-      set -euo pipefail
-
-      export DEBIAN_FRONTEND=noninteractive
-      apt-get update
-      apt-get install -y nginx-light jq
-
-      NAME=node-template
-      IP=static
-      PORT=8080
-      CHECKSUM=apache2.7.0
-
-      # install nginx
-      nginx -s /bin/bash
-      RETRIES=5
-      RETRY_COUNT=1
-      while [ "$STACK_SIZE" -le "$RETRY_COUNT" -a "$STACK_SIZE" ]; do
-        curl -s $ENDPOINT_ADDRESS:8080/test -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname" -H "Metadata-Flavor: Google" > nginx-light.out
-        echo "---nginx output ---"
-        echo "---server output---"
-        echo "---server error---"
-        exit 1
-      done
-
-      # install nginx
-      nginx -s /bin/bash
-      RETRIES=5
-      RETRY_COUNT=1
-      while [ "$STACK_SIZE" -le "$RETRY_COUNT" -a "$STACK_SIZE" ]; do
-        curl -s $ENDPOINT_ADDRESS:8080/test -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname" -H "Metadata-Flavor: Google" > nginx-light.out
-        echo "---nginx output ---"
-        echo "---server output---"
-        echo "---server error---"
-        exit 1
-      done
-
-      # install nginx
-      nginx -s /bin/bash
-      RETRIES=5
-      RETRY_COUNT=1
-      while [ "$STACK_SIZE" -le "$RETRY_COUNT" -a "$STACK_SIZE" ]; do
-        curl -s $ENDPOINT_ADDRESS:8080/test -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname" -H "Metadata-Flavor: Google" > nginx-light.out
-        echo "---nginx output ---"
-        echo "---server output---"
-        echo "---server error---"
-        exit 1
-      done
-
-      # install nginx
-      nginx -s /bin/bash
-      RETRIES=5
-      RETRY_COUNT=1
-      while [ "$STACK_SIZE" -le "$RETRY_COUNT" -a "$STACK_SIZE" ]; do
-        curl -s $ENDPOINT_ADDRESS:8080/test -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname" -H "Metadata-Flavor: Google" > nginx-light.out
-        echo "---nginx output ---"
-        echo "---server output---"
-        echo "---server error---"
-        exit 1
-      done
-
-      # install nginx
-      nginx -s /bin/bash
-      RETRIES=5
-      RETRY_COUNT=1
-      while [ "$STACK_SIZE" -le "$RETRY_COUNT" -a "$STACK_SIZE" ]; do
-        curl -s $ENDPOINT_ADDRESS:8080/test -H "Metadata-Flavor: Google" "http://metadata.google.
 }
 

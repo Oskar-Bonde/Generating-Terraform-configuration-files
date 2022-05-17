@@ -16,11 +16,11 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# compute route resourcevariable
+# compute route resource 
 resource "google_compute_route" "default" {
   name        = "my-route-${random_suffix}"
-  network     = google_compute_network.default.self_link
   dest_range  = "0.0.0.0/0"
-  priority     = 1000
+  network     = google_compute_network.default.self_link
+  next_hop_instance = google_compute_instance.vm_instance.self_link
 }
 

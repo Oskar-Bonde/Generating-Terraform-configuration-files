@@ -1,0 +1,56 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure provider
+
+resource "azurerm_virtual_machine" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  vm_size               = "Standard_A0"
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size_gb         = "Standard_A1"
+  delete_os_disk_on_termination = true
+  delete_data_disks_on_termination = true
+  delete_data_disks_on_termination_list = true
+  vm_address_prefix       = "10.0.0.0/16"
+  vm_address_prefix_list = "10.0.1.0/24"
+  vm_address_prefix_list_type = "CIDR_BLOCK"
+  vm_disk_type           = "Standard_LRS"
+  vm_disk_size           = "Standard_LRS"
+  vm_disk_type_disk_size = "Standard_LRS"
+  vm_disk_type_disk_type_disk_size = "Standard_LRS"
+  vm_disk_type_disk_type_disk_type_disk_size = "Standard_LRS"
+  vm_disk_machine_type        = "Standard_LRS"
+  vm_disk_machine_type_disk_type_disk_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_size_list = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk_machine_type_disk_type_disk_size_list_type = "Standard_LRS"
+  vm_disk_machine_type_disk_machine_type_disk
+}
+
+# create resource group
+}
+
+# create public ip resource
+}
+
+# make a lb resource
+}
+

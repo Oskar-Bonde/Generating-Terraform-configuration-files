@@ -12,13 +12,14 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name = "fw-policy-${local.name_suffix}"
+  name    = "fw-policy"
   network = "default"
+
   allow {
     protocol = "tcp"
-    ports = ["80", "443"]
+    ports    = ["80", "443"]
   }
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["favicons"]
+
+  target_tags = ["ha-gce-example-com-k8s-io-role-master"]
 }
 

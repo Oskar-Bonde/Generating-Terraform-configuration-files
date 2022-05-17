@@ -1,0 +1,52 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create variable for each resource
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable blockvariable "aws_availability_zones" {
+  default = "us-east-1a,us-east-1b,us-east-1c"
+}
+
+# make variablevariable "aws_instance_type" {
+  default = "t2.micro"
+}
+
+# create variable blockvariable "aws_instance_size" {
+  default = "t2.micro"
+}
+
+# Create Security Groupvariable "aws_security_group_name" {
+  default = "default"
+}
+
+# Create Security Group
+resource "aws_security_group" "default" {
+  name        = "default"
+  description = "Allow all inbound traffic"
+  vpc_id      = "${aws_vpc.main.id}"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+ 
+}
+
+# Create EC2 Instance
+}
+

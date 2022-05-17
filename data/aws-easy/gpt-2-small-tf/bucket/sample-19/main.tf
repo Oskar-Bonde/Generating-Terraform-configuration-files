@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider aws block with AWS provider
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create S3 Bucket resource
+resource "aws_s3_bucket" "name_0" {
+  bucket                  = "testingBucket"
+  acl                      = "private"
+  force_destroy            = true
+  force_update            = true
+  force_delete            = true
+  acl                     = "public-read"
+}
+

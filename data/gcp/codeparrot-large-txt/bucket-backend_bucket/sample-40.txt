@@ -22,7 +22,8 @@ resource "google_storage_bucket" "bucket_cdn" {
   location = "europe-north1"
   cdn_policy {
     cache_mode = "CACHE_ALL_STATIC"
-    client_ttl = 3600
+    default_ttl = 3600
+    client_ttl  = 86400
   }
 }
 

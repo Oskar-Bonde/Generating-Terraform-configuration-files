@@ -26,5 +26,13 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
 }
 

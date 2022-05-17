@@ -15,21 +15,11 @@ data "google_compute_zones" "available" {
   project = var.project_id
 }
 
-# make a compute instance
-resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
+# make a compute instancevariable
+resource "google_compute_instance_variable" "instance_var" {
+  name = "my-instance-var-${random_suffix}"
   machine_type = "f1-micro"
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+  value = "my-instance-value"
 }
 

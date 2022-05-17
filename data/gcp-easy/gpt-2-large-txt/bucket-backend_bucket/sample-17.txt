@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+}
+
+# create storage bucket resource
+
+resource "google_compute_network" "default" {
+  name                    = "my-network-${random_suffix}"
+  auto_create_subnetworks = false
+}
+
+# create compute backend bucket
+
+resource "google_compute_subnetwork" "default" {
+  name          = "my-subnetwork-${random_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
+  region        = "us-central1"
+  network       = google_compute_network.default.self_link
+  region        = "us-central1"
+}
+

@@ -12,11 +12,30 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS zone where to create the record
-  ttl  = 300
-  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+  # DNS zone
+  policy = <<EOF
+{
+  "action": "allow",
+  "priority": 1,
+  "condition": {
+    "title": "test",
+    "description": "test",
+    "expression": "test"
+  },
+  "direction": "INGRESS",
+  "priority": 1,
+  "action": {
+    "type": "forward",
+    "protocol": "tcp",
+    "source": "0.0.0.0/0",
+    "address": "0.0.0.0"
+  },
+  "source": "10.0.0.0/16",
+  "source_port_range": "10.0.0.0/16",
+  "destination_port_range": "10.0.0.0/16",
+  "source_address_prefix": "10.0.0.0/16"
 }
 

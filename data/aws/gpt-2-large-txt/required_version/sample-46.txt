@@ -1,0 +1,12 @@
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Provider block with AWS in us-east-1 region and default profile
+resource "aws_instance" "ec2demo-b" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

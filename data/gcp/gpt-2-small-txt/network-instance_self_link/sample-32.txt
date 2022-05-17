@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# compute network that auto creates subnetworks
+resource "google_compute_subnetwork" "subnet" {
+  name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+}
+
+# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name
+}
+

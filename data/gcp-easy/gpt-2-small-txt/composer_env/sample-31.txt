@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create composer environment in region us-central1
+resource "google_compute_environment" "env_us_central1" {
+  name = "my-env-us-central1"
+  region = "us-central1"
+  zone = "us-central1-a"
+  service_account = "ci-ci-ci-ci-sa"
+  name = "ci-ci-ci-ci-ci-sa"
+  network = "default"    
+  source_tags = ["ci-ci-ci-ci-ci-sa"]
+  network_interfaces {
+    associate_public_ip_address = true
+    delete_on_termination              = true
+    ipv6_address_count                 = 0
+    security_groups                   = [google_compute_secgroup.ci_ci_ci_secgroup.name]
+  }
+}
+

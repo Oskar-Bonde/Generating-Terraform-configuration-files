@@ -12,134 +12,31 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${random_suffix}"
-  enable_inbound_forwarding = true
-  policy_type  = "SINGLE_IP_INTERNET"
-  dns_policy_name = google_dns_policy.dns_policy.name
+  name = "my-dns-policy"
+  zone = "us-central1-a"
 
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "tcp"
-    ports    = ["53"]
+  # DNS policy
+  rule {
+    action = "deny(403)"
+    priority = 1
   }
 
-  // Allow Google-managed private DNS hosting (without a warning)
-  allow {
-    protocol = "udp"
-    ports    = ["53"]
+  # allow outbound traffic
+  rule {
+    action = "allow"
+    priority = 1
   }
 
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "icmp"
+  # allow inbound traffic
+  rule {
+    action = "allow"
+    priority = 1
   }
 
-  // Allow Google-managed private DNS hosting (without a warning)
-  allow {
-    protocol = "esp"
+  # allow all outbound traffic
+  rule {
+    action = "allow"
+    priority = 1
   }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "ah"
-  }
-
-  // Allow Google-managed private DNS hosting (without a warning)
-  allow {
-    protocol = "sctp"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "ah-esp"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "sctp-esp"
-  }
-
-  // Allow Google-managed private DNS hosting (without a warning)
-  allow {
-    protocol = "sctp-ah"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
-  allow {
-    protocol = "udp-1-65535"
-  }
-
-  // Allow Google-managed private DNS hosting (with a warning)
- 
 }
 

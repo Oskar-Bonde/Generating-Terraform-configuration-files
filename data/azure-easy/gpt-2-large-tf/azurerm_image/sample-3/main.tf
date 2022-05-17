@@ -1,0 +1,79 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure provider
+
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "name_0" {
+  name     = "myTFResourceGrouppolicy"
+  location = "westus2"
+}
+
+# resource block. Create azurerm image
+resource "azurerm_virtual_machine" "name_1" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+  vm_size               = "Standard_A1"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A2"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A3"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A4"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A5"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A6"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A7"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A8"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A9"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A10"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A11"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A12"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A13"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A1114"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A1214"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A1314"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A141411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A141114"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14111411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14111411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14111411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14111411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A14111411"
+  delete_data_disks_on_termination = true
+  vm_size               = "Standard_A
+}
+

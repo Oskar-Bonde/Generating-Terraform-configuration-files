@@ -11,8 +11,8 @@ provider "google" {
 }
 
 # ml engine model resource
-resource "google_ml_engine_model" "my_model" {
-  name = "my_model-${random_suffix}"
+resource "google_ml_engine_model" "default" {
+  name = "my-ml-engine-model"
   region = "us-central1"
   description = "my model"
   tags = ["foo", "bar"]

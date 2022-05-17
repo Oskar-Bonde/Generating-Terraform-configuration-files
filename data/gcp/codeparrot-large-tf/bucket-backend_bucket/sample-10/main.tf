@@ -16,14 +16,14 @@ resource "google_storage_bucket" "name_0" {
   location = "europe-north1"
 }
 
-# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdnvariable
+# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn
 resource "google_storage_bucket" "name_1" {
   name = "my-bucket-cdn"
   location = "europe-north1"
-  cdn_configuration {
-    cdn_token {
-      value = "${file("secrets/cdn_token.txt")}"
-    }
+  cdn_policy {
+    cache_mode = "CACHE_ALL_STATIC"
+    default_ttl = 3600
+    client_ttl = 86400
   }
 }
 

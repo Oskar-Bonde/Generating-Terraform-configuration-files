@@ -14,7 +14,6 @@ provider "google" {
 resource "google_bigquery_dataset" "dataset" {
   dataset_id = "dataset-${random_suffix}"
   friendly_name = "test"
-  description = "test"
-  location = "US"
+  description = "This is a test description"
 }
 

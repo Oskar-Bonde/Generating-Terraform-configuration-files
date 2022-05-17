@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true.
+resource "google_ca_certificate" "name_0" {
+  provider = google-beta
+  name    = "my-ca-certificate"
+  location = "europe-west4"
+  certificate = file("${path.module}/ca.pem")
+
+  # This is a dummy CA certificate, because the provider doesn't know what the provider expects
+  # of the resource it's provisioning it for.
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/ca-certificates#ca-certificates
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/ca-certificates
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

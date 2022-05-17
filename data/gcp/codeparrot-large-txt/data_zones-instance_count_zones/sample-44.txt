@@ -14,9 +14,9 @@ provider "google" {
 data "google_compute_zones" "available" {
 }
 
-# compute instance. There should be one count of the compute instance in each available zone. Type f1 micro, debian 9 image and default network interface. Assign a name
+# compute instance. There should be one count of the compute instance in each available zone. Type f1 micro, debian 9 image and default network interface. Assign a name to each instance in the instance list.
 resource "google_compute_instance" "vm_instance" {
-  name = "my-compute-instance-%%{random_suffix}"
+  name = "my-vm"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -27,8 +27,6 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 }
 

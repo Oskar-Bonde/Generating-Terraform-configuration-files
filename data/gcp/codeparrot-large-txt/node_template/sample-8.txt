@@ -13,7 +13,6 @@ provider "google" {
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "node_template" {
   name = "my-node-template"
-  region = "europe-west1"
 
   node_type = "n1-node-96-624"
 
@@ -25,16 +24,6 @@ resource "google_compute_node_template" "node_template" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
-  }
-
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 }
 

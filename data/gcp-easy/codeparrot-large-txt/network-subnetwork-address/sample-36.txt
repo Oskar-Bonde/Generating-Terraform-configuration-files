@@ -18,9 +18,10 @@ resource "google_compute_network" "default" {
 
 # create compute subnetwork
 resource "google_compute_subnetwork" "default" {
-  name = "my-subnetwork-${random_suffix}"
+  name = "my-subnet-${random_suffix}"
   ip_cidr_range = "10.0.0.0/16"
-  network = google_compute_network.default.self_link
+  network       = google_compute_network.default.self_link
+  region        = "us-central1"
 }
 
 # make a compute address resource

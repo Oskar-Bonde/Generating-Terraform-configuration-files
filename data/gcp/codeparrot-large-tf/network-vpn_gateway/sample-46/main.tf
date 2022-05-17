@@ -16,13 +16,9 @@ resource "google_compute_network" "name_0" {
   auto_create_subnetworks = false
 }
 
-# resource compute ha vpn gateway, in the us central1 region and use the compute network idvariable as the value for the region variable
+# resource compute ha vpn gateway, in the us central1 region and use the compute network id
 resource "google_compute_ha_vpn_gateway" "name_1" {
-  name = "my-ha-vpn-gateway"
+  name    = "ha-vpn-${local.name_suffix}"
   network = google_compute_network.name_0.id
-  region = "us-central1"
-  vpn_gateway_interface = "eth-1"
-  # Set the static ip address as static ip
-  ip_address = "192.168.0.3"
 }
 

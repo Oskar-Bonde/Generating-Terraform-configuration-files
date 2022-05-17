@@ -16,14 +16,11 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# create a compute ha vpn gatewayvariable
+# create a compute ha vpn gateway
 resource "google_compute_ha_vpn_gateway" "ha_gateway" {
-  name = "my-ha-vpn-${random_suffix}"
+  name    = "my-ha-vpn-gw"
   network = google_compute_network.default.id
-  region = "us-central1"
-  vpn_gateway_interface = "eth-1"
-  # Do not create a VPN gateway if the gateway is already created
-  # with a different region
-  vpn_gateway_subnets = [google_compute_subnetwork.default.id]
+  region  = "us-central1"
+  vpn_gateway = google_compute_ha_vpn_gateway.ha_gateway.id
 }
 

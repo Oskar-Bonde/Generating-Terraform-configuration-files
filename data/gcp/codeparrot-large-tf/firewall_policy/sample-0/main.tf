@@ -12,12 +12,15 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name    = "default-allow-network-traffic"
+  name    = "fw-policy"
   network = "default"
+  priority = 1000
+
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
-  source_ranges = ["0.0.0.0/0"]
+
+  target_tags = ["www-node"]
 }
 

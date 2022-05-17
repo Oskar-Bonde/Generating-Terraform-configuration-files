@@ -1,0 +1,18 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+}
+
+# create a node template
+
+resource "google_compute_address" "vm_address" {
+  name = "my-compute-address-${local.name_suffix}"
+}
+

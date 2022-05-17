@@ -14,19 +14,6 @@ provider "google" {
 resource "google_composer_environment" "env" {
   name     = "env-${random_suffix}"
   region   = "us-central1"
-
-  config {
-    node_config {
-      machine_type = "e2-medium"
-
-      # Add a dependency on the image to help identify the
-      # environment, including the repository URL.
-      container_concurrency = 2
-    }
-  }
-
-  # Add a dependency on the image to help identify the
-  # environment, including the repository URL.
-  container_concurrency = 2
+  project  = var.project_id
 }
 

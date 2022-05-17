@@ -11,15 +11,15 @@ provider "google" {
 }
 
 # a compute network resource
-resource "google_compute_network" "my_custom_network" {
-  name = "my-custom-network-${local.name_suffix}"
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
   auto_create_subnetworks = false
 }
 
-# compute route resource 
-resource "google_compute_route" "default_route" {
-  name        = "default-route-${local.name_suffix}"
-  network     = google_compute_network.my_custom_network.self_link
+# compute route resource
+resource "google_compute_route" "default" {
+  name        = "my-route-${random_suffix}"
+  network     = google_compute_network.default.id
   dest_range  = "0.0.0.0/0"
   priority    = 1000
 }

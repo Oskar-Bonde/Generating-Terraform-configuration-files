@@ -12,7 +12,7 @@ provider "google" {
 
 # ml engine model resource. With default name and in europe west 4 regions
 resource "google_compute_instance" "name_0" {
-  name = "my-ml-instance-%{random_suffix}"
+  name = "my-ml"
   machine_type = "europe-west4"
 
   boot_disk {
@@ -23,8 +23,6 @@ resource "google_compute_instance" "name_0" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 }
 

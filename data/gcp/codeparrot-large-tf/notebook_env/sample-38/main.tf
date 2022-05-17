@@ -10,19 +10,20 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 apex
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${random_suffix}"
-  machine_type = "europe-west1"
-  location = "europe-west1-b"
+  name = "notebooks-instance"
+  machine_type = "europe-west4-a"
+  location = "europe-west4-a"
   machine_image {
-    repository = "gcr.io/deeplearning-platform-release/base-cpu"
-    tag = "latest"
+    source = "gcr.io/deeplearning-platform-release/base-cpu"
   }
-  network_interface {
-    network = "default"
-    access_config {
-    }
+  machine_image {
+    source = "gcr.io/gcr/deeplearning-platform-release/base-cpu"
   }
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
+  depends_on = [google_project_service.notebooks]
 }
 

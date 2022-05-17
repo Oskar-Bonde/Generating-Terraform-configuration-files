@@ -12,7 +12,7 @@ provider "google" {
 
 # a compute instance resource
 resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
+  name = "my-compute-instance-2"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -28,8 +28,8 @@ resource "google_compute_instance" "vm_instance2" {
   }
 }
 
-# an output block
-output "instance_ip" {
-  value = google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip
+# an output blockvariable with a value
+output "output" {
+  value = "${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"
 }
 

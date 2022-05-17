@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+
+resource "azurerm_public_ip" "name_0" {
+  name                         = "myTFResourceGroup"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+
+# create resource group
+resource "azurerm_network_interface" "name_1" {
+  name                = "myTFResourceGroup-${var.cluster_name}-${var.cluster_id}"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+}
+
+# iothub resource block
+resource "azurerm_subnet" "name_2" {
+  name                 = "myTFResourceGroup-${var.cluster_name}-${var.cluster_id}"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.0.0/16"
+}
+

@@ -12,145 +12,101 @@ provider "google" {
 
 # create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${local.name_suffix}"
-  location = "europe-west4-a"
-  machine_type = "europe-west4"
-  tags = ["notebooks"]
-
-  # create a network interface in the correct region
+  name = "notebooks-instance"
+  location = "europe-west1"
+  machine_type = "europe-west1-a"
+  machine_image {
+    source = "debian-cloud/debian-9"
+  }
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
   }
-
-  # create a instance in the correct region
-  instance_name = "notebooks-instance-${local.name_suffix}"
-  machine_type = "europe-west4"
-  tags = ["notebooks"]
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+    # define a network interface with a custom image
   }
-
-  # create a backup of the instance
-  backup_configuration {
-    enabled = true
-    location = "europe-west4-a"
-  }
-
-  # create a network interface in the correct region
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
   network_interface {
     network = "default"
-   
+    # define a network interface with a custom image
+  }
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
+  network_interface {
+    network = "default"
+    # define a network interface with a custom image
+  }
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
+  network_interface {
+    network = "default"
+    # define a network interface with a custom image
+  }
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
+  network_interface {
+    network = "default"
+    # define a network interface with a custom image
+  }
+  # create a instance with a custom image
+  instance_name = "notebooks-instance"
+  # create a network interface with a custom image
+  network_interface {
+    network = "
 }
 

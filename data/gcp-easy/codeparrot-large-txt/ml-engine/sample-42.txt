@@ -11,14 +11,14 @@ provider "google" {
 }
 
 # ml engine model resource
-resource "google_ml_engine_model" "my_model" {
-  name = "my-model-${random_suffix}"
+resource "google_ml_engine_model" "default" {
+  name = "my-ml-engine-model"
   region = "us-central1"
-  description = "my model"
-  training_budget = "2000"
-  is_active = true
-  labels = {
-    "my_model-label1" = "my_model-label-value1"
-  }
+  machine_type = "f1-micro"
+  initial_node_count = 1
+  max_pods_per_node = 1
+  min_node_count = 1
+  machine_type = "n1-standard-1"
+  tags = ["foo", "bar"]
 }
 

@@ -16,23 +16,5 @@ resource "google_notebooks_instance" "instance" {
   location = "us-central1"
   machine_type = "n1-standard-1"
   tags = ["notebooks"]
-
-  create_option {
-    create_type = "STANDARD_IA"
-    disk_size_gb = 50
-  }
-
-  # create a persistent disk
-  disk {
-    source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
 }
 

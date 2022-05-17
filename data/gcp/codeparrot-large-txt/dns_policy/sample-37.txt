@@ -12,157 +12,32 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
+  # DNS zone where the instance is created
+  zone_update_policy {
+    update_policy {
+      # Only enabled in the private datacenter
+      only_visible = true
     }
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
+  # DNS zone where the instance is created
+  zone_update_policy {
+    update_policy {
+      # Only enabled in the private datacenter
+      only_visible = false
     }
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
+  # allow outbound traffic on all ports
+  ports = ["22", "80", "443"]
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
+  # allow inbound traffic on a port range
+  ports = ["80", "443"]
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
+  # allow all outbound traffic
+  inbound_security_rules = ["0.0.0.0/0"]
 }
 

@@ -14,6 +14,7 @@ provider "google" {
 resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
   machine_type = "f1-micro"
+  can_ip_forward = true
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -25,14 +26,6 @@ resource "google_compute_instance_template" "node_template" {
     network = "default"    
     access_config {
     }
-  }
-
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 }
 

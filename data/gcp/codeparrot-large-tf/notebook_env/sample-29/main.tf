@@ -10,22 +10,11 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-west4
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${local.name_suffix}"
-  location = "europe-west4"
+  name = "notebooks-instance"
+  location = "europe-west4-a"
   machine_type = "europe-west4"
-  # create a boot disk with a boot disk
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+  tags = ["notebooks"]
 }
 

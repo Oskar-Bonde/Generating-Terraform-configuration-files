@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  project = var.project_id
+  region  = var.region
+  zone    = var.zone
+}
+
+# create compute network
+
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = false
+}
+
+# create compute subnetwork
+
+resource "google_compute_subnetwork" "default" {
+  name = "my-subnetwork-${random_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
+  region  = var.region
+  network       = google_compute_network.default.name
+  private_ip_google_access = true
+}
+
+# make a compute address resource
+
+resource "google_compute_address" "default" {
+  name = "my-address-${random_suffix}"
+  address = google_compute_address.default.address
+}
+

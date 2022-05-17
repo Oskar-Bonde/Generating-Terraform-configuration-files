@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# create container registry resource. Assign resource group name and location. Set sku to premium and admin enabled to false. Inside a georeplications block, set location to East US and enable zone reduncancy and enable network.
+resource "azurerm_storage_account" "name_1" {
+  name                     = "${var.env_short_name}root"
+  resource_group_name      = "${azurerm_resource_group.rg.name}"
+  location                 = "${var.location}"
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+}
+

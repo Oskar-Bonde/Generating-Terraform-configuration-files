@@ -18,8 +18,7 @@ resource "google_composer_environment" "env" {
 
   composer_env {
     parameters = {
-      image   = "debian-cloud/debian-9"
-      type    = "NATIVE"
+      image = "debian-cloud/debian-9"
     }
   }
 }

@@ -14,11 +14,11 @@ provider "google" {
 resource "google_dns_policy" "dns_policy" {
   name        = "dns-policy-${random_suffix}"
   enable_inbound_forwarding = true
-  project      = google_project.project.project_id
+  project       = google_project.project.project_id
   dns_policy_name = google_dns_policy.dns_policy.name
 
   labels = {
-    "my-label-key" = "my-value"
+    "my-label-key" = "my-label-value"
   }
 }
 

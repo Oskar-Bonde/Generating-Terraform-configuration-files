@@ -1,0 +1,73 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+
+resource "azurerm_virtual_machine" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  vm_size               = "Standard_A0"
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size_in_gbs = "Standard_A1"
+  delete_os_disk_on_termination = true
+  delete_data_disks_on_termination = true
+  delete_data_disks_on_termination_list = true
+  vm_address_prefix       = "myTFResourceGroup/azurerm"
+  vm_address_prefix_on_termination = true
+  vm_address_prefix_data_disks_on_termination = true
+  vm_address_prefix_data_disks_on_termination_list = true
+  vm_address_prefix_config_termination = true
+  vm_address_prefix_config_data_disks_on_termination = true
+  vm_address_prefix_config_config_data_disks_on_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_config_termination_list = true
+  vm_address_prefix_config_termination_list = true
+  vm_address_prefix_config_termination_list = true
+  vm_address_prefix_config_termination_
+}
+
+# create resource group
+resource "azurerm_virtual_machine_extension" "rg" {
+  name                = "myTFResourceGroup"
+ 
+}
+
+# create storage account resource
+}
+
+# create advanced threat protection resource
+}
+

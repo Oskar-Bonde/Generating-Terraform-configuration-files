@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1.0.0.0/0
+resource "google_compute_instance" "vm_instance_linux" {
+  name = "my-compute-instance-linux"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 a
+# create google ingress
+resource "google_compute_instance" "vm_instance_linux_linux" {
+  name = "my-compute-instance-linux-linux"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

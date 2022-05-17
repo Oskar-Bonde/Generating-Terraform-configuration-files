@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with an EC2 instance
+resource "aws_instance" "ec2demo_2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a VPC resource block
+resource "aws_vpc" "default" {
+  cidr_block                        = "10.0.0.0/16"
+  enable_dns_hostnames              = true
+  enable_dns_support                = true
+  tags = {
+    Name                                    = "terraform-vpc"
+    Owner                                    = "John Doe"
+    ProvisioningDate                        = "2012-10-17"
+  }
+}
+
+# Make a service discovery private dns namespace resource
+}
+

@@ -11,7 +11,7 @@ provider "google" {
 }
 
 # create compute network resource 
-resource "google_compute_network" "my_network" {
+resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
   auto_create_subnetworks = "false"
   routing_mode = "REGIONAL"
@@ -21,9 +21,9 @@ resource "google_compute_network" "my_network" {
 }
 
 # resource block: create a compute router
-resource "google_compute_router" "router" {
-  name = "my-router-${random_suffix}"
-  network = google_compute_network.my_network.self_link
+resource "google_compute_router" "default" {
+  name    = "my-router-${random_suffix}"
+  network = google_compute_network.default.self_link
 
   bgp {
     asn = 64514

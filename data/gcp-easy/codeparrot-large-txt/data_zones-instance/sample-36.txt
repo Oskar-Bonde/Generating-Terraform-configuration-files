@@ -12,7 +12,7 @@ provider "google" {
 
 # data block with google compute zones
 data "google_compute_zones" "available" {
-  project = var.gcp_project_id
+  project = var.project_id
 }
 
 # make a compute instance

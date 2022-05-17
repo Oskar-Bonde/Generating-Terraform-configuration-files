@@ -1,0 +1,30 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "name_1" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create resource group with required parameters
+resource "azurerm_resource_group" "name_1" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+  resource_group_name = "${azurerm_resource_group.name_1.name}"
+}
+
+# iothub resource block
+resource "azurerm_storage_account" "name_2" {
+  name                     = "${var.env_short_name}stor"
+  resource_group_name      = "${azurerm_resource_group.name_1.name}"
+  location                 = "${var.location}"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+

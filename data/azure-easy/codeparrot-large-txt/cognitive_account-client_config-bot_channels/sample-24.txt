@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azurerm resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# create resource group with storage account
+resource "azurerm_resource_group" "storage" {
+  name     = "myTFStorageGroup"
+  location = "westus2"
+}
+
+# create cognitive account resource group
+resource "azurerm_resource_group" "cognitive" {
+  name     = "myTFCognitiveGroup"
+  location = "westus2"
+}
+
+# data block, azurem client config
+data "azurerm_subscription" "current" {}
+
+# create storage account
+resource "azurerm_storage_account" "bosh" {
+  name                     = "bosh"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create bot channels registration resource
+
+}
+

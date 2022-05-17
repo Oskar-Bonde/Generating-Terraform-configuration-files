@@ -1,0 +1,122 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a firewall policy
+resource "google_compute_firewall" "name_0" {
+  name                                    = "my-firewall-rule-rule-rule-rule-rule-rule-rule-rule-rule-rule-rule-rule-rule-rule"
+  network                                  = google_compute_network.network.name
+  source_ranges                             = ["35.235.240.0/20"]
+  target_tags                               = ["my-compute-instance-target-group-1"]
+  allow_stopping_for_update = true
+  allow_stopping_for_update_since_defined = true
+
+  allow {
+    protocol = "tcp"
+  }
+
+  allow {
+    protocol = "udp"
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "esp"
+  }
+
+  allow {
+    protocol = "ah"
+  }
+
+  allow {
+    protocol = "sctp"
+  }
+
+  allow {
+    protocol = "sctp-to-master"
+  }
+
+  allow {
+    protocol = "tcp"
+  }
+
+  allow {
+    protocol = "udp"
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "esp"
+  }
+
+  allow {
+    protocol = "ah"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "tcp"
+  }
+
+  allow {
+    protocol = "udp"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+  }
+
+  allow {
+    protocol = "sctp-to-node"
+
+}
+

@@ -15,59 +15,30 @@ resource "google_dns_policy" "name_0" {
   name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS Policy
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
+  # DNS zone to allow SSH from
+    policy = "accept"
+
+  # allow outbound traffic
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
+  # allow inbound traffic from a specific port
+  allow {
+    protocol = "tcp"
+    ports    = ["1-65535"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
+  # allow inbound traffic from a specific port
+  allow {
+    protocol = "udp"
+    ports    = ["1-65535"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
-
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
+  # allow all outbound traffic
+  allow {
+    protocol = "all"
   }
 }
 

@@ -14,16 +14,19 @@ provider "google" {
 data "google_compute_zones" "available" {
 }
 
-# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name
-resource "google_compute_instance" "vm_instance" {
-  name = "my-compute-instance-%%{random_suffix}"
+# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give namevariable
+resource "google_compute_instance" "vm_instance2" {
+  name = "my-vm2"
   machine_type = "f1-micro"
-  zone = "europe-west4-a"
-  network_interface {
-    network = "default"
-    access_config {
-      # Ephemeral
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
     }
+  }
+
+  network_interface {
+    network = "default"    
   }
 }
 

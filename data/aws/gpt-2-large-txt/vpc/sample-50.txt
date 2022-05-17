@@ -1,0 +1,24 @@
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Terraform Block with the AWS provider
+# Provider block with AWS in us-east-1 region and default profile
+resource "aws_instance" "ec2demo-nodes" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS provider block in region us-east-1
+resource "aws_instance" "ec2demo-nodes-ami" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# Resource block with an amazon VPC in private network 10.0.0.0/16 and private network 10.0.0.0/24 and private network 10.0.0.0/24-1
+resource "aws_instance" "ec2demo-nodes-ami-ami-ami-ami-ami-ami-ami" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+

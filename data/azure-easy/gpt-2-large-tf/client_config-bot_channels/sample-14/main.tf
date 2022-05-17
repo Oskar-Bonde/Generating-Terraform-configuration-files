@@ -1,0 +1,61 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+
+resource "azurerm_virtual_machine" "name_0" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  address_space       = ["10.0.0.0/16"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+  vm_size_gb         = "Standard_A1"
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size_gb_policy = "Standard_A2"
+  vm_size_gb_policy_id = "${azurerm_virtual_machine.name_0.id}"
+  vm_size_gb_private_ip_address = true
+  vm_size_gb_public_ip_address = true
+  vm_size_gb_private_ip_address_allocation = "static"
+  vm_size_gb_public_ip_address_id = "${azurerm_virtual_machine.name_0.id}"
+  vm_size_gb_private_ip_address_id_list = "${azurerm_virtual_machine.name_0.id_list}"
+  vm_size_gb_public_ip_address_id_line = "${azurerm_virtual_machine.name_0.id_line}"
+  vm_size_gb_private_ip_address_id_ this = "${azurerm_virtual_machine.name_0.id_ this}"
+  vm_size_gb_private_ip_address_id_ 
+                   = "${azurerm_virtual_machine.name_0.id_ 
+                  }"
+  vm_size_gb_private_ip_address_id_tent = "${azurerm_virtual_machine.name_0.id_tent}"
+  vm_size_gb_private_ip_address_id_dict = "${azurerm_virtual_machine.name_0.id_dict}"
+  vm_size_gb_private_ip_address_id_andle = "${azurerm_virtual_machine.name_0.id_andle}"
+  vm_size_gb_private_ip_address_id_ph = "${azurerm_virtual_machine.name_0.id_ph}"
+  vm_size_gb_private_ip_address_id_56 = "${azurerm_virtual_machine.name_0.id_56}"
+  vm_size_gb_private_ip_address_id_']) = "${azurerm_virtual_machine.name_0.id_'])}"
+  vm_size_gb_private_ip_address_id_ options = "${azurerm_virtual_machine.name_0.id_ options}"
+  vm_size_gb_private_ip_address_id_ index = "${azurerm_virtual_machine.name_0.id_ index}"
+  vm_size_gb_private_ip_address_id_ z = "${azurerm_virtual_machine.name_0.id_ z}"
+  vm_size_gb_private_ip_address_id_
+             = "${azurerm_virtual_machine.name_0.id_
+            }"
+  vm_size_gb_private_ip_address_id_Ar = "${azurerm_virtual_machine.name_0.id_Ar}"
+  vm_size_gb_private_ip_address_id_ublic = "${azurerm_virtual_machine.name_0.id_ublic}"
+  vm_size_gb_private_ip_address_id_pon = "${azurerm_virtual_machine.name_0.id_pon}"
+  vm_size_gb_private_ip_address_id_template = "${azurerm_virtual_machine.name_0.id_template}"
+  vm_size_gb_private_ip_address_id_ves = "${azurerm_virtual_machine.name_0.id_ves}"
+  vm_size_gb_private_ip_address_id
+}
+
+# create resource group
+resource "azurerm_network_
+}
+
+# data block, azurem client config
+}
+
+# create bot channels registration resource
+}
+

@@ -11,15 +11,15 @@ provider "google" {
 }
 
 # resource block, sql database instance
-resource "google_sql_database_instance" "instance" {
-  name = "my-sql-database-instance"
-  database_version = "POSTGRES_12"
+resource "google_sql_database_instance" "db_instance" {
+  name = "my-sql-db-instance"
   region = "us-central1"
+  database_version = "POSTGRES_12"
   settings {
     tier = "db-f1-micro"
     ip_configuration {
       authorized_networks {
-        name = "PublicNetwork"
+        name = "PublicSubnet-${var.vpc_name}"
         value = "192.168.0.0/16"
       }
     }
@@ -29,8 +29,8 @@ resource "google_sql_database_instance" "instance" {
 
 # create a sql database
 resource "google_sql_database" "db" {
-  name = "my-sql-database"
-  instance = google_sql_database_instance.instance.name
+  name = "my-sql-db"
+  instance = google_sql_database_instance.db_instance.name
   charset = "utf8mb4"
 }
 

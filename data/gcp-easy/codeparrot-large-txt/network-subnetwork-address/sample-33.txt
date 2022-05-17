@@ -13,20 +13,18 @@ provider "google" {
 # create compute network
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  auto_create_subnetworks = false
 }
 
-# create compute subnetworkvariable
-resource "google_compute_subnetwork_iam_member" "default" {
+# create compute subnetwork
+resource "google_compute_subnetwork" "default" {
+  name = "my-subnetwork-${random_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
   network = google_compute_network.default.self_link
-  subnetwork = google_compute_subnetwork.default.name
-  role = "roles/compute.networkUser"
 }
 
 # make a compute address resource
 resource "google_compute_address" "default" {
   name = "my-compute-address-${random_suffix}"
-  region = "us-central1"
-  subnetwork = google_compute_subnetwork.default.name
 }
 

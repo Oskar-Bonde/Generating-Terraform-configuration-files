@@ -10,129 +10,25 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 apex to specify the region where the image resides.
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${random_suffix}"
+  name = "notebooks-instance"
+  machine_type = "europe-west4-a"
   location = "europe-west4-a"
-  machine_type = "n1-standard-1"
+  machine_image {
+    source = "gcr.io/deeplearning-platform-release/base-cpu"
+  }
+  machine_image {
+    source = "gcr.io/gce-machine/debian-9"
+  }
   network_interface {
     network = "default"
-    access_config {
-      // Ephemeral IP
-    }
   }
-  # create a network interface with a custom web console
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
+  # create a network interface in the correct region
+  network_ip = "10.0.0.0/16"
+  access_config {
+    # Ephemeral IP
+    nat_ip = "10.0.0.5"
   }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom web console and a custom certificate
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-  # create a network interface with a custom
 }
 

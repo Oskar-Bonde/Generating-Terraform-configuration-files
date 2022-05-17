@@ -1,0 +1,51 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+resource "google_compute_instance" "vm_instance_dev" {
+  name = "my-compute-instance-dev-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create storage bucket resource
+
+resource "google_compute_instance" "vm_instance_dev_disk" {
+  name = "my-compute-instance-dev-disk-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute backend bucket
+
+resource "google_compute_instance" "vm_instance_dev_disk_disk" {
+  name = "my-compute-instance-dev-disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk_disk
+}
+

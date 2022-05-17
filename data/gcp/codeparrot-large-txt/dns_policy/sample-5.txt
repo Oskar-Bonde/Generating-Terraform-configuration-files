@@ -15,40 +15,15 @@ resource "google_dns_policy" "dns_policy" {
   name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS Policy
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
+  # DNS zone where the instances should be created
+  zone_update_policy {
+    update_policy = "MIGRATE"
   }
 
-  # allow outbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-  }
-
-  # allow inbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-  }
-
-  # allow all outbound traffic
-  rule {
-    action = "allow"
-    priority = 0
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
+  # DNS record
+  record {
+    name = "dns-policy"
+    zone_id = "europe-west1-b"
   }
 }
 

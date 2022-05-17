@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create dns policy
+resource "google_dns_policy" "name_0" {
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
+
+  # DNS policy
+  rule {
+    action = "deny"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound tcp traffic on all ports
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound udp traffic on a port range
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound icmp traffic of a specific type
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      protocol = "icmp"
+      icmp_type = 3
+    }
+  }
+}
+

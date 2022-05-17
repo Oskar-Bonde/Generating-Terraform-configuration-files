@@ -12,167 +12,131 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${local.name_suffix}"
-  enable_inbound_forwarding = true
-  policy_type  = "SINGLE_IP_INTERNET"
-  dns_policy_name = google_dns_policy.dns_policy.name
+  name = "my-dns-policy"
+  zone = "us-central1-a"
+  description = "Terraform dns policy"
 
-  // allows traffic from the private subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allows traffic from the load balancer
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the backend subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
+  # dns_policy {
+  #   policy_type = "POLICY_PERSISTENT"
+  #   max_ttl = 3600
+  # }
 
-  // allow traffic from the instance
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
-  }
-
-  // allow traffic from the health check subnet
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"]
-  }
-
-  // allow traffic from the backend subnet
+  # dns_policy {
+  #
 }
 

@@ -12,17 +12,13 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name = "my-firewall-policy"
+  name    = "default-allow-network-access"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
-  direction = "INGRESS"
-  priority = 1
-
   allow {
     protocol = "tcp"
-    ports = ["22"]
+    ports    = ["80", "443"]
   }
-
-  target_tags = ["my-tag"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["minimal-gce-example-com-k8s-io-role-master"]
 }
 

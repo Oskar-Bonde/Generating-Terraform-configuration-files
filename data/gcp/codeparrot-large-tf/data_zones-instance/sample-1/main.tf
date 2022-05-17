@@ -15,26 +15,19 @@ data "google_compute_zones" "name_0" {
   region = "europe-west4"
 }
 
-# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name to the instance
+# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name of instance
 resource "google_compute_instance" "name_1" {
-  name = "my-compute-instance-2"
+  name = "my-vm"
   machine_type = "f1-micro"
-  zone = "europe-west4-a"
-  network_interface {
-    network = "default"
-    access_config {
-      # Ephemeral
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
     }
   }
-  metadata = {
-    startup-script = <<EOT
-#!/bin/bash
-echo EOT
 
-set -euf -o pipefail
-
-# install Terraform.
-terraform {
-  required_version = ">= 0.12"
+  network_interface {
+    network = "default"    
+  }
 }
 

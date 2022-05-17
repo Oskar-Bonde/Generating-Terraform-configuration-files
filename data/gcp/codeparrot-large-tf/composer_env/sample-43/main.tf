@@ -12,148 +12,116 @@ provider "google" {
 
 # create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2 (Ubuntu Server 16.04 LTS, SDD Volume Type)
 resource "google_composer_environment" "name_0" {
-  name     = "composer-environment-${random_suffix}"
+  name     = "composer-environment"
   region   = "us-central1"
   project  = var.project_id
   composer = google_composer_environment.name_0.id
 
-  # Set machine type
-  config {
-    machine_type = "e2-micro"
-  }
-
-  # Set network
+  # Add a default network interface to allow SSH access only from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-1.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set additional disk parameters
-  config {
-    disk_size_gb = "100"
-  }
-
-  # Set network interface
+  # Add a default network interface to allow HTTP access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-2.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set additional disk parameters
-  config {
-    disk_size_gb = "100"
-  }
-
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-3.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-4.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTP access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-5.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-6.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-7.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-8.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-9.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-10.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-11.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-12.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-13.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-14.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
+  # Add a default network interface to allow HTTPS access from the host
   network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
+    subnetwork = google_compute_subnetwork.subnet-15.name
     access_config {
-      # Ephemeral IP
     }
   }
 
-  # Set network interface
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.
+  # Add a default network interface to allow HTTPS
 }
 

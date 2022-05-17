@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+resource "google_compute_instance" "vm_instance_http" {
+  name = "my-compute-instance-http"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# a compute instance resource
+
+resource "google_compute_instance" "vm_instance_http_http" {
+  name = "my-compute-instance-http-http"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# an output block
+
+resource "google_compute_instance" "vm_instance_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http_http
+}
+

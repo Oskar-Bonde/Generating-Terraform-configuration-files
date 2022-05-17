@@ -20,37 +20,13 @@ resource "google_compute_network" "default" {
 resource "google_compute_firewall" "default" {
   name = "my-firewall-${random_suffix}"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
-
-  allow {
-    protocol = "icmp"
-  }
 
   allow {
     protocol = "tcp"
-    ports = ["22"]
+    ports = ["80"]
   }
 
-  allow {
-    protocol = "udp"
-    ports = ["22"]
-  }
-
-  allow {
-    protocol = "esp"
-    ports = ["22"]
-  }
-
-  allow {
-    protocol = "ah"
-    ports = ["22"]
-  }
-
-  allow {
-    protocol = "sctp"
-    ports = ["22"]
-  }
-
-  target_tags = ["my-tag"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["web"]
 }
 

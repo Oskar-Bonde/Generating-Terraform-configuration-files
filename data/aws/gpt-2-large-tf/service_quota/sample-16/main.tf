@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create a service quota resource. Use quota code "L-F678F1CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F2CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F3CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F4CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F5CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F6CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F7CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F8CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F9CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F10CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F11CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F12CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F13CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F14CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F15CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F16CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F17CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F11CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F12CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F13CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F14CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F15CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F16CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F17CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F678F11CE" and service code "vpc". Use value 75
+# Use a service quota resource. Use quota code "L-F
+}
+

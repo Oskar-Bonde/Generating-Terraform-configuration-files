@@ -12,12 +12,12 @@ provider "google" {
 
 # data block with google compute zones
 data "google_compute_zones" "available" {
-  project = var.project_id
+  region = var.gcp_region
 }
 
-# make a compute instance
-resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
+# make a compute instanceresource
+resource "google_compute_instance" "vm_instance" {
+  name = "my-compute-instance-%%{random_suffix}"
   machine_type = "f1-micro"
 
   boot_disk {

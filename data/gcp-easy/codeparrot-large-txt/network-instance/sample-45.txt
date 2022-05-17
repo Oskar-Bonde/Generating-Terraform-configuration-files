@@ -12,27 +12,25 @@ provider "google" {
 
 # compute network resource
 resource "google_compute_network" "default" {
-  name = "my-network-${local.name_suffix}"
-  auto_create_subnetworks = false
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
 }
 
-# a compute instancevariable with a default value
-resource "google_compute_instance_template" "default" {
-  name_prefix = "my-instance-template-${local.name_suffix}"
+# a compute instance for the network "default"
+resource "google_compute_instance" "vm_instance2" {
+  name = "my-compute-instance-${random_suffix}"
   machine_type = "f1-micro"
-  can_ip_forward = false
 
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
     }
   }
 
-  can_ip_forward = true
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  network_interface {
+    network = "default"    
+    access_config {
+    }
   }
 }
 

@@ -12,8 +12,8 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "node_template" {
-  name = "node-template-${local.name_suffix}"
-  region = "europe-west1"
+  name = "n1-node-96-624"
+
   node_type = "n1-node-96-624"
 
   disk {
@@ -24,8 +24,10 @@ resource "google_compute_node_template" "node_template" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 }
 

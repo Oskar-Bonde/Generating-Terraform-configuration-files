@@ -1,0 +1,73 @@
+resource "azurerm_storage_account" "rg" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# Provider block with features block
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# kubernetes cluster. Use dns prefix exampleaks1, create a default node pool with 1 node count and vm size Standard_D2_v2. Make identity SystemAssigned
+# Terraform configuration file
+# Terraform block with azure provider
+resource "azurerm_virtual_machine" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+  vm_disk_type           = "pd-standard"
+  vm_disk_size           = "Standard_A1"
+  vm_disk_type_disk_type = "pd-standard"
+  vm_disk_size_gb       = "Standard_A2"
+  vm_memory_size_gb       = "Standard_A3"
+  vm_memory_type           = "pd-standard"
+  vm_disk_type_disk_type = "pd-standard"
+  vm_memory_size_gb       = "Standard_A4"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           = "pd-standard"
+  vm_memory_type           =
+}
+

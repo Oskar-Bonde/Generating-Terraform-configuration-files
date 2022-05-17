@@ -11,20 +11,12 @@ provider "google" {
 }
 
 # ml engine model resource. With default name and in europe west 4 regions
-resource "google_compute_instance" "ml_instance" {
-  name = "my-ml-instance-%%{random_suffix}"
-  machine_type = "europe-west4"
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+# https://cloud.google.com/compute/docs/regions-zones
+resource "google_compute_region_instance_group_manager" "my-region-instance-group-manager" {
+  name = "my-region-instance-group-manager"
+  base_instance_name = "my-instance-group"
+  region = "europe-west4"
+  version = "latest"
+  target_size = 2
 }
 

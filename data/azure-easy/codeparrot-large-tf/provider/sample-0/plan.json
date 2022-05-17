@@ -1,0 +1,2 @@
+{"@level":"info","@message":"Terraform 1.1.7","@module":"terraform.ui","@timestamp":"2022-05-14T05:17:38.609224+02:00","terraform":"1.1.7","type":"version","ui":"1.0"}
+{"@level":"error","@message":"Error: Insufficient features blocks","@module":"terraform.ui","@timestamp":"2022-05-14T05:17:42.137186+02:00","diagnostic":{"severity":"error","summary":"Insufficient features blocks","detail":"At least 1 \"features\" blocks are required.","range":{"filename":"\u003cempty\u003e","start":{"line":0,"column":0,"byte":0},"end":{"line":0,"column":1,"byte":1}}},"type":"diagnostic"}

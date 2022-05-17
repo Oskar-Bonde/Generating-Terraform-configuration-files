@@ -1,0 +1,52 @@
+resource "azurerm_storage_account" "name_0" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# Provider block with features block
+resource "azurerm_storage_container" "name_2" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.name_0.name
+  container_access_type = "private"
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_storage_container" "name_2" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.name_0.name
+  container_access_type = "private"
+}
+
+# kubernetes cluster. Use dns prefix exampleaks1, create a default node pool with 1 node count and vm size Standard_D2_v2. Make identity SystemAssigned
+resource "azurerm_virtual_machine" "name_3" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+  vm_size               = "Standard_A1"
+  vm_address_prefix       = "10.0.0.0/16"
+  vm_address_prefix_on_termination = true
+  vm_size               = "Standard_A2"
+  vm_address_prefix_on_termination = true
+  vm_address_prefix_on_termination_list = ["10.0.1.0/24"]
+  vm_address_prefix_on_termination_list_list = ["10.0.2.0/24"]
+  vm_address_prefix_on_termination_list_list_list = ["10.0.3.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list = ["10.0.4.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list = ["10.0.5.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list = ["10.0.6.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list = ["10.0.7.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list = ["10.0.8.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list_list = ["10.0.9.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list_list = ["10.0.10.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list_list = ["10.0.11.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list_list_list = ["10.0.12.0/24"]
+  vm_address_prefix_on_termination_list_list_list_list_list_list_list_list_list_list =
+}
+

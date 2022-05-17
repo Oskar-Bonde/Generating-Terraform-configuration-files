@@ -12,7 +12,7 @@ provider "google" {
 
 # a compute instance resource
 resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2"
+  name = "my-compute-instance-2-%%{random_suffix}"
   machine_type = "f1-micro"
 
   boot_disk {

@@ -12,13 +12,16 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${random_suffix}"
-  enable_inbound_forwarding = true
-  policy_type  = "SINGLE_IP_INTERNET"
-  dns_policy_name = google_dns_policy.dns_policy.name
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
 
-  labels = {
-    foo = "bar"
+  # DNS policy
+  rule {
+    action = "deny"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
   }
 }
 

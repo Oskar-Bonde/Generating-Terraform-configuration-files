@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with an EC2 instance
+resource "aws_instance" "ec2demo2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a AWS VPC resourcevariable "aws_vpc_cidr" {
+  type        = "string"
+  description = "CIDR for the VPC"
+}
+
+# AWS Internet Gateway
+}
+
+# Create AWS route table
+}
+
+# Create route resource
+}
+

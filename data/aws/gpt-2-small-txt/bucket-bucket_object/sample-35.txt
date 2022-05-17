@@ -1,0 +1,34 @@
+provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with region us-east-1 region and default profile
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create S3 Bucket Resource. Set bucket to cookie-friendly name to avoid collisions with other resources
+resource "aws_s3_bucket" "cookie" {
+  bucket = "cookie-friendly-name"
+  acl    = "private"
+
+  force_destroy = true
+
+  tags = {
+    Name = "cookie"
+  }
+}
+
+# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
+resource "aws_s3_bucket_object" "index" {
+  bucket = aws_s3_bucket.cookie.id
+  key    = "index.html"
+  content = filebase64("${path.module}/index.html")
+}
+

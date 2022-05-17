@@ -11,20 +11,162 @@ provider "google" {
 }
 
 # create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
-resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
-  machine_type = "f1-micro"
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
+resource "google_compute_instance" "ca_instance" {
+  name = "my-vm"
+  machine_type = "europe-west4"
+  zone = "europe-west1-b"
   network_interface {
-    network = "default"    
+    network = "default"
     access_config {
+      // Ephemeral IP
     }
   }
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network admin password
+  network_security_group {
+    name = "tf-test-network-access"
+  }
+  # Set the network access config
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
+    }
+  }
+  # Set the network internal IP
+  network_interface {
+    network = "default"
+    access_config {
 }
 

@@ -11,8 +11,9 @@ provider "google" {
 }
 
 # bigquery dataset resource
-resource "google_bigquery_dataset" "default" {
-  dataset_id = "default"
-  friendly_name = "Terraform Example Dataset"
+resource "google_bigquery_dataset" "dataset" {
+  dataset_id = "dataset-${random_suffix}"
+  friendly_name = "test"
+  description = "This is a test description"
 }
 

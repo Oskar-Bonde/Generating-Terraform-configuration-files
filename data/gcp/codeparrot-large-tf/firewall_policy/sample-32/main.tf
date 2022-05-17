@@ -12,28 +12,186 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name = "my-firewall-policy"
+  name = "my-fw-policy"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
-  direction = "INGRESS"
-  priority = 1
-
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["80", "443"]
   }
-
   allow {
     protocol = "udp"
-    ports = ["80"]
+    ports = ["443"]
   }
-
   allow {
     protocol = "icmp"
   }
-
   allow {
     protocol = "esp"
   }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "tcp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp"
+  }
+  allow {
+    protocol = "udp"
+    ports = ["22"]
+  }
+  allow {
+    protocol = "esp"
+  }
+  allow {
+    protocol = "ah"
+  }
+  allow {
+    protocol = "sctp
 }
 

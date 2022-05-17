@@ -15,11 +15,11 @@ resource "google_compute_network" "default" {
   name = "my-network-${local.name_suffix}"
 }
 
-# create compute subnetworkvariable
-resource "google_compute_subnetwork_iam_member" "default" {
-  network = google_compute_network.default.name
-  subnetwork = google_compute_subnetwork.default.name
-  role   = "roles/compute.networkUser"
+# create compute subnetwork
+resource "google_compute_subnetwork" "default" {
+  name = "my-subnet-${local.name_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
+  network = google_compute_network.default.self_link
 }
 
 # make a compute address resource

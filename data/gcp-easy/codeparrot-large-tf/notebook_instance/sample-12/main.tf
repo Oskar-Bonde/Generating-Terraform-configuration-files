@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a notebook instance 
+resource "google_notebooks_instance" "name_0" {
+  name = "my-notebook-instance-name"
+  machine_type = "f1-micro"
+
+  notebook_image {
+    source = "debian-cloud/debian-9"
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

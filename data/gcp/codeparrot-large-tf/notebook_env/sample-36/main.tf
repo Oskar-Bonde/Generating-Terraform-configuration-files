@@ -10,22 +10,79 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 apex to find the latest official release.
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${local.name_suffix}"
-  machine_type = "europe-west4-a"
+  name = "notebooks-instance"
   location = "europe-west4-a"
+  machine_type = "n1-standard-1"
   machine_image {
-    source = "gcr.io/deeplearning-platform-release/base-cpu"
-  }
-  machine_image {
-    family = "europe-west4-a"
-    image = "debian-9-stretch-v20160303"
+    source = "debian-cloud/debian-9"
   }
   network_interface {
     network = "default"
-    access_config {
-    }
   }
+  # create a persistent disk from a public URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar.gz"
+    type = "pd-standard"
+  }
+  # create a persistent disk from a private URL
+  disk {
+    source = "https://storage.googleapis.com/golang/notes/debian-9-minimal.tar
 }
 

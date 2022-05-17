@@ -19,92 +19,10 @@ resource "google_compute_network" "default" {
 # create a compute ha vpn gateway
 resource "google_compute_ha_vpn_gateway" "ha_gateway" {
   name = "my-ha-vpn-${random_suffix}"
-  network = google_compute_network.default.name
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the hosted network to be hit over ICMP, SSH, and HTTP
-  allow_global_access = true
-
-  # Allow the
+  network = google_compute_network.default.id
+  region = "us-central1"
+  config {
+    ip_address = google_compute_address.ha_address.address
+  }
 }
 

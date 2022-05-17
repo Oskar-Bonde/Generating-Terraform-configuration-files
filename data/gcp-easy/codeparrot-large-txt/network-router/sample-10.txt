@@ -11,17 +11,22 @@ provider "google" {
 }
 
 # create compute network resource 
-resource "google_compute_network" "default" {
+resource "google_compute_network" "my_network" {
   name = "my-network-${random_suffix}"
   auto_create_subnetworks = "false"
+  routing_mode = "REGIONAL"
+  project = google_project.project.project_id
+
+  depends_on = [google_project_service.compute]
 }
 
-# resource block: create a compute routervariable
-resource "google_compute_router_variable" "router_variable" {
-  name = "my-router-variable-${random_suffix}"
-  region = "us-central1"
-  network = google_compute_network.default.id
-  ip_cidr_range = "10.0.0.0/16"
-  service_account_email = google_service_account.default.email
+# resource block: create a compute router
+resource "google_compute_router" "my_router" {
+  name = "my-router-${random_suffix}"
+  network = google_compute_network.my_network.self_link
+
+  bgp {
+    asn = 64514
+  }
 }
 

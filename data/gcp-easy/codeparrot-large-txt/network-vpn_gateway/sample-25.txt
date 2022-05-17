@@ -15,10 +15,15 @@ resource "google_compute_network" "default" {
   name = "my-network-${local.name_suffix}"
 }
 
-# create a compute ha vpn gateway
+# create a compute ha vpn gatewayvariable
 resource "google_compute_ha_vpn_gateway" "ha_gateway" {
-  name    = "ha-vpn-${local.name_suffix}"
+  name = "ha-vpn-${local.name_suffix}"
   network = google_compute_network.default.name
-  region  = "us-central1"
+  region = "us-central1"
+  vpn_gateway_interface = "eth-1"
+  # Set the static ip address as static_ip_address
+  static_ip_address = "10.0.0.5"
+  # Set the static ip address as static_ip_address
+  static_route_table_id = "${google_compute_route_table.ha_route_table.id}"
 }
 

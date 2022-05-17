@@ -16,7 +16,7 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# compute route resource
+# compute route resource 
 resource "google_compute_route" "default" {
   name        = "my-route-${random_suffix}"
   network     = google_compute_network.default.id

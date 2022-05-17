@@ -1,0 +1,41 @@
+resource "azurerm_resource_group" "rg_outbound" {
+  name     = "myTFResourceGroup_outbound"
+  location = "westus2"
+}
+
+# Provider block with features block
+resource "azurerm_resource_group" "rg_outbound_outbound" {
+  name     = "myTFResourceGroup_outbound_outbound"
+  location = "westus2"
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "rg_outbound_outbound_resource_group" {
+  name     = "myTFResourceGroup_outbound_outbound_resource_group"
+  location = "westus2"
+}
+
+# a virtual network resource in address space 10.0.0.0/16. Use location and resource group name
+resource "azurerm_virtual_network" "rg" {
+  name                = "myTFResourceGroup"
+  address_space       = ["10.0.0.0/16"]
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+# create subnet resource, with address prefix 10.0.1.0/24. Use virtual network name and the resource group name
+resource "azurerm_subnet" "rg" {
+  name                 = "myTFResourceGroup"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.0.0/24"
+}
+
+# resource block of public ip. Use allocation method static and sku standard. Use resource group name and location
+resource "azurerm_public_ip" "rg" {
+  name                         = "myTFResourceGroup"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+

@@ -26,8 +26,39 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
+
+  metadata = {
+    startup-script = data.template_file.startup-script.rendered
+  }
+
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
 }
 
 # create a compute node group resource
+resource "google_compute_node_template" "node_group_template" {
+  name_prefix  = "node-group-template-"
+  machine_type = "f1-micro"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+
+  metadata = {
+    startup-script = data.template_file.startup-script.rendered
+  }
+
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
 }
 

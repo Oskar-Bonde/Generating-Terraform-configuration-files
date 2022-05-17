@@ -16,10 +16,9 @@ resource "google_storage_bucket" "name_0" {
   location = "europe-north1"
 }
 
-# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn
+# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn-prefix
 resource "google_storage_bucket" "name_1" {
   name = "my-bucket-cdn"
   location = "europe-north1"
-  cdn_policy = "ALLOW"
 }
 

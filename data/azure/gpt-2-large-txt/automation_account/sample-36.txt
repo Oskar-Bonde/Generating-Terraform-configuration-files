@@ -1,0 +1,96 @@
+resource "azurerm_storage_account" "rg" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# Provider block with features block
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# create resource group and name it example. Set location to westeurope
+resource "azurerm_storage_container" "rg_container" {
+  name                  = "myTFResourceGroup_container"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# resource block, create automation account. Set location to resource group example and use its name. Set sku name to Basic
+resource "azurerm_virtual_machine" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size               = "Standard_A0"
+  delete_os_disk_on_termination = true
+  storage_image_reference {
+    publisher = "CoreOS"
+    offer     = "CoreOS"
+    sku       = "CoreOS"
+  }
+  storage_os_disk {
+    name          = "myTFResourceGroup_os_disk"
+    vhd_uri       = azurerm_storage_account.rg.primary_blob_endpoint
+    caching       = "ReadWrite"
+    create_option = "FromImage"
+  }
+  os_profile {
+    computer_name  = "myTFResourceGroup"
+    admin_username = "core"
+    admin_password = "core"
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized_keys"
+      key_data = "${file("${var.public_ssh_key}")}"
+    }
+  }
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/core/.ssh/authorized
+}
+

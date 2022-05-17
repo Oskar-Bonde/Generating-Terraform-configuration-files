@@ -12,54 +12,13 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_id.instance_id.hex}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS zone to allow SSH access
-  vpc = "default"
+  # DNS zone where the instance should be created
+  dns_name = "dsp-envs"
 
-  # allow outbound tcp traffic on port 22
-  ingress {
-    # SSH
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # allow inbound ssh traffic from all ports
-  ingress {
-    # SSH
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # allow inbound icmp traffic of a specific type
-  ingress {
-    # SSH
-    from_port = -1
-    to_port = -1
-    protocol = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # allow inbound icmp traffic of a specific type
-  ingress {
-    # SSH
-    from_port = -1
-    to_port = -1
-    protocol = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # allow all outbound traffic
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # DNS record
+  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
 }
 

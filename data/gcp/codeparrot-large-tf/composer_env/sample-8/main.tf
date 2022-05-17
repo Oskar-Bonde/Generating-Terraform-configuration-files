@@ -10,104 +10,80 @@ terraform {
 provider "google" {
 }
 
-# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2
+# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2 (Ubuntu Server 16.04 LTS, SDD Volume Type)
 resource "google_composer_environment" "name_0" {
-  name     = "composer-env-${local.name_suffix}"
+  name     = "composer-environment"
   region   = "us-central1"
-  project  = var.project_id
-  composer = google_composer_environment.composer.id
 
-  # Add a default network interface to allow SSH access only from the host
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.self_link
-    access_config {
-    }
-  }
+  config {
+    node_count = 1
+    machine_type = "e2-micro"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[0].self_link
-    access_config {
-    }
-  }
+    disk_size_gb = "100"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[1].self_link
-    access_config {
-    }
-  }
+    service_account = "default"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[2].self_link
-    access_config {
-    }
-  }
+    init_script = <<EOF
+#!/bin/bash
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[3].self_link
-    access_config {
-    }
-  }
+set -euf -o pipefail
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[4].self_link
-    access_config {
-    }
-  }
+LOGFILE="/var/log/composer-environment.log"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[5].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export PROJECT_ID="${var.project_id}"
+export GOOGLE_CLOUD_PROJECT="${var.project_id}"
+export STAGE_DIR="${var.project_id}/composer-environment"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[6].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/logs"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[7].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-logs"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[8].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-metrics"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[9].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[10].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-metrics"
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.secondary_ip_range[11].self_link
-    access_config {
-    }
-  }
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring"
 
- 
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-metrics"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-metrics-monitoring-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-monitoring-metrics-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-monitoring-metrics-monitoring-monitoring"
+
+# create log analytics workspace
+export STAGE_DIR="${var.project_id}/composer-environment-monitoring-monitoring-monitoring-monitoring-monitoring-monitoring
 }
 

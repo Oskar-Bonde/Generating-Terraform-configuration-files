@@ -12,80 +12,13 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${local.name_suffix}"
+  name        = "dns-policy-${random_suffix}"
   enable_inbound_forwarding = true
+  policy_type  = "OPPORTUNISTIC"
+  dns_policy_name = google_dns_policy.dns_policy.name
 
-  # dns_policy_name is the dns policy name, it has to be unique
-  # for each instance
-  dns_policy_name = "dns-policy-${local.name_suffix}"
-
-  # dns_policy_type is the dns policy type, see google_dns_policy.tf
-  dns_policy = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
+  labels = {
+    foo = "bar"
   }
-
-  # dns_policy_domain_name is the dns policy domain name, it has to be unique
-  # for each instance
-  dns_policy_domain_name = "dns-policy-${local.name_suffix}"
-
-  # dns_policy_target_tags is the dns policy target tags, it has to be unique
-  # for each instance
-  dns_policy_target_tags = ["dns-policy-target-tag-${local.name_suffix}"]
-
-  # dns_policy_network_policy_config is the dns policy policy network policy config, see google_dns_policy.tf
-  dns_policy_network_policy_config = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
-  }
-
-  # dns_policy_priority is the dns policy priority, it has to be unique
-  # for each instance
-  dns_policy_priority = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
-  }
-
-  # dns_policy_target_service_accounts is the dns policy target service accounts, it has to be unique
-  # for each instance
-  dns_policy_target_service_accounts = ["serviceAccount:${google_service_account.dns_service_account.email_address}"]
-
-  # dns_policy_allow_list is the dns policy allow list, it has to be unique
-  # for each instance
-  dns_policy_allow_list = ["${google_dns_policy.dns_policy.dns_policy_name}"]
-
-  # dns_policy_deny_list is the dns policy deny list, it has to be unique
-  # for each instance
-  dns_policy_deny_list = ["${google_dns_policy.dns_policy.dns_policy_name}"]
-
-  # dns_policy_log_config is the dns policy log config, see google_dns_policy.tf
-  dns_policy_log_config = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
-  }
-
-  # dns_policy_options is the dns policy options, it has to be unique
-  # for each instance
-  dns_policy_options = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
-  }
-
-  # dns_policy_ports is the dns policy ports, it has to be unique
-  # for each instance
-  dns_policy_ports = {
-    # dns_policy_name is the dns policy name, it has to be unique
-    # for each instance
-    # dns_policy_type = "A"
-  }
-
-  # dns_policy_source_ranges is the dns policy source ranges, it has to be unique
-  # for each instance
-  dns_policy_source_ranges = ["0
 }
 

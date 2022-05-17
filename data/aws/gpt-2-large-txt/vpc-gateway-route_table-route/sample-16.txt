@@ -1,0 +1,56 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+resource "aws_instance" "ec2demo-b" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a AWS VPC resource with private network 10.0.0.0/16
+resource "aws_instance" "ec2demo-c" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS Internet Gateway with vpc id
+resource "aws_instance" "ec2demo-d" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create AWS route table with vpc id
+resource "aws_instance" "ec2demo-e" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+# Create route resource
+}
+

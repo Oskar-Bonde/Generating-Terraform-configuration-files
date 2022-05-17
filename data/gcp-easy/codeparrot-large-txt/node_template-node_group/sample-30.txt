@@ -18,8 +18,6 @@ resource "google_compute_instance_template" "node_template" {
 
   disk {
     source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
   }
 
   network_interface {
@@ -37,8 +35,6 @@ resource "google_compute_node_template" "node_template" {
 
   disk {
     source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
   }
 
   network_interface {

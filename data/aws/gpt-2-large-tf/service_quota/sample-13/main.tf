@@ -1,0 +1,59 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create a service quota resource. Use quota code "L-F678F1CE" and service code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc". Use value 75
+# create a service quota resource. Use quota code "vpc".
+}
+

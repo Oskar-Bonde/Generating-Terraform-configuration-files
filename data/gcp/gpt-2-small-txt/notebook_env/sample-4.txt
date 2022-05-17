@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 a2e
+resource "google_notebooks_enviroment" "notebooks_environment" {
+  name = "notebooks-environment"
+  project = var.project_id
+  region = var.region
+  notebook_name = "my-notebooks"
+  region = var.region
+  notebook_region = var.region
+  notebook_size = var.notebook_size
+  region = var.region
+  notebook_type = "pd-standard"
+  notebook_tags = ["my-notebooks"]
+  labels = {
+    "my-label-label" = "my-label"
+  }
+}
+

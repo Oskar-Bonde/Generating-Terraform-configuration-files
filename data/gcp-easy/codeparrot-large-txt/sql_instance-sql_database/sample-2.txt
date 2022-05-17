@@ -21,5 +21,10 @@ resource "google_sql_database_instance" "instance" {
 }
 
 # create a sql database
+resource "google_sql_database" "db" {
+  name = "my-sql-database"
+  instance = google_sql_database_instance.instance.name
+  charset_name = "utf8mb4"
+  collation = "utf8mb4_unicode_ci"
 }
 

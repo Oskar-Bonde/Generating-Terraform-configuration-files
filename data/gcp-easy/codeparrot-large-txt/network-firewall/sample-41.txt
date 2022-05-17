@@ -13,13 +13,14 @@ provider "google" {
 # create compute network
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = false
+  auto_create_subnetworks = "false"
 }
 
 # create compute firewall
 resource "google_compute_firewall" "default" {
   name = "my-firewall-${random_suffix}"
   network = "default"
+  source_ranges = ["10.0.0.0/8"]
 
   allow {
     protocol = "icmp"
@@ -34,8 +35,5 @@ resource "google_compute_firewall" "default" {
     protocol = "udp"
     ports = ["22", "80"]
   }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["my-tag"]
 }
 

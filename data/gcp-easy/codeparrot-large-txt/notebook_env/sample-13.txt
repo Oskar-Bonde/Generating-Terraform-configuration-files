@@ -13,8 +13,17 @@ provider "google" {
 # create google notebooks enviroment
 resource "google_notebooks_instance" "instance" {
   name = "my-notebooks-instance"
-  location = "us-central1"
+  machine_image {
+    source = "debian-cloud/debian-9"
+  }
   machine_type = "n1-standard-1"
-  tags = ["notebooks"]
+  metadata = {
+    foo = "bar"
+  }
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
 }
 

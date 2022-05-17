@@ -12,13 +12,24 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone = "europe-west1-b"
+  name = "dns-policy"
 
-  # DNS zone where to create the record
-  zone_name = "example.com."
+  # DNS zone name where the target domain resides
+  zone_name = "dsp-envs"
 
-  # DNS record
-  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+  # DNS zone name where the target domain resides
+  zone_dns_name = "dsp-envs.${var.domain}"
+
+  # DNS record name to be created
+  record_name = "dsp-envs"
+
+  # DNS record name to be created
+  record_type = "A"
+
+  # DNS record name to be created
+  record_value = "${google_dns_managed_zone.env_dns_zone.name}"
+
+  # DNS record name to be created
+  record_ttl = "300"
 }
 

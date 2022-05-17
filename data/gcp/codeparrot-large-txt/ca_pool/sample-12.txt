@@ -12,8 +12,8 @@ provider "google" {
 
 # create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
 resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
-  machine_type = "f1-micro"
+  name = "my-vm"
+  machine_type = "europe-west4"
 
   boot_disk {
     initialize_params {
@@ -23,8 +23,6 @@ resource "google_compute_instance" "vm_instance2" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 }
 

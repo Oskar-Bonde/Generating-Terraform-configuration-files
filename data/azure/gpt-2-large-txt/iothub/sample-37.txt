@@ -1,0 +1,67 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "rg_lb" {
+  name     = "myTFResourceGroup"
+  location = "westus2"
+}
+
+# iothub with sku name S1 and capacity 1. Use resource group name and location
+resource "azurerm_lb_backend_address_pool" "rg_lb_backend_address_pool" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  loadbalancer_id     = azurerm_lb.rg.id
+  protocol            = "HTTP"
+  port                = 80
+  protocol_port         = 80
+  protocol_protocol  = "HTTP"
+  ssl_policy        = "ELBSecurityPolicy"
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "80"
+  protocol_port_range = "80"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_name = azurerm_lb_backend_address_pool.rg_lb_backend_address_pool.name
+  load_balancing_scheme = "EXTERNAL_policy"
+  port_range            = "443"
+  protocol_port_range = "443"
+  ssl_policy_
+}
+

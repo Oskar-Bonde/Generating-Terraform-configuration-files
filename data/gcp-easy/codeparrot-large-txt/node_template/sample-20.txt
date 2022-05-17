@@ -15,27 +15,22 @@ resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
   machine_type = "n1-standard-1"
 
-  can_ip_forward = true
-
   disk {
     source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
   }
 
   network_interface {
-    network = "default"
+    network = "default"    
     access_config {
     }
   }
 
-  metadata = {
-    cluster-name   = "${file("${path.module}/data/google_compute_instance_template_master-us-test1-a-ha-gce-example-com_metadata_cluster-name")}"
-    ssh-keys       = "${file("${path.module}/data/google_compute_instance_template_master-us-test1-a-ha-gce-example-com_metadata_ssh-keys")}"
-    startup-script = "${file("${path.module}/data/google_compute_instance_template_master-us-test1-a-ha-gce-example-com_metadata_startup-script")}"
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 
-  tags        = ["ha-gce-example-com-k8s-io-role-master"]
-  name_prefix = "node-template-"
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
 }
 

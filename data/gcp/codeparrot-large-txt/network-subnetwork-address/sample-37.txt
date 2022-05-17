@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create compute network, give it a name and set auto create subnetworks to false to use the default network
+resource "google_compute_network" "default" {
+  name = "my-network"
+}
+
+# create compute subnetwork. Use ip cidr range 10.0.0.0/16 and use previous compute network called surfvariable
+resource "google_compute_subnetwork" "surfvariable" {
+  name = "my-subnet"
+  ip_cidr_range = "10.0.1.0/16"
+  network = google_compute_network.default.self_link
+}
+
+# resource compute address, set subnetwork id. Set address type to internal, use address 10.0.42.42
+resource "google_compute_address" "default" {
+  name = "my-address"
+}
+

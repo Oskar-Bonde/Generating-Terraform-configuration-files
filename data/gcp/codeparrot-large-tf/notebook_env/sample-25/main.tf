@@ -10,158 +10,141 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 apex
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${random_suffix}"
-  location = "europe-west1"
-  machine_type = "europe-west1-a"
-  tags = ["notebooks"]
-
-  # create a boot disk with a boot disk
-  disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
+  name = "notebooks-instance"
+  machine_type = "europe-west4-a"
+  location = "europe-west4-a"
+  machine_image {
+    source = "debian-cloud/debian-9"
+  }
+  network_interface {
+    network = "default"
+  }
+  # create a network interface only if we have one, otherwise we'll get a cyclic dependency error
+  network_interface {
+    network = "default"
+  }
+  # create a instance with a custom image
+  network_interface {
+    network = "default"
+    # add a custom IP address
+    access_config {
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a network interface with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
+  # create a instance with a custom image
   network_interface {
     network = "default"
     access_config {
-      // Ephemeral IP
+      # add an ephemeral external IP
     }
   }
-
-  # create a network interface with a network interface block
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral IP
-    }
-  }
-
-  # create a network interface with a network interface block
-  network_interface {
-    network
+  # create a instance with
 }
 

@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1
+resource "aws_instance" "ec2demo-nodes" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a AWS VPC resource with private network 10.0.0.0/16
+resource "aws_instance" "ec2demo-nodes-private" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS Internet Gateway with vpc id
+resource "aws_instance" "ec2demo-nodes-public" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create AWS route table with vpc id
+resource "aws_instance" "ec2demo-nodes-private" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
+resource "aws_instance" "ec2demo-nodes-public" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

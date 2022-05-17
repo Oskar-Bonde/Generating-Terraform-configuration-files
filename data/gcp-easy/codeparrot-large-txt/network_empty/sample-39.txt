@@ -12,6 +12,7 @@ provider "google" {
 
 # a google compute network resource
 resource "google_compute_network" "default" {
-  name = "my-network-${local.name_suffix}"
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
 }
 

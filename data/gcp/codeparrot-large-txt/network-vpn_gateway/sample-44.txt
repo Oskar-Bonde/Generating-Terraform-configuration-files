@@ -15,11 +15,9 @@ resource "google_compute_network" "default" {
   name = "my-network"
 }
 
-# resource compute ha vpn gateway, in the us central1 region and use the compute network id
-resource "google_compute_ha_vpn_gateway" "ha_gateway" {
+# resource compute ha vpn gateway, in the us central1 region and use the compute network idvariable as the internal routing zone
+resource "google_compute_ha_vpn_gateway" "default" {
   name    = "ha-vpn-${local.name_suffix}"
   network = google_compute_network.default.id
-  region  = "us-central1"
-  vpn_gateway = google_compute_ha_vpn_gateway.ha_gateway.id
 }
 

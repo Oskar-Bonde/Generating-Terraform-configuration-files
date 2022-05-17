@@ -35,8 +35,7 @@ resource "google_compute_firewall" "default" {
     ports = ["22", "80"]
   }
 
-  allow {
-    protocol = "icmp"
-  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["my-tag"]
 }
 

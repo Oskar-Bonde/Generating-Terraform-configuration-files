@@ -12,73 +12,124 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS Policy
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow outbound"
-      direction = "INGRESS"
-      match_rule {
-        src_ip_ranges = ["10.0.0.0/16"]
-      }
-    }
+  # DNS zone where to create the record
+  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+
+  # allow DNS to be accessed by name
+  rrpolicy = "${google_dns_policy.name_0.name}"
+
+  # allow outbound traffic on all ports
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow inbound"
-      direction = "INGRESS"
-      match_rule {
-        src_ip_ranges = ["10.0.0.0/16"]
-      }
-    }
+  # allow inbound traffic from the subnet
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow inbound"
-      direction = "INGRESS"
-      match_rule {
-        src_ip_ranges = ["10.0.0.0/16"]
-      }
-    }
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow inbound"
-      direction = "INGRESS"
-      match_rule {
-        src_ip_ranges = ["10.0.0.0/16"]
-      }
-    }
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow inbound"
-      direction = "INGRESS"
-      match_rule {
-        src_ip_ranges = ["10.0.0.0/16"]
-      }
-    }
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the security group
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # allow inbound traffic from the instance
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.
 }
 

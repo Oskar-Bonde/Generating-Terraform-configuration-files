@@ -1,0 +1,25 @@
+provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with an EC2 instance
+resource "aws_instance" "ec2demo2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create S3 Bucket Resourcevariable "bucket" {
+  type        = "string"
+  description = "Name of the bucket to create"
+}
+
+# Create S3 Bucket objectvariable "object" {
+  type        = "string"
+  description = "Name of the object to create"
+}
+

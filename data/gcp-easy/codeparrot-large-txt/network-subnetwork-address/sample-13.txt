@@ -20,11 +20,11 @@ resource "google_compute_network" "default" {
 resource "google_compute_subnetwork" "default" {
   name = "my-subnetwork-${random_suffix}"
   ip_cidr_range = "10.0.0.0/16"
-  network       = google_compute_network.default.self_link
+  network = google_compute_network.default.self_link
 }
 
 # make a compute address resource
 resource "google_compute_address" "default" {
-  name = "my-address-${random_suffix}"
+  name = "my-compute-address-${random_suffix}"
 }
 

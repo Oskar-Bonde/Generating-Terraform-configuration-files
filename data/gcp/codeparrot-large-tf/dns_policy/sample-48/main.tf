@@ -12,21 +12,19 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS zone where the instances should be created
-  zone_update_policy {
-    update_policy = "MIGRATE"
-  }
+  # DNS zone where to create the record
+  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
 
-  # DNS record
-  record {
-    name = "dns-policy-${random_suffix}"
-    type = "A"
+  # allow DNS to be accessed by name
+  rrpolicy = "${google_dns_policy.name_0.name}"
 
-    ttl = 300
-    rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
-  }
+  # allow outbound traffic on all ports
+  ports = ["80", "443"]
+
+  # allow DNS to be accessed by name
+  rrpolicy = "${google_dns_policy.name_0.name}"
 }
 

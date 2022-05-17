@@ -11,15 +11,15 @@ provider "google" {
 }
 
 # create compute network
-resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+resource "google_compute_network" "my_custom_network" {
+  name = "my-custom-network-${local.name_suffix}"
+  auto_create_subnetworks = false
 }
 
 # create compute firewall
-resource "google_compute_firewall" "default" {
-  name = "my-firewall-${random_suffix}"
-  network = "default"
+resource "google_compute_firewall" "allow-internal" {
+  name = "allow-internal-${local.name_suffix}"
+  network = google_compute_network.my_custom_network.name
 
   allow {
     protocol = "icmp"
@@ -30,13 +30,7 @@ resource "google_compute_firewall" "default" {
     ports = ["22", "80"]
   }
 
-  allow {
-    protocol = "udp"
-    ports = ["22", "80"]
-  }
-
-  allow {
-    protocol = "icmp"
-  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["allow-internal"]
 }
 

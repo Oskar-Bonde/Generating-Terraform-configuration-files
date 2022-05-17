@@ -12,12 +12,13 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name = "my-firewall-policy"
+  name    = "default-allow-network-access"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
-  direction = "INGRESS"
-  priority = 1
-  project = "organizations/12345"
-  source_tags = ["foo", "bar"]
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["allow-network-access"]
 }
 

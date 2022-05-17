@@ -12,7 +12,6 @@ provider "google" {
 
 # a google compute network resource with name terraform network
 resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  name = "my-network"
 }
 

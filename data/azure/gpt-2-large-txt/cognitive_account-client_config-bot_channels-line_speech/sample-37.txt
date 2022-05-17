@@ -1,0 +1,69 @@
+resource "azurerm_public_ip" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+
+# Provider block with features block
+resource "azurerm_public_ip_address" "rg" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  domain_name_label = "myTFResourceGroup"
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_network_interface" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  ip_configuration {
+    name                          = "myTFResourceGroup"
+    subnet_id                     = azurerm_subnet.rg.id
+    private_ip_address_allocation = "static"
+    public_ip_address_id          = azurerm_public_ip.rg.id
+  }
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group
+resource "azurerm_virtual_machine" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_interface_ids = ["${azurerm_network_interface.rg.id}"]
+  vm_size               = "Standard_A0"
+  vm_size_gb       = "Standard_A0"
+  vm_size_prefix          = "Standard_A0"
+  vm_address_prefix       = "Standard_A0"
+  vm_address_id        = azurerm_public_ip.rg.id
+  vm_address_id_label = "myTFResourceGroup"
+  vm_address_id_prefix  = "myTFResourceGroup"
+  vm_address_id_label_on_launch = "myTFResourceGroup"
+  vm_address_id_prefix      = "myTFResourceGroup"
+  vm_address_id_label_on_launch_on_unique = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique    = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_1 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_2 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_3 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_4 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_5 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_6 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_7 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_8 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_unique_on_9 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_9_1 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_on_9_2 = "myTFResourceGroup"
+  vm_address_id_prefix_on_unique_
+}
+
+# data block, azurem client config
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+}
+
+# resource block called bot channel direct line speech. Use name and location from bot_channels_registration. For cognitive service location and access key use cognitive account. Assign resource group name
+}
+

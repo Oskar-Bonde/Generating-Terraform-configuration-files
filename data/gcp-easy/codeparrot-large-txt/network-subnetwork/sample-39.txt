@@ -16,10 +16,10 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# create compute subnetwork
-resource "google_compute_subnetwork" "default" {
-  name = "my-subnet-${random_suffix}"
-  ip_cidr_range = "10.0.0.0/16"
-  network = google_compute_network.default.self_link
+# create compute subnetworkvariable
+resource "google_compute_subnetwork_iam_member" "default" {
+  network = google_compute_network.default.name
+  role    = "roles/compute.networkUser"
+  member  = "allUsers"
 }
 

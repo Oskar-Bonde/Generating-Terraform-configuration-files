@@ -14,9 +14,9 @@ provider "google" {
 data "google_compute_zones" "available" {
 }
 
-# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a namevariable.
+# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name
 resource "google_compute_instance" "vm_instance" {
-  name = "my-compute-instance-%%{random_suffix}"
+  name = "my-vm"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -27,78 +27,6 @@ resource "google_compute_instance" "vm_instance" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
-
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  tags = ["ssh"]
-
-  can_ip_forward = true
-
-  metadata_startup_script = "sudo apt-get update"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_ps1 = "sudo apt-get install -y ppa:ubuntu/xenial/ppa"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_ps2 = "sudo apt-get install -y ppa:ubuntu/xenial/ppa"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_user = "ubuntu"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript = "sudo apt-get install -y bootscripts"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_user = "ubuntu"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps1 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps2 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_user = "ubuntu"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps1 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps2 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_user = "ubuntu"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps1 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_ps2 = "sudo apt-get install -y bootscripts -p ${var.key_name}.pub -r ${var.region} -n ${var.instance_name}"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_user = "ubuntu"
-
-  tags = ["ssh"]
-
-  metadata_startup_script_bootscript_
 }
 

@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+}
+
+# create a node template
+
+resource "google_compute_forwarding_rule" "name_1" {
+  name = "my-compute-forwarding-rule"
+  target = google_compute_target_http_proxy.vm_instance_http_proxy.self_link
+  port = "80"
+
+  ip_protocol = "TCP"
+  ip_address  = google_compute_address.vm_instance_address.address
+  subnetwork = google_compute_subnetwork.vm_instance_subnet.self_link
+}
+
+# create a compute node group resource
+
+resource "google_compute_forwarding_rule" "name_1" {
+  name = "my-compute-forwarding-rule"
+  target = google_compute_target_http_proxy.vm_instance_http_proxy.self_link
+}
+

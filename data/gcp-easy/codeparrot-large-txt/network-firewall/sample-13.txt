@@ -20,7 +20,6 @@ resource "google_compute_network" "default" {
 resource "google_compute_firewall" "default" {
   name = "my-firewall-${random_suffix}"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
 
   allow {
     protocol = "icmp"
@@ -28,12 +27,12 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports = ["22"]
+    ports = ["22", "80"]
   }
 
   allow {
     protocol = "udp"
-    ports = ["22"]
+    ports = ["22", "80"]
   }
 
   allow {

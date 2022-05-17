@@ -12,49 +12,42 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone = "europe-west1-b"
+  name = "dns-policy"
 
   # DNS
   rule {
-    action = "accept"
-    ports = ["80", "443"]
+    action = "allow"
+    priority = 100
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
   }
 
   # allow outbound traffic
   rule {
-    action = "deny"
-    ports = ["0-65535"]
+    action = "allow"
+    priority = 110
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
   }
 
-  # allow inbound ssh
-  rule {
-    action = "accept"
-    ports = ["22"]
-  }
-
-  # allow inbound http
-  rule {
-    action = "accept"
-    ports = ["80"]
-  }
-
-  # allow inbound https
-  rule {
-    action = "accept"
-    ports = ["443"]
-  }
-
-  # allow inbound outbound
-  rule {
-    action = "accept"
-    ports = ["0-65535"]
-  }
-
-  # allow all outbound
+  # allow inbound traffic
   rule {
     action = "allow"
-    ports = ["0-65535"]
+    priority = 120
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound traffic
+  rule {
+    action = "allow"
+    priority = 130
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
   }
 }
 

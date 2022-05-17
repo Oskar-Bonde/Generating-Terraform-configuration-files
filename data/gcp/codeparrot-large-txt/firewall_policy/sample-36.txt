@@ -12,13 +12,157 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "fw-policy" {
-  name    = "fw-policy-${local.name_suffix}"
-  network = "default"
+  name = "my-fw-policy"
+
+  # firewall rule provides a smaller firewall policy
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["favicons"]
+
+  # firewall rule provides a smaller firewall policy
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule provides a smaller firewall policy
+  allow {
+    protocol = "icmp"
+  }
+
+  # firewall rule has an allow list of protocols
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  # firewall rule has a allow list of ports
+  allow {
+    protocol = "icmp"
+    ports    = ["80", "443"]
+  }
+
+  # firewall rule has
 }
 

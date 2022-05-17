@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS configuration file
+# Terraform Block with AWS provider
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# create a workspace ip group
+resource "aws_network_acl" "network_acl" {
+  vpc_id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+}
+

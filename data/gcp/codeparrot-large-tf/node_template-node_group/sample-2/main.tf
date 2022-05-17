@@ -12,8 +12,7 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "name_0" {
-  name = "my-node-template"
-  region = "europe-west1"
+  name = "n1-node-96-624"
 
   node_type = "n1-node-96-624"
 
@@ -25,8 +24,6 @@ resource "google_compute_node_template" "name_0" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
@@ -38,17 +35,15 @@ resource "google_compute_node_template" "name_0" {
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
+# create a compute node group resource. Set size to 1 and use the node template resource id.
 resource "google_compute_node_template_node_group" "name_1" {
-  name = "my-node-template-node-group-${random_suffix}"
-  zone = "europe-west1-a"
+  name = "n1-node-96-624"
+  zone = "us-central1-a"
 
   node_template = google_compute_node_template.name_0.id
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {

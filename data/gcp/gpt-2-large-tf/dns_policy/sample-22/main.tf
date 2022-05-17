@@ -1,0 +1,56 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1-standard-1
+resource "google_compute_instance" "name_0" {
+  name = "my-compute-instance-outbound"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create dns policy, enable inbound forwarding and enable logging
+resource "google_compute_instance_group" "name_1" {
+  name = "my-compute-instance-group"
+  description = "Allow all inbound forwarding"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"
+  }
+
+  metadata {
+    domain_name = "my-compute-instance-name"
+  }
+
+  provisioner "file" {
+    source = "scripts/compute_instance_group"
+    destination = "/home/ubuntu/compute_instance_group"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get -y update",
+      "sudo apt-get -y install supervisor",
+      "sudo service supervisor stop",
+      "sudo service supervisor supervisor -t supervisor",
+      "sudo service supervisor -t supervisor"
+    ]
+  }
+}
+

@@ -13,9 +13,8 @@ provider "google" {
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
   name = "dns-policy"
-  project = var.project_id
-  provider = google.dns
-  dns_policy_create = true
-  enable_inbound_forwarding = true
+  zone = "europe-west1-b"
+  type = "A"
+  records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
 }
 

@@ -16,13 +16,10 @@ resource "google_storage_bucket" "bucket" {
   location = "europe-north1"
 }
 
-# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn
+# create compute backend bucket, give it a name, use bucket name from storage bucket and enable cdn-account-policy
 resource "google_storage_bucket" "bucket_cdn" {
   name = "my-bucket-cdn"
   location = "europe-north1"
-  cdn_policy {
-    cache_mode = "CACHE_ALL_STATIC"
-    client_ttl = 3600
-  }
+  cdn_policy = "bucket-policy-${var.region}"
 }
 

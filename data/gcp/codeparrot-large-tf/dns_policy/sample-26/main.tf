@@ -12,47 +12,83 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "my-dns-policy"
+  name = "dns-policy"
   zone = "europe-west1-b"
-  type = "A"
 
-  # DNS Policy
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
+  # DNS zone where the instance is created
+  zone_update_policy {
+    managed_zone = "${google_dns_managed_zone.env_dns_zone.name}"
+  }
+
+  # DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
     }
   }
 
-  # allow outbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
+  # Cloud DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
     }
   }
 
-  # allow inbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
+  # Cloud DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
     }
   }
 
-  # allow outbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
+  # Cloud DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
+    }
+  }
+
+  # Cloud DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
+    }
+  }
+
+  # Cloud DNS record
+  record {
+    name = "tf-example-com"
+    type = "A"
+
+    alias {
+      name = "${google_dns_managed_zone.env_dns_zone.dns_name}"
+      zone_id = "${google_dns_managed_zone.env_dns_zone.zone_id}"
+      evaluate_target_health = false
     }
   }
 }

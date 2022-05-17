@@ -1,0 +1,17 @@
+# Terraform Block with the AWS provider
+# Terraform Block with the random provider
+# Provider block with AWS
+resource "aws_instance" "ec2demo-ec2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS provider block
+}
+
+# Resource block to create a random pet name
+}
+
+# Create AWS S3 bucket
+}
+

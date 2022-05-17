@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block
+# Terraform block with AWS and random provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Resource block to create a random pet name
+resource "random_pet" "random_name" {
+  byte_length = 4
+}
+
+# Create AWS S3 bucket
+}
+

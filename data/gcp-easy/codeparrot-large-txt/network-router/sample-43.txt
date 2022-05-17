@@ -11,19 +11,18 @@ provider "google" {
 }
 
 # create compute network resource 
-resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
-  project = google_project.project.project_id
-
-  depends_on = [
-    # The project's services must be set up before the
-    # network is enabled as the compute API will not
-    # be enabled and cause the setup to fail.
-    google_project_service.compute_api,
-  ]
+resource "google_compute_network" "my_custom_network" {
+  name = "my-custom-network-${local.name_suffix}"
+  auto_create_subnetworks = false
 }
 
 # resource block: create a compute router
+resource "google_compute_router" "router" {
+  name    = "my-custom-router-${local.name_suffix}"
+  network = google_compute_network.my_custom_network.name
+  region  = "us-central1"
+  bgp {
+    asn = 64514
+  }
 }
 

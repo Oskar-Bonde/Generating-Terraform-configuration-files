@@ -13,19 +13,13 @@ provider "google" {
 # create compute network
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = false
+  auto_create_subnetworks = "false"
 }
 
-# create a compute ha vpn gatewayvariable
+# create a compute ha vpn gateway
 resource "google_compute_ha_vpn_gateway" "ha_gateway" {
-  name = "my-ha-vpn-${random_suffix}"
-  network = google_compute_network.default.id
-  region = "us-central1"
-  vpn_gateway_interface = "eth-1"
-  # Do not create a VPN gateway if the gateway is created outside the VPC
-  # network
-  vpn_gateway_address = "192.168.0.1"
-  # Set create option to delete default VPN gateway
-  delete_default_vpn_gateway = true
+  name    = "ha-vpn-${random_suffix}"
+  network = google_compute_network.default.name
+  region  = "us-central1"
 }
 

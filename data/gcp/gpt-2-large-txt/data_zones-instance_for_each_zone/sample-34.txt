@@ -1,0 +1,46 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1.0
+resource "google_compute_instance" "vm_instance_linux" {
+  name = "my-compute-instance-linux-%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# data block with available google compute zones in europe west4. The status must be UP and project is terraform-338909
+# the all of the instance.
+resource "google_compute_instance" "vm_instance_linux_linux" {
+  name = "my-compute-instance-linux-linux-%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name
+# the all of the instance.
+resource "google_compute_instance" "vm_instance_linux_linux_linux" {
+  name = "my-compute-instance-linux-linux-linux-%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

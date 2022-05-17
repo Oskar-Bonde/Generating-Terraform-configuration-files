@@ -12,7 +12,7 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name    = "fw-policy-${local.name_suffix}"
+  name    = "fw-policy"
   network = "default"
   priority = 1000
 
@@ -21,6 +21,6 @@ resource "google_compute_firewall" "name_0" {
     ports    = ["80", "443"]
   }
 
-  target_tags = ["www-node"]
+  target_tags = ["foo", "bar"]
 }
 

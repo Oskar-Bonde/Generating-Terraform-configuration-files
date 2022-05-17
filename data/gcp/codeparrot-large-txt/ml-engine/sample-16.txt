@@ -11,11 +11,18 @@ provider "google" {
 }
 
 # ml engine model resource. With default name and in europe west 4 regions
-# the default network interface is in the default subnet
-resource "google_compute_network" "default" {
-  name = "my-custom-network"
-  auto_create_subnetworks = "false"
-  routing_mode = "GLOBAL"
-  project = google_project.project.project_id
+resource "google_compute_instance" "ml_instance" {
+  name = "my-ml"
+  machine_type = "europe-west4"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+  }
 }
 

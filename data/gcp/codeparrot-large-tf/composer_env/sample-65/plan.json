@@ -1,1 +1,0 @@
-{"format_version":"1.0","terraform_version":"1.1.7","planned_values":{"root_module":{}},"configuration":{"provider_config":{"google":{"name":"google"},"google-beta":{"name":"google-beta","expressions":{"region":{"constant_value":"us-central1"},"zone":{"constant_value":"us-central1-b"}}}},"root_module":{}}}

@@ -1,0 +1,53 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1.0.0.0/0
+resource "google_compute_instance" "vm_instance_linux" {
+  name = "my-compute-instance-linux"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# data block with available google compute zones in europe west4. The status must be UP and project is terraform-338909
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface
+resource "google_compute_instance" "vm_instance_linux_linux" {
+  name = "my-compute-instance-linux-linux"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro, debian-9 image and default network interface and giva a name
+# the following for the instance that has machine type f1-micro,
+}
+

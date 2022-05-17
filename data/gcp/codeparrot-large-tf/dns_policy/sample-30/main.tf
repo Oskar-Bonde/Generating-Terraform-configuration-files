@@ -12,131 +12,157 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
-  zone = "europe-west1-b"
+  name = "dns-policy"
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  # DNS
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_policy = "REPLACE"
-
-    # Reject all traffic that hasn't been whitelisted
-    disable_rule = "true"
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
   }
 
-  # DNS zone where the instance should be created
-  zone_update_policy {
-    update_
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      description = "allow inbound"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0
 }
 

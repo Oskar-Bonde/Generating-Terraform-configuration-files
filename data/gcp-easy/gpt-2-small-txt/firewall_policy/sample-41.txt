@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+}
+
+# create a firewall policy
+resource "google_compute_firewall" "fw" {
+  name                                     = "fw-my-firewall"
+  network                                   = google_compute_network.network.name
+  source_ranges                              = ["35.191.0.0/16"]
+  allow_stopping_for_update                   = true
+  allow_stopping_for_update_destroy = true
+  allow_monitoring                          = true
+  allow_unverified_ssl_certificates                = true
+  allow_unverified_ssl_certificates_destroy = true
+  target_tags                               = ["my-compute-instance-group"]
+  target_service_accounts                     = ["my-compute-instance-service-account"]
+  allow_stopping_for_update                   = true
+  allow_unverified_ssl_certificates                = true
+  allow_unverified_ssl_certificates_destroy = true
+  target_tags                               = ["my-compute-instance-group"]
+  target_service_accounts                     = ["my-compute-instance-service-account"]
+  allow_stopping_for_update                   = true
+  allow_unverified_ssl_certificates                = true
+  allow_unverified_ssl_certificates_destroy = true
+  target_tags                              = ["my-compute-instance-group"]
+  target_service_accounts                    = ["my-compute-instance-group"]
+  allow_unverified_ssl_certificates               = true
+  target_service_accounts_destroy = true
+  target_tags      
+}
+

@@ -12,12 +12,11 @@ provider "google" {
 
 # data block with google compute zones in europe west4. The status must be UP and set project to terraform-338909
 data "google_compute_zones" "available" {
-  project = var.project_id
 }
 
-# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name
-resource "google_compute_instance" "vm_instance_1" {
-  name = "my-compute-instance-1"
+# compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name of the instance
+resource "google_compute_instance" "vm_instance2" {
+  name = "my-vm2"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -28,8 +27,6 @@ resource "google_compute_instance" "vm_instance_1" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 }
 

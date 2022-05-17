@@ -11,16 +11,16 @@ provider "google" {
 }
 
 # compute network that auto creates subnetworks
-resource "google_compute_subnetwork" "my-subnet" {
-  name          = "my-subnetwork-${local.name_suffix}"
+resource "google_compute_subnetwork" "vm_subnet" {
+  name          = "my-subnetwork"
   ip_cidr_range = "10.127.0.0/20"
   region        = "europe-west1"
-  network       = google_compute_network.my-network.self_link
+  network       = google_compute_network.vm_network.id
 }
 
-# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name of "my-network"
+# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name
 resource "google_compute_instance" "vm_instance_1" {
-  name         = "my-instance-1-${local.name_suffix}"
+  name         = "my-vm-1"
   machine_type = "f1-micro"
   zone         = "europe-west1-b"
 
@@ -31,15 +31,7 @@ resource "google_compute_instance" "vm_instance_1" {
   }
 
   network_interface {
-    network = google_compute_network.my-network.self_link
-  }
-
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    network = google_compute_network.vm_network.id
   }
 }
 

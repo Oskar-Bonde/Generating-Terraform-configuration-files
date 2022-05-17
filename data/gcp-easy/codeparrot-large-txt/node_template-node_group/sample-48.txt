@@ -11,10 +11,11 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
-  can_ip_forward = true
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+  region = "us-central1"
+
+  node_type = "n1-standard-1"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -23,20 +24,46 @@ resource "google_compute_instance_template" "node_template" {
   }
 
   network_interface {
-    network = "default"
+    network = "default"    
     access_config {
     }
-  }
-
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 }
 
 # create a compute node group resource
+resource "google_compute_node_group_manager" "node_group_manager" {
+  name = "my-node-group-manager"
+  zone = "us-central1-a"
+
+  node_template = google_compute_node_template.node_template.id
+  base_instance_name = "vm"
+
+  version {
+    instance_template = google_compute_instance.vm_instance.id
+  }
+
+  target_pools = [
+    google_compute_target_pool.default.id,
+  ]
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.health_check.id
+    initial_delay_sec = "30"
+    max_instances       = "2"
+  }
+
+  depends_on = [
+    google_project_service.compute,
+    google_kms_crypto_key_iam_binding.crypto-key-iam,
+    google_project_iam_member.service-account-user,
+    google_project_iam_member.service-account-key-admin,
+    google_project_iam_member.service-account-compute,
+    google_project_iam_member.service-account-key-iam,
+    google_project_iam_member.service-account-storage-admin,
+    google_project_iam_member.service-account-storage-key-iam,
+    google_project_iam_member.service-account-service-account,
+    google_project_iam_member.service-account-user,
+    google_project_iam_member.service-account-v1,
+  ]
 }
 

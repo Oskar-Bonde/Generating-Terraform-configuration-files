@@ -12,9 +12,9 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "node_template" {
-  name_prefix = "n1-node-${local.name_suffix}"
-  machine_type = "n1-node-96-624"
-  can_ip_forward = true
+  name = "node-template-${local.name_suffix}"
+
+  node_type = "n1-node-96-624"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -24,8 +24,6 @@ resource "google_compute_node_template" "node_template" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
@@ -37,25 +35,15 @@ resource "google_compute_node_template" "node_template" {
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
-resource "google_compute_node_template_group" "node_template_group" {
-  name_prefix = "n1-node-group-${local.name_suffix}"
-  machine_type = "n1-node-96-624"
-  can_ip_forward = true
+# create a compute node group resource. Set size to 1 and use the node template resource id.
+resource "google_compute_node_template_node_group" "node_template_node_group" {
+  name = "node-template-node-group-${local.name_suffix}"
+  zone = "us-central1-a"
 
-  node_template {
-    can_ip_forward = true
-    disk {
-      source_image = "debian-cloud/debian-9"
-      disk_size_gb = "50"
-      auto_delete  = true
-    }
-  }
+  node_template = google_compute_node_template.node_template.id
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {

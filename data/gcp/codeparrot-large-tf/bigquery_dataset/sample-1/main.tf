@@ -14,8 +14,8 @@ provider "google" {
 resource "google_bigquery_dataset" "name_0" {
   dataset_id = "example_dataset"
   location = "EU"
-  default_table_expiration_ms = "3600000"
-  labels {
+
+  labels = {
     env = "dev"
   }
 }

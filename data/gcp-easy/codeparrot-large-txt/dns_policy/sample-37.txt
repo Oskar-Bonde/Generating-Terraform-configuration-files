@@ -12,37 +12,42 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${local.name_suffix}"
+  name = "dns-policy-${random_suffix}"
   zone = "us-central1-a"
 
   # DNS policy
   rule {
     action = "deny(403)"
-    priority = 1
   }
 
-  # allow outbound traffic
+  # allow outbound tcp traffic on all ports
   rule {
     action = "allow"
-    priority = 1
+    ports = ["1-65535"]
   }
 
-  # allow inbound traffic
+  # allow outbound udp traffic on a port range
   rule {
     action = "allow"
-    priority = 1
+    ports = ["1-65535"]
   }
 
-  # allow all outbound traffic
+  # allow outbound icmp traffic on a port range
   rule {
     action = "allow"
-    priority = 0
+    ports = ["1-65535"]
   }
 
-  # allow all inbound traffic
+  # allow outbound udp traffic on a port range
   rule {
     action = "allow"
-    priority = 0
+    ports = ["1-65535"]
+  }
+
+  # allow outbound icmp traffic on a port range
+  rule {
+    action = "allow"
+    ports = ["1-65535"]
   }
 }
 

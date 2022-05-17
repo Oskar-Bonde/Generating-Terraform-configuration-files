@@ -1,0 +1,23 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a firewall policy 
+resource "google_compute_firewall" "name_0" {
+  name = "my-fw-policy"
+  network = "default"
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
+  source_ranges = ["0.0.0.0/0"]
+}
+

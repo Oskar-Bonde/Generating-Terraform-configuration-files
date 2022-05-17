@@ -25,38 +25,37 @@ resource "google_compute_node_template" "name_0" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    ssh-keys = "root:${file("${var.public_key_path}")}"
   }
 }
 
 # create a compute node group resource. Set size to 1 and use the node template resource id
-resource "google_compute_node_template_node_group" "name_1" {
-  name_prefix = "node-template-node-group-"
-  zone = "us-central1-a"
+resource "google_compute_node_template_group" "name_1" {
+  name_prefix = "node-template-group-"
+  machine_type = "n1-node-96-624"
 
-  node_template = google_compute_node_template.name_0.id
+  node_template {
+    id = "node-template-1"
+    name = "node-template-1"
 
-  network_interface {
-    network = "default"
-    access_config {
+    node_type = "n1-node-96-624"
+
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
     }
-  }
 
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
+    network_interface {
+      network = "default"
+    }
 
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+    metadata {
+      ssh-keys = "root:${file("${var.public_key_path}")}"
+    }
   }
 }
 

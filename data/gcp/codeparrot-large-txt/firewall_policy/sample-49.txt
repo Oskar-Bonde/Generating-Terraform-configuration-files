@@ -11,45 +11,16 @@ provider "google" {
 }
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
-resource "google_compute_firewall" "fw-policy" {
-  name = "my-firewall-policy"
+resource "google_compute_firewall" "default" {
+  name    = "default-allow-network-traffic"
   network = "default"
-  source_ranges = ["10.0.0.0/8"]
-  direction = "INGRESS"
-  priority = 1
+
   allow {
     protocol = "tcp"
-    ports = ["80", "443"]
+    ports    = ["80", "443"]
   }
-  allow {
-    protocol = "udp"
-    ports = ["443"]
-  }
-  allow {
-    protocol = "icmp"
-  }
-  allow {
-    protocol = "esp"
-  }
-  allow {
-    protocol = "ah"
-  }
-  allow {
-    protocol = "sctp"
-  }
-  allow {
-    protocol = "udp-eh"
-  }
-  allow {
-    protocol = "udp-psh"
-  }
-  allow {
-    protocol = "sctp-psh"
-  }
-  disabled    = false
-  name        = "my-firewall-policy"
-  network     = "default"
-  source_tags = ["foo", "bar"]
-  target_tags = ["bar"]
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["minimal-gce-example-com-k8s-io-role-master"]
 }
 

@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with an EC2 instance
+resource "aws_instance" "ec2demo_2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create a service quota resource block
+resource "aws_ebs_volume" "ec2demo_2_volume" {
+  availability_zone = "us-east-1b"
+  size             = 20
+  type             = "gp2"
+  encrypted        = false
+
+  tags = {
+    Name = "ec2demo-2-volume"
+  }
+}
+

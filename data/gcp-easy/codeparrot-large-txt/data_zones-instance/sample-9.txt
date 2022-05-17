@@ -12,10 +12,10 @@ provider "google" {
 
 # data block with google compute zones
 data "google_compute_zones" "available" {
-  region = "us-central1"
+  region = var.region
 }
 
-# make a compute instanceresource
+# make a compute instance
 resource "google_compute_instance" "vm_instance" {
   name = "my-compute-instance-%%{random_suffix}"
   machine_type = "f1-micro"

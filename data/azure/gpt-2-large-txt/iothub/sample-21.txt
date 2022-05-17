@@ -1,0 +1,30 @@
+resource "azurerm_storage_account" "rg" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+}
+
+# Provider block with features block
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+
+# iothub with sku name S1 and capacity 1. Use resource group name and location
+resource "azurerm_storage_container" "rg" {
+  name                  = "myTFResourceGroup"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.rg.name
+  container_access_type = "private"
+}
+

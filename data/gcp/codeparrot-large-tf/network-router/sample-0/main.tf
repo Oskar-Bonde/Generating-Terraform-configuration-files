@@ -12,13 +12,14 @@ provider "google" {
 
 # create compute network resource. Give it the name foobar and don't auto create subnetworks
 resource "google_compute_network" "name_0" {
-  name = "my-network-${local.name_suffix}"
+  name = "foobar"
 }
 
 # resource block: create a compute router for the foobar network. Make a bgp block, use asn 64514, advertise mode custom, advertise groups all subnets and set advertised ip ranges to 1.2.3.4 and 6.7.0.0/16
 resource "google_compute_router" "name_1" {
-  name    = "my-router-${local.name_suffix}"
-  network = google_compute_network.name_0.name
+  name    = "foobar"
+  network = google_compute_network.name_0.id
+  region  = "europe-west1"
   bgp {
     asn = 64514
   }
