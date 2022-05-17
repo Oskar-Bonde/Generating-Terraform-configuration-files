@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -28,7 +28,7 @@ resource "aws_route_table" "main" {
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
-resource "aws_route" "0.0.0.0/0" {
+resource "aws_route" "main" {
   route_table_id         = "${aws_route_table.main.id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.main.id}"

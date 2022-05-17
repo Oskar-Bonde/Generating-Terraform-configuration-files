@@ -11,10 +11,14 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
-resource "aws_security_group" "terraform_example" {
-  name        = "terraform_example"
-  description = "Used in terraform"
-  vpc_id      = "${aws_vpc.terraform.id}"
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-groups#create_aws_iam_group
+resource "aws_iam_group" "terraform_example" {
+  name = "terraform-example"
+  path = "/"
+  description = "Terraform example group"
+  tags = {
+    Name = "terraform-example"
+  }
 }
 

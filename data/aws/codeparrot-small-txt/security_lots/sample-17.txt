@@ -1,4 +1,4 @@
-provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -54,34 +54,6 @@ resource "aws_security_group" "ec2demo" {
   }
 
   ingress {
-    from_port   = 7081
-    to_port     = 7081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 8081
-    to_port     = 8081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 7080
-    to_port     = 7080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 7081
-    to_port     = 7081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
@@ -117,13 +89,40 @@ resource "aws_security_group" "ec2demo" {
   }
 
   ingress {
-    from_port   = 7080
-    to_port     = 7080
+    from_port   = 8081
+    to_port     = 8081
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = 7
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 7081
+    to_port     = 7081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  in
 }
 

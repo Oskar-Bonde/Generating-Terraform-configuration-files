@@ -12,17 +12,16 @@ provider "aws" {
 }
 
 # Resource block to create a random pet name of length 5 with separator -
-resource "random_pet" "pet" {
+# see: https://www.terraform.io/docs/providers/aws/r/instance_template.html#random_pet
+resource "random_pet" "main" {
   length  = 5
   special = false
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
-resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-state-bucket-${random_pet.pet.id}"
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-state"
   acl    = "private"
-
-  # TODO: Need to allow all egress
   force_destroy = true
 }
 

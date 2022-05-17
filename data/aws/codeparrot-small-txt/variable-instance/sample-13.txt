@@ -11,55 +11,18 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string "t2.micro"
+# Create variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
 variable "ec2_ami_id" {
   type = "string"
 }
 
 # variable called ec2_instance_count which is number type with default 1
+
 variable "ec2_instance_count" {
   type = "string"
 }
 
 # Create EC2 Instance with ami set to var.ec2_ami_id, count as var.ec2_instance_count and instance type t3.micro
-resource "aws_instance" "ec2_instance" {
-  ami           = var.ec2_ami_id
-  instance_type = var.ec2_instance_type
-  count         = var.ec2_instance_count
-  instance_count = var.ec2_instance_count
-  instance_type = var.ec2_instance_type
-  spot_price = var.ec2_spot_price
 
-  # VPC Variables
-  vpc_security_group_ids = [
-    aws_security_group.ec2_sg.id,
-    aws_security_group.ec2_sg_egress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress_egress.id,
-    aws_security_group.ec2_sg_egress.id,
-    aws_security_group.ec2_sg_ingress_egress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2_sg_ingress.id,
-    aws_security_group.ec2
 }
 

@@ -11,15 +11,17 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Resource block to create a random pet name of length 5 with separator - "-" and "-"
+# Resource block to create a random pet name of length 5 with separator -
+# and a random suffix of length 20 with separator -
 resource "random_pet" "pet" {
-  length = "5"
-  separator = "-"
+  length  = 5
+  special = false
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
+
 resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-state-bucket"
+  bucket = "terraform-state-bucket-${random_pet.pet.id}"
   acl    = "private"
   force_destroy = true
 }

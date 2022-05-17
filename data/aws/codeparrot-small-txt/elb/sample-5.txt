@@ -6,17 +6,17 @@ terraform {
   }
 }
 
-# Provider block with AWS in us-east-1 region and default profile
+# Provider block with AWS in us-east-1 region
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # Resource, create AWS ELB that listens for instance port 80 and lb port 80
-resource "aws_elb" "elb" {
-  name            = "terraform-example-elb"
-  subnets         = ["${aws_subnet.default.id}"]
-  security_groups = ["${aws_security_group.default.id}"]
+resource "aws_elb" "ec2demo" {
+  name            = "terraform-ec2demo"
+  subnets         = ["${aws_subnet.ec2demo.*.id}"]
+  security_groups = ["${aws_security_group.ec2demo.id}"]
 
   listener {
     instance_port     = 80
@@ -33,10 +33,8 @@ resource "aws_elb" "elb" {
     interval            = 30
   }
 
-  cross_zone_load_balancing = true
-
   tags {
-    Name = "terraform-example-elb"
+    Name = "terraform-ec2demo"
   }
 }
 

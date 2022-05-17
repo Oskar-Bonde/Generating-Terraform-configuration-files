@@ -11,7 +11,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string "t2.micro"
+# Create variable called ec2_ami_id with default ami-0915bcb5fa77e4892 and type string
 variable "name_0" {
   type = "string"
 }
@@ -22,19 +22,87 @@ variable "name_1" {
 }
 
 # Create EC2 Instance with ami set to var.name_0, count as var.name_1 and instance type t3.micro
-resource "aws_instance" "name_2" {
-  ami           = var.name_0
-  instance_type = var.ec2_instance_type
-  count         = var.name_1
-  instance_count  = var.name_1
-  instance_type  = var.ec2_instance_type
-  spot_price     = var.ec2_spot_price
-  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  subnet_id = var.ec2_subnet_id
-  key_name = var.ec2_key_name
-  tags = {
-    Name = "ec2demo"
-    Environment = var.environment
-  }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "ec2_instance_type" {
+#   type = "string"
+#   default = "t3.micro"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "name_1" {
+#   type = "string"
+#   default = "1"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "ec2_instance_type" {
+#   type = "string"
+#   default = "t2.micro"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "name_1" {
+#   type = "string"
+#   default = "1"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "ec2_instance_type" {
+#   type = "string"
+#   default = "t2.micro"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "name_1" {
+#   type = "string"
+#   default = "1"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "ec2_instance_type" {
+#   type = "string"
+#   default = "t2.micro"
+# }
+
+# variable "name_0" {
+#   type = "string"
+#   default = "ami-0915bcb5fa77e4892"
+# }
+
+# variable "name_1" {
+#   type = "string"
+#   default = "1"
+# }
+
+# variable "ec2_
 }
 

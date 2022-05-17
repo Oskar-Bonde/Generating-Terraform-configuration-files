@@ -1,1 +1,0 @@
- Provider Block: aws in us east 1# create vpc resource, use cidr block 10.1.0.0/16 and assign generated ipv6 cidr block# create an egress only internet gateway, use vpc id

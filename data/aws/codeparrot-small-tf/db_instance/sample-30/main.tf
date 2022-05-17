@@ -17,12 +17,11 @@ resource "aws_db_instance" "name_0" {
   engine            = "mysql"
   engine_version    = "5.6.27"
   instance_class    = "db.t2.micro"
-  name              = "wordpress-mysql"
+  name              = "wordpress"
   username          = "foo"
   password          = "barbaz"
-  multi_az            = true
   vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
-  db_subnet_group_name   = "${aws_db_subnet_group.mysql.id}"
+  db_subnet_group_name = "${aws_db_subnet_group.mysql.name}"
   skip_final_snapshot = true
 }
 

@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,12 +17,9 @@ resource "aws_vpc" "name_0" {
   cidr_block = "10.0.0.0/16"
 }
 
-# Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id as the value for the 'name' key in the resource definition
-resource "aws_route53_record" "name_1" {
-  zone_id = "${aws_vpc.name_0.zone_id}"
-  name    = "example.terraform.local"
-  type    = "CNAME"
-  ttl     = "300"
-  records = ["${aws_vpc.name_0.cidr_block}"]
+# Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id
+resource "aws_route53_zone" "name_1" {
+  name = "example.terraform.local"
+  vpc_id = "${aws_vpc.name_0.id}"
 }
 

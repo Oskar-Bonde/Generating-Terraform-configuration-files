@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -26,5 +26,6 @@ resource "aws_vpn_gateway" "main" {
 resource "aws_customer_gateway" "main" {
   bgp_asn = 65000
   ip_address = "172.16.0.1"
+  type = "ipsec.1"
 }
 

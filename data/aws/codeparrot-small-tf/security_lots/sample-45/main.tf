@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -56,7 +55,7 @@ resource "aws_security_group" "name_0" {
   ingress {
     from_port   = 7081
     to_port     = 7081
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -77,14 +76,14 @@ resource "aws_security_group" "name_0" {
   ingress {
     from_port   = 7081
     to_port     = 7081
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = 8081
-    to_port     = 8081
-    protocol    = "tcp"
+    from_port   = 7081
+    to_port     = 7081
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -98,7 +97,7 @@ resource "aws_security_group" "name_0" {
   ingress {
     from_port   = 7081
     to_port     = 7081
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -112,7 +111,7 @@ resource "aws_security_group" "name_0" {
   ingress {
     from_port   = 7081
     to_port     = 7081
-    protocol    = "tcp"
+    protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -124,6 +123,6 @@ resource "aws_security_group" "name_0" {
   }
 
   ingress {
-    from_port   = 80
+    from_port   = 7081
 }
 

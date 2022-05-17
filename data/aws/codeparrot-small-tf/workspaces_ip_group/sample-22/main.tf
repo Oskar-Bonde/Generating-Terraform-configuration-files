@@ -11,10 +11,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# resource "aws_security_group" "name_0" {
+#   name        = "terraform-example"
+#   description = "Terraform example security group"
+# }
+
+# create security group with allow ssh from anywhere
 resource "aws_security_group" "name_0" {
-  name        = "terraform_ws"
-  description = "Terraform Workspace"
-  vpc_id      = "${aws_vpc.terraform_vpc.id}"
+  name        = "terraform-example"
+  description = "Terraform example security group"
+  vpc_id      = "${aws_vpc.terraform-example.id}"
 }
 

@@ -13,13 +13,7 @@ provider "aws" {
 
 # create wafv2 ip set, use regional scope, assigna name and IPV4 address version. Set addresses to 4.3.3.4/32 and 2.8.1.9/32
 resource "aws_instance" "wafv2" {
-  instance_type = "t2.micro"
   ami           = "ami-0ff8a91507f77f867"
-  key_name      = "wafv2"
-  subnet_id     = "subnet-d3c9d9"
-  vpc_security_group_ids = ["sg-d3c9d9"]
-  tags = {
-    Name = "wafv2"
-  }
+  instance_type = "t2.micro"
 }
 

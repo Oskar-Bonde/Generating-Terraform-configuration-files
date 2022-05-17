@@ -20,10 +20,9 @@ resource "aws_db_instance" "name_0" {
   name              = "mysql"
   username          = "foo"
   password          = "barbaz"
-  multi_az            = true
-  vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
-  db_subnet_group_name   = "${aws_db_subnet_group.mysql.id}"
+  multi_az         = false
+  vpc_security_group_ids = ["${aws_security_group.ec2demo.id}"]
+  db_subnet_group_name = "${aws_db_subnet_group.ec2demo.id}"
   skip_final_snapshot = true
-  final_snapshot_identifier = "mysql"
 }
 

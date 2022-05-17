@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -21,98 +21,5 @@ resource "aws_vpc" "main" {
 resource "aws_network_acl" "main" {
   vpc_id = "${aws_vpc.main.id}"
   subnet_ids = ["${aws_subnet.main.*.id}"]
-  ingress {
-    protocol   = "all"
-    rule_number = 100
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 83
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 101
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 102
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 103
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 104
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 105
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =106
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =107
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =108
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =109
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =1110
-    egress  = true
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-    to_port = 0
-  }
-  ingress {
-    protocol   = "all"
-    rule_number =1220
-    egress  = true
-    cidr_block = "0.0.0.0/0"
 }
 

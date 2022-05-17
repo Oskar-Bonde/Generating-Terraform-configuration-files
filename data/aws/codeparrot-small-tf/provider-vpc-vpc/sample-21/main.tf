@@ -28,10 +28,8 @@ resource "aws_vpc" "name_0" {
 }
 
 # Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1
-resource "aws_vpc" "name_1" {
-  cidr_block = "10.1.0.0/16"
-  tags = {
-    Name = "vpc-us-west-1"
-  }
+
+resource "aws_internet_gateway" "name_1" {
+  vpc_id = aws_vpc.name_0.id
 }
 

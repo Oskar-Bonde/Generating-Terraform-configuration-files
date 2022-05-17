@@ -1,4 +1,4 @@
-provider
+# Terraform block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -15,7 +15,7 @@ provider "aws" {
 # Create Security Group called vpc-ssh. It allows port 22 ingress and all ports and ip egress
 resource "aws_security_group" "vpc-ssh" {
   name        = "vpc-ssh"
-  description = "Allow ssh from anywhere"
+  description = "Allow all inbound traffic"
   vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
@@ -60,11 +60,76 @@ resource "aws_security_group" "vpc-ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
+  ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  in
 }
 

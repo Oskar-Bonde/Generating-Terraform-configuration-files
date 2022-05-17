@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -8,12 +7,14 @@ terraform {
 }
 
 # Provider Block AWS with region us east 1 and default profile
+
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create EC2 Instance with ami-0ff8a91507f77f867 instance type t2.micro. Connection Block for ssh with the public ip of the instance
+# Create EC2 Instance with ami-0ff8a91507f77f867 instance type t2.micro. Connection Block for ssh with the public ip
+# AWS requires public_ip to be set
 resource "aws_instance" "name_0" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"

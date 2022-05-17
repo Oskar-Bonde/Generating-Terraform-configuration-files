@@ -1,1 +1,31 @@
- Provider Block with region us-east-1# Create S3 Bucket Resource. Set bucket to cookie# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with region us-east-1
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create S3 Bucket Resource. Set bucket to cookie
+resource "aws_s3_bucket" "bucket" {
+  bucket = "terraform-state-bucket"
+  acl    = "private"
+}
+
+# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
+
+# Terraform configuration file
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+

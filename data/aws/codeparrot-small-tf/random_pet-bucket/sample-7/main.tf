@@ -1,17 +1,19 @@
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
+    random = {
+      source = "hashicorp/random"
     }
   }
 }
 
 # AWS provider block in region us-east-1
-provider "aws" {
-  region = "us-east-1"
+
+provider "random" {
+  version = "~> 1.0"
 }
 
-# Resource block to create a random pet name of length 5 with separator - "-"
+# Resource block to create a random pet name of length 5 with separator -
+
 resource "random_pet" "name_0" {
   length  = 5
   special = false
@@ -19,7 +21,22 @@ resource "random_pet" "name_0" {
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
 resource "aws_s3_bucket" "name_1" {
-  bucket = "terraform-example-bucket-${random_pet.name_0.id}"
+  bucket = "terraform-state-bucket-${random_pet.name_0.id}"
   acl    = "private"
+
+  # TODO: Restrict to specific region if not specified in terraform.tfvars
+  lifecycle_rule {
+    id      = "delete-old-versions"
+    prefix  = ""
+    enabled = true
+
+    expiration {
+      days = 30
+    }
+  }
+
+  tags = {
+    Name = random_pet.name_0.id
+  }
 }
 

@@ -17,8 +17,15 @@ variable "ec2_ami_id" {
 }
 
 # variable called ec2_instance_count which is number type with default 1
+
+variable "ec2_instance_count" {
+  type = "string"
 }
 
 # Create EC2 Instance with ami set to var.ec2_ami_id, count as var.ec2_instance_count and instance type t3.micro
+
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0915bcb5fa77e4892"
+  instance_type = "t3.micro"
 }
 

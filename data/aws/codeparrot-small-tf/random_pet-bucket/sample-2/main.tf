@@ -1,7 +1,7 @@
 terraform {
   required_providers {
-    random = {
-      source = "hashicorp/random"
+    aws = {
+      source  = "hashicorp/aws"
     }
   }
 }
@@ -12,15 +12,20 @@ provider "aws" {
 }
 
 # Resource block to create a random pet name of length 5 with separator -
-# https://cloud.google.com/vpc/docs/how-to/creating-a-random-pet
 resource "random_pet" "name_0" {
-  length = 5
+  length  = 5
+  special = false
 }
 
-# Resource Block: Create AWS S3 Bucket with bucket set as random pet nameresource
-resource "aws_s3_bucket" "name_1" {
-  bucket = "terraform-state-bucket-${random_pet.name_0.id}"
-  acl    = "private"
-  force_destroy = true
+# Resource Block: Create AWS S3 Bucket with bucket set as random pet name
+
+# Terraform configuration file
+# Terraform block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
 }
 

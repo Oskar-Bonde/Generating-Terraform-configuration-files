@@ -6,15 +6,22 @@ terraform {
   }
 }
 
-# Provider aws block with us east 1 region and default profile
+# Provider aws block with us east 1 region
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
-# Create S3 Bucket, set bucket to  "icecream"resource://bucketname/
+# Create S3 Bucket, set bucket to  "icecream"
+
+# Create S3 bucket with cloudfront.com
+# S3 bucket will be created under the same region as the cloudfront.com
 resource "aws_s3_bucket" "name_0" {
-  bucket = "icecream-bucket"
+  bucket = "icecream-bucket-${var.env}"
   acl    = "private"
+  force_destroy = "true"
+  versioning {
+    enabled = true
+  }
 }
 

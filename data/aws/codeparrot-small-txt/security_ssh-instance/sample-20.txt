@@ -12,11 +12,12 @@ provider "aws" {
 }
 
 # Create Security Group that allows port 22 inbound and all outbound ports
-resource "aws_security_group" "ec2demo_sg" {
-  name        = "ec2demo_sg"
-  description = "Allow all inbound and all outbound traffic"
+resource "aws_security_group" "ec2demo" {
+  name        = "ec2demo"
+  description = "Security group for EC2 Demo"
   vpc_id      = "${aws_vpc.default.id}"
 
+  # SSH access from anywhere
   ingress {
     from_port   = 22
     to_port     = 22
@@ -24,6 +25,15 @@ resource "aws_security_group" "ec2demo_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # outbound internet access
   egress {
     from_port   = 0
     to_port     = 0
@@ -32,9 +42,7 @@ resource "aws_security_group" "ec2demo_sg" {
   }
 }
 
-# Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group idresource
-resource "aws_instance" "ec2demo" {
-  ami           = "ami-0915bcb5fa77e4892"
-  instance_type = "t3.micro"
+# Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
+
 }
 

@@ -23,5 +23,6 @@ resource "aws_db_instance" "name_0" {
   vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
   db_subnet_group_name = "${aws_db_subnet_group.mysql.name}"
   final_snapshot_identifier = "wordpress-final-snapshot"
+  skip_final_snapshot = true
 }
 

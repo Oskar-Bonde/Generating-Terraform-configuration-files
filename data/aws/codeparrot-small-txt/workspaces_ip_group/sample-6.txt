@@ -11,10 +11,92 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
-resource "aws_security_group" "terraform_ws" {
-  name        = "terraform_ws"
-  description = "Terraform Workspace"
-  vpc_id      = "${aws_vpc.terraform_vpc.id}"
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# with the example description
+resource "aws_security_group" "terraform_example" {
+  name        = "terraform_example"
+  description = "Terraform example security group"
+  vpc_id      = "${aws_vpc.terraform.id}"
+
+  ingress {
+    from_port   = 150.24.14.0/24
+    to_port     = 150.24.14.0/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.64/24
+    to_port     = 150.24.14.64/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.128/24
+    to_port     = 150.24.14.128/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.129/24
+    to_port     = 150.24.14.129/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.130/24
+    to_port     = 150.24.14.130/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.131/24
+    to_port     = 150.24.14.131/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.132/24
+    to_port     = 150.24.14.132/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.133/24
+    to_port     = 150.24.14.133/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.134/24
+    to_port     = 150.24.14.134/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.135/24
+    to_port     = 150.24.14.135/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.136/24
+    to_port     = 150.24.14.136/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.137/24
+    to_port     = 150.24.14.137/
 }
 

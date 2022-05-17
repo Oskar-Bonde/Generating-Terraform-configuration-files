@@ -19,16 +19,14 @@ resource "aws_vpc" "name_0" {
 
 # Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true
 resource "aws_subnet" "name_1" {
-  vpc_id            = "${aws_vpc.name_0.id}"
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-east-1a"
-
-  tags {
-    Name = "main"
-  }
+  vpc_id                  = aws_vpc.name_0.id
+  cidr_block              = "10.0.1.0/24"
+  map_public_ip_on_launch = true
 }
 
 # Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
+
+# Create a T2 instance with subnet, ami-0ff8a91507f77f867
 resource "aws_instance" "name_2" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"

@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,7 +18,7 @@ resource "aws_vpc" "main" {
 }
 
 # create an egress only internet gateway, use vpc id
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 }
 

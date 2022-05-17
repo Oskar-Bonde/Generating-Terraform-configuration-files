@@ -11,7 +11,8 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_IP_GROUP.html
 resource "aws_security_group" "name_0" {
   name        = "ec2demo"
   description = "ec2demo security group"
@@ -21,14 +22,14 @@ resource "aws_security_group" "name_0" {
     from_port   = 150.24.14.0/24
     to_port     = 150.24.14.0/24
     protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+    cidr_blocks = ["${var.vpc_cidr}"]
   }
 
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+    cidr_blocks = ["${var.vpc_cidr}"]
   }
 
   ingress {
@@ -43,10 +44,6 @@ resource "aws_security_group" "name_0" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags {
-    Name = "ec2demo"
   }
 }
 

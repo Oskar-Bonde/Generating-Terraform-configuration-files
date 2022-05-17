@@ -11,31 +11,31 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
-# and a rule with source 200.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_IP_GROUP.html
 resource "aws_security_group" "name_0" {
-  name        = "terraform_example"
-  description = "Terraform example security group"
-  vpc_id      = "${aws_vpc.default.id}"
+  name        = "ec2demo"
+  description = "ec2demo security group"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
     from_port   = 150.24.14.0/24
     to_port     = 150.24.14.0/24
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.vpc_cidr}"]
   }
 
   ingress {
-    from_port   = 200.24.14.0/24
-    to_port     = 200.24.14.0/24
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.vpc_cidr}"]
   }
 
   ingress {
-    from_port   = 200.24.14.0/24
-    to_port     = 200.24.14.0/24
-    protocol    = "udp"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

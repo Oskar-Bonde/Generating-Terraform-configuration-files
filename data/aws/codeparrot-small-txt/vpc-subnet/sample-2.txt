@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -17,9 +17,11 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 }
 
-# Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true. Use VPC id as a variable
+# Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true. Use VPC id
+# of the subnet to create the VPC in
 resource "aws_subnet" "main" {
-  vpc_id = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-east-1b"
 }
 

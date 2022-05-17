@@ -1,0 +1,9 @@
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mVersion constraints inside provider configuration blocks are deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on F:\Code\Generating-Terraform-configuration-files\data\aws\codeparrot-small-tf\random_pet-bucket\sample-44\main.tf line 12, in provider "random":
+[33m│[0m [0m  12:   version = [4m"~> 1.0"[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mTerraform 0.13 and earlier allowed provider version constraints inside the provider configuration block, but that is now deprecated and will be removed in a future version of Terraform. To silence this warning, move the provider version constraint into the required_providers block.
+[33m╵[0m[0m
+[0m[0m

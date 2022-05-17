@@ -1,4 +1,4 @@
-provider
+# Terraform block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -13,7 +13,6 @@ provider "aws" {
 }
 
 # Create Security Group called vpc-ssh. It allows port 22 ingress and all ports and ip egress
-# traffic to outside.
 resource "aws_security_group" "vpc-ssh" {
   name        = "vpc-ssh"
   description = "Allow all inbound traffic"
@@ -131,7 +130,6 @@ resource "aws_security_group" "vpc-ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-   
+  in
 }
 

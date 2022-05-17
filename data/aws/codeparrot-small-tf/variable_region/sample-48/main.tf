@@ -1,1 +1,0 @@
- Provider AWS in region var.aws_region# Create variable called aws_region that is a string typpe with default value "us-east-1"

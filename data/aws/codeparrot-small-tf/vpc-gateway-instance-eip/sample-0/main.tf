@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -22,7 +22,7 @@ resource "aws_internet_gateway" "name_1" {
   vpc_id = "${aws_vpc.name_0.id}"
 }
 
-# Create EC2 Instance, use ami-047a51fa27710816e and t2.micro instance type
+# Create EC2 Instance, use ami-047a51fa27710816e and t2.micro
 resource "aws_instance" "name_2" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"

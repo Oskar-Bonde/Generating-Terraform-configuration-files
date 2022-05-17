@@ -11,15 +11,24 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Resource block to create a random pet name of length 5 with separator - this is not the case
+# Resource block to create a random pet name of length 5 with separator -
 resource "random_pet" "pet" {
   length  = 5
   special = false
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
+
 resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-example-bucket-${random_pet.pet.id}"
+  bucket = "terraform-state"
   acl    = "private"
+
+  # Terraform block with the AWS provider
+  # https://www.terraform.io/docs/providers/aws/r/s3_bucket.html
+  # https://www.terraform.io/docs/providers/aws/r/s3_bucket_policy.html
+  # https://www.terraform.io/docs/providers/aws/r/s3_bucket_lifecycle.html
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 

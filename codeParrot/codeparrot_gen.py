@@ -147,7 +147,7 @@ def main():
                 for j in range(len(data_list[i])):
                     
                     for s in range(n_samples): 
-                        code[s] = code[s] + data_list[i][j].strip()
+                        code[s] = code[s] + data_list[i][j].strip() +'\n'
                     
                     for batch in range(n_samples//batch_size):
                         tokens = tokenizer(code[batch*batch_size: (1+batch)*batch_size], padding=True, return_tensors="pt")

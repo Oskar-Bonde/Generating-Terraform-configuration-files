@@ -1,4 +1,4 @@
-provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -40,34 +40,6 @@ resource "aws_security_group" "name_0" {
   }
 
   ingress {
-    from_port   = 7080
-    to_port     = 7080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 7081
-    to_port     = 7081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 8081
-    to_port     = 8081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 7081
-    to_port     = 7081
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
@@ -89,8 +61,36 @@ resource "aws_security_group" "name_0" {
   }
 
   ingress {
+    from_port   = 7081
+    to_port     = 7081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 8081
     to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 7080
+    to_port     = 7080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 7081
+    to_port     = 7081
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -110,8 +110,8 @@ resource "aws_security_group" "name_0" {
   }
 
   ingress {
-    from_port   = 7081
-    to_port     = 7081
+    from_port   = 8081
+    to_port     = 8081
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -123,7 +123,6 @@ resource "aws_security_group" "name_0" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 7
+  in
 }
 

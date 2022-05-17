@@ -18,19 +18,9 @@ resource "random_pet" "pet" {
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
-resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-example-bucket"
-  acl    = "private"
 
-  # Terraform configuration
-  # Terraform block with the AWS provider
-  # terraform {
-  #   required_providers {
-  #     aws = {
-  #       source  = "hashicorp/aws"
-  #       version = ">= 3.38.0"
-  #     }
-  #   }
-  # }
+resource "aws_s3_bucket" "bucket" {
+  bucket = "terraform-state-bucket-${random_pet.pet.id}"
+  acl    = "private"
 }
 

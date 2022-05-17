@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -21,5 +21,94 @@ resource "aws_vpc" "main" {
 resource "aws_network_acl" "main" {
   vpc_id = "${aws_vpc.main.id}"
   subnet_ids = ["${aws_subnet.main.*.id}"]
+  ingress {
+    protocol   = "all"
+    rule_no    = 100
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 83
+    to_port    = 83
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 100
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 443
+    to_port    = 443
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 100
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 443
+    to_port    = 443
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 101
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 101
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 102
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 103
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 104
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 105
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 106
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "all"
+    rule_no    = 107
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+ 
 }
 

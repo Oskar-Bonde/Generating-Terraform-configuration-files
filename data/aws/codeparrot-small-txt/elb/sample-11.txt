@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block with AWS in us-east-1 region and default profile
+# Provider block with AWS in us-east-1 region
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -31,6 +31,10 @@ resource "aws_elb" "ec2demo" {
     timeout             = 3
     target              = "HTTP:80/"
     interval            = 30
+  }
+
+  tags {
+    Name = "terraform-example-elb"
   }
 }
 

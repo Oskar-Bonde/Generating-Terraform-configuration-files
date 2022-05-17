@@ -24,11 +24,11 @@ resource "aws_subnet" "main" {
   availability_zone = "us-east-1a"
 
   tags {
-    Name = "terraform-example"
+    Name = "main"
   }
 }
 
-# Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro instance type
+# Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
 resource "aws_instance" "ec2demo" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"

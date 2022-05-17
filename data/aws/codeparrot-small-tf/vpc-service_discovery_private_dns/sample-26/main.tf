@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -15,18 +15,57 @@ provider "aws" {
 # Create a VPC resource with cidr block 10.0.0.0/16. Enable DNS support and DNS hostnames
 resource "aws_vpc" "name_0" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 }
 
-# Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc idresource
-# resource "aws_route53_zone" "main" {
-#   name = "example.terraform.local"
-#   vpc_id = "${aws_vpc.name_0.id}"
-# }
+# Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id
+# aws_route53_zone.main()
 
-# Create a subnet resource with cidr block 10.0.1. Enable DNS support and DNS hostnames
-resource "aws_subnet" "name_1" {
-  vpc_id            = "${aws_vpc.name_0.id}"
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+# Create a subnet resource with cidr block 10.0.0.0/24. Create subnet in us-east-1a and use vpc id
+# aws_subnet.main()
+
+# Create a security group resource with cidr block 10.0.0.0/24. Create security group in us-east-1a and use vpc id
+# aws_security_group.main()
+
+# Create a security group resource with cidr block 10.0.0.0/24. Create security group in us-east-1b and use vpc id
+# aws_security_group.main()
+
+# Create a subnet resource with cidr block 10.0.16.0/24. Create subnet in us-east-1c and use vpc id
+# aws_subnet.main()
+
+# Create a security group resource with cidr block 10.0.32.0/24. Create security group in us-east-1d and use vpc id
+# aws_security_group.main()
+
+# Create a security group resource with cidr block 10.0.32.0/24. Create security group in us-east-1e and use vpc id
+# aws_security_group.main()
+
+# Create a subnet resource with cidr block 10.0.32.128/24. Create subnet in us-east-1f and use vpc id
+# aws_subnet.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
+# Create a subnet resource with cidr block 10.0.32.192/24. Create subnet in us-east-1e and use vpc id
+# aws_subnet.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
+# Create a subnet resource with cidr block 10.0.32.192/24. Create subnet in us-east-1e and use vpc id
+# aws_subnet.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
+# Create a security group resource with cidr block 10.0.32.192/24. Create security group in us-east-1f and use vpc id
+# aws_security_group.main()
+
 }
 

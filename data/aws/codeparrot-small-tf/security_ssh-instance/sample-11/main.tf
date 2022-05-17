@@ -13,7 +13,7 @@ provider "aws" {
 
 # Create Security Group that allows port 22 inbound and all outbound ports
 resource "aws_security_group" "name_0" {
-  name        = "ec2demo_sg"
+  name        = "ec2demo"
   description = "Allow all inbound and all outbound traffic"
   vpc_id      = "${aws_vpc.default.id}"
 
@@ -33,5 +33,9 @@ resource "aws_security_group" "name_0" {
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
+
+resource "aws_instance" "name_1" {
+  ami           = "ami-0915bcb5fa77e4892"
+  instance_type = "t3.micro"
 }
 

@@ -13,7 +13,6 @@ provider "aws" {
 
 # Create variable called aws_region that is a string typpe with default value "us-east-1"
 variable "name_0" {
-  description = "AWS region to create resources in."
-  default     = "us-east-1"
+  default = "us-east-1"
 }
 

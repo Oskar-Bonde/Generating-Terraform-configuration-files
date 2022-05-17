@@ -11,7 +11,8 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# with the AWS provider
 resource "aws_security_group" "name_0" {
   name        = "ec2demo"
   description = "ec2demo security group"
@@ -25,98 +26,78 @@ resource "aws_security_group" "name_0" {
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
+    from_port   = 150.24.14.64/24
+    to_port     = 150.24.14.64/24
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
+    from_port   = 150.24.14.128/24
+    to_port     = 150.24.14.128/24
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.129/24
+    to_port     = 150.24.14.129/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.130/24
+    to_port     = 150.24.14.130/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.131/24
+    to_port     = 150.24.14.131/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.132/24
+    to_port     = 150.24.14.132/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.133/24
+    to_port     = 150.24.14.133/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.134/24
+    to_port     = 150.24.14.134/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
+    from_port   = 150.24.14.135/24
+    to_port     = 150.24.14.135/24
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = "0"
-    to_port     =
+    from_port   = 150.24.14.136/24
+    to_port     = 150.24.14.136/24
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 150.24.14.137/24
+    to_port     = 150.24.14.137/24
+    protocol    = "tcp
 }
 

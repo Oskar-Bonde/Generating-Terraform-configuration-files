@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -8,20 +7,21 @@ terraform {
 }
 
 # Provider Block with region us-east-1
-provider "aws" {
-  region = "us-east-1"
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
 }
 
-# Create S3 Bucket Resource. Set bucket to cookie file name
-resource "aws_s3_bucket" "name_0" {
+# Create S3 Bucket Resource. Set bucket to cookie
+resource "aws_s3_bucket" "name_1" {
   bucket = "terraform-state"
   acl    = "private"
 }
 
-# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket idvariable
-resource "aws_s3_bucket_object" "name_1" {
-  bucket = "terraform-state"
+# Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
+resource "aws_s3_bucket_object" "name_2" {
+  bucket = aws_s3_bucket.name_1.id
   key    = "index.html"
-  content = "${file("${path.module}/index.html")}"
+  content = file("index.html")
 }
 

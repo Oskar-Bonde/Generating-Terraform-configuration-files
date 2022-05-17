@@ -19,16 +19,16 @@ resource "aws_security_group" "ec2demo" {
 
   # SSH access from anywhere
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   # HTTP access from anywhere
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -43,5 +43,9 @@ resource "aws_security_group" "ec2demo" {
 }
 
 # Create EC2 Instance with ami set to ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc web security group id
+
+resource "aws_instance" "ec2demo" {
+  ami           = "ami-0915bcb5fa77e4892"
+  instance_type = "t3.micro"
 }
 

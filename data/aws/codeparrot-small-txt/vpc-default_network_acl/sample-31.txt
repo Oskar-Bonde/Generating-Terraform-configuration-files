@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -21,101 +21,5 @@ resource "aws_vpc" "main" {
 resource "aws_network_acl" "main" {
   vpc_id = "${aws_vpc.main.id}"
   subnet_ids = ["${aws_subnet.main.*.id}"]
-  ingress {
-    protocol = "all"
-    rule_number = 100
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 83
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 101
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 83
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 102
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 83
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 103
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 104
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 105
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 106
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 107
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 108
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 109
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 110
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 111
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 112
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 0
-  }
-  ingress {
-    protocol = "all"
-    rule_number = 113
-    action = "allow"
-    cidr_block
 }
 

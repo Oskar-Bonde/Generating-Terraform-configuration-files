@@ -20,8 +20,9 @@ resource "aws_db_instance" "name_0" {
   name              = "wordpress"
   username          = "foo"
   password          = "barbaz"
-  db_subnet_group_name = "wordpress"
-  vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
-  skip_final_snapshot = true
+  multi_az         = false
+  vpc_security_group_ids = [aws_security_group.mysql.id]
+  db_subnet_group_name = aws_db_subnet_group.mysql.name
+  final_snapshot_identifier = "wordpress-final-snapshot"
 }
 

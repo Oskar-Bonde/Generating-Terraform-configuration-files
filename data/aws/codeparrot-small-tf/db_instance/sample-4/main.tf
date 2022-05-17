@@ -17,8 +17,9 @@ resource "aws_db_instance" "name_0" {
   engine            = "mysql"
   engine_version    = "5.6.27"
   instance_class    = "db.t2.micro"
-  name              = "mysql"
-  username          = "username"
-  password          = "password"
+  name              = "wordpress"
+  username          = "foo"
+  password          = "barbaz"
+  skip_final_snapshot = true
 }
 

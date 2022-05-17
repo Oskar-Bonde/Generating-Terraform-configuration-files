@@ -22,6 +22,10 @@ resource "aws_subnet" "name_1" {
   vpc_id            = "${aws_vpc.name_0.id}"
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
+
+  tags {
+    Name = "main"
+  }
 }
 
 # Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro

@@ -14,30 +14,65 @@ provider "aws" {
 
 # Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1
 provider "aws" {
-  alias  = "aws-west-1"
   profile = "default"
   region  = "us-west-1"
+  alias  = "aws-west-1"
 }
 
 # Resource block to Create VPC called vpc-us-east-1 which uses private network 10.1.0.0/16
 resource "aws_vpc" "name_0" {
   cidr_block = "10.1.0.0/16"
-  enable_dns_support = true
-  enable_dns_hostnames = true
-
-  tags {
+  tags = {
     Name = "vpc-us-east-1"
   }
 }
 
 # Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1
-resource "aws_vpc" "name_1" {
-  cidr_block = "10.1.0.0/16"
-  enable_dns_support = true
-  enable_dns_hostnames = true
 
-  tags {
-    Name = "vpc-us-west-1"
-  }
+# resource "aws_internet_gateway" "vpc-us-east-1" {
+#   vpc_id = "${aws_vpc.name_0.id}"
+# }
+
+# resource "aws_route_table" "vpc-us-east-1" {
+#   vpc_id = "${aws_vpc.name_0.id}"
+# }
+
+# resource "aws_route_table_association" "vpc-us-east-1" {
+#   subnet_id = "${aws_subnet.vpc-us-east-1.id}"
+#   route_table_id = "${aws_route_table.vpc-us-east-1.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-east-1" {
+#   name = "vpc-us-east-1"
+#   description = "Allow all inbound traffic"
+#   vpc_id = "${aws_vpc.name_0.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-west-1" {
+#   name = "vpc-us-west-1"
+#   description = "Allow inbound traffic"
+#   vpc_id = "${aws_vpc.vpc-us-west-1.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-west-2" {
+#   name = "vpc-us-west-2"
+#   description = "Allow inbound traffic"
+#   vpc_id = "${aws_vpc.vpc-us-west-2.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-west-3" {
+#   name = "vpc-us-west-3"
+#   description = "Allow inbound traffic"
+#   vpc_id = "${aws_vpc.vpc-us-west-3.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-west-4" {
+#   name = "vpc-us-west-4"
+#   description = "Allow inbound traffic"
+#   vpc_id = "${aws_vpc.vpc-us-west-4.id}"
+# }
+
+# resource "aws_security_group" "vpc-us-west-5" {
+#   name = "vpc-us-
 }
 

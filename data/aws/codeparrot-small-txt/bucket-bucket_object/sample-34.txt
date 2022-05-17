@@ -1,4 +1,4 @@
-provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -12,17 +12,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create S3 Bucket Resource. Set bucket to cookie bucket name
-resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-state-bucket"
+# Create S3 Bucket Resource. Set bucket to cookie
+
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-state"
   acl    = "private"
-  force_destroy = true
 }
 
 # Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
-resource "aws_s3_bucket_object" "index" {
-  bucket = "terraform-state-bucket"
-  key    = "index.html"
-  content = "${file("index.html")}"
+variable "terraform_state_s3_bucket_index" {
+  default = "index.html"
 }
 

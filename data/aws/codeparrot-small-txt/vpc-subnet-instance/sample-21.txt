@@ -25,6 +25,7 @@ resource "aws_subnet" "default" {
 }
 
 # Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
+
 resource "aws_instance" "ec2demo" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"

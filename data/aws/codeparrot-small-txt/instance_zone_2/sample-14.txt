@@ -1,4 +1,4 @@
-provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -12,9 +12,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Resource, make aws instance. Use ami-038f1ca1bd58a5790, instance type t2.small and availability zone us-east-1eresource.
-resource "aws_instance" "ec2demo" {
-  ami           = "ami-038f1ca1bd58a5790"
-  instance_type = "t2.small"
+# Resource, make aws instance. Use ami-038f1ca1bd58a5790, instance type t2.small and availability zone us-east-1e
+
+# Define VPC
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags {
+    Name = "terraform-example-vpc"
+  }
 }
 

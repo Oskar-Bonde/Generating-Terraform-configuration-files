@@ -1,27 +1,39 @@
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
+    random = {
+      source = "hashicorp/random"
     }
   }
 }
 
 # AWS provider block in region us-east-1
+
 provider "aws" {
   region = "us-east-1"
 }
 
 # Resource block to create a random pet name of length 5 with separator -
-# https://www.terraform.io/docs/providers/aws/r/instance_template.html
+# and a random suffix of length 5 with separator -
 resource "random_pet" "pet" {
   length  = 5
-  special = false
+  separator = "-"
 }
 
 # Resource Block: Create AWS S3 Bucket with bucket set as random pet name
+
 resource "aws_s3_bucket" "bucket" {
-  bucket = "terraform-state"
+  bucket = "terraform-example-bucket-${random_pet.pet.id}"
   acl    = "private"
-  force_destroy = true
+
+  # To create the bucket, we need to set the encryption key
+  # that is uploaded to S3. The encryption key must be in the same region
+  # that the AWS S3 bucket will be created in.
+  # The encryption key must be in the same region that the AWS S3
+  # bucket will be created in.
+  # The encryption key must be in the same region that the AWS S3
+  # bucket will be created in.
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 

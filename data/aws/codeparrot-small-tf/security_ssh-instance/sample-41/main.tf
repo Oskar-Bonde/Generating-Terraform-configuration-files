@@ -14,7 +14,7 @@ provider "aws" {
 # Create Security Group that allows port 22 inbound and all outbound ports
 resource "aws_security_group" "name_0" {
   name        = "ec2demo"
-  description = "Security group for the EC2 Demo server"
+  description = "Used in the terraform"
   vpc_id      = "${aws_vpc.default.id}"
 
   # SSH access from anywhere
@@ -43,7 +43,7 @@ resource "aws_security_group" "name_0" {
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
-# and instance type t2.micro. Use instance type t2.micro. Use AMI-T3.micro.
+
 resource "aws_instance" "name_1" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"

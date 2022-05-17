@@ -1,9 +1,10 @@
-# Terraform block with the AWS provider
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-    }
+data "template_file" "user_data" {
+  template = file("user_data.tpl")
+  vars = {
+    region = var.region
+    cluster_name = var.cluster_name
+    instance_type = var.instance_type
+    ami = var.ami_0ff8a91507f77f867
   }
 }
 

@@ -11,36 +11,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_INSTANCE_NAME
-# and a rule with source 150.24.14.0/24 and description LAUNCH_INSTANCE_ID
-resource "aws_security_group" "name_0" {
-  name        = "terraform-ec2demo-sg"
-  description = "Terraform instance security group"
-  vpc_id      = "${aws_vpc.default.id}"
-
-  ingress {
-    from_port   = 150.24.14.0/24
-    to_port     = 150.24.14.0/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${var.cidr_block}"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags {
-    Name = "terraform-ec2demo-sg"
-  }
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-groups#create_aws_iam_group
+resource "aws_iam_group" "name_0" {
+  name = "terraform-example-group"
+  path = "/"
 }
 

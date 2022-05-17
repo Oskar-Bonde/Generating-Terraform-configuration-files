@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -7,7 +6,8 @@ terraform {
   }
 }
 
-# Provider AWS block with region us east as default
+# Provider AWS block with region us east
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -19,7 +19,8 @@ resource "aws_instance" "name_0" {
 }
 
 # Output block, create public DNS URL from vm
+
 output "name_1" {
-  value = "http://${aws_instance.name_0.public_dns}"
+  value = aws_instance.name_0.public_dns
 }
 

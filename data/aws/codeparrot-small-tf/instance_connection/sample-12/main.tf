@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS with region us east 1 and default profile
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 2.0"
+#     }
+#   }
+# }
+
+# Resource block with AWS in us-east-1 region and default profile
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 2.0"
+#     }
+#   }
+# }
+
+# Resource block with AWS in us-east-1 region and default profile
+# terraform {
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "~> 2.0"
+#     }
+#   }
+# }
+
+# resource "aws_instance" "name_1" {
+#   ami           = "ami-0ff8a91507f77f867"
+#   instance_type = "t2.micro"
+# }
+
+
+variable "name_0" {
+  description = "The ID of the project in which the resources will be deployed."
+  type        = string
+}
+
+# Create EC2 Instance with ami-0ff8a91507f77f867 instance type t2.micro. Connection Block for ssh with the public ip
+resource "aws_instance" "name_1" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+

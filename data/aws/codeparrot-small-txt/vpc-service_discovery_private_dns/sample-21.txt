@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,8 +18,8 @@ resource "aws_vpc" "main" {
 }
 
 # Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id
-# and name it the name of the private dns namespace
-resource "aws_route53_zone" "example" {
+
+resource "aws_route53_zone" "main" {
   name = "example.terraform.local"
   vpc_id  = "${aws_vpc.main.id}"
 }

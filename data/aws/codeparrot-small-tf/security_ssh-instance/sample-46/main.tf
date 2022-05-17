@@ -43,6 +43,7 @@ resource "aws_security_group" "name_0" {
 }
 
 # Create EC2 Instance with ami-0915bcb5fa77e4892 and instance type t3.micro. Use vpc ssh security group id
+
 resource "aws_instance" "name_1" {
   ami           = "ami-0915bcb5fa77e4892"
   instance_type = "t3.micro"

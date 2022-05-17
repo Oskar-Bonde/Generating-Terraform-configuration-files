@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -16,17 +15,10 @@ provider "aws" {
 # data block: Get latest AMI ID for Amazon Linux2 OS
 data "aws_ami" "name_0" {
   most_recent = true
+  owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-*-amazonlinux-ami-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+    values = ["amzn-ami-*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux-2.0.*-amazon-linux
 }
 

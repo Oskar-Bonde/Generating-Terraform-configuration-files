@@ -1,1 +1,0 @@
- Provider Block: aws in us east 1 and default profile# Create a AWS VPC resource with private network 10.0.0.0/16# Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true# Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro

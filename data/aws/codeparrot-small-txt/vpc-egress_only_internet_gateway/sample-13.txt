@@ -6,19 +6,19 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # create vpc resource, use cidr block 10.1.0.0/16 and assign generated ipv6 cidr block
-resource "aws_vpc" "default" {
+resource "aws_vpc" "main" {
   cidr_block = "10.1.0.0/16"
 }
 
 # create an egress only internet gateway, use vpc id
-resource "aws_internet_gateway" "default" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_internet_gateway" "main" {
+  vpc_id = "${aws_vpc.main.id}"
 }
 

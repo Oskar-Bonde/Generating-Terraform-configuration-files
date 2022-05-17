@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -7,19 +6,22 @@ terraform {
   }
 }
 
-# Provider AWS block with region us east as default
+# Provider AWS block with region us east
+
 provider "aws" {
   region = "us-east-1"
 }
 
-# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.micro instance type
+# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.micro
+
 resource "aws_instance" "ec2demo" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"
 }
 
-# Output block, create public DNS URL from vm instance
-output "public_dns" {
-  value = "http://${aws_instance.ec2demo.public_dns}"
+# Output block, create public DNS URL from vm
+resource "aws_eip" "ec2demo" {
+  instance = aws_instance.ec2demo.id
+  vpc      = true
 }
 

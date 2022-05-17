@@ -1,0 +1,33 @@
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block with region us east
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.micro
+
+# Create t2.micro instance using t2.micro instance type and ami-0ff8a91507f77f867
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# Output block, create public DNS URL from vm
+resource "null_resource" "name_1" {
+  provisioner "local-exec" {
+    command = <<EOF
+      echo "Sleep 10 secends so that the instance is ready to go"
+      echo "See https://cloud.google.com/compute/docs/instances/ for more details"
+      sleep 10
+EOF
+  }
+}
+

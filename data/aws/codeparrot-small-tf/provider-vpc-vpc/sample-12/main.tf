@@ -12,11 +12,11 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1#ec2demo-1
+# Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1
 provider "aws" {
+  alias  = "aws-west-1"
   profile = "default"
   region  = "us-west-1"
-  alias  = "aws-west-1"
 }
 
 # Resource block to Create VPC called vpc-us-east-1 which uses private network 10.1.0.0/16

@@ -6,15 +6,21 @@ terraform {
   }
 }
 
-# Provider aws block with us east 1 region and default profile
+# Provider aws block with us east 1 region
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # Create S3 Bucket, set bucket to  "icecream"
-resource "aws_s3_bucket" "example" {
-  bucket = "icecream-bucket"
+
+# Create S3 bucket with cloudfront.com
+# S3 bucket is not deleted when terraform destroy
+resource "aws_s3_bucket" "cloudfront" {
+  bucket = "icecream-bucket-${var.env}"
   acl    = "private"
+
+  # Make sure to construct a unique bucket name depending on the environment
+  bucket_prefix = "icecream-bucket-"
 }
 

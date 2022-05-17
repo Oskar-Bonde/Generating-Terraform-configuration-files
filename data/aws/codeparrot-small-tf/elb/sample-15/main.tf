@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider block with AWS in us-east-1 region and default profile
+# Provider block with AWS in us-east-1 region
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -16,7 +16,7 @@ provider "aws" {
 resource "aws_elb" "name_0" {
   name            = "terraform-example-elb"
   subnets         = ["${aws_subnet.ec2demo.*.id}"]
-  security_groups = ["${aws_security_group.ec2demo.id}"]
+  security_groups = ["${aws_security_group.ec2demo-elb.id}"]
 
   listener {
     instance_port     = 80
@@ -31,10 +31,6 @@ resource "aws_elb" "name_0" {
     timeout             = 3
     target              = "HTTP:80/"
     interval            = 30
-  }
-
-  tags {
-    Name = "terraform-example-elb"
   }
 }
 

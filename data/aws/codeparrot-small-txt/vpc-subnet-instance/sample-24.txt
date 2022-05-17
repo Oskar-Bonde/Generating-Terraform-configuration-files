@@ -13,16 +13,18 @@ provider "aws" {
 }
 
 # Create a AWS VPC resource with private network 10.0.0.0/16
-resource "aws_vpc" "main" {
+resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 }
 
 # Create AWS subnets resource in private network 10.0.1.0/24 and map public ip on launch set true
-resource "aws_subnet" "main" {
-  vpc_id            = "${aws_vpc.main.id}"
+resource "aws_subnet" "default" {
+  vpc_id            = "${aws_vpc.default.id}"
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
 }
+
+# Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
 
 # Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
 resource "aws_instance" "ec2demo" {

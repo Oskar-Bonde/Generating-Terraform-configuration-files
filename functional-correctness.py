@@ -134,6 +134,7 @@ def pass1(provider, model, n_samples):
                 try:
                     distr[sample_to_int[duplicate[:-4]]]+=1
                 except:
+                    print(f'data/{provider}/{model}-tf/{task}/{sample}')
                     shutil.rmtree(f'data/{provider}/{model}-tf/{task}/{sample}')
                     sys.exit(f'data/{provider}/{model}-tf/{task}/{sample}')
             else:
@@ -277,16 +278,16 @@ def make_json_model(provider, model):
                     tf_file.close()
 
 if __name__ == "__main__":
-    #model = 'codeparrot-small'
+    model = 'codeparrot-small'
     n_samples = 50
-    for model in ['codex', 'codeparrot-large',  'gpt-2-large', 'gpt-2-small']: #'codeparrot-small',
-        clean_terraform(model, n_samples)
-        for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
-            print(f'-----------------------------------------\n{provider}')
-            #make_json_human(provider)
-            #make_json_model(provider, model)
-            easy = True if 'easy' in provider else False
-            if not easy:
-                pass1(provider, model, n_samples)
-            else:
-                compile_check(provider, model, n_samples)    
+    #for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: # 'azure', 'azure-easy'
+        print(f'-----------------------------------------\n{provider}')
+        make_json_human(provider)
+        make_json_model(provider, model)
+        easy = True if 'easy' in provider else False
+        if not easy:
+            pass1(provider, model, n_samples)
+        else:
+            compile_check(provider, model, n_samples)    
+    #clean_terraform(model, n_samples)

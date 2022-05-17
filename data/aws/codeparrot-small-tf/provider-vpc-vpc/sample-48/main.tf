@@ -1,1 +1,0 @@
- Provider block with AWS in us-east-1 region and profile set as default# Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1# Resource block to Create VPC called vpc-us-east-1 which uses private network 10.1.0.0/16# Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1

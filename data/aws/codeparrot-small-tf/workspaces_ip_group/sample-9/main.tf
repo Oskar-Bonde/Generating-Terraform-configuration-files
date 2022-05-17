@@ -11,90 +11,50 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_INSTANCE_NAME
-resource "aws_security_group" "name_0" {
-  name        = "ec2demo"
-  description = "ec2demo security group"
-  vpc_id      = "${aws_vpc.default.id}"
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-groups#create_aws_iam_group
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-groups#create_aws_iam_group
 
-  ingress {
-    from_port   = 150.24.14.0/24
-    to_port     = 150.24.14.0/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-roles#create_aws_iam_role
 
-  ingress {
-    from_port   = 150.24.14.64/24
-    to_port     = 150.24.14.64/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.128/24
-    to_port     = 150.24.14.128/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.129/24
-    to_port     = 150.24.14.129/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.130/24
-    to_port     = 150.24.14.130/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.131/24
-    to_port     = 150.24.14.131/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.132/24
-    to_port     = 150.24.14.132/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.133/24
-    to_port     = 150.24.14.133/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.134/24
-    to_port     = 150.24.14.134/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-role#create_aws_iam_role
 
-  ingress {
-    from_port   = 150.24.14.135/24
-    to_port     = 150.24.14.135/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.136/24
-    to_port     = 150.24.14.136/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
 
-  ingress {
-    from_port   = 150.24.14.137/
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
+
+# create role policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws/how-to/create-aws-iam-policy#create_aws_iam_policy
+
+# create policy
+# https://cloud.google.com/anthos/clusters/docs/multi-cloud/aws
 }
 

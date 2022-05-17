@@ -12,9 +12,9 @@ provider "aws" {
   region  = "us-east-1"
 }
 
-# Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1resource-manager
+# Provider block with AWS in us-west-1 region, profile set as default and alias aws-west-1
 provider "aws" {
-  alias  = "aws-west-1resource-manager"
+  alias  = "aws-west-1"
   profile = "default"
   region  = "us-west-1"
 }
@@ -29,13 +29,9 @@ resource "aws_vpc" "name_0" {
   }
 }
 
-# Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1resource-manager
-resource "aws_vpc" "name_1" {
-  cidr_block = "10.1.0.0/16"
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  tags = {
-    Name = "vpc-us-west-1"
-  }
+# Resource block to Create VPC called vpc-us-west-1 which uses private network 10.1.0.0/16 and the provider aws.aws-west-1
+
+resource "aws_internet_gateway" "name_1" {
+  vpc_id = "${aws_vpc.vpc-us-west-1.id}"
 }
 

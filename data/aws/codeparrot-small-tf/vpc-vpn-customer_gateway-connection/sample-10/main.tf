@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -25,10 +25,11 @@ resource "aws_vpn_gateway" "name_1" {
 # create a customer gateway with BGP ASN set to 65000, ip address 172.0.0.1 and type ipsec.1
 resource "aws_customer_gateway" "name_2" {
   bgp_asn = 65000
-  ip_address = "172.16.0.1"
+  ip_address = "172.0.0.1"
 }
 
 # make a vpn connection with the vpn gateway id and customer gateway id. Use type ipsec.1, and use static routes only
+
 resource "aws_vpn_connection" "name_3" {
   vpn_gateway_id = "${aws_vpn_gateway.name_1.id}"
   customer_gateway_id = "${aws_customer_gateway.name_2.id}"

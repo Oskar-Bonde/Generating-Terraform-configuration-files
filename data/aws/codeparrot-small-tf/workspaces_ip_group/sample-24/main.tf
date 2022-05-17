@@ -11,10 +11,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# workspace ip group
 resource "aws_security_group" "name_0" {
-  name        = "terraform_example"
-  description = "Terraform example security group"
-  vpc_id      = "${aws_vpc.terraform-example.id}"
+  name        = "terraform_workspace_ip_group"
+  description = "Terraform workspace ip group"
+  vpc_id      = "${aws_vpc.terraform.id}"
 }
 

@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -12,8 +11,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create Variable that is a map of strings. The default is that key Terraform maps to true and Environment key maps to dev and prod
-variable "aws_key_name" {
-  default = "dev"
+# Create Variable that is a map of strings. The default is that key Terraform maps to true and Environment key maps to dev
+variable "key_name" {
+  description = "Name of the key pair uploaded to AWS"
+  default     = "key-name"
 }
 

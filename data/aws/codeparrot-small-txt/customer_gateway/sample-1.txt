@@ -6,14 +6,14 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
 }
 
 # create customer gateway with bgp asn 65000, use ip address 172.0.0.1 and type ipsec.1
-resource "aws_customer_gateway" "customer_gw" {
+resource "aws_customer_gateway" "customer_gateway" {
   bgp_asn = 65000
   type      = "ipsec.1"
   ip_address = "172.16.0.1"

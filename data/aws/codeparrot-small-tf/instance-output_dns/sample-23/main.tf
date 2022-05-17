@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -7,19 +6,25 @@ terraform {
   }
 }
 
-# Provider AWS block with region us east as default
-provider "aws" {
-  region = "us-east-1"
+# Provider AWS block with region us east
+variable "name_0" {
+  default = "us-east-1"
 }
 
-# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.microresource
-resource "aws_instance" "name_0" {
+# Create EC2 Instance with ami-0ff8a91507f77f867 and t2.micro
+
+resource "aws_instance" "name_1" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"
 }
 
-# Output block, create public DNS URL from vmresource
-output "name_1" {
-  value = "http://${aws_instance.name_0.public_dns}"
+# Output block, create public DNS URL from vm
+resource "null_resource" "name_2" {
+  provisioner "local-exec" {
+    command = <<EOF
+      echo "Sleep 10 secends so that aws_instance is up"
+      sleep 10
+EOF
+  }
 }
 

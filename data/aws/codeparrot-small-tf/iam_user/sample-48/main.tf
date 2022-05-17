@@ -1,1 +1,0 @@
- AWS provider block in us east 1# Create AWS IAM user resource for each TJack, TJames, TMadhu and TDave

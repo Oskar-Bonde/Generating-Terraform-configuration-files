@@ -1,4 +1,3 @@
-provider
 terraform {
   required_providers {
     aws = {
@@ -12,42 +11,21 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Create S3 Bucket Resource. Set bucket to cookie file name
+# Create S3 Bucket Resource. Set bucket to cookie
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state"
+  bucket = "terraform_state"
   acl    = "private"
 }
 
 # Resource, aws s3 bucket object. Set key to index.html and use the s3 bucket id
-# and name the object id to be stored in the state file.
-resource "aws_s3_bucket_object" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
-  key    = "index.html"
-  content = <<EOF
-<html><head>
-<title>Terraform State</title>
-<link href="//terraform-state.tfstate" rel="stylesheet" type="text/css">
-<style type="text/css" href="//terraform-state.tfstate" rel="stylesheet" type="text/css">
-<link href="//terraform-state.tfstate" rel="stylesheet" type="text/css">
-<link href="//terraform-state.tfstate" rel="stylesheet" type="text/css">
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.tfstate" type="text/x-shellscript"></script>
-<script src="//terraform-state.
+
+# Terraform configuration file
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
 }
 

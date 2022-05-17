@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,9 +18,11 @@ resource "aws_s3_bucket" "logs" {
   acl    = "log-delivery-write"
 }
 
-# an s3 bucket, use bucket "my-tf-test-bucket" and acl private. Make a logging block, with target bucket id and target prefix "log/"resource
-resource "aws_s3_bucket" "test" {
-  bucket = "my-tf-test-bucket"
-  acl    = "private"
+# an s3 bucket, use bucket "my-tf-test-bucket" and acl private. Make a logging block, with target bucket id and target prefix "log/"
+
+# create a bucket, set bucket to "my-tf-log-bucket" and acl to "log-delivery-write"
+resource "aws_s3_bucket" "logs-test" {
+  bucket = "my-tf-log-bucket"
+  acl    = "log-delivery-write"
 }
 

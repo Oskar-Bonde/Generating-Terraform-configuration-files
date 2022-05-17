@@ -25,6 +25,8 @@ resource "aws_subnet" "name_1" {
 }
 
 # Create EC2 Instance with subnet, ami-047a51fa27710816e and t2.micro
+
+# Create 3 instances in the private network 10.0.1.0/24 and t2.micro
 resource "aws_instance" "name_2" {
   ami           = "ami-047a51fa27710816e"
   instance_type = "t2.micro"

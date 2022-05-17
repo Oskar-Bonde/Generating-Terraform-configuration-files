@@ -1,5 +1,4 @@
-apse
-# Terraform block with the AWS provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -8,18 +7,21 @@ terraform {
   }
 }
 
-# Provider block AWS with region us east as default
+# Provider block AWS with region us east
+
 provider "aws" {
   region = "us-east-1"
 }
 
 # Resource block with an EC2 instance with t2.micro instance type and ami-0ff8a91507f77f867
+
 resource "aws_instance" "name_0" {
   ami           = "ami-0ff8a91507f77f867"
   instance_type = "t2.micro"
 }
 
 # Time sleep resource block, Wait for 90 seconds after creating ec2 instance
+
 resource "null_resource" "name_1" {
   provisioner "local-exec" {
     command = "sleep 60"

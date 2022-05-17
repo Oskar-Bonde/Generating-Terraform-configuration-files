@@ -1,11 +1,8 @@
-data "template_file" "user_data" {
-  template = file("user_data.tpl")
-
-  vars = {
-    aws_region = var.aws_region
-    t2_micro = var.t2_micro
-    random_version = var.random_version
-    user_data = data.template_file.user_data.rendered
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
   }
 }
 

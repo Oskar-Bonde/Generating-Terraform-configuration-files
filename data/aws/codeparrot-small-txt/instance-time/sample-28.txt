@@ -1,14 +1,13 @@
-apse
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-    }
-  }
+# See https://docs.aws.amazon.com/ec2/latest/userguide/instance_configuration.html
+provider "aws" {
+  alias  = "ec2demo"
+  region = "us-east-1"
 }
 
 # Provider block AWS with region us east
+
 provider "aws" {
+  alias  = "ec2demo"
   region = "us-east-1"
 }
 
@@ -22,6 +21,6 @@ resource "aws_instance" "ec2demo" {
 resource "aws_instance" "ec2demo" {
   ami           = "10"
   instance_type = "t2.micro"
-  sleep_seconds = 90
+  time_sleep = "90"
 }
 

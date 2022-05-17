@@ -1,4 +1,4 @@
-provider
+# Terraform Block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -7,10 +7,9 @@ terraform {
   }
 }
 
-# Provider Block AWS with region us east as default
+# Provider Block AWS with region us east
 provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 # Resource, create s3 bucket. Set bucket to state-import-bucket and force destroy false

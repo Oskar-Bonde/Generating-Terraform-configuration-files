@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -23,7 +23,7 @@ resource "aws_network_acl" "main" {
   subnet_ids = ["${aws_subnet.main.*.id}"]
   ingress {
     protocol   = "all"
-    rule_number = 100
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 83
@@ -31,7 +31,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 101
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 443
@@ -39,15 +39,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 102
-    action    = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port  = 443
-    to_port    = 443
-  }
-  ingress {
-    protocol   = "all"
-    rule_number = 103
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -55,7 +47,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 104
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -63,7 +55,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 105
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -71,7 +63,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 106
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -79,7 +71,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 107
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -87,7 +79,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 108
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -95,7 +87,7 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 109
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
@@ -103,13 +95,20 @@ resource "aws_network_acl" "main" {
   }
   ingress {
     protocol   = "all"
-    rule_number = 110
+    rule_no    = 100
     action    = "allow"
     cidr_block = "0.0.0.0/0"
     from_port  = 0
     to_port    = 0
   }
   ingress {
-    protocol   =
+    protocol   = "all"
+    rule_no    = 100
+    action    = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+ 
 }
 

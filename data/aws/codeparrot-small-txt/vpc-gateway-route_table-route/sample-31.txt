@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,19 +18,19 @@ resource "aws_vpc" "main" {
 }
 
 # AWS Internet Gateway with vpc id
-resource "aws_internet_gateway" "main" {
+resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.main.id}"
 }
 
 # Create AWS route table with vpc id
-resource "aws_route_table" "main" {
+resource "aws_route_table" "r" {
   vpc_id = "${aws_vpc.main.id}"
 }
 
 # Create route resource. Use destination 0.0.0.0/0, gateway id and route talbe id
-resource "aws_route" "main" {
-  route_table_id         = "${aws_route_table.main.id}"
+resource "aws_route" "r" {
+  route_table_id         = "${aws_route_table.r.id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.main.id}"
+  gateway_id             = "${aws_internet_gateway.gw.id}"
 }
 

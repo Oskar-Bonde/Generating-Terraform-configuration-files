@@ -11,92 +11,43 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# with the same name.
 resource "aws_security_group" "name_0" {
   name        = "ec2demo"
-  description = "Security group for the EC2 Demo instance"
+  description = "ec2demo security group"
   vpc_id      = "${aws_vpc.default.id}"
 
   ingress {
     from_port   = 150.24.14.0/24
     to_port     = 150.24.14.0/24
     protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
   }
 
   ingress {
-    from_port   = 150.24.14.64/24
-    to_port     = 150.24.14.64/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = 150.24.14.128/24
-    to_port     = 150.24.14.128/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 150.24.14.129/24
-    to_port     = 150.24.14.129/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 150.24.14.130/24
-    to_port     = 150.24.14.130/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
+  tags {
+    Name = "ec2demo security group"
   }
-
-  ingress {
-    from_port   = 150.24.14.131/24
-    to_port     = 150.24.14.131/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.132/24
-    to_port     = 150.24.14.132/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.133/24
-    to_port     = 150.24.14.133/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.134/24
-    to_port     = 150.24.14.134/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.135/24
-    to_port     = 150.24.14.135/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.136/24
-    to_port     = 150.24.14.136/24
-    protocol    = "tcp"
-    cidr_blocks = ["${var.WHITELIST_CIDR}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.137/24
-    to_port     = 150.24.14.137/24
-   
 }
 

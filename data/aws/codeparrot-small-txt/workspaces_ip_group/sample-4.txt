@@ -11,90 +11,18 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LAUNCH_IP_GROUP_NAME
-resource "aws_security_group" "ec2demo" {
-  name        = "ec2demo"
-  description = "Allow inbound traffic for t2.micro instances"
-  vpc_id      = "${aws_vpc.default.id}"
+# create workspace ip group, give it a name. Set a rule with source 150.24.14.0/24 and description LA
+# https://www.terraform.io/docs/providers/aws/r/s3_bucket.html
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "terraform-state"
+  acl    = "private"
 
-  ingress {
-    from_port   = 150.24.14.0/24
-    to_port     = 150.24.14.0/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
+  versioning {
+    enabled = true
   }
 
-  ingress {
-    from_port   = 150.24.14.64/24
-    to_port     = 150.24.14.64/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
+  lifecycle {
+    prevent_destroy = true
   }
-
-  ingress {
-    from_port   = 150.24.14.128/24
-    to_port     = 150.24.14.128/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.129/24
-    to_port     = 150.24.14.129/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.130/24
-    to_port     = 150.24.14.130/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.131/24
-    to_port     = 150.24.14.131/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.132/24
-    to_port     = 150.24.14.132/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.133/24
-    to_port     = 150.24.14.133/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.134/24
-    to_port     = 150.24.14.134/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.135/24
-    to_port     = 150.24.14.135/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.24.14.136/24
-    to_port     = 150.24.14.136/24
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.default.cidr_block}"]
-  }
-
-  ingress {
-    from_port   = 150.
 }
 

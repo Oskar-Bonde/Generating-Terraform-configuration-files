@@ -83,7 +83,7 @@ class CodexModel:
         generated = openai.Completion.create(
                 engine="code-davinci-002", #  code-cushman-001
                 prompt= input,
-                max_tokens = 800, # 512
+                max_tokens = 1024, # 512
                 top_p = 0.95,
                 temperature=0.2,
                 n = samples,

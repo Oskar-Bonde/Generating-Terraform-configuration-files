@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-# Provider Block: aws in us east 1 region and default profile
+# Provider Block: aws in us east 1
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -18,16 +18,8 @@ resource "aws_vpc" "name_0" {
 }
 
 # Make a service discovery private dns namespace resource. Give it the name 'example.terraform.local' and use vpc id
-# resource "aws_route53_zone" "example" {
-#   name = "example.terraform.local"
-#   vpc_id = "${aws_vpc.name_0.id}"
-# }
 
-# Create a subnet resource with cidr block 10.0.1. Enable DNS support and DNS hostnames
-resource "aws_subnet" "name_1" {
-  vpc_id            = "${aws_vpc.name_0.id}"
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
-  map_public_ip_on_launch = true
+resource "aws_route53_zone" "name_1" {
+  name = "example.terraform.local"
 }
 

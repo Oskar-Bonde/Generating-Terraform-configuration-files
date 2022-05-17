@@ -1,4 +1,4 @@
-provider
+# Terraform block with the AWS provider
 terraform {
   required_providers {
     aws = {
@@ -17,6 +17,20 @@ resource "aws_security_group" "name_0" {
   name        = "vpc-web"
   description = "Allow all inbound traffic"
   vpc_id      = "${aws_vpc.vpc-web.id}"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     from_port   = 80
