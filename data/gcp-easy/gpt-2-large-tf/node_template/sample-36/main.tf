@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  {{if. google_compute_instance.vm_instance)
+  {{if. google_compute_instance.vm_instance_http_proxy)
+  {{if. google_compute_instance.vm_instance_http_proxy_http_proxy_ip)
+  {{if. google_compute_instance.vm_instance_http_proxy_http_proxy_ip_address)
+  {{if. google_compute_instance.vm_instance_http_proxy_http_proxy_ip_address_list)
+}
+
+# create a node template
+
+resource "google_compute_address" "name_0" {
+  name = "my-compute-address-${local.name_suffix}"
+  address_type = "INTERNAL"
+}
+

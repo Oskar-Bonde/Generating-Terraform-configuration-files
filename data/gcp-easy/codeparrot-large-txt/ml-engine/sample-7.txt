@@ -11,20 +11,10 @@ provider "google" {
 }
 
 # ml engine model resource
-resource "google_compute_instance" "ml_instance" {
-  name = "my-ml-instance-%%{random_suffix}"
-  machine_type = "f1-micro"
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+resource "google_ml_engine_model" "default" {
+  name = "my-ml-engine-model"
+  region = "us-central1"
+  description = "my-ml-engine-model"
+  tags = ["foo", "bar"]
 }
 

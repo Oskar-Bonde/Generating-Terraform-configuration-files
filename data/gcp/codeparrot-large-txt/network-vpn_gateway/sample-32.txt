@@ -15,9 +15,9 @@ resource "google_compute_network" "my_network" {
   name = "my-network"
 }
 
-# resource compute ha vpn gateway, in the us central1 region and use the compute network id
+# resource compute ha vpn gateway, in the us central1 region and use the compute network id as a backend
 resource "google_compute_ha_vpn_gateway" "my_ha_gateway" {
-  name    = "my-ha-vpn-gw"
+  name    = "my-ha-vpn-${local.name_suffix}"
   network = google_compute_network.my_network.self_link
   region  = "us-central1"
   vpn_gateway = google_compute_ha_vpn_gateway.my_ha_gateway.id

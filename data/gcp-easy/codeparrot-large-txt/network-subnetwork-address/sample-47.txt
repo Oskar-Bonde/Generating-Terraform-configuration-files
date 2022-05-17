@@ -26,5 +26,6 @@ resource "google_compute_subnetwork" "default" {
 # make a compute address resource
 resource "google_compute_address" "default" {
   name = "my-compute-address-${random_suffix}"
+  subnetwork = google_compute_subnetwork.default.self_link
 }
 

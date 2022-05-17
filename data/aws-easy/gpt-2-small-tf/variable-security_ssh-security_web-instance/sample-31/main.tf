@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create variable declaration for each resource
+variable "name_0" {
+  description = "Name of the resource group in which to create the virtual network."
+}
+
+# variable blockvariable "virtual_network" {
+  description = "Name of the virtual network in which to create the virtual network."
+}
+
+# make variablevariable declaration for each resource
+variable "name_1" {
+  description = "Name of the virtual network in which to create the virtual network."
+}
+
+# create variable blockvariable "subnet_name" {
+  description = "Name of the subnet in which to create the virtual network."
+
+}
+
+# Create Security Group
+}
+
+# Create Security Group
+}
+
+# Create EC2 Instance
+}
+

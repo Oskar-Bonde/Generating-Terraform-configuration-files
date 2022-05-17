@@ -12,9 +12,158 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
-  type = "A"
-  records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+
+  # DNS policy
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+      action = "accept"
+    }
+  }
+
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0
 }
 

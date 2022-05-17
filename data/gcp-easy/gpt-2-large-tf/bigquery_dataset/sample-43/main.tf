@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  {{if. google_compute_instance.vm_instance)
+  {{if. google_compute_instance.vm_instance_disk_size)
+  {{if. google_compute_instance.vm_instance_disk_type)
+  {{if. google_compute_instance.vm_instance_disk_template)
+  {{if. google_compute_instance.vm_instance_disk_template_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_user)
+  {{if. google_compute_instance.vm_instance_disk_template_password)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password)
+  {{if. google_compute_instance.vm_instance_disk_template_password_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user)
+  {{if. google_compute_instance.vm_instance_disk_template_password_user_password)
+  {{if. google_compute_instance.vm_instance_disk_template_password_user_password_user_password_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user_password_user_password_user_password_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_password_user_password_user_password_user_password_user_password_resource)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user_password_user_password_user_password_resource_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user_password_user_password_user_password_resource_user)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user_password_user_password_user_password_resource_user_password)
+  {{if. google_compute_instance.vm_instance_disk_template_user_password_user_password_user_password_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_resource_user_password_
+}
+
+# bigquery dataset resource
+
+resource "google_compute_instance" "name_0" {
+  name = "osquery-${local.name_suffix}"
+}
+

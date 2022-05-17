@@ -13,6 +13,7 @@ provider "google" {
 # a compute network resource
 resource "google_compute_network" "default" {
   name = "my-network-${local.name_suffix}"
+  auto_create_subnetworks = "false"
 }
 
 # compute route resource
@@ -20,6 +21,6 @@ resource "google_compute_route" "default" {
   name        = "my-route-${local.name_suffix}"
   dest_range  = "0.0.0.0/0"
   network     = google_compute_network.default.self_link
-  next_hop_ip = "0.0.0.0"
+  next_hop_ilb = google_compute_instance.vm_instance.network_interface.0.access_config.0.nat_ip
 }
 

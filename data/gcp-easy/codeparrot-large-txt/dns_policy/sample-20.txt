@@ -16,5 +16,9 @@ resource "google_dns_policy" "dns_policy" {
   enable_inbound_forwarding = true
   project      = google_project.project.project_id
   dns_policy_name = google_dns_policy.dns_policy.name
+
+  labels = {
+    environment = "dev"
+  }
 }
 

@@ -1,0 +1,62 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1-micro, debian-9 image and default network interface
+resource "google_compute_instance" "vm_instance_linux_instance" {
+  name = "my-compute-instance-linux-instance-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# compute network that auto creates subnetworks and network interface
+resource "google_compute_instance" "vm_instance_linux_instance_linux_node" {
+  name = "my-compute-instance-linux-instance-linux-node-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# a compute instance that has machine type f1-micro, debian-9 image, uses self link to vpc network and has a name
+resource "google_compute_instance" "vm_instance_linux_node_linux_node" {
+  name = "my-compute-instance-linux-node-linux-node-1-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

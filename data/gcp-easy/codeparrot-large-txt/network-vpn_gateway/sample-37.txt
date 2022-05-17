@@ -17,9 +17,12 @@ resource "google_compute_network" "default" {
 }
 
 # create a compute ha vpn gateway
-resource "google_compute_ha_vpn_gateway" "ha_gateway" {
-  name    = "ha-vpn-${random_suffix}"
+resource "google_compute_ha_vpn_gateway" "default" {
+  name = "my-ha-vpn-gw"
   network = google_compute_network.default.id
-  region  = "us-central1"
+  region = "us-central1"
+  config {
+    ip_address = google_compute_address.default.address
+  }
 }
 

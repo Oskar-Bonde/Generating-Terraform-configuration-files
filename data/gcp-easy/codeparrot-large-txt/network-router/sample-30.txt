@@ -11,15 +11,18 @@ provider "google" {
 }
 
 # create compute network resource 
-resource "google_compute_network" "default" {
+resource "google_compute_network" "my_network" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = false
+  auto_create_subnetworks = "false"
 }
 
-# resource block: create a compute routervariable
-resource "google_compute_router_variable" "default" {
-  name = "my-router-variable-${random_suffix}"
+# resource block: create a compute router
+resource "google_compute_router" "my_router" {
+  name = "my-router-${random_suffix}"
+  network = google_compute_network.my_network.name
   region = "us-central1"
-  network = google_compute_network.default.id
+  bgp {
+    asn = "64515"
+  }
 }
 

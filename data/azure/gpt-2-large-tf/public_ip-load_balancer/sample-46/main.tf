@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "myTFResourceGroup_lb"
+  location = "westus2"
+}
+
+# create public ip resource, use static allocation method. Assign resource group name and location
+resource "azurerm_public_ip" "name_1" {
+  name                = "myTFResourceGroup_lb"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+
+# lb resource. In frontend ip configuration block, asssign name and public ip address id. Use resource group name and location
+resource "azurerm_lb_rule" "name_2" {
+  name                = "myTFResourceGroup_lb_rule"
+  resource_group_name = azurerm_resource_group.rg.name
+  loadbalancer_id     = azurerm_lb.rg.id
+  protocol            = "TCP"
+  port                = 80
+  protocol_port            = 443
+  protocol_protocol  = "TCP"
+  frontend_port                  = 443
+  backend_port                   = 443
+  backend_protocol       = "TCP"
+  frontend_ip_configuration_name = "myTFResourceGroup_lb_ip_configuration_name"
+}
+

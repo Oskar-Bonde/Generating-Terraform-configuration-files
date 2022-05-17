@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+resource "google_compute_firewall" "vm_firewall" {
+  name = "my-firewall-vm"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["my-firewall-vm"]
+}
+

@@ -12,85 +12,33 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_id.instance_id.hex}"
-  zone = "europe-west1-b"
+  name = "dns-policy"
 
-  # DNS zone
-  policy = <<EOF
-{
-  "conditions": [
-    "compute.googleapis.com",
-    "compute.googleapis.com",
-    "dns.googleapis.com.",
-    "cloudresourcemanager.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "iam.googleapis.com",
-    "iamcredentials.googleapis.com",
-    "oslogin.googleapis.com",
-    "serviceusage.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "serviceusage.googleapis.com",
-    "serviceusage.googleapis.com",
-    "sql-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "pubsub.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "pubsub.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "pubsub.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.googleapis.com",
-    "storage-api.googleapis.com",
-    "storage-component.
+  # DNS
+  rule {
+    action = "deny(403)"
+    priority = "1000"
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
 }
 

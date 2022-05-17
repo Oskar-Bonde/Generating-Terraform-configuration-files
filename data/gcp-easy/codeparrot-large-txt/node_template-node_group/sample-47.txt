@@ -27,59 +27,38 @@ resource "google_compute_instance_template" "node_template" {
     }
   }
 
-  metadata = {
-    startup-script = <<-EOF1
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME=node-template
-      IP=${google_compute_address.gcp_sap_hana_intip_primary_ip.address}
-      METADATA=${google_compute_instance_metadata.vm_instance.metadata_value}
-      INSTANCE_NAME=node-template
-      INSTANCE_TYPE=n1-standard-1
-      USER_DATA=$(curl -s -S -g --header "Authorization: Bearer $(gcloud config get-value account)").stdout
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME=node-template
-      IP=${google_compute_address.gcp_sap_hana_intip_secondary_ip.address}
-      METADATA=${google_compute_instance_metadata.vm_instance.metadata_value}
-      INSTANCE_NAME=node-template
-      INSTANCE_TYPE=n1-standard-1
-      USER_DATA=$(curl -s -S -g --header "Authorization: Bearer $(gcloud config get-value account)").stdout
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME=node-template
-      IP=${google_compute_address.gcp_sap_hana_intip_terra_intip.address}
-      METADATA=${google_compute_instance_metadata.vm_instance.metadata_value}
-      INSTANCE_NAME=node-template
-      INSTANCE_TYPE=n1-standard-1
-      USER_DATA=$(curl -s -S -g --header "Authorization: Bearer $(gcloud config get-value account)").stdout
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME=node-template
-      IP=${google_compute_address.gcp_sap_hana_intip_primary_ip.address}
-      METADATA=${google_compute_instance_metadata.vm_instance.metadata_value}
-      INSTANCE_NAME=node-template
-      INSTANCE_TYPE=n1-standard-1
-      USER_DATA=$(curl -s -S -g --header "Authorization: Bearer $(gcloud config get-value account)").stdout
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME=node-template
-      IP=${google_compute_address.gcp_sap_hana_intip_terra_intip.address}
-      METADATA=${google_compute_instance_metadata.vm_instance.metadata_value}
-      INSTANCE_NAME=node-template
-      INSTANCE_TYPE=n1-standard-1
-      USER_DATA=$(curl -s -S -g --header "Authorization: Bearer $(gcloud config get-value account)").stdout
-      #!/bin/bash
-      sudo apt-get update
-      apt-get install -y nginx-light jq
-      NAME
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
 }
 
 # create a compute node group resource
+resource "google_compute_node_template" "node_group_template" {
+  name_prefix  = "node-template-"
+  machine_type = "n1-standard-1"
+
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  }
 }
 

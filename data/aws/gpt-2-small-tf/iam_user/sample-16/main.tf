@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block in us east 1 region and default profile
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create AWS IAM user resource for each TJack, TJames, TMadhu and TDavey
+resource "aws_iam_user" "name_0" {
+  name                  = "tj-aws"
+  path                  = "/"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+         "Service": "ec2.amazonaws.com"
+       },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+

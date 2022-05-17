@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block aws in us-east-1 region and default profile
+resource "aws_instance" "ec2demo-ec2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource block that creates an ec2 instance with ami-047a51fa27710816e, instance type t2.micro in zone us west 1a
+resource "aws_instance" "ec2demo-ec2-1" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

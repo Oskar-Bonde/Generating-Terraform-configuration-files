@@ -1,0 +1,40 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider blockresource "google_compute_instance" "vm_instance_dev" {
+  name = "my-compute-instance-dev-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute network
+
+resource "google_compute_network" "default" {
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = false
+}
+
+# create compute firewall
+
+resource "google_compute_subnetwork" "default" {
+  name = "my-subnetwork-${random_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
+  region = "us-central1"
+}
+

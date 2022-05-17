@@ -13,12 +13,9 @@ provider "google" {
 # create composer environment in region us-central1
 resource "google_composer_environment" "env" {
   name     = "env-${random_suffix}"
-  region  = "us-central1"
+  region   = "us-central1"
+  project  = google_project.project.project_id
 
-  config {
-    node_config {
-      machine_type = "e2-medium"
-    }
-  }
+  depends_on = [google_project_service.composer]
 }
 

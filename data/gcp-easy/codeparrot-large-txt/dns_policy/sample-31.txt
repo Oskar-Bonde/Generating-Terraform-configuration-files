@@ -14,19 +14,15 @@ provider "google" {
 resource "google_dns_policy" "dns_policy" {
   name        = "dns-policy-${local.name_suffix}"
   enable_inbound_forwarding = true
+  project       = google_project.project.project_id
+  dns_policy_name = google_dns_policy.dns_policy.name
 
-  // DNS
-  dns_policy {
-    policy_type = "PRIMARY"
-    dns_name    = "tf-dns-policy"
-    dns_zone_name = "tf-dns-zone"
+  labels = {
+    environment = "dev"
   }
 
-  // Cloud DNS
-  dns_policy {
-    policy_type = "SECONDARY"
-    dns_name    = "tf-dns-policy-us"
-    dns_zone_name = "tf-dns-zone"
+  access_config {
+    nat_ip = google_compute_address.opsman.address
   }
 }
 

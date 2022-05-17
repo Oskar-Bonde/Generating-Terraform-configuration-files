@@ -1,0 +1,23 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1-standard and the instance.
+resource "google_compute_instance" "vm_instance" {
+  name = "my-compute-instance-vm"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# a google compute network resource with name terraform network
+}
+

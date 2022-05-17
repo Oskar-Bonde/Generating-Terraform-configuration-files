@@ -20,5 +20,6 @@ resource "google_storage_bucket" "bucket" {
 resource "google_compute_backend_bucket" "bucket" {
   name = "my-backend-bucket-${random_suffix}"
   bucket_name = google_storage_bucket.bucket.name
+  enable_cdn  = true
 }
 

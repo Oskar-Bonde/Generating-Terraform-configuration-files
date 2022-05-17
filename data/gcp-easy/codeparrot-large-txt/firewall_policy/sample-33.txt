@@ -12,7 +12,7 @@ provider "google" {
 
 # create a firewall policy 
 resource "google_compute_firewall" "fw_policy" {
-  name = "my-firewall-policy"
+  name = "my-fw-policy"
   network = "default"
 
   allow {

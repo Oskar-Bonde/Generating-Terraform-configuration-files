@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  {{if. google_compute_instance.vm_instance)
+  {{if. google_compute_instance.name_0)
+  {{if. google_compute_instance.vm_instance_disk_type)
+  {{if. google_compute_instance.vm_instance_disk_template)
+  {{if. google_compute_instance.vm_instance_disk_template_folder)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_per_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_per_node_address)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_address_per_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_address_per_node_http)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_address_per_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_address_per_node_http_http_ip_address_per_node_http_ip_forwarding_key)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_forwarding_key_address)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_forwarding_key_address_per_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_forwarding_key_ip_address_per_node)
+  {{if. google_compute_instance.vm_instance_disk_template_resource_group_name_servers_address_port_node_http_address_per_node_http_ip_forwarding_key_ip_address_per_node_http_ip_forwarding_private)
+}
+
+# a compute instance resource
+
+resource "google_compute_instance" "name_0" {
+  name = "my-compute-instance
+}
+
+# an output block
+}
+

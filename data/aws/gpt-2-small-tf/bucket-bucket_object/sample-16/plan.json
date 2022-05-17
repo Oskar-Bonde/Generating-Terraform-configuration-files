@@ -1,0 +1,10 @@
+[33m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mQuoted references are deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on main.tf line 28, in resource "aws_s3_bucket" "name_0":
+[33m│[0m [0m  28:     ignore_changes = [[4m"name"[0m][0m
+[33m│[0m [0m
+[33m│[0m [0mIn this context, references are expected literally rather than in quotes. Terraform 0.11 and earlier required quotes, but quoted references are now deprecated and will be
+[33m│[0m [0mremoved in a future version of Terraform. Remove the quotes surrounding this reference to silence this warning.
+[33m╵[0m[0m
+[0m[0m

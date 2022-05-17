@@ -15,8 +15,8 @@ data "google_compute_zones" "available" {
 }
 
 # compute instance.Use the first available compute zone. Type f1 micro, debian 9 image, default network interface and give name
-resource "google_compute_instance" "vm_instance1" {
-  name = "my-compute-instance-1"
+resource "google_compute_instance" "vm_instance2" {
+  name = "my-vm-2"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -27,8 +27,6 @@ resource "google_compute_instance" "vm_instance1" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 }
 

@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# ml engine model resource. With default name and in europe west 4 regions
+# https://cloud.google.com/compute/docs/regions-zones
+resource "google_compute_region_instance_group_manager" "name_0" {
+  name = "my-mig-with-region"
+  base_instance_name = "vm"
+  region = "europe-west4"
+  version = "latest"
+  target_size = 2
+}
+

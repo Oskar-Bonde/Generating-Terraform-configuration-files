@@ -12,8 +12,9 @@ provider "google" {
 
 # ml engine model resource
 resource "google_ml_engine_model" "my_model" {
-  name = "my_model"
+  name = "my_model-${random_suffix}"
   region = "us-central1"
+  description = "my model"
   tags = ["foo", "bar"]
 }
 

@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# data block, azurem client config file, and terraform state file
+data "azurerm_client_config" "name_1" {
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name to get the registration id
+resource "azurerm_bot_application_registration" "name_2" {
+  name                = "example-registration"
+  location            = "West US"
+  resource_group_name = azurerm_resource_group.rg.name
+  app_id              = azurerm_bot_application_registration.example_application_registration.app_id
+  tenant_id           = azurerm_bot_application_registration.example_application_registration.tenant_id
+}
+

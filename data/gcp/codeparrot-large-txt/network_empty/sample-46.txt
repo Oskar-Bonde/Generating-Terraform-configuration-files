@@ -12,6 +12,6 @@ provider "google" {
 
 # a google compute network resource with name terraform network
 resource "google_compute_network" "default" {
-  name = "my-network-${local.name_suffix}"
+  name = "my-network"
 }
 

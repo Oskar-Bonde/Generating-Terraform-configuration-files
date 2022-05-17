@@ -29,7 +29,7 @@ resource "google_compute_instance" "vm_instance2" {
 }
 
 # an output block
-output "instance_ip" {
+output "vm_ip" {
   value = "${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"
 }
 

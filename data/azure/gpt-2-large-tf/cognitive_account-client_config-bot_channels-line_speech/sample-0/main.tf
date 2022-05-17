@@ -1,0 +1,52 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "myresources"
+  location = "westus2"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group
+resource "azurerm_storage_account" "name_1" {
+  name                = "mystorage-account"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = "westus2"
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# data block, azurem client config
+resource "azurerm_storage_container" "name_2" {
+  name                  = "mystorage-container"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.name_1.name
+  container_access_type = "private"
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+resource "azurerm_storage_container" "name_3" {
+  name                  = "mystorage-container-linux-node"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.name_1.name
+  container_access_type = "private"
+}
+
+# resource block called bot channel direct line speech. Use name and location from bot_channels_registration. For cognitive service location and access key use cognitive account. Assign resource group name
+resource "azurerm_storage_container" "name_4" {
+  name                  = "mystorage-container-linux-node-outbound"
+  resource_group_name   = azurerm_resource_group.rg.name
+  storage_account_name  = azurerm_storage_account.name_1.name
+  container_access_type = "private"
+}
+

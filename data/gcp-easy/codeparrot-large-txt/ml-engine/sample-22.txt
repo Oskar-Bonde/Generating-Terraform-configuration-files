@@ -11,10 +11,20 @@ provider "google" {
 }
 
 # ml engine model resource
-resource "google_ml_engine_model" "default" {
-  name = "my-ml-engine-model"
+resource "google_ml_engine_model" "my_model" {
+  name = "my-model-${random_suffix}"
   region = "us-central1"
-  description = "my model"
+  initial_node_count = 1
+  max_pods_per_node = 1
+  min_replicas = 1
+  max_nodes = 1
+  machine_type = "e2-medium"
+  network_config {
+    subnetwork = "default"
+    ip_allocation_policy {
+      use_ip_aliases = true
+    }
+  }
   tags = ["foo", "bar"]
 }
 

@@ -1,0 +1,61 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+resource "google_compute_instance" "vm_instance_dev" {
+  name = "my-compute-instance-dev-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute network
+
+resource "google_compute_instance" "vm_instance_dev_tcp" {
+  name = "my-compute-instance-dev-tcp-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute subnetwork
+
+resource "google_compute_subnetwork" "vm_subnetwork" {
+  name = "my-compute-subnetwork-%%{random_suffix}"
+  ip_cidr_range = "10.0.0.0/16"
+  region = "us-central1"
+  network       = "default"
+}
+
+# make a compute address resource
+
+resource "google_compute_address" "vm_address" {
+  name = "my-compute-address-${random_suffix}"
+  address = "10.0.0.0/24"
+}
+

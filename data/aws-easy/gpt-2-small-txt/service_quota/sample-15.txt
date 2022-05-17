@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS provider
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# create a service quota resource
+resource "aws_service_quota" "ec2demo" {
+  quota_size = 1
+  depends_on = [
+    aws_instance.ec2demo,
+    aws_instance.ec2demo_no_floating_ip,
+    aws_instance.ec2demo_no_floating_ip_no_etcd,
+    aws_instance.ec2demo_no_floating_ip_no_etcd_no_etcd,
+    aws_instance.ec2demo_no_floating_ip_no_etcd_no_floating_ip,
+    aws_instance.ec2demo_no_floating_ip_no_etcd_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_ip_no_floating_
+}
+

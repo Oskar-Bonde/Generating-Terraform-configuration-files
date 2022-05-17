@@ -12,19 +12,24 @@ provider "google" {
 
 # create compute network
 resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  name = "my-network-${local.name_suffix}"
 }
 
-# create compute firewallvariable
-resource "google_compute_firewall_rule" "default" {
-  name = "my-firewall-rule-${random_suffix}"
+# create compute firewall
+resource "google_compute_firewall" "default" {
+  name    = "my-firewall-${local.name_suffix}"
   network = "default"
+
+  allow {
+    protocol = "icmp"
+  }
+
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports    = ["22", "80", "443"] # ssh, http, https
   }
+
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["web"]
+  target_tags   = ["my-tag"]
 }
 

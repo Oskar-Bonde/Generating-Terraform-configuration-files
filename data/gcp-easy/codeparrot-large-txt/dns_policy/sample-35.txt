@@ -18,43 +18,168 @@ resource "google_dns_policy" "dns_policy" {
   // DNS
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud DNS
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud Storage
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud Build
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud Identity
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud Build
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
 
-  // Cloud Identity
+  // Cloudflare
   dns_policy {
     policy_type = "POLICY_PERFORMANCE"
-    allow_access_to_remote_network = true
   }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  // Cloudflare
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
+  }
+
+  //
 }
 

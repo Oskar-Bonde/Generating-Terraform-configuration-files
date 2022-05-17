@@ -18,7 +18,7 @@ resource "google_dns_policy" "dns_policy" {
   dns_policy_name = google_dns_policy.dns_policy.name
 
   labels = {
-    environment = "dev"
+    "my-label" = "my-value"
   }
 
   # allow outbound tcp traffic on all ports

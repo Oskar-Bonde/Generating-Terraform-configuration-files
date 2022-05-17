@@ -1,0 +1,23 @@
+resource "aws_instance" "ec2demo-b" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS provider block in region us-east-1
+resource "aws_instance" "ec2demo-c" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource block to create a random pet name of length 5 with separator -
+# the AWS provider block in region us-east-1
+resource "aws_instance" "ec2demo-d" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource Block: Create AWS S3 Bucket with bucket set as random pet name
+resource "aws_instance" "ec2demo-e" {
+  ami           = "ami-0ff8
+}
+

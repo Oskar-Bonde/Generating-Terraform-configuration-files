@@ -12,9 +12,37 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
-  type = "A"
-  records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+
+  # DNS zone
+  policy_definition {
+    description = "DNS zone policy"
+    priority = 100
+  }
+
+  # allow outbound traffic on all ports
+  rule {
+    action = "allow"
+    priority = 100
+  }
+
+  # allow inbound traffic from a specific port
+  rule {
+    action = "allow"
+    priority = 101
+  }
+
+  # allow inbound traffic from a specific port
+  rule {
+    action = "allow"
+    priority = 102
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "allow"
+    priority = 103
+  }
 }
 

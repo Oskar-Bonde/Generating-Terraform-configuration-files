@@ -13,29 +13,211 @@ provider "google" {
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
   name        = "dns-policy-${random_suffix}"
-  zone        = "us-central1-a"
-  description = "DNS policy for ${google_dns_managed_zone.dns_zone.name}"
+  enable_inbound_forwarding = true
+  project       = google_project.project.project_id
+  dns_policy_name = google_dns_policy.dns_policy.name
 
-  # allow outbound tcp traffic on all ports
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // SSH
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  // HTTP
   allow {
     protocol = "tcp"
     ports    = ["80"]
   }
 
-  # allow outbound udp traffic on a port range
+  // HTTPS
   allow {
-    protocol = "udp"
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
     ports    = ["53"]
   }
 
-  # allow outbound icmp traffic on a port range
+  // HTTPs
   allow {
-    protocol = "icmp"
+    protocol = "tcp"
+    ports    = ["80"]
   }
 
-  # allow outbound any outbound traffic
+  // HTTPSs
   allow {
-    protocol = "any"
+    protocol = "tcp"
+    ports    = ["443"]
   }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // HTTPSs
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // GO
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // DNS
+  allow {
+    protocol = "tcp"
+    ports    = ["53"]
+  }
+
+  // HTTPs
+  allow {
+    protocol = "tcp"
+    ports
 }
 

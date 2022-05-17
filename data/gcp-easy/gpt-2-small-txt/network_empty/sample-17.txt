@@ -1,0 +1,17 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+}
+
+# a google compute network resource
+resource "google_compute_network" "network" {
+  name = "my-network-%{random_suffix}"
+}
+

@@ -11,11 +11,19 @@ provider "google" {
 }
 
 # ml engine model resource. With default name and in europe west 4 regions
-# this resource is not considered a match
-resource "google_compute_region_instance_group_manager" "my_region_instance_group_manager" {
-  name = "my-region-instance-group-manager-${random_suffix}"
-  region = "europe-west4"
-  base_instance_name = "my-instance-group-manager"
-  target_size = 1
+# https://cloud.google.com/compute/docs/regions-zones
+resource "google_compute_instance" "ml_instance" {
+  name = "my-ml"
+  machine_type = "europe-west4"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+  }
 }
 

@@ -11,24 +11,20 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
-  can_ip_forward = true
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
 
-  disk {
-    source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
-  }
-
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+  provider = google.target
 }
 
 # create a compute node group resource
+resource "google_compute_node_group" "node_group" {
+  name = "my-node-group"
+
+  # create node template
+  node_template = google_compute_node_template.node_template.id
+
+  # create node group
+  depends_on = [google_compute_node_template.node_template]
 }
 

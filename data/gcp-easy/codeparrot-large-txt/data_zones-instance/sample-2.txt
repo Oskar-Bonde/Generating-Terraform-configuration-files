@@ -16,8 +16,8 @@ data "google_compute_zones" "available" {
 }
 
 # make a compute instance
-resource "google_compute_instance" "vm_instance2" {
-  name = "my-compute-instance-2-%%{random_suffix}"
+resource "google_compute_instance" "vm_instance" {
+  name = "my-compute-instance-%%{random_suffix}"
   machine_type = "f1-micro"
 
   boot_disk {

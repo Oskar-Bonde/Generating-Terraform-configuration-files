@@ -12,15 +12,24 @@ provider "google" {
 
 # resource block, sql database instance
 resource "google_sql_database_instance" "instance" {
-  name = "my-sql-database-instance-instance-${random_suffix}"
+  name = "my-sql-database-instance"
   region = "us-central1"
   database_version = "POSTGRES_12"
   settings {
     tier = "db-f1-micro"
+    ip_configuration {
+      authorized_networks {
+        name = "PublicNetworks-${var.env}"
+      }
+    }
   }
   deletion_protection =  "true"
 }
 
 # create a sql database
+resource "google_sql_database" "db" {
+  name = "my-sql-database"
+  instance = google_sql_database_instance.instance.name
+  charset = "utf8mb4"
 }
 

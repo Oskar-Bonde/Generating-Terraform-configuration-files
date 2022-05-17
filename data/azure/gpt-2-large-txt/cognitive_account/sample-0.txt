@@ -1,0 +1,33 @@
+resource "azurerm_public_ip" "rg" {
+  name                         = "myTFResourceGroup"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+
+# Provider block with features block
+resource "azurerm_public_ip_address" "rg" {
+  name                         = "myTFResourceGroup"
+  resource_group_name          = azurerm_resource_group.rg.name
+  location                     = "westus2"
+  public_ip_address_allocation = "static"
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_network_interface" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group
+resource "azurerm_network_interface_rule" "rg" {
+  name                = "myTFResourceGroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+  ip_address            = "10.0.0.0/16"
+  ip_address_type          = "INTERNAL"
+  ip_address_id            = azurerm_network_security_group.rg.id
+}
+

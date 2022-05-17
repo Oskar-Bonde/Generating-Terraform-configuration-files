@@ -17,14 +17,20 @@ resource "google_sql_database_instance" "instance" {
   database_version = "POSTGRES_12"
   settings {
     tier = "db-f1-micro"
+    ip_configuration {
+      authorized_networks {
+        name = "PublicIP"
+        value = "10.0.0.5"
+      }
+    }
   }
   deletion_protection =  "true"
 }
 
 # create a sql database
 resource "google_sql_database" "db" {
-  name     = "my-sql-database-instance"
+  name = "my-sql-database"
   instance = google_sql_database_instance.instance.name
-  charset   = "utf8mb4"
+  charset = "utf8mb4"
 }
 

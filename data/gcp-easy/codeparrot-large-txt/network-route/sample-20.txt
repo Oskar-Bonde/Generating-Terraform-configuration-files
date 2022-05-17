@@ -12,13 +12,14 @@ provider "google" {
 
 # a compute network resource
 resource "google_compute_network" "default" {
-  name = "my-network-${local.name_suffix}"
+  name = "my-network-${random_suffix}"
+  auto_create_subnetworks = "false"
 }
 
-# compute route resource
+# compute route resource 
 resource "google_compute_route" "default" {
-  name        = "my-route-${local.name_suffix}"
-  dest_range  = "0.0.0.0/0"
-  network     = google_compute_network.default.self_link
+  name = "my-route-${random_suffix}"
+  dest_range = "0.0.0.0/0"
+  network = google_compute_network.default.self_link
 }
 

@@ -1,0 +1,69 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example in location West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "exampleRG"
+  location = "westeurope"
+}
+
+# kubernetes cluster. Use dns prefix exampleaks1, create a default node pool with 1 node count and vm size Standard_D2_v2. Make identity SystemAssigned_Networks_1 available in the cluster.
+resource "azurerm_virtual_machine" "name_1" {
+  name                  = "example"
+  location               = "westeurope"
+  resource_group_name   = azurerm_resource_group.name_0.name
+  network_interface_ids = [azurerm_network_interface.example.id]
+  vm_size                = "Standard_D2_v2"
+  availability_set_id   = azurerm_availability_set.example.id
+  delete_os_disk_on_termination = true
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+
+  storage_os_disk {
+    name               = "exampleosdisk"
+    vhd_uri            = azurerm_storage_account.example.primary_blob_endpoint
+    caching             = "ReadWrite"
+    create_option      = "FromImage"
+    os_type            = "linux"
+    create_option      = "FromImage"
+    disk_size_gb        = "50"
+    disk_type           = "pd-standard"
+    create_option      = "Attach"
+    disk_type_policy = "LRS"
+  }
+
+  os_profile {
+    computer_name  = "example"
+    admin_username = "admin"
+    admin_password = "Password1234!"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = true
+
+    ssh_keys {
+      path     = "/home/admin/.ssh/authorized_keys"
+      key_data = "${file(var.public_ssh_key)}"
+    }
+  }
+
+  tags {
+    environment = "test"
+  }
+}
+

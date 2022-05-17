@@ -12,9 +12,42 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone = "europe-west1-b"
-  type = "A"
-  records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+  name = "dns-policy"
+
+  # dns_policy_name is the name of the dns policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  zone_name = "europe-west1-b"
+
+  # dns_policy_create is a list of DNS policy definitions
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create_policy
+  # https://cloud.google.com/dns/docs/dns-policy-reference#create
 }
 

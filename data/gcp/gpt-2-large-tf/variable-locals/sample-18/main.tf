@@ -1,0 +1,46 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with default settings
+resource "google_compute_instance" "name_0" {
+  name = "my-compute-instance-vm"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# a string type variable called name with default value "service"
+# a string type variable calledservice_account
+# a string type variable "service_account_email
+# a string type variable "service_account_email_email
+# a string type variable "service_account_email_email_email_name
+# a string type variable "service_account_email_name_email
+# a string type variable "service_account_email_name_email_name_email
+# a string type variable "service_account_email_name_email_name_email_value
+# a string type variable "service_account_email_name_email_value_email
+# a string type variable "service_account_email_name_value_email_value_email
+# a string type variable "service_account_email_value_value_email_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+# a string type variable "service_account_email_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value_value
+}
+
+# local block with a common labels block. service is set to name variable
+}
+

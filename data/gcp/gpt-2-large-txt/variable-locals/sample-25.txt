@@ -1,0 +1,39 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with default settings
+resource "google_compute_instance" "vm_instance_1" {
+  name = "my-compute-instance-1-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# a string type variable called name with default value "service"
+# a string type variable calledservice_project
+# a string type variable calledservice_project_id
+# a string type variable calledservice_project_id_suffix
+# a string type variable calledservice_project_id_suffix_suffix
+# a string type variable calledservice_project_id_suffix_suffix_suffix_project_id
+# a string type variable calledservice_project_id_suffix_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id_suffix_project_id
+# a string type variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable variable
+}
+
+# local block with a common labels block. service is set to name variable
+}
+

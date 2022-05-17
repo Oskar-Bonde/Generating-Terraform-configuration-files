@@ -12,15 +12,26 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name    = "my-firewall-policy"
+  name    = "fw-policy"
   network = "default"
   priority = 1000
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "443"]
+    ports    = ["80"]
   }
 
-  target_tags = ["cloud-robotics"]
+  allow {
+    protocol = "udp"
+    ports    = ["80"]
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "esp"
+  }
 }
 

@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  project = var.project_id
+  region  = var.region
+}
+
+# create a node template
+
+resource "google_compute_forwarding_rule" "default" {
+  name        = "my-forwarding-rule"
+  target      = google_compute_instance.vm_instance.self_link
+  ip_protocol = "TCP"
+  port_range  = "443"
+  ip_address  = google_compute_address.default.address
+  subnetwork = google_compute_subnetwork.default.self_link
+}
+

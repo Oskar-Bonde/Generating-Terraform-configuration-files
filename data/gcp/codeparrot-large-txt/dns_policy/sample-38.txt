@@ -13,8 +13,14 @@ provider "google" {
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
   name = "dns-policy"
-  zone = "europe-west1-b"
-  type = "A"
+
+  # DNS
+  zone_name = "europe-west1-b"
+
+  # recordsets
+  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+
+  # records
   records = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
 }
 

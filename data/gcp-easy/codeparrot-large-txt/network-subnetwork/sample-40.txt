@@ -12,13 +12,13 @@ provider "google" {
 
 # create compute network
 resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
+  name = "my-network-${local.name_suffix}"
   auto_create_subnetworks = "false"
 }
 
 # create compute subnetwork
 resource "google_compute_subnetwork" "default" {
-  name = "my-subnetwork-${random_suffix}"
+  name = "my-subnet-${local.name_suffix}"
   ip_cidr_range = "10.0.0.0/16"
   network = google_compute_network.default.self_link
 }

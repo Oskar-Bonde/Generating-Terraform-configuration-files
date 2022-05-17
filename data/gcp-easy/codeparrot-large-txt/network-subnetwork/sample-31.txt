@@ -13,7 +13,7 @@ provider "google" {
 # create compute network
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  auto_create_subnetworks = false
 }
 
 # create compute subnetwork

@@ -1,0 +1,73 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create a node template
+resource "google_compute_node_template" "name_0" {
+  name = "my-node-template"
+  region = "us-central1"
+  node_type = "n1-standard-1"
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create a compute node group resource
+resource "google_compute_node_group_manager" "name_1" {
+  name = "my-node-group-manager"
+  zone = "us-central1-a"
+  base_instance_name = "vm-node-template"
+  version = "1.9.1"
+  target_size = 1
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.health_check.self_link
+    initial_delay_sec = 30
+  }
+
+  management {
+    auto_repair  = "true"
+    auto_upgrade = "true"
+  }
+
+  os_profile {
+    computer_name  = "debian-9"
+    admin_username = "adminUser"
+    admin_password = "Password1234!"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = true
+    ssh_keys {
+      path     = "/home/ubuntu/.ssh/authorized_keys"
+      key_data = "${file(var.public_key_path)}"
+    }
+  }
+
+  tags = ["foo", "bar"]
+
+  metadata = {
+    foo = "bar"
+  }
+
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
+}
+

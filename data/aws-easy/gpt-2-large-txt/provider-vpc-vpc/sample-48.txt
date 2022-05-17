@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block
+resource "aws_instance" "ec2demo-nodes" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Provider block
+resource "aws_instance" "ec2demo-nodes-egress" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource block to Create VPC
+resource "aws_instance" "ec2demo-nodes-egress-egress" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource block with VPC
+resource "aws_instance" "ec2demo-nodes-ingress" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

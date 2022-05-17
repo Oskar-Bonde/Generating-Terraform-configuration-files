@@ -12,47 +12,30 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "my-dns-policy"
+  name = "dns-policy"
+
+  # DNS zone to allow SSH access
   zone = "europe-west1-b"
 
-  # DNS policy
-  rule {
-    action = "accept"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "accept"
-    }
-  }
+  # DNS name to allow HTTP access
+  name_servers = ["AmazonProvidedDNS"]
 
   # allow outbound traffic
-  rule {
-    action = "deny"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "deny"
-    }
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
   }
 
-  # allow inbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
-    }
+  # allow inbound traffic from all addresses
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
   }
 
-  # allow inbound traffic
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      action = "allow"
-    }
+  # allow all outbound traffic
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
   }
 }
 

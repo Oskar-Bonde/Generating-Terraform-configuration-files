@@ -20,13 +20,11 @@ resource "google_compute_network" "default" {
 resource "google_compute_firewall" "default" {
   name = "my-firewall-${random_suffix}"
   network = "default"
-
+  source_ranges = ["10.0.0.0/8"]
   allow {
     protocol = "tcp"
     ports = ["80"]
   }
-
-  source_ranges = ["0.0.0.0/0"]
   target_tags = ["web"]
 }
 

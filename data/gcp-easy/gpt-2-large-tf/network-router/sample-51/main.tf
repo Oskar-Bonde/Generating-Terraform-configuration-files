@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google-beta" {
+  {{if. google_compute_instance.vm_instance)
+  {{if. google_compute_instance.vm_instance_disk_size)
+  {{if. google_compute_instance.vm_instance_disk_type)
+  {{if. google_compute_instance.vm_instance_disk_template)
+  {{if. google_compute_instance.vm_instance_disk_template_http_proxy)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_http_proxy)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_http_proxy_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_http_proxy_proxy_address_count)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_http_proxy_proxy_address_port)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_address_port)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_address_port_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_address_port_address_port_address_port)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_address_port_https_proxy)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_https_proxy_http_proxy_port_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_https_proxy_http_proxy_port_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_https_proxy_https_proxy_http_proxy_port_address)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_http_proxy_port_https_proxy_https_proxy_https_proxy_https_proxy_proxy_proxy)
+  {{if. google_compute_instance.vm_instance_disk_template_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_https_proxy_proxy_proxy_
+}
+
+# create compute network resource
+}
+
+# resource block: create a compute router
+}
+

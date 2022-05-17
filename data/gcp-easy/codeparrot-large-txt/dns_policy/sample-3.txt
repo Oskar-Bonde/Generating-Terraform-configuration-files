@@ -12,14 +12,16 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${random_suffix}"
-  zone        = "us-central1-a"
-  description = "Terraform dns policy"
-  project     = var.project_id
-  # allow outbound tcp traffic on all ports
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
+
+  # DNS policy
+  rule {
+    action = "deny(403)"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
   }
 }
 

@@ -12,8 +12,7 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "name_0" {
-  name_prefix = "node-template-"
-  machine_type = "n1-node-96-624"
+  name = "my-node-template"
 
   node_type = "n1-node-96-624"
 
@@ -25,27 +24,24 @@ resource "google_compute_node_template" "name_0" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
+# create a compute node group resource. Set size to 1 and use the node template resource id.
 resource "google_compute_node_template_group" "name_1" {
-  name_prefix = "node-template-group-"
-  machine_type = "n1-node-96-624"
+  name = "my-node-template-group"
 
-  node_template {
-    id = "template-node-template"
-    type = "node-template"
-    can_ip_forward = true
-    tags = ["ubuntu-os-cloud", "debian-10"]
-  }
+  node_template = google_compute_node_template.name_0.id
 
+  # Set a network interface if a network interface is not specified
   network_interface {
     network = "default"
-    access_config {
-    }
   }
+
+  # Set a name
+  name = "my-node-template-group-${local.name_suffix}"
+
+  # Set a node count
+  node_count = 1
 }
 

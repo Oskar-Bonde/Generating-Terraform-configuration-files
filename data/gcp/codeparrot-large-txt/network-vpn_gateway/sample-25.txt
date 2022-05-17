@@ -13,19 +13,11 @@ provider "google" {
 # create compute network with global routing mode and set auto create subnetworks to false
 resource "google_compute_network" "default" {
   name = "my-network"
-  auto_create_subnetworks = false
 }
 
-# resource compute ha vpn gateway, in the us central1 region and use the compute network idvariable to create a subnet
-resource "google_compute_ha_vpn_gateway" "ha_gateway1" {
-  name = "ha-vpn-1"
+# resource compute ha vpn gateway, in the us central1 region and use the compute network id as the internal gateway
+resource "google_compute_ha_vpn_gateway" "default" {
+  name    = "ha-vpn-${local.name_suffix}"
   network = google_compute_network.default.id
-  region = "us-central1"
-  vpn_gateway_interface = "gke-1"
-  # Set the vpn_gateway_interface to be a dynamic resource
-  # only valid for the region
-  vpn_gateway_interface = "dynamic-1"
-  # Set the igw_address to be a dynamic resource
-  igw_address = "dynamic-1.1.1.1"
 }
 

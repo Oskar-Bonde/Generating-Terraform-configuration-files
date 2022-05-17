@@ -15,23 +15,6 @@ resource "google_ml_engine_model" "my_model" {
   name = "my_model"
   region = "us-central1"
   description = "my model"
-  training_budget = "2000"
-  is_causal = true
-  region_name = "us-central1"
-  labels = {
-    "my_model" = "my_model"
-  }
-  network_config {
-    network = "default"
-    access_config {
-      # add external ip to fetch packages
-    }
-  }
-  deletion_protection = false
-  labels_config {
-    "my_model" = "my_model"
-  }
-  labels_dimension = "1"
-  regional_md5 = "md5"
+  tags = ["foo", "bar"]
 }
 

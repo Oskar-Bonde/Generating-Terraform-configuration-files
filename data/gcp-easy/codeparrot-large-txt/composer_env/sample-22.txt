@@ -17,13 +17,9 @@ resource "google_composer_environment" "env" {
   project  = google_project.project.project_id
 
   composer_env {
-    image = "debian-cloud/debian-9"
+    parameters = {
+      input_topic = google_pubsub_topic.topic.id
+    }
   }
-
-  depends_on = [
-    google_project_service.composer_api,
-    google_project_service.composer_container_api,
-    google_project_service.composer_service_container_api
-  ]
 }
 

@@ -16,9 +16,9 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# create compute firewallvariable
-resource "google_compute_firewall_rule" "default" {
-  name = "my-firewall-rule-${random_suffix}"
+# create compute firewall
+resource "google_compute_firewall" "default" {
+  name = "my-firewall-${random_suffix}"
   network = "default"
 
   allow {
@@ -27,6 +27,6 @@ resource "google_compute_firewall_rule" "default" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["my-tag"]
+  target_tags = ["web"]
 }
 

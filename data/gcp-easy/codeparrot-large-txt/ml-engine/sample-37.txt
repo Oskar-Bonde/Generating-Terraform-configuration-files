@@ -11,17 +11,10 @@ provider "google" {
 }
 
 # ml engine model resource
-resource "google_ml_engine_model" "default" {
-  name = "my-ml-engine-model"
+resource "google_ml_engine_model" "my_model" {
+  name = "my_model"
   region = "us-central1"
-  initial_node_count = 1
-  max_pods_per_node = 1
-  min_replicas = 1
-  num_nodes = 1
-  machine_type = "n1-standard-1"
-  disk_size_gb = 100
-  disk_type = "pd-standard"
-  service_account_email = google_service_account.default.email
+  description = "my model"
   tags = ["foo", "bar"]
 }
 

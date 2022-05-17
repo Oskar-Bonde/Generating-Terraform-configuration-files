@@ -10,96 +10,100 @@ terraform {
 provider "google" {
 }
 
-# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2
+# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2 (Ubuntu Server 16.04 LTS, SDD Volume Type)
 resource "google_composer_environment" "composer-environment" {
-  name     = "composer-environment-${random_suffix}"
+  name     = "composer-environment"
   region   = "us-central1"
   project  = var.project_id
   composer = google_composer_environment.composer-environment.id
 
-  # Add a default network interface to allow SSH access only from the host
+  # Add a network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    access_config {
-      // Ephemeral IP
-    }
+    address    = "10.0.1.0/24"
   }
 
-  # Add a default network interface to allow SSH access from the VM
+  # Add a security group to the instance
+  security_groups = [
+    google_compute_security_group.default.id,
+    google_compute_security_group.ssh-access.id,
+  ]
+
+  # Add a default network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.10"
+    address    = "10.0.1.1"
   }
 
-  # Add a default network interface to allow SSH access from the VM
+  # Add a subnet to the instance
+  subnet = google_compute_subnetwork.subnet.id
+  subnet = google_compute_subnetwork.subnet.id
+
+  # Create a new instance
+  instance_template = google_compute_instance_template.vm_instance.id
+
+  # Configure the instance
+  instance_type          = "f1-micro"
+  instance_name           = "my-instance"
+  instance_tags           = ["foo", "bar"]
+
+  # Set the network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.11"
+    address    = "10.0.1.2"
   }
 
-  # Add a default network interface to allow SSH access from the VM
+  # Set the security group to the instance
+  security_groups = [
+    google_compute_security_group.default.id,
+    google_compute_security_group.ssh-access.id,
+  ]
+
+  # Set the default network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.12"
+    address    = "10.0.1.3"
   }
 
-  # Add a default network interface to allow SSH access from the VM
+  # Set the subnet to the instance
+  subnet = google_compute_subnetwork.subnet.id
+  subnet = google_compute_subnetwork.subnet.id
+
+  # Create a new instance
+  instance_template = google_compute_instance_template.vm_instance.id
+
+  # Configure the instance
+  instance_type          = "f1-micro"
+  instance_name           = "my-instance"
+  instance_tags           = ["foo", "bar"]
+
+  # Set the network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.13"
+    address    = "10.0.1.4"
   }
 
-  # Add a default network interface to allow SSH access from the VM
+  # Set the security group to the instance
+  security_groups = [
+    google_compute_security_group.default.id,
+    google_compute_security_group.ssh-access.id,
+  ]
+
+  # Set the default network interface to the instance
   network_interface {
     subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.14"
+    address    = "10.0.1.5"
   }
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.15"
-  }
+  # Set the subnet to the instance
+  subnet = google_compute_subnetwork.subnet.id
+  subnet = google_compute_subnetwork.subnet.id
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.16"
-  }
+  # Create a new instance
+  instance_template = google_compute_instance_template.vm_instance.id
 
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.17"
-  }
-
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.18"
-  }
-
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.19"
-  }
-
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.20"
-  }
-
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-    network_ip = "10.10.10.21"
-  }
-
-  # Add a default network interface to allow SSH access from the VM
-  network_interface {
-    subnetwork = google_compute_subnetwork.subnet.id
-   
+  # Configure the instance
+  instance_type          = "f1-micro"
+  instance
 }
 

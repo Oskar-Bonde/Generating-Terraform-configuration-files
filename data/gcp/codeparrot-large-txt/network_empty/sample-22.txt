@@ -11,7 +11,7 @@ provider "google" {
 }
 
 # a google compute network resource with name terraform network
-resource "google_compute_network" "my_network" {
-  name = "my-network-${random_suffix}"
+resource "google_compute_network" "default" {
+  name = "my-network"
 }
 

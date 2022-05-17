@@ -12,16 +12,24 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone_name = "europe-west1-b"
+  name = "dns-policy"
 
-  # DNS zone name where the instance is created
-  zone_dns_name = "dsp-envs"
+  # DNS
+  rule {
+    action = "accept"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
 
-  # DNS record name where the instance is created
-  record_name = "dsp-envs"
-
-  # DNS record name to allow DNS lookups
-  rrdatas = ["${google_compute_instance.vm_instance.network_interface.0.access_config.0.assigned_nat_ip}"]
+  # allow outbound traffic
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
 }
 

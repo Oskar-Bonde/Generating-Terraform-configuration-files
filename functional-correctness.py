@@ -61,7 +61,7 @@ def remove_identifiers(txt_file):
         text = text.replace(k, reference[k])
     return text
     
-def clean_terraform(model):
+def clean_terraform(model, n_samples=None):
     for Provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
         print(f'Cleaning {Provider}')
         for task in sorted(os.listdir(f'data/{Provider}/human-tf')):
@@ -69,7 +69,8 @@ def clean_terraform(model):
                 try:
                     shutil.rmtree(f'data/{Provider}/human-tf/{task}/.terraform')
                 except:
-                    print(f'Error {Provider}/human-tf/{task}/.terraform')
+                    k = 1
+                    #print(f'Error in {Provider}/human-tf/{task}/.terraform')
             if os.path.exists(f'data/{Provider}/human-tf/{task}/binary'):
                 os.remove(f'data/{Provider}/human-tf/{task}/binary')
             if os.path.exists(f'data/{Provider}/human-tf/{task}/.terraform.lock.hcl'):
@@ -81,11 +82,25 @@ def clean_terraform(model):
                     try:
                         shutil.rmtree(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform/')
                     except:
-                        print(f'Error in {Provider}/{model}-tf/{task}/{sample}/.terraform/')
+                        k = 1
+                        #print(f'Error in {Provider}/{model}-tf/{task}/{sample}/.terraform/')
                 if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/binary'):
                     os.remove(f'data/{Provider}/{model}-tf/{task}/{sample}/binary')
                 if os.path.exists(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform.lock.hcl'):
                     os.remove(f'data/{Provider}/{model}-tf/{task}/{sample}/.terraform.lock.hcl')
+        
+        if n_samples != None:
+            for task in sorted(os.listdir(f'data/{Provider}/{model}-tf')):
+                i = 0
+                for sample in sorted(os.listdir(f'data/{Provider}/{model}-tf/{task}')):         
+                    if i >= n_samples:
+                        try:
+                            shutil.rmtree(f'data/{Provider}/{model}-tf/{task}/{sample}')
+                        except:
+                            print(f'Error data/{Provider}/{model}-tf/{task}/{sample}')
+                        if os.path.exists(f'data/{Provider}/{model}-txt/{task}/{sample}.txt'):
+                            os.remove(f'data/{Provider}/{model}-txt/{task}/{sample}.txt')
+                    i += 1       
 
 def clean_json(input):
     input = re.sub('"(tags|tags_all)":.+?},','', input)
@@ -100,14 +115,14 @@ def remove_brackets(input):
     input = re.sub('\[.+\]','', input)
     return input
 
-def pass1(provider, model):
+def pass1(provider, model, n_samples):
     out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
     task_names = []
     for task in sorted(os.listdir(f'data/{provider}/human-tf')):
         task_names.append(task)
-        n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
+        #n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
         # find the number of duplicates
         i = 0
         sample_to_int = {}
@@ -119,11 +134,15 @@ def pass1(provider, model):
                 try:
                     distr[sample_to_int[duplicate[:-4]]]+=1
                 except:
+                    shutil.rmtree(f'data/{provider}/{model}-tf/{task}/{sample}')
                     sys.exit(f'data/{provider}/{model}-tf/{task}/{sample}')
             else:
                 distr[i] +=1
             i+=1
+            if i == n_samples:
+                break
         # calculate success rate on tasks
+        i == 0
         errors = []
         human_file = open(f'data/{provider}/human-tf/{task}/plan.json', 'r', encoding='utf-8', errors='ignore')
         human_json = human_file.read()
@@ -138,6 +157,9 @@ def pass1(provider, model):
                     success_rate[sample_to_int[sample]] = distr[sample_to_int[sample]]
                 else: 
                     errors.append(int(sample[7:]))
+            i += 1
+            if i == n_samples:
+                break
 
         total_success_rate.append(np.mean(success_rate))
         out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
@@ -151,14 +173,14 @@ def clean_plan(plan):
     return cleaned_plan
             
 
-def compile_check(provider, model):
+def compile_check(provider, model, n_samples):
     task_names = []
     out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
     out_txt.write('Task | Success rate | Errors\n')
     total_success_rate = []
     for task in sorted(os.listdir(f'data/{provider}/human-tf')):
         task_names.append(task)
-        n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
+        #n_samples = len(os.listdir(f'data/{provider}/{model}-tf/{task}'))
         # find the number of duplicates
         i = 0
         sample_to_int = {}
@@ -174,6 +196,8 @@ def compile_check(provider, model):
             else:
                 distr[i] +=1
             i+=1
+            if i == n_samples:
+                break
         # calculate success rate on tasks
         success_rate=[0]*n_samples
         t=0
@@ -199,8 +223,10 @@ def compile_check(provider, model):
                         correct = 0
                         if int(sample[7:]) not in errors:
                                 errors.append(int(sample[7:]))
-            success_rate[t] = correct
+            success_rate[sample_to_int[sample]] = correct
             t +=1
+            if t ==n_samples:
+                break
 
         if success_rate == []: success_rate=[0]
         total_success_rate.append(np.mean(success_rate))
@@ -251,15 +277,16 @@ def make_json_model(provider, model):
                     tf_file.close()
 
 if __name__ == "__main__":
-    model = 'codeparrot-small'
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: #'azure', 'azure-easy'
-        print(f'-----------------------------------------\n{provider}')
-        make_json_human(provider)
-        make_json_model(provider, model)
-        
-        easy = True if 'easy' in provider else False
-        if not easy:
-            pass1(provider, model)
-        else:
-            compile_check(provider, model)
-    clean_terraform(model)
+    #model = 'codeparrot-small'
+    n_samples = 50
+    for model in ['codex', 'codeparrot-large',  'gpt-2-large', 'gpt-2-small']: #'codeparrot-small',
+        clean_terraform(model, n_samples)
+        for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+            print(f'-----------------------------------------\n{provider}')
+            #make_json_human(provider)
+            #make_json_model(provider, model)
+            easy = True if 'easy' in provider else False
+            if not easy:
+                pass1(provider, model, n_samples)
+            else:
+                compile_check(provider, model, n_samples)    

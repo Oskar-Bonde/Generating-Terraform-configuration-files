@@ -12,20 +12,33 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS
-  enable_inbound_forwarding = true
-  enable_logging = true
+  # DNS zone to allow SSH from
+    policy = "accept"
 
-  # Cloudflare DNS zone
-  dns_name = "my-cloudflare.com."
+  # allow outbound traffic on all ports
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
 
-  # Cloudflare record sets
-  managed_zone = "europe-west1-b"
+  # allow inbound traffic from a specific port
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
 
-  # Cloudflare record sets
-  managed_zone_ttl = "3600"
+  # allow inbound traffic from a specific port
+  allow {
+    protocol = "udp"
+    ports    = ["22"]
+  }
+
+  # allow all outbound traffic
+  allow {
+    protocol = "all"
+  }
 }
 

@@ -1,0 +1,18 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create google notebooks enviroment
+resource "google_notebooks_enviroment" "enviroment" {
+  name = "notebooks-enviroment"
+  enviroment_id = "my-enviroment"
+}
+

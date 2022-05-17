@@ -23,23 +23,22 @@ resource "google_compute_node_template" "name_0" {
   }
 
   network_interface {
-    network = "default"    
-    access_config {
-    }
+    network = "default"
   }
 }
 
 # create a compute node group resource. Set size to 1 and use the node template resource id
 resource "google_compute_node_template_node_group" "name_1" {
-  name = "my-node-template-node-group-${local.name_suffix}"
-  zone = "europe-west1-b"
+  name = "my-node-group-1"
 
   node_template = google_compute_node_template.name_0.id
 
+  node_groups = [
+    "my-node-group-1",
+  ]
+
   network_interface {
-    network = "default"    
-    access_config {
-    }
+    network = "default"
   }
 }
 

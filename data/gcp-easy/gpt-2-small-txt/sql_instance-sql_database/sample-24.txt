@@ -1,0 +1,31 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# resource block, sql database instance
+resource "google_sql_database" "vm_instance" {
+  name = "my-sql-database-%{random_suffix}"
+  region = "us-central1"
+  database_version = "POSTGRES_12"
+  settings {
+    tier = "db-f1-micro"
+    tier_name = "db-f1-micro"
+    tier_database_version = "POSTGRES_12"
+  }
+  deletion_protection = false
+  deletion_protection_policy {
+    type = "Delete"
+  }
+}
+
+# create a sql database
+}
+

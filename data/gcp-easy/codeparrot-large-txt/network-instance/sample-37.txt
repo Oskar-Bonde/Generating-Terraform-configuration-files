@@ -16,8 +16,8 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# a compute instance for the network
-resource "google_compute_instance" "vm_instance2" {
+# a compute instance is defined as a "default"
+resource "google_compute_instance" "vm_instance" {
   name = "my-compute-instance-${random_suffix}"
   machine_type = "f1-micro"
 

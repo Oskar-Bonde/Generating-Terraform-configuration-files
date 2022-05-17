@@ -13,7 +13,7 @@ provider "google" {
 # a compute network resource
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
-  auto_create_subnetworks = "false"
+  auto_create_subnetworks = false
 }
 
 # compute route resource
@@ -22,5 +22,7 @@ resource "google_compute_route" "default" {
   network     = google_compute_network.default.id
   dest_range  = "0.0.0.0/0"
   priority    = 1000
+
+  next_hop_vpn_tunnel = google_compute_vpn_tunnel.default.id
 }
 

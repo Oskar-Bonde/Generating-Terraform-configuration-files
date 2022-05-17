@@ -12,15 +12,14 @@ provider "google" {
 
 # data block with google compute zones
 data "google_compute_zones" "available" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
+  project = var.project_id
 }
 
 # make a compute instance
 resource "google_compute_instance" "vm_instance2" {
-  name         = "my-compute-instance-2-%%{random_suffix}"
+  name = "my-compute-instance-2-%%{random_suffix}"
   machine_type = "f1-micro"
-  zone         = data.google_compute_zones.available.names[0]
+
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"

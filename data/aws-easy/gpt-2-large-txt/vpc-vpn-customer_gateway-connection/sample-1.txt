@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block with AWS provider
+resource "aws_instance" "ec2demo-nodes" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a AWS VPC resource
+resource "aws_instance" "ec2demo-nodes-egress" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# make a vpn gateway
+resource "aws_instance" "ec2demo-nodes-egress-egress-all" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# create a customer gateway
+resource "aws_instance" "ec2demo-nodes-egress-all-egress" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+
+# make a vpn connection gateway
+resource "aws_instance" "ec2demo-nodes-egress-all-egress-all" {
+  ami           = "ami-0ff8a91507f77f867"
+  instance_type = "t2.micro"
+}
+

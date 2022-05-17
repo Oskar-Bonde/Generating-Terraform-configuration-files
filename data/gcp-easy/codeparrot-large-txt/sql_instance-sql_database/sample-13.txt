@@ -11,11 +11,11 @@ provider "google" {
 }
 
 # resource block, sql database instance
-resource "google_sql_database_instance" "db_instance" {
-  name = "my-sql-db-instance"
+resource "google_sql_database_instance" "instance" {
+  name = "my-sql-database-instance"
   region = "us-central1"
 
-  database_version = "POSTGRES_12"
+  database_version = "POSTGRES_13"
 
   settings {
     tier = "db-f1-micro"
@@ -23,7 +23,7 @@ resource "google_sql_database_instance" "db_instance" {
     ip_configuration {
       authorized_networks {
         name = "PublicIp"
-        value = "192.168.0.10"
+        value = "10.0.0.5"
       }
     }
 
@@ -38,118 +38,113 @@ resource "google_sql_database_instance" "db_instance" {
     }
 
     database_flags {
-      name  = "max_connections_per_instance"
-      value = "10"
+      name  = "user_autovacuum"
+      value = "on"
     }
 
     database_flags {
-      name  = "backup_retention_period"
-      value = "7"
+      name  = "log_checkpoints"
+      value = "on"
     }
 
     database_flags {
-      name  = "backup_window"
-      value = "02:00-03:00"
-    }
-
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
+      name  = "zone_awareness_mode"
+      value = "off"
     }
 
     database_flags {
       name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
+      value = "sun:10:30-sun:10:30"
     }
 
-    database_flags {
-      name  = "backup_window"
-      value = "sun:04:30-sun:04:30"
+    disk_autoresize = "true"
+
+    ip_configuration {
+      ipv4_enabled    = "true"
+      private_network = "projects/${var.project_id}/global/networks/default"
     }
 
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
+    # Add an external IP to allow SSH access
+    access_config {
+      # add external ip to allow SSH access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
+    # Add an external IP to allow HTTP access
+    access_config {
+      # add external ip to allow HTTP access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "backup_window"
-      value = "sun:04:30-sun:04:30"
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "backup_window"
-      value = "sun:04:30-sun:04:30"
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config" {
+        for_each = var.access_config_parameters
+        content {
+          nat_ip       = access_config.value.nat_ip
+        }
+      }
     }
 
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
-    }
-
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
-    }
-
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_retention_period"
-      value = "10"
-    }
-
-    database_flags {
-      name  = "maintenance_window"
-      value = "sun:04:30-sun:04:30"
-    }
-
-    database_flags {
-      name  = "backup_window"
-      value
+    # Add an external IP to allow HTTPS access
+    access_config {
+      # add external ip to allow HTTPS access
+      dynamic "access_config
 }
 
 # create a sql database

@@ -1,0 +1,55 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure provider
+
+resource "azurerm_public_ip" "rg" {
+  name                         = "myTFResourceGroup"
+  location                     = "westus2"
+  resource_group_name          = azurerm_resource_group.rg.name
+  public_ip_address_allocation = "static"
+}
+
+# create resource group
+resource "azurerm_network_security_group" "rg" {
+  name                = "myTFResourceGroup"
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+}
+
+# data block, azurem client config
+resource "azurerm_network_security_rule" "rg" {
+  name                = "myTFResourceGroup-egress"
+  priority            = 100
+  direction         = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+}
+
+# create bot channels registration resource
+resource "azurerm_network_security_rule" "rg" {
+  name                = "myTFResourceGroup-egress-all-0"
+  priority            = 100
+  direction         = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_id = azurerm_network_security_group.rg.id
+}
+

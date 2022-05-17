@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block with an EC2 instance
+resource "aws_instance" "ec2demo_rd" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create a workspace ip group
+resource "aws_key_pair" "keypair" {
+  key_name   = "keypair"
+  public_key = "${file(var.public_key_path)}"
+}
+

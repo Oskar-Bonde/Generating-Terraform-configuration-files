@@ -11,16 +11,17 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_node_template" "node_template" {
-  name = "my-node-template-${random_suffix}"
-  region = "us-central1"
-
-  node_type = "n1-standard-1"
+resource "google_compute_instance_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+  can_ip_forward = true
 
   disk {
     source_image = "debian-cloud/debian-9"
     auto_delete  = true
     boot         = true
+    type         = "pd-standard"
+    disk_size_gb = 50
   }
 
   network_interface {

@@ -12,11 +12,12 @@ provider "google" {
 
 # create a notebook instance 
 resource "google_notebooks_instance" "notebook_instance" {
-  name = "my-notebook-instance-%%{random_suffix}"
+  name = "my-notebook-instance-name-%{random_suffix}"
   machine_type = "f1-micro"
 
-  notebook_contents {
-    notebook_name = "my-notebook-instance"
+  notebook_image {
+    source = "debian-cloud/debian-9"
+    auto_delete = true
   }
 
   network_interface {

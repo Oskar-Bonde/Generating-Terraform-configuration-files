@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS in us-east-1 region
+resource "aws_instance" "ec2demo-instance" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Resource, create AWS ELB that listens for instance port 80 and lb port 80
+resource "aws_instance" "ec2demo-instance-public" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

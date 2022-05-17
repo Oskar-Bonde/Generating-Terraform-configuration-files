@@ -1,0 +1,21 @@
+resource "azurerm_resource_group" "rg_user" {
+  name     = "myTFResourceGroupuser"
+  location = "westus2"
+}
+
+# Provider block with azure
+resource "azurerm_resource_group" "rg_password" {
+  name     = "myTFResourceGrouppassword"
+  location = "westus2"
+}
+
+# create resource group
+resource "azurerm_resource_
+}
+
+# data block, azurem client config
+}
+
+# create bot channels registration resource
+}
+

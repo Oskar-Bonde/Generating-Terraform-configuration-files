@@ -1,0 +1,12 @@
+provider
+resource "aws_instance" "ec2demo-a" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# AWS provider block
+}
+
+# Create Security Group
+}
+

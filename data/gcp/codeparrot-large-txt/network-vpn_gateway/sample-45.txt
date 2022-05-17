@@ -11,14 +11,16 @@ provider "google" {
 }
 
 # create compute network with global routing mode and set auto create subnetworks to false
-resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
+resource "google_compute_network" "my_network" {
+  name = "my-network"
   auto_create_subnetworks = false
 }
 
-# resource compute ha vpn gateway, in the us central1 region and use the compute network id
-resource "google_compute_ha_vpn_gateway" "ha_gateway" {
-  name    = "ha-vpn-${random_suffix}"
-  network = google_compute_network.default.id
+# resource compute ha vpn gateway, in the us central1 region and use the compute network id as a backend
+resource "google_compute_ha_vpn_gateway" "my_ha_gateway" {
+  name    = "my-ha-vpn-gw"
+  network = google_compute_network.my_network.id
+  region  = "us-central1"
+  vpn_gateway = google_compute_ha_vpn_gateway.my_ha_gateway.id
 }
 

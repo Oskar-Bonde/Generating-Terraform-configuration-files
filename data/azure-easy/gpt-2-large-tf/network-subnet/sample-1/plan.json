@@ -1,0 +1,2 @@
+{"@level":"info","@message":"Terraform 1.1.7","@module":"terraform.ui","@timestamp":"2022-05-16T10:27:48.116177+02:00","terraform":"1.1.7","type":"version","ui":"1.0"}
+{"@level":"error","@message":"Error: Cycle: azurerm_virtual_machine.name_0, azurerm_subnet.name_3, azurerm_network_interface.name_2","@module":"terraform.ui","@timestamp":"2022-05-16T10:27:50.596486+02:00","diagnostic":{"severity":"error","summary":"Cycle: azurerm_virtual_machine.name_0, azurerm_subnet.name_3, azurerm_network_interface.name_2","detail":""},"type":"diagnostic"}

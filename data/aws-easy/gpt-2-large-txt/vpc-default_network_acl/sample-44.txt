@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS
+resource "aws_instance" "ec2demo-instance" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# Create a AWS VPC resource
+resource "aws_instance" "ec2demo-instance-public" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create a default network acl
+resource "aws_instance" "ec2demo-instance-public-internal" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

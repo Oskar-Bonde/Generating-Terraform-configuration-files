@@ -14,7 +14,7 @@ provider "google" {
 resource "google_ml_engine_model" "default" {
   name = "my-ml-engine-model"
   region = "us-central1"
-  description = "my model"
+  description = "my-ml-engine-model"
   tags = ["foo", "bar"]
 }
 

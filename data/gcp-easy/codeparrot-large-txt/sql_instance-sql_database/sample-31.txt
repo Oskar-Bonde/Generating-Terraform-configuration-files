@@ -17,11 +17,7 @@ resource "google_sql_database_instance" "instance" {
   database_version = "POSTGRES_12"
   settings {
     tier = "db-f1-micro"
-    backup_configuration {
-      enabled = true
-    }
   }
-  deletion_protection =  "true"
 }
 
 # create a sql database
@@ -29,5 +25,6 @@ resource "google_sql_database" "db" {
   name     = "my-sql-database-${random_suffix}"
   instance = google_sql_database_instance.instance.name
   charset   = "utf8mb4"
+  collation = "utf8mb4_unicode_ci"
 }
 

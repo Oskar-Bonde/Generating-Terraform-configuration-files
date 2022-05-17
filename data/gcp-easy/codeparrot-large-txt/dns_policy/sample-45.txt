@@ -12,36 +12,19 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone = "us-central1-a"
+  name        = "dns-policy-${random_suffix}"
+  zone_name     = "example.com."
+  force_destroy = true
 
-  # DNS policy
-  network_tier = "STANDARD"
-  project = "debian-cloud"
-
-  # DNS zone
-  domain_name_servers = ["AmazonProvidedDNS"]
-
-  # allow outbound tcp traffic on all ports
-  allow {
-    protocol = "tcp"
-    ports = ["22"]
+  rules {
+    # allow outbound traffic
+    allow_access = true
+    protocol    = "tcp"
+    ports       = ["22", "80", "443"]
   }
 
-  # allow outbound udp traffic on a port range
-  allow {
-    protocol = "udp"
-    ports = ["1-65535"]
-  }
-
-  # allow outbound icmp traffic on a port range
-  allow {
-    protocol = "icmp"
-  }
-
-  # allow outbound any outbound traffic
-  allow {
-    protocol = "any"
+  networks {
+    network_url = google_compute_network.my-custom-network.id
   }
 }
 

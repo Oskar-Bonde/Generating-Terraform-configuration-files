@@ -1,0 +1,49 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "myresources"
+  location = "westus2"
+}
+
+# create cognitive account resource. Of kind SpeechServices and sku name S0. Use name and location from resource group
+resource "azurerm_lb_backend_address_pool" "name_1" {
+  name                = "rg-lb-backend-pool"
+  resource_group_name = azurerm_resource_group.rg.name
+  loadbalancer_id     = azurerm_lb.rg.id
+  protocol            = "HTTP"
+  port                = 80
+  protocol_type          = "HTTP"
+  protocol_type_size = "HTTP"
+  port_name            = "http"
+  protocol_port_name  = "http"
+  load_balancing_scheme = "EXTERNAL"
+  load_balancing_scheme_name = "EXTERNAL"
+  load_balancing_scheme_value = "EXTERNAL"
+  load_balancing_scheme_value_path = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_name = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address_pool_value_path_per_address = "EXTERNAL"
+  load_balancing_scheme_value_path_per_address_pool_value_path_per_address
+}
+

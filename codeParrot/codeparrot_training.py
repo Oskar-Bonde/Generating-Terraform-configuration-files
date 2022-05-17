@@ -195,7 +195,7 @@ if accelerator.is_main_process:
 model = AutoModelForCausalLM.from_pretrained(args.model_ckpt)
 if args.gradient_checkpointing:
     model.gradient_checkpointing_enable()
-tokenizer = AutoTokenizer.from_pretrained('lvwerra/codeparrot')
+tokenizer = AutoTokenizer.from_pretrained(args.model_ckpt)
 
 # Load dataset and dataloader
 train_dataloader, eval_dataloader = create_dataloaders(args)

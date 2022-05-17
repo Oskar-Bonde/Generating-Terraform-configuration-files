@@ -12,27 +12,15 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${local.name_suffix}"
-  zone = "us-central1-a"
-  description = "DNS policy for ${local.name_suffix}"
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
 
-  # DNS policy
-  rule {
-    action = "deny"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow outbound"
-    }
-  }
+  network_tier = "STANDARD"
+  project      = var.project_id
+  priority    = "100"
 
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "allow outbound"
-    }
+  dns_policy {
+    policy_type = "POLICY_PERFORMANCE"
   }
 }
 

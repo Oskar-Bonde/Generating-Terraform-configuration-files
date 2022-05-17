@@ -10,20 +10,123 @@ terraform {
 provider "google" {
 }
 
-# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 asia-east1 to use the latest official release image
+# create google notebooks enviroment, use container image located in repository gcr.io/deeplearning-platform-release/base-cpu. Use name notebooks-environment and location europe west4 apex to specify the region where the notebook is located.
 resource "google_notebooks_instance" "name_0" {
-  name = "notebooks-instance-${random_suffix}"
-  machine_type = "europe-west4-a"
+  name = "notebooks-instance"
   location = "europe-west4-a"
-  machine_image {
-    repository = "gcr.io/deeplearning-platform-release/base-cpu"
+  machine_type = "e2-medium"
+  tags = ["notebooks"]
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-9"
   }
-  machine_image {
-    repository = "gcr.io/gcr.io/deeplearning-platform-release/base-cpu"
+
+  network_interface {
+    network = "default"
   }
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-9"
   }
-  depends_on = [google_project_service.compute]
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  # create a persistent disk from a public bucket
+  disk {
+    source = "data.google_storage_image.notebooks-public-image-family/debian-10"
 }
 

@@ -12,9 +12,9 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "name_0" {
-  name_prefix = "n1-node-${local.name_suffix}"
-  machine_type   = "n1-node-96-624"
-  can_ip_forward = true
+  name = "my-node-template"
+
+  node_type = "n1-node-96-624"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -24,12 +24,10 @@ resource "google_compute_node_template" "name_0" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 
   service_account {
@@ -37,21 +35,19 @@ resource "google_compute_node_template" "name_0" {
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
-resource "google_compute_node_template_node_group" "name_1" {
-  name_prefix = "node-group-${local.name_suffix}"
+# create a compute node group resource. Set size to 1 and use the node template resource id.
+resource "google_compute_node_template_instance" "name_1" {
+  name = "my-node-template-instance"
   zone = "us-central1-a"
 
   node_template = google_compute_node_template.name_0.id
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 
   service_account {

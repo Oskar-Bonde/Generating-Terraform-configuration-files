@@ -14,8 +14,19 @@ provider "google" {
 resource "google_compute_network" "default" {
   name = "my-network-${random_suffix}"
   auto_create_subnetworks = "false"
+  routing_mode = "REGIONAL"
+  project = google_project.project.project_id
+
+  depends_on = [google_project_service.compute]
 }
 
 # resource block: create a compute router
+resource "google_compute_router" "default" {
+  name = "my-router-${random_suffix}"
+  network = google_compute_network.default.self_link
+
+  bgp {
+    asn = 64514
+  }
 }
 

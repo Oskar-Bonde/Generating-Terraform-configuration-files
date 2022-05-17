@@ -20,9 +20,5 @@ resource "google_storage_bucket" "bucket" {
 resource "google_compute_backend_bucket" "bucket" {
   name = "my-bucket-${random_suffix}"
   bucket_name = google_storage_bucket.bucket.name
-  enable_cdn  = true
-  cdn_policy {
-    cache_mode = "CACHE_ALL_STATIC"
-  }
 }
 

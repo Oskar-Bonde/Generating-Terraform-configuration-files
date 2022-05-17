@@ -12,143 +12,62 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${random_suffix}"
-  zone = "us-central1-a"
-  description = "Terraform dns policy"
-  project = "my-project-id"
-  # allow outbound tcp traffic on all ports
-  allow {
-    ports = ["80", "443"]
+  name        = "dns-policy-${local.name_suffix}"
+  enable_inbound_forwarding = true
+
+  policy_type = "SINGLE_IP_INTERNALLY_REDUNDANT"
+
+  networks {
+    network_url = google_compute_network.my-custom-network.id
   }
-  network_tier = "PREMIUM"
-  # allow outbound udp traffic on a port range
+
+  # Reject all other networks
   allow {
-    ports = ["53"]
+    protocol = "tcp"
+    ports    = ["80", "443"]
   }
-  # allow outbound tcp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "udp"
+    ports    = ["443"]
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "icmp"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "esp"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "ah"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "sctp"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "udp-eh"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "udp-psh"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "sctp-psh"
   }
-  # allow outbound udp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "udp-acm"
   }
-  # allow outbound tcp traffic on a port range
+
   allow {
-    ports = ["53"]
+    protocol = "sctp-udp-1-2-3-4"
   }
-  # allow outbound tcp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
-  # allow outbound udp traffic on a port range
-  allow {
-    ports = ["53"]
-  }
- 
+
+  source_ranges = ["10.0.0.0/8"]
 }
 

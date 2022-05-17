@@ -16,15 +16,28 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# create compute firewallvariable
-resource "google_compute_firewall_rule" "default" {
-  name = "my-firewall-rule-${random_suffix}"
-  network = "default"
+# create compute firewall
+resource "google_compute_firewall" "default" {
+  name = "my-firewall-${random_suffix}"
+  network = "${google_compute_network.default.self_link}"
+  source_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "icmp"
+  }
+
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["22", "80"]
   }
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["web"]
+
+  allow {
+    protocol = "udp"
+    ports = ["22", "80"]
+  }
+
+  allow {
+    protocol = "esp"
+  }
 }
 

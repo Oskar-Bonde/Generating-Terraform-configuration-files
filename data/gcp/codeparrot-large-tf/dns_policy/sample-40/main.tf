@@ -12,18 +12,13 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "name_0" {
-  name = "dns-policy-${random_suffix}"
-  zone = "europe-west1-b"
-
-  # DNS zone where to create the record
-  zone_name = "example.com."
-
-  # DNS record
-  record {
-    name = "tf-test-zone"
-    type = "A"
-
-    rrdatas = ["192.0.2.1"]
-  }
+  name = "dns-policy"
+  project = var.project_id
+  dns_policy_definitions = [
+    {
+      name = "example.com.",
+      enable_inbound_forwarding = true
+    },
+  ]
 }
 

@@ -10,7 +10,7 @@ terraform {
 provider "google" {
 }
 
-# create a CaPool resource
+# create a CaPool resource 
 resource "google_compute_instance" "vm_instance2" {
   name = "my-compute-instance-2-%%{random_suffix}"
   machine_type = "f1-micro"

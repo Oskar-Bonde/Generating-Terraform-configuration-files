@@ -1,0 +1,20 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# AWS provider block
+# Terraform Block with the AWS provider
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Resource block with an amazon VPCvariable
+resource "aws_vpc" "name_0" {
+  cidr_block = "10.0.0.0/16"
+}
+

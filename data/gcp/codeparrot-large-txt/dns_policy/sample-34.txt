@@ -12,17 +12,17 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${var.env}"
+  name = "dns-policy"
   zone = "europe-west1-b"
 
-  # DNS policy
+  # DNS Policy
   rule {
     action = "accept"
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow outbound"
   }
 
   rule {
@@ -30,8 +30,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -39,8 +39,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow outbound"
   }
 
   rule {
@@ -48,8 +48,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -57,8 +57,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow outbound"
   }
 
   rule {
@@ -66,8 +66,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -75,8 +75,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow outbound"
   }
 
   rule {
@@ -84,8 +84,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -93,8 +93,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -102,8 +102,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -111,8 +111,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -120,8 +120,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -129,8 +129,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -138,8 +138,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -147,8 +147,8 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
@@ -156,13 +156,12 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      action = "accept"
     }
+    description = "allow inbound"
   }
 
   rule {
     action = "accept"
     priority = 1
-    match_rules
 }
 

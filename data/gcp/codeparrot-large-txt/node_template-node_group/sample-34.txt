@@ -24,12 +24,10 @@ resource "google_compute_node_template" "node_template" {
 
   network_interface {
     network = "default"
-    access_config {
-    }
   }
 
   metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+    ssh-keys = "root:${file("${var.public_key_path}")}"
   }
 
   service_account {
@@ -37,8 +35,8 @@ resource "google_compute_node_template" "node_template" {
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
-resource "google_compute_node_template_node_group" "node_template_node_group" {
+# create a compute node group resource. Set size to 1 and use the node template resource id.
+resource "google_compute_node_template_node_group" "node_group" {
   name_prefix = "node-template-node-group-"
   machine_type   = "n1-node-96-624"
   can_ip_forward = true
@@ -48,78 +46,8 @@ resource "google_compute_node_template_node_group" "node_template_node_group" {
     machine_type   = "n1-node-96-624"
   }
 
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
+  node_groups {
+    node_type = "n1-node-96-624"
   }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40"
-  }
-
-  node_template {
-    can_ip_forward = true
-    machine_type   = "n1-node-32-40
 }
 

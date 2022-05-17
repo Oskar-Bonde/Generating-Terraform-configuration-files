@@ -12,12 +12,29 @@ provider "google" {
 
 # create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
 resource "google_compute_firewall" "name_0" {
-  name    = "default-allow-network-access"
-  network = "organizations/12345"
+  name    = "my-fw-policy"
+  network = "default"
+
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
-  source_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "udp"
+    ports    = ["443"]
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "esp"
+  }
+
+  allow {
+    protocol = "ah"
+  }
 }
 

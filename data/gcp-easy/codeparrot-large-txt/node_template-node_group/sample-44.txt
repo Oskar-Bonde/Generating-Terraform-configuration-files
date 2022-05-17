@@ -14,7 +14,7 @@ provider "google" {
 resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
   machine_type = "f1-micro"
-  can_ip_forward = false
+  can_ip_forward = true
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -27,16 +27,28 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
-
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
-  }
 }
 
-# create a compute node group resource
+# create a compute node group resourcevariable
+resource "google_compute_instance_group_manager" "node_group_manager" {
+  name = "my-node-group-manager"
+  base_instance_name = "vm"
+  zone         = "us-central1-a"
+
+  version {
+    instance_template = google_compute_instance_template.node_template.id
+  }
+
+  target_size  = 1
+  named_port {
+    name = "http"
+    port = 80
+  }
+
+  network_interface {
+    network = "default"
+    access_config {
+    }
+  }
 }
 

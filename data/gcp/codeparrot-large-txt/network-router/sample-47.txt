@@ -19,7 +19,6 @@ resource "google_compute_network" "foobar" {
 resource "google_compute_router" "foobar" {
   name    = "foobar"
   network = google_compute_network.foobar.name
-  region  = "europe-west1"
   bgp {
     asn = 64514
   }

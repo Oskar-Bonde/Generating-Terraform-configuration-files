@@ -14,24 +14,6 @@ provider "google" {
 resource "google_composer_environment" "env" {
   name     = "env-${random_suffix}"
   region   = "us-central1"
-
-  config {
-    node_config {
-      machine_type = "e2-medium"
-
-      # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-      # See https://cloud.google.com/iam/docs/understanding-roles#roles_iam
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_iam
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_iam
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_iam
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_accounts
-      # https://cloud.google.com/iam/docs/understanding-roles#roles_service_account
-    }
-  }
+  project  = var.project_id
 }
 

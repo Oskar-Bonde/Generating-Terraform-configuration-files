@@ -112,7 +112,7 @@ def main():
 
     # Load model and tokenizer
     model = AutoModelForCausalLM.from_pretrained(args.model_ckpt, local_files_only=True)
-    tokenizer = AutoTokenizer.from_pretrained("lvwerra/codeparrot-small")
+    tokenizer = AutoTokenizer.from_pretrained('lvwerra/codeparrot-small') #  "gpt2"
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.model_max_length = 1024
     # Generation settings

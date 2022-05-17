@@ -20,9 +20,6 @@ resource "google_storage_bucket" "bucket" {
 resource "google_storage_bucket" "bucket_cdn" {
   name = "my-bucket-cdn"
   location = "europe-north1"
-  cdn_policy {
-    cache_mode = "CACHE_ALL_STATIC"
-    client_ttl = 3600
-  }
+  cdn_policy = "bucket"
 }
 

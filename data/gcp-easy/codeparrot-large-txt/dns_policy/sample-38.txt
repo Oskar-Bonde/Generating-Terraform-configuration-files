@@ -12,43 +12,15 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${local.name_suffix}"
+  name = "dns-policy-${random_suffix}"
   zone = "us-central1-a"
 
   # DNS policy
   rule {
-    action = "deny(403)"
+    action = "deny"
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
-      description = "Allow access to google.com"
-    }
-  }
-
-  rule {
-    action = "deny(403)"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "Allow access from anywhere"
-    }
-  }
-
-  rule {
-    action = "deny(403)"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "Deny all"
-    }
-  }
-
-  rule {
-    action = "deny(403)"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-      description = "Allow all"
     }
   }
 }

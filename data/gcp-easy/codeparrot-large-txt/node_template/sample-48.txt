@@ -13,7 +13,7 @@ provider "google" {
 # create a node template
 resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
-  machine_type = "n1-standard-1"
+  machine_type = "f1-micro"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -27,38 +27,12 @@ resource "google_compute_instance_template" "node_template" {
     }
   }
 
-  # install nginx and serve a simple web page
   metadata = {
-    startup-script = <<-EOF1
-      #! /bin/bash
-      set -euo pipefail
+    startup-script = data.template_file.node_startup_script.rendered
+  }
 
-      export DEBIAN_FRONTEND=noninteractive
-      apt-get update
-      apt-get install -y nginx-light jq
-
-      NAME=node-template
-      IP=static
-      PORT=8080
-      CHECKSUM=apache2.7.9
-
-      cat <<EOF > /var/www/html/index.html
-      <pre>
-      Name: $NAME
-      IP: $IP
-      PORT: $PORT
-      CHECKSUM=apache2.7.9
-
-      Notice: This file was installed by hand in the Cloud Console.
-      See https://console.cloud.google.com/compute/instances/configure-server#configure-server
-      After you run this command, you will need to configure your
-      Server to use the generated configuration.
-      If you see an error message like the following when running the
-      command:
-
-        curl -s -XPOST -H "Content-type: application/json" -d'{\"configuration\":[{\"name\":\"node-role-master\"}]}' http://${google_compute_instance_template.node_template.network_interface.0.access_config.0.nat_ip}:8080/configure-server
-      EOF
-    EOF1
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 }
 

@@ -12,15 +12,43 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${local.name_suffix}"
-  enable_inbound_forwarding = true
-  project       = var.project_id
-  description  = "DNS policy"
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
 
-  dns_policy {
-    policy_type = "POLICY_PERFORMANCE"
-    allow {
-      ports    = ["22", "80", "443"]
+  # DNS policy
+  rule {
+    action = "deny"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound tcp traffic on all ports
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound udp traffic on a port range
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      cidr_list = ["0.0.0.0/0"]
+    }
+  }
+
+  # allow outbound icmp traffic of a specific type
+  rule {
+    action = "allow"
+    priority = 1
+    match_rules {
+      protocol = "icmp"
+      icmp_type = 3
     }
   }
 }

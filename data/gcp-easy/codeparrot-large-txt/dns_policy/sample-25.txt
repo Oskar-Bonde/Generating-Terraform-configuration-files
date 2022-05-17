@@ -13,34 +13,26 @@ provider "google" {
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
   name        = "dns-policy-${local.name_suffix}"
-  enable_inbound_forwarding = true
-  project       = google_project.project.project_id
-  dns_policy_name = google_dns_policy.dns_policy.name
+  zone        = "us-central1-a"
+  force_destroy = true
 
-  labels = {
-    foo = "bar"
-  }
-
-  # allow outbound tcp traffic on all ports
-  allow {
+  rules {
+    # allow outbound tcp traffic on all ports
+    # allow ssh from anywhere
     protocol = "tcp"
-    ports    = ["80", "443"]
+    ports    = ["22"]
   }
 
-  # allow outbound udp traffic on a port range
-  allow {
-    protocol = "udp"
-    ports    = ["53"]
+  # allow inbound ssh traffic from a specific port
+  rule {
+    ip_protocol = "tcp"
+    ports    = ["22"]
   }
 
-  # allow outbound icmp traffic on a port range
-  allow {
-    protocol = "icmp"
-  }
-
-  # allow outbound any outbound traffic
-  allow {
-    protocol = "any"
+  # allow inbound icmp traffic of a specific type
+  rule {
+    ip_protocol = "icmp"
+    icmp_type = "code"
   }
 }
 

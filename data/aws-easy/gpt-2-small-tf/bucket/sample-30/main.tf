@@ -1,0 +1,58 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider aws block with AWS provider
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create S3 Bucket resource
+resource "aws_s3_bucket" "name_0" {
+  bucket                   = "testingBucket"
+  acl                       = "private"
+  force_destroy             = true
+  force_update             = true
+  force_delete             = true
+  force_partition           = true
+  enable_cdn               = true
+  enable_cdn_logging    = true
+  enable_cdn_monitoring = true
+  enable_cdn_logging_logs = true
+  enable_cdn_staging     = true
+  enable_cdn_staging_logs = true
+  enable_cdn_staging_logs_interval = "60s"
+  enable_cdn_staging_logs_interval_sec = "1"
+  enable_cdn_staging_logs_timeout = "60s"
+  enable_cdn_staging_logs_timeout_sec = "1"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn_staging_logs_timeout_sec = "10"
+  enable_cdn
+}
+

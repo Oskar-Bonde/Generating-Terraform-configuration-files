@@ -1,0 +1,59 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+resource "google_compute_instance" "vm_instance_disk" {
+  name = "my-compute-instance-disk-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute network
+
+resource "google_compute_instance" "vm_instance_disk_disk" {
+  name = "my-compute-instance-disk-disk-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# create compute subnetwork
+
+resource "google_compute_instance" "vm_instance_disk_disk_tcp" {
+  name = "my-compute-instance-disk-tcp-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+
+# make a compute address resource
+
+resource "google_compute_instance" "vm_instance_disk_tcp_tcp" {
+  name = "my-compute-instance-disk-tcp-tcp-%%{random_suffix}"
+  machine_type = "f1-micro"
+
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
+}
+

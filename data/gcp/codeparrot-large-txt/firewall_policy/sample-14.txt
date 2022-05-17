@@ -14,13 +14,12 @@ provider "google" {
 resource "google_compute_firewall" "fw_policy" {
   name    = "my-fw-policy"
   network = "default"
-  priority = 1000
 
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
 
-  target_tags = ["www-node"]
+  target_tags = ["my-tag"]
 }
 

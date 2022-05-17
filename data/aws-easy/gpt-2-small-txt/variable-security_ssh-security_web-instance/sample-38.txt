@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# Create variable
+variable "vpc_cidr" {
+  type = "string"
+}
+
+# variable block
+variable "vpc_id" {
+  type = "string"
+}
+
+# make variablevariable
+variable "vpc_cidr" {
+  type = "string"
+}
+
+# create variable blockvariable "vpc_id" {
+  type = "string"
+}
+
+# Create Security Group
+}
+
+# Create Security Group
+}
+
+# Create EC2 Instance
+}
+

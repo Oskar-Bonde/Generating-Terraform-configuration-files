@@ -14,10 +14,12 @@ provider "google" {
 resource "google_compute_instance_template" "node_template" {
   name_prefix  = "node-template-"
   machine_type = "f1-micro"
-  can_ip_forward = true
+  can_ip_forward = false
 
   disk {
     source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
   }
 
   network_interface {
@@ -28,19 +30,21 @@ resource "google_compute_instance_template" "node_template" {
 }
 
 # create a compute node group resource
-resource "google_compute_instance_group_manager" "node_group_manager" {
-  name = "my-node-group-manager"
-  zone = "us-central1-a"
+resource "google_compute_node_template" "node_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
+  can_ip_forward = false
 
-  tags = ["foo", "bar"]
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete  = true
+    boot         = true
+  }
 
-  # create the node template
-  node_template = google_compute_instance_template.node_template.id
-
-  # create the node group
-  node_group = google_compute_instance_group.node_group.id
-
-  # create the node
-  depends_on = [google_compute_instance.vm_instance]
+  network_interface {
+    network = "default"    
+    access_config {
+    }
+  }
 }
 

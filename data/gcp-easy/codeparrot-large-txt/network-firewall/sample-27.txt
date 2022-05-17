@@ -12,18 +12,18 @@ provider "google" {
 
 # create compute network
 resource "google_compute_network" "default" {
-  name = "my-network-${random_suffix}"
+  name = "my-network-${local.name_suffix}"
   auto_create_subnetworks = "false"
 }
 
 # create compute firewall
 resource "google_compute_firewall" "default" {
-  name = "my-firewall-${random_suffix}"
+  name = "my-firewall-${local.name_suffix}"
   network = "default"
 
   allow {
     protocol = "tcp"
-    ports = ["80"]
+    ports = ["80", "443"]
   }
 
   source_ranges = ["0.0.0.0/0"]

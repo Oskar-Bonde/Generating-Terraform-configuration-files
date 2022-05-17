@@ -11,10 +11,12 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
-  can_ip_forward = false
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+
+  provider = google.target
+
+  node_type = "n1-standard-1"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -27,16 +29,27 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
-
-  metadata = {
-    startup-script = data.template_file.node_startup_script.rendered
-  }
-
-  service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-  }
 }
 
 # create a compute node group resource
+resource "google_compute_node_group" "node_group" {
+  name = "my-node-group"
+
+  # Add node to a compute instance group
+  node_template = google_compute_node_template.node_template.id
+  zone = "us-central1-a"
+
+  # Add node to a network interface
+  network_interface {
+    network = "default"
+    access_config {
+      # add external ip to fetch packages
+    }
+  }
+
+  # Add node to a node group
+  node_group = google_compute_node_group.node_group.id
+  # Add node to a service account
+  service_account = "create"
 }
 

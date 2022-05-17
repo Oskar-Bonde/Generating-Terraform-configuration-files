@@ -12,14 +12,185 @@ provider "google" {
 
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
-  name = "dns-policy-${local.name_suffix}"
-  zone = "europe-west1-b"
+  name = "dns-policy"
 
-  # DNS zone
-  policy = <<EOF
-{
-  "policy_name": "dns-policy-${local.name_suffix}",
-  "zone_name": "europe-west1-b",
-  "enforcement_mode": "REQUIRE_ATTESTATION"
+  # DNS
+  rule {
+    action = "accept"
+    ports = ["80", "443"]
+  }
+
+  # allow outbound traffic
+  rule {
+    action = "drop"
+    ports = ["0-65535"]
+  }
+
+  # allow inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "accept"
+    ports = ["0-65535"]
+  }
+
+  # allow all inbound traffic
+  rule {
+    action = "accept"
+    ports =
 }
 

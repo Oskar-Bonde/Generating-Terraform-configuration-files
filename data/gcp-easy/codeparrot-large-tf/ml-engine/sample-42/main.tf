@@ -1,0 +1,24 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# ml engine model resource
+resource "google_ml_engine_model" "name_0" {
+  name = "my-ml-engine-model"
+  region = "us-central1"
+  machine_type = "f1-micro"
+  initial_node_count = 1
+  max_pods_per_node = 1
+  min_node_count = 1
+  machine_type = "n1-standard-1"
+  tags = ["foo", "bar"]
+}
+

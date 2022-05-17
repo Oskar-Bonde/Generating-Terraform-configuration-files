@@ -11,54 +11,128 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+
+  provider = google.target
+
+  node_type = "n1-standard-1"
+
+  tags = ["foo", "bar"]
 
   disk {
     source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
   }
 
   network_interface {
     network = "default"    
     access_config {
     }
-  }
-
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
   }
 }
 
 # create a compute node group resource
-resource "google_compute_node_template" "node_group_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
+resource "google_compute_node_group" "node_group" {
+  name = "my-node-group"
 
-  disk {
-    source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
-  }
+  # add node to the node group resource
+  node_template = google_compute_node_template.node_template.id
+  zone = "us-central1-a"
 
-  network_interface {
-    network = "default"    
-    access_config {
-    }
-  }
+  # create portable network (no security group)
+  network = "default"
 
-  metadata {
-    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
-  }
+  # create a firewall rule to allow port 22
+  firewall_rule = "allow"
 
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
-  }
+  # create a firewall rule to allow port 22
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_rule = "allow"
+
+  # create a firewall rule to allow port 0
+  firewall_
 }
 

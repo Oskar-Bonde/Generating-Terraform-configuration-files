@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+}
+
+# create compute network
+resource "google_compute_network" "name_0" {
+  name = "my-network-${local.name_suffix}"
+}
+
+# create a compute ha vpn gatewayvariable
+resource "google_compute_ha_vpn_gateway" "name_1" {
+  name = "ha-vpn-${local.name_suffix}"
+  network = google_compute_network.name_0.name
+  region = "us-central1"
+  vpn_gateway_interface = "eth-1"
+  # Set the static ip address as static_ip_address
+  static_ip_address = "10.0.0.5"
+  # Set the static ip address as static_ip_address
+  static_route_table_id = "${google_compute_route_table.ha_route_table.id}"
+}
+

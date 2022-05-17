@@ -15,11 +15,10 @@ data "google_compute_zones" "name_0" {
   region = "europe-west4"
 }
 
-# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name for the instance.
+# compute instance. Create an instance for each available compute zone. One zone for each value. Type f1 micro, debian 9 image, default network interface and giva a name.
 resource "google_compute_instance" "name_1" {
-  name = "my-compute-instance-%%{random_suffix}"
+  name = "my-vm"
   machine_type = "f1-micro"
-  zone = "europe-west4-a"
 
   boot_disk {
     initialize_params {
@@ -29,26 +28,99 @@ resource "google_compute_instance" "name_1" {
 
   network_interface {
     network = "default"    
-    access_config {
-    }
   }
 
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
+  # create a public IP address
+  public_ip = "10.0.0.5"
+
+  # create a private IP address
+  network_interface {
+    network = "default"
   }
 
-  tags = ["ssh"]
+  # create a network interface inside the created network
+  network_ip = "10.0.0.5"
 
-  can_ip_forward = true
+  # create a subnet in the created network
+  subnet = "10.0.1.0/24"
 
-  metadata_startup_script = "sudo apt-get update"
+  # create a secondary IP address
+  secondary_ip = "10.0.2.5"
 
-  tags = ["ssh"]
-
-  metadata_startup_script_ps1 = "sudo apt-get install -y nginx"
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
+  # create a network interface inside the created network
+  network_interface {
+    network = "default"
   }
+
+  # create a subnet in the created network
+  network_ip = "10.0.3.0/24"
+
+  # create a firewall rule to allow HTTP and SSH access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow TCP/UDP access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow HTTP/S access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow TCP/UDP access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow HTTP/S access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow TCP/UDP access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow HTTP/S access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow TCP/UDP access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow TCP/UDP access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "INGRESS"
+    priority = 1
+  }
+
+  # create a firewall rule to allow HTTP/S access
+  firewall_rule {
+    source_ranges = ["0.0.0.0/0"]
+    direction = "
 }
 

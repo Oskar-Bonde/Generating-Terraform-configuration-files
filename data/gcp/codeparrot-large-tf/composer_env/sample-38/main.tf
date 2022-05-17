@@ -10,113 +10,143 @@ terraform {
 provider "google" {
 }
 
-# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2 (Ubuntu Server 16.04 LTS, SDD Volume Type)
+# create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2
 resource "google_composer_environment" "name_0" {
-  name     = "composer-environment-${random_suffix}"
-  region   = "us-central1"
-  project  = var.project_id
-  composer = google_composer_environment.name_0.id
+  name     = "composer-environment"
+  region  = "us-central1"
 
-  # Add a default network interface to allow the instance to communicate with the default network.
-  network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
+  config {
+    node_config {
+      machine_type = "e2-micro"
+
+      image = "debian-cloud/debian-9"
     }
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Add a network interface to allow SSH access only from the internet
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
-  network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+  # Create a container
+  container_config {
+    image = "debian-cloud/debian-9"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Start the instance
+  startup_script = "echo \"${data.template_file.startup_script.rendered}\""
+
+  # Start the instance
+  instance_type = "t2.micro"
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_type = "t2.micro"
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_type = "t2.micro"
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_type = "t2.micro"
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-      // Ephemeral IP
-    }
+    network = "default"
   }
 
-  # Add a default network interface to allow the instance to communicate with the default network.
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags = ["foo", "bar"]
+
+  # Set the network interface
   network_interface {
-    subnetwork = google_compute_subnetwork.default.id
-    access_config {
-     
+    network = "default"
+  }
+
+  # Set the startup script
+  startup_script = "${data.template_file.startup_script.rendered}"
+
+  # Start the instance
+  instance_tags
 }
 

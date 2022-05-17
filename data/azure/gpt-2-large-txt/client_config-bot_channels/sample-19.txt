@@ -1,0 +1,39 @@
+resource "azurerm_virtual_network" "rg" {
+  name                = "myTFResourceGroup"
+  address_space       = ["10.0.0.0/16"]
+  location            = "westus2"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+# Provider block with features block
+resource "azurerm_subnet" "rg" {
+  name                 = "myTFResourceGroup"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.1.0/24"
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_subnet" "rg_public" {
+  name                 = "myTFResourceGroup"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.2.0/24"
+}
+
+# data block, azurem client config
+resource "azurerm_subnet" "rg_private" {
+  name                 = "myTFResourceGroup"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.3.0/24"
+}
+
+# create bot channels registration resource. Set location global, sku to F0, microsoft app id from client config id. Assign name and use resource group name
+resource "azurerm_subnet" "rg_public_ip" {
+  name                 = "myTFResourceGroup"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.rg.name
+  address_prefix       = "10.0.4.0/24"
+}
+

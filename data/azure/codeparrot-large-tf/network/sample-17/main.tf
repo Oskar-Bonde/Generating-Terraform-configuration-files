@@ -1,0 +1,27 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with features block
+provider "azurerm" {
+  features {}
+}
+
+# create resource group, use name example-resources and set location to West Europe
+resource "azurerm_resource_group" "name_0" {
+  name     = "example-resources"
+  location = "westus"
+}
+
+# a virtual network resource in address space 10.0.0.0/16. Use location and resource group name to get
+# the IP address of the virtual network
+resource "azurerm_virtual_network" "name_1" {
+  name                = "vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = "West US"
+}
+

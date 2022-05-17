@@ -16,10 +16,10 @@ resource "google_compute_network" "default" {
   auto_create_subnetworks = "false"
 }
 
-# resource block: create a compute routerresource
-resource "google_compute_router" "router" {
+# resource block: create a compute router
+resource "google_compute_router" "default" {
   name    = "my-router-${random_suffix}"
-  network = google_compute_network.default.id
+  network = google_compute_network.default.name
   region  = "us-central1"
   bgp {
     asn = 64514

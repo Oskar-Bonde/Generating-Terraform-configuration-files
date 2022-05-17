@@ -12,13 +12,55 @@ provider "google" {
 
 # create dns policy
 resource "google_dns_policy" "dns_policy" {
-  name        = "dns-policy-${local.name_suffix}"
-  enable_inbound_forwarding = true
+  name = "dns-policy-${random_suffix}"
+  zone = "us-central1-a"
 
-  // DNS
-  dns_policy {
-    policy_type = "POLICY_PERFORMANCE"
-    allow_access_for_private_access = true
+  # DNS zone
+  policy_definition {
+    description = "DNS zone policy"
+    policy_type = "PRIMARY"
+  }
+
+  # DNS records
+  rule {
+    action = "DROP"
+    priority = 1
+    match {
+      expr {
+        expression = "domain:google.com"
+        title = "tf-www.${var.domain}"
+      }
+    }
+    description = "tf-www.${var.domain}"
+    zone_name = "tf-www"
+  }
+
+  # allow dns
+  rule {
+    action = "ALLOW"
+    priority = 1
+    match {
+      expr {
+        expression = "domain:google.com"
+        title = "tf-www.${var.domain}"
+      }
+    }
+    description = "tf-www.${var.domain}"
+    zone_name = "tf-www"
+  }
+
+  # allow all outbound traffic
+  rule {
+    action = "ALLOW"
+    priority = 100
+    match {
+      expr {
+        expression = "method:response"
+        title = "tf-www.${var.domain}"
+      }
+    }
+    description = "Allow all outbound traffic"
+    zone_name = "tf-www"
   }
 }
 

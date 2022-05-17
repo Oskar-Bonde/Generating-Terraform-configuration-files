@@ -13,16 +13,16 @@ provider "google" {
 # create dns policy, enable inbound forwarding and enable logging
 resource "google_dns_policy" "dns_policy" {
   name = "dns-policy"
-  zone = "europe-west1-b"
 
-  # DNS policy
+  # DNS
   rule {
     action = "allow"
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "INGRESS"
     }
-    description = "allow outbound"
   }
 
   rule {
@@ -30,8 +30,9 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "EGRESS"
     }
-    description = "allow outbound"
   }
 
   rule {
@@ -39,8 +40,9 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "INGRESS"
     }
-    description = "allow inbound"
   }
 
   rule {
@@ -48,8 +50,9 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "EGRESS"
     }
-    description = "allow inbound"
   }
 
   rule {
@@ -57,8 +60,9 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "INGRESS"
     }
-    description = "allow inbound"
   }
 
   rule {
@@ -66,101 +70,9 @@ resource "google_dns_policy" "dns_policy" {
     priority = 1
     match_rules {
       cidr_list = ["0.0.0.0/0"]
+      description = "allow outbound"
+      direction = "EGRESS"
     }
-    description = "allow inbound"
   }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-    action = "allow"
-    priority = 1
-    match_rules {
-      cidr_list = ["0.0.0.0/0"]
-    }
-    description = "allow inbound"
-  }
-
-  rule {
-   
 }
 

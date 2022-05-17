@@ -12,13 +12,13 @@ provider "google" {
 
 # create a firewall policy 
 resource "google_compute_firewall" "fw_policy" {
-  name = "my-fw-policy"
+  name = "my-firewall-policy"
   network = "default"
   source_ranges = ["10.0.0.0/8"]
   allow {
     protocol = "tcp"
     ports = ["80"]
   }
-  target_tags = ["www-node"]
+  target_tags = ["web"]
 }
 

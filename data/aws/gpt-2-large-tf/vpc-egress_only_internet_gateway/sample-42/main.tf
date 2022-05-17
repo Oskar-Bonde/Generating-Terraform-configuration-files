@@ -1,0 +1,26 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block: aws in us east 1.0
+resource "aws_instance" "name_0" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create vpc resource, use cidr block 10.1.0.0/16 and assign generated ipv6 cidr block 10.1.0.0/24
+resource "aws_instance" "name_1" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+
+# create an egress only internet gateway, use vpc id, and vpc
+resource "aws_instance" "name_2" {
+  ami           = "ami-0ff8a91507f77f867" 
+  instance_type = "t2.micro"
+}
+

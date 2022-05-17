@@ -17,8 +17,6 @@ resource "google_compute_instance_template" "node_template" {
 
   disk {
     source_image = "debian-cloud/debian-9"
-    auto_delete  = true
-    boot         = true
   }
 
   network_interface {
@@ -26,63 +24,21 @@ resource "google_compute_instance_template" "node_template" {
     access_config {
     }
   }
-
-  metadata = {
-    startup-script = <<EOF
-    #!/bin/bash
-    set -euo pipefail
-    export DEBIAN_FRONTEND=noninteractive
-    apt-get update
-    apt-get install -y nginx-light jq
-    NAME=node-template
-    IP=$(curl -s -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname")
-    METADATA=$(curl -s -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/?recursive=True" | jq 'del(.["startup-script"])')
-    cat <<EOF > /var/www/html/index.html
-    <pre>
-    Name: $NAME
-    IP: $IP
-    Metadata: $METADATA
-    </pre>
-    EOF
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 # create a compute node group resource
-resource "google_compute_instance_group_manager" "node_group_manager" {
-  name = "my-group-manager-${random_suffix}"
-  zone = "us-central1-a"
+resource "google_compute_node_template" "node_group_template" {
+  name_prefix  = "node-template-"
+  machine_type = "f1-micro"
 
-  version {
-    instance_template = google_compute_instance_template.node_template.id
-    name              = "my-node-group-manager-instance-template"
+  disk {
+    source_image = "debian-cloud/debian-9"
   }
 
-  target_size  = 1
-  version_template {
-    instance_template = google_compute_instance_template.node_template.id
-    name              = "my-node-group-manager-version-template"
+  network_interface {
+    network = "default"    
+    access_config {
+    }
   }
-
-  named_port {
-    name = "http"
-    port = 80
-  }
-
-  # install nginx and serve a simple web page
-  metadata_startup_script = <<EOF
-sudo apt-get update
-sudo apt-get -y install nginx
-sudo apt-get -y install btrfs
-sudo apt-get -y install nginx-light
-sudo apt-get -y install btrfs-tools
-sudo apt-get -y install btrfs-tools-cli
-sudo apt-get -y install nginx
-sudo service nginx start
-sudo service nginx restart
-EOF
 }
 

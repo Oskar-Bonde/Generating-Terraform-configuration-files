@@ -1,0 +1,125 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+}
+
+# create a notebook instance in location us west 1 a. Use machine type e2 medium and vm image from deeplearning-platform-release and image familiy tf-latest-cpu
+resource "google_notebooks_instance" "name_0" {
+  name = "notebooks-instance"
+  machine_type = "e2-medium"
+  zone = "europe-west1-b"
+  tags = ["notebook"]
+
+  # create a network interface in a specific region
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance in a specific region using a network interface block
+  instance_type = "f1-micro"
+  zone = "europe-west1-b"
+
+  # create a disk with a private boot disk
+  disk {
+    source_image = "debian-cloud/debian-9"
+    auto_delete = true
+  }
+
+  # create a network interface with a private boot disk
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a network interface block
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a public/private IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a public/private IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone = "europe-west1-b"
+
+  # create a network interface with a private/public IP
+  network_interface {
+    network = "default"
+  }
+
+  # create a instance with a private/public IP
+  instance_type = "n1-standard-1"
+  zone =
+}
+

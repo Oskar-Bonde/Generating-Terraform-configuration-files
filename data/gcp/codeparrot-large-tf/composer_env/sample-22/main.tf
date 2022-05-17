@@ -12,9 +12,23 @@ provider "google" {
 
 # create composer environment in region us-central1. Create software config and use image composer-2.0.0-preview.3-airflow-2.1.2
 resource "google_composer_environment" "name_0" {
-  name     = "composer-env-${random_suffix}"
-  region   = "us-central1"
-  project  = var.project_id
-  composer = google_composer_environment.name_0.id
+  name     = "composer-env"
+  region  = "us-central1"
+
+  config {
+    node_count = 1
+    machine_type = "e2-micro"
+
+    // Add a remote-exec provisioner
+    script = "scripts/install.sh"
+  }
+
+  metadata {
+    labels = {
+      app = "composer-env"
+    }
+  }
+
+  depends_on = [google_project_service.composer]
 }
 

@@ -11,10 +11,10 @@ provider "google" {
 }
 
 # create a node template
-resource "google_compute_instance_template" "node_template" {
-  name_prefix  = "node-template-"
-  machine_type = "f1-micro"
-  can_ip_forward = true
+resource "google_compute_node_template" "node_template" {
+  name = "my-node-template"
+  region = "us-central1"
+  node_type = "n1-standard-1"
 
   disk {
     source_image = "debian-cloud/debian-9"
@@ -30,5 +30,136 @@ resource "google_compute_instance_template" "node_template" {
 }
 
 # create a compute node group resource
+resource "google_compute_node_group" "node_group" {
+  name = "my-node-group"
+  zone = "us-central1-a"
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template {
+    can_ip_forward = true
+    disk {
+      source_image = "debian-cloud/debian-9"
+      auto_delete  = true
+      boot         = true
+    }
+  }
+
+  node_template
 }
 

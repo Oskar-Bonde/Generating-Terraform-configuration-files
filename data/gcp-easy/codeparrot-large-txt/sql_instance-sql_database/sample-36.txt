@@ -13,16 +13,10 @@ provider "google" {
 # resource block, sql database instance
 resource "google_sql_database_instance" "instance" {
   name = "my-sql-database-instance"
-  database_version = "POSTGRES_12"
   region = "us-central1"
+  database_version = "POSTGRES_12"
   settings {
     tier = "db-f1-micro"
-    ip_configuration {
-      authorized_networks {
-        name = "PublicIp"
-        value = "192.168.0.10"
-      }
-    }
   }
   deletion_protection =  "true"
 }
@@ -32,5 +26,7 @@ resource "google_sql_database" "db" {
   name = "my-sql-database"
   instance = google_sql_database_instance.instance.name
   charset = "utf8mb4"
+  collation = "utf8mb4_unicode_ci"
+  depends_on = [google_sql_database_instance.instance]
 }
 

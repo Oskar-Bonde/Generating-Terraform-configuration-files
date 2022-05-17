@@ -12,7 +12,7 @@ provider "google" {
 
 # create a node template. Assign a name, set node type to n1-node-96-624
 resource "google_compute_node_template" "name_0" {
-  name = "my-node-template"
+  name = "n1-node-96-624"
 
   node_type = "n1-node-96-624"
 
@@ -23,23 +23,29 @@ resource "google_compute_node_template" "name_0" {
   }
 
   network_interface {
-    network = "default"    
-    access_config {
-    }
+    network = "default"
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 }
 
-# create a compute node group resource. Set size to 1 and use the node template resource id
-resource "google_compute_node_template_group" "name_1" {
-  name = "my-node-template-group-${local.name_suffix}"
-  zone = "us-central1-a"
+# create a compute node group resource. Set size to 1 and use the node template resource id.
+resource "google_compute_node_template_node_group" "name_1" {
+  name = "n1-node-96-624"
 
-  node_template = google_compute_node_template.name_0.id
+  node_template {
+    node_type = "n1-node-96-624"
+    image_id = "${google_compute_image.debian-9.id}"
+  }
 
   network_interface {
-    network = "default"    
-    access_config {
-    }
+    network = "default"
+  }
+
+  metadata {
+    sshKeys = "ubuntu:${file("~/.ssh/${var.key_name}.pub")}"
   }
 }
 
