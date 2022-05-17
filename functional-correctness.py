@@ -281,7 +281,7 @@ if __name__ == "__main__":
     model = 'codeparrot-small'
     n_samples = 50
     #for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: # 'azure', 'azure-easy'
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: # 'azure', 'azure-easy'
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -290,4 +290,4 @@ if __name__ == "__main__":
             pass1(provider, model, n_samples)
         else:
             compile_check(provider, model, n_samples)    
-    #clean_terraform(model, n_samples)
+    clean_terraform(model, n_samples)
