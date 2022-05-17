@@ -68,8 +68,7 @@ class CodexModel:
                     else:
                         input[batch*batch_size+j] = input[batch*batch_size+j] + generated["choices"][j]["text"] +"{}\n\n"
                     if generated["choices"][j]["finish_reason"] == "length":
-                        print(f"Finish reason length index {batch*batch_size+j}")
-                        print(key)
+                        print(f"Finish reason length. {key} index {batch*batch_size+j}")
                         #return
                         
         os.makedirs(f'data/{self.provider}/codex{self.file_name}-txt/{key}')

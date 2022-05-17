@@ -1,0 +1,65 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-name"
+  location = "westus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cognitive_account" {
+  name                = "cognitive-account-name"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot_channels_registration" {
+  name                = "bot-channels-registration-name"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name            = "F0"
+  microsoft_app_id    = "microsoft-app-id"
+  microsoft_app_password = "microsoft-app-password"
+  endpoint            = "https://endpoint.com"
+  developer_app_insights_key = "developer-app-insights-key"
+  cognitive_models {
+    dispatch_model_id = "dispatch-model-id"
+    language_model_id = "language-model-id"
+  }
+  tags = {
+    environment = "Production"
+  }
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_line_speech" "bot_channel_direct_line_speech" {
+  name                = "bot-channel-direct-line-speech-name"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_channels_registration_id = azurerm_bot_channels_registration.bot_channels_registration.id
+  cognitive_services_authoring_key = azurerm_cognitive_account.cognitive_account.primary_access_key
+  cognitive_services_authoring_region = azurerm_cognitive_account.cognitive_account.location
+  speech_subscription_key = "speech-subscription-key"
+  speech_region = "speech-region"
+  client_id = data.azurerm_client_config.current.client_id
+  client_secret = data.azurerm_client_config.current.client_secret
+  tenant_id = data.azurerm_client_config.current.tenant_id
+}
+

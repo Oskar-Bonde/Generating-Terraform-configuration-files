@@ -1,0 +1,63 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  version = "=2.0.0"
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-terraform-demo"
+  location = "eastus"
+}
+
+# create cognitive account resource
+resource "azurerm_cognitive_account" "cog_account" {
+  name                = "cog-account-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  kind                = "TextAnalytics"
+  sku_name            = "S0"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot_registration" {
+  name                = "bot-registration-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  kind                = "sdk"
+  microsoft_app_id    = "app_id"
+  microsoft_app_password = "app_password"
+  endpoint            = "https://bot-registration-demo.azurewebsites.net/api/messages"
+  tags                = {
+    environment = "Terraform Demo"
+  }
+}
+
+# resource block called bot channel direct line speech
+resource "azurerm_bot_channel_direct_line_speech" "bot_channel_direct_line_speech" {
+  name                = "bot-channel-direct-line-speech-demo"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  bot_id              = azurerm_bot_channels_registration.bot_registration.id
+  cognitive_models    = [
+    {
+      locale = "en-us"
+      model_id = "builtin/conversational"
+    },
+  ]
+  speech_subscription_key = "subscription_key"
+  speech_region           = "westus"
+}
+
