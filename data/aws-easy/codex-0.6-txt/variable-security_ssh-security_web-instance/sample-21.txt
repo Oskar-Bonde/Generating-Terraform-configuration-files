@@ -1,0 +1,105 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+# variable block
+variable "ami" {
+  default = "ami-0b33d91d"
+}
+
+# make variable
+variable "key_name" {
+  default = "terraform"
+}
+
+# create variable block
+variable "security_group_ids" {
+  default = ["sg-0c0e0d6b"]
+}
+
+# Create Security Group
+resource "aws_security_group" "web" {
+  name        = "terraform-web"
+  description = "Allow HTTP and SSH traffic"
+  vpc_id      = "vpc-0e9f9e6e"
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-web"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "db" {
+  name        = "terraform-db"
+  description = "Allow MySQL traffic"
+  vpc_id      = "vpc-0e9f9e6e"
+
+  ingress {
+    description = "MySQL"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-db"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "web" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  security_groups = var.security_group_ids
+
+  tags = {
+    Name = "terraform-web"
+  }
+}
+

@@ -1,0 +1,41 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a node template. Assign a name, set node type to n1-node-96-624
+resource "google_compute_instance_template" "node" {
+  name = "node-template"
+  machine_type = "n1-node-96-624"
+  tags = ["node"]
+  # set the boot disk to the latest ubuntu image
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+    }
+  }
+  # set the network interface to use the default network
+  network_interface {
+    network = "default"
+  }
+  # set the service account to the default compute service account
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+}
+
+# create a compute node group resource. Set size to 1 and use the node template resource id
+resource "google_compute_node_group" "node" {
+  name = "node-group"
+  size = 1
+  node_template = google_compute_instance_template.node.id
+}
+

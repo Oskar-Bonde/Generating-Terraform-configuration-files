@@ -1,0 +1,43 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "terraform-vpc"
+  }
+}
+
+# Create AWS subnets resource 
+resource "aws_subnet" "public" {
+  count = 2
+  vpc_id = aws_vpc.main.id
+  cidr_block = "10.0.${count.index}.0/24"
+  availability_zone = "us-east-1${count.index}"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "terraform-subnet-public-${count.index}"
+  }
+}
+
+# create a nat gateway
+resource "aws_nat_gateway" "nat_gateway" {
+  count = 2
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id = aws_subnet.public[count.index].id
+  tags = {
+    Name = "terraform-nat-gateway-${count.index}"
+  }
+}
+

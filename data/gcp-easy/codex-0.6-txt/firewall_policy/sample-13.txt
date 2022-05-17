@@ -1,0 +1,21 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = "${file("account.json")}"
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create a firewall policy
+resource "google_compute_firewall_policy" "default" {
+  name = "default-firewall-policy"
+  description = "Default firewall policy"
+}
+

@@ -1,0 +1,114 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "aws_region" {
+  default = "us-east-1"
+}
+
+# variable block
+variable "aws_profile" {
+  default = "default"
+}
+
+# make variable
+variable "aws_access_key" {
+  default = "AKIAIOSFODNN7EXAMPLE"
+}
+
+# create variable block
+variable "aws_secret_key" {
+  default = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+}
+
+# Create Security Group
+resource "aws_security_group" "web" {
+  name        = "web"
+  description = "Allow HTTP and SSH access"
+  vpc_id      = "vpc-0e0c8a5f5b5c1c8b5"
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "web"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "db" {
+  name        = "db"
+  description = "Allow HTTP and SSH access"
+  vpc_id      = "vpc-0e0c8a5f5b5c1c8b5"
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "db"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "web" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
+  key_name      = "mykey"
+  subnet_id     = "subnet-0e0c8a5f5b5c1c8b5"
+  vpc_security_group_ids = [aws_security_group.web.id]
+
+  tags = {
+    Name = "web"
+  }
+}
+

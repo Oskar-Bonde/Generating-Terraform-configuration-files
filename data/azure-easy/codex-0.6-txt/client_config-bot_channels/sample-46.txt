@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-tf-test"
+  location = "westeurope"
+}
+
+# data block, azurem client config
+data "azurerm_client_config" "current" {}
+
+# create bot channels registration resource
+resource "azurerm_bot_channels_registration" "bot" {
+  name                = "bot-tf-test"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "F0"
+  microsoft_app_id    = "00000000-0000-0000-0000-000000000000"
+  microsoft_app_password = "00000000-0000-0000-0000-000000000000"
+
+  tags = {
+    environment = "test"
+  }
+}
+

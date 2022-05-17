@@ -1,0 +1,34 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("${path.module}/account.json")
+  project     = "my-project"
+  region      = "us-central1"
+}
+
+# create compute network
+resource "google_compute_network" "vpc_network" {
+  name                    = "vpc-network"
+  auto_create_subnetworks = "true"
+}
+
+# create compute subnetwork
+resource "google_compute_subnetwork" "vpc_subnetwork" {
+  name          = "vpc-subnetwork"
+  ip_cidr_range = "10.0.0.0/16"
+  region        = "us-central1"
+  network       = google_compute_network.vpc_network.self_link
+}
+
+# make a compute address resource
+resource "google_compute_address" "vpc_address" {
+  name = "vpc-address"
+}
+

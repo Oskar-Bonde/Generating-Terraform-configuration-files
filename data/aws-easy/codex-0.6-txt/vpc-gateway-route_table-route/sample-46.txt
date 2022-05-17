@@ -1,0 +1,35 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create a AWS VPC resource
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
+}
+
+# AWS Internet Gateway
+resource "aws_internet_gateway" "example" {
+  vpc_id = aws_vpc.example.id
+}
+
+# Create AWS route table
+resource "aws_route_table" "example" {
+  vpc_id = aws_vpc.example.id
+}
+
+# Create route resource
+resource "aws_route" "example" {
+  route_table_id = aws_route_table.example.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.example.id
+}
+

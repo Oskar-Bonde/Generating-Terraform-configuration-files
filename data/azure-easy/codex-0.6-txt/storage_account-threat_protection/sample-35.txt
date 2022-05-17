@@ -1,0 +1,38 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "my-rg"
+  location = "eastus"
+}
+
+# create storage account resource
+resource "azurerm_storage_account" "sa" {
+  name                     = "mystorageaccount"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+# create advanced threat protection resource
+resource "azurerm_storage_account_network_rules" "atp" {
+  resource_group_name = azurerm_resource_group.rg.name
+  storage_account_name = azurerm_storage_account.sa.name
+  bypass = ["Metrics"]
+  default_action = "Allow"
+  ip_rules = ["10.0.0.0/8"]
+  virtual_network_subnet_ids = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Network/virtualNetworks/my-vnet/subnets/my-subnet"]
+}
+

@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a node template. Assign a name, set node type to n1-node-96-624
+# and set boot disk to ubuntu-1604-xenial-v20190402
+resource "google_compute_instance_template" "instance_template" {
+  name = "instance-template"
+  machine_type = "n1-node-96-624"
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-1604-xenial-v20190402"
+    }
+  }
+}
+

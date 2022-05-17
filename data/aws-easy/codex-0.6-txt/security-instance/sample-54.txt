@@ -1,0 +1,51 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS block
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create Security Group
+resource "aws_security_group" "ssh_sg" {
+  name        = "ssh_sg"
+  description = "Allow SSH access"
+  vpc_id      = "vpc-0a1e9e4f6f7c8d8b6"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ssh_sg"
+  }
+}
+
+# Create EC2 Instance 
+resource "aws_instance" "web" {
+  ami           = "ami-0b898040803850657"
+  instance_type = "t2.micro"
+  key_name      = "mykey"
+  vpc_security_group_ids = [aws_security_group.ssh_sg.id]
+  subnet_id     = "subnet-0c5f5a9f9c8d8b6d2"
+
+  tags = {
+    Name = "web"
+  }
+}
+

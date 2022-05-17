@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  version = "=2.0.0"
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "my-resource-group"
+  location = "westus"
+}
+
+# create container registry resource
+resource "azurerm_container_registry" "acr" {
+  name                = "mycontainerregistry"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Standard"
+  admin_enabled       = true
+}
+

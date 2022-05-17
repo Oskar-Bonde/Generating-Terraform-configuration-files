@@ -1,0 +1,103 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "instance_type" {
+  description = "EC2 instance type"
+  default     = "t2.micro"
+}
+
+# variable block
+variable "ami" {
+  description = "EC2 AMI"
+  default     = "ami-0b33d91d"
+}
+
+# make variable
+variable "key_name" {
+  description = "EC2 key name"
+  default     = "ec2-keypair"
+}
+
+# create variable block
+variable "subnet_id" {
+  description = "EC2 subnet id"
+  default     = "subnet-0b8d4a6f"
+}
+
+# Create Security Group
+resource "aws_security_group" "default" {
+  name        = "terraform-example"
+  description = "Used in the terraform"
+
+  ingress {
+    description = "SSH access from anywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "default" {
+  name        = "terraform-example"
+  description = "Used in the terraform"
+
+  ingress {
+    description = "SSH access from anywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "example" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  subnet_id     = var.subnet_id
+
+  security_groups = [
+    aws_security_group.default.name,
+  ]
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+

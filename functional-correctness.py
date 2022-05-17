@@ -252,7 +252,9 @@ def make_json_model(provider, model):
 
 if __name__ == "__main__":
     model = 'codeparrot-small'
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: #'azure', 'azure-easy'
+    provider = 'aws'
+    #for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy']: #'azure', 'azure-easy'
+    for model in ['codex-0','codex-0.4','codex-0.6','codex-0.8']:
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -262,4 +264,4 @@ if __name__ == "__main__":
             pass1(provider, model)
         else:
             compile_check(provider, model)
-    clean_terraform(model)
+        #clean_terraform(model)

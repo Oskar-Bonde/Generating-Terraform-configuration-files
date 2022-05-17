@@ -1,0 +1,99 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "instance_type" {
+  description = "Instance type"
+  default     = "t2.micro"
+}
+
+# variable block
+variable "ami" {
+  description = "Amazon Linux AMI"
+  default     = "ami-0b33d91d"
+}
+
+# make variable
+variable "key_name" {
+  description = "Name of an existing EC2 KeyPair to enable SSH access to the instance"
+  default     = "mykey"
+}
+
+# create variable block
+variable "security_group_ids" {
+  description = "List of security group IDs to assign to the instance"
+  default     = ["sg-0d4b4f8c"]
+}
+
+# Create Security Group
+resource "aws_security_group" "default" {
+  name        = "terraform-example"
+  description = "Used in the terraform"
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "default" {
+  name        = "terraform-example"
+  description = "Used in the terraform"
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "example" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  security_groups = var.security_group_ids
+
+  tags = {
+    Name = "terraform-example"
+  }
+}
+

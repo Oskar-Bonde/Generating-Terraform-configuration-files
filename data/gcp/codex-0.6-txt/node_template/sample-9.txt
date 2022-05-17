@@ -1,0 +1,34 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a node template. Assign a name, set node type to n1-node-96-624
+# and set the node count to 2
+resource "google_compute_instance_template" "node_template" {
+  name = "node-template"
+  machine_type = "n1-node-96-624"
+  disk {
+    source_image = "ubuntu-os-cloud/ubuntu-1804-lts"
+    auto_delete = true
+    boot = true
+  }
+  network_interface {
+    network = "default"
+  }
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
+}
+

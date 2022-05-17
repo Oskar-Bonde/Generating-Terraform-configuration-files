@@ -1,0 +1,36 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+    }
+  }
+}
+
+# Provider block with azure
+provider "azurerm" {
+  features {}
+}
+
+# create resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "rg-terraform-demo"
+  location = "eastus"
+}
+
+# make iothub resource
+resource "azurerm_iothub" "iothub" {
+  name                = "iothub-terraform-demo"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "S1"
+}
+
+# iot security solution resource
+resource "azurerm_iothub_security_solution" "iothub_security_solution" {
+  resource_group_name = azurerm_resource_group.rg.name
+  iothub_name         = azurerm_iothub.iothub.name
+  location            = azurerm_resource_group.rg.location
+  solution_name       = "iothub-terraform-demo-solution"
+  workspace_resource_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+}
+

@@ -1,0 +1,96 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider Block AWS
+provider "aws" {
+  region = "us-east-1"
+}
+
+# Create variable 
+variable "instance_type" {
+  default = "t2.micro"
+}
+
+# variable block
+variable "ami" {
+  default = "ami-0bbe6b35405ecebdb"
+}
+
+# make variable
+variable "key_name" {
+  default = "terraform-key"
+}
+
+# create variable block
+variable "security_group_ids" {
+  type = list(string)
+  default = ["sg-0d1c9f7a9e2f8c7b6"]
+}
+
+# Create Security Group
+resource "aws_security_group" "allow_all" {
+  name        = "allow_all"
+  description = "Allow all inbound traffic"
+  vpc_id      = "vpc-0a8e8c8f8d2f7b1e2"
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_all"
+  }
+}
+
+# Create Security Group
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow HTTP inbound traffic"
+  vpc_id      = "vpc-0a8e8c8f8d2f7b1e2"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_http"
+  }
+}
+
+# Create EC2 Instance
+resource "aws_instance" "web" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  security_groups = var.security_group_ids
+
+  tags = {
+    Name = "web"
+  }
+}
+

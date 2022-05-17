@@ -1,0 +1,28 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  project = var.project
+  region  = var.region
+  zone    = var.zone
+}
+
+# create compute network
+resource "google_compute_network" "vpc_network" {
+  name                    = "vpc-network"
+  auto_create_subnetworks = "true"
+}
+
+# create a compute ha vpn gateway
+resource "google_compute_ha_vpn_gateway" "vpn_gateway" {
+  name        = "vpn-gateway"
+  network     = google_compute_network.vpc_network.name
+  region      = var.region
+}
+
