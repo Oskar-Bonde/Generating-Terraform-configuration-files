@@ -1,0 +1,1 @@
+ Provider block# Resource block with an EC2 instance

@@ -70,7 +70,7 @@ class CodexModel:
                     if generated["choices"][j]["finish_reason"] == "length":
                         print(f"Finish reason length index {batch*batch_size+j}")
                         print(key)
-                        return
+                        #return
                         
         os.makedirs(f'data/{self.provider}/codex{self.file_name}-txt/{key}')
         for i in range(self.n_samples):
