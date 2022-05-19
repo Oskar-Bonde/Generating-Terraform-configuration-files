@@ -1,0 +1,89 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
+resource "google_privateca_certificate_authority" "name_0" {
+  provider = google-beta
+  name = "ca-pool"
+  type = "SUBORDINATE"
+  tier = "ENTERPRISE"
+  region = "europe-west4"
+  enable_certificate_authority = true
+  enable_certificate = true
+  enable_crl = true
+  enable_csr = true
+  enable_ocsp = true
+  enable_uri_san_fqdn = true
+  enable_uri_san_ip = true
+  enable_uri_san_email = true
+  enable_uri_san_other_name = true
+  enable_basic_constraints = true
+  enable_subject_alt_name = true
+  enable_key_usage = true
+  enable_extended_key_usage = true
+  enable_any_extended_key_usage = true
+  enable_policy_constraints = true
+  enable_name_constraints = true
+  enable_crl_distribution_points = true
+  enable_inhibit_any_policy = true
+  enable_freshest_crl = true
+  enable_ct_poison = true
+  enable_ct_scts = true
+  enable_issuer_alt_name = true
+  enable_ocsp_must_staple = true
+  enable_signed_certificate_timestamps = true
+  enable_certificate_transparency = true
+  enable_certificate_key_usages = true
+  enable_certificate_extended_key_usages = true
+  enable_certificate_basic_constraints = true
+  enable_certificate_subject_alt_name = true
+  enable_certificate_crl_distribution_points = true
+  enable_certificate_policy_constraints = true
+  enable_certificate_name_constraints = true
+  enable_certificate_any_extended_key_usage = true
+  enable_certificate_inhibit_any_policy = true
+  enable_certificate_freshest_crl = true
+  enable_certificate_ct_poison = true
+  enable_certificate_ct_scts = true
+  enable_certificate_issuer_alt_name = true
+  enable_certificate_ocsp_must_staple = true
+  enable_certificate_signed_certificate_timestamps = true
+  enable_certificate_certificate_transparency = true
+  enable_certificate_authority_information_access = true
+  enable_certificate_authority_key_identifier = true
+  enable_certificate_authority_issuer = true
+  enable_certificate_authority_subject = true
+  enable_certificate_authority_public_key = true
+  enable_certificate_authority_key_usage = true
+  enable_certificate_authority_extended_key_usage = true
+  enable_certificate_authority_basic_constraints = true
+  enable_certificate_authority_subject_alt_name = true
+  enable_certificate_authority_crl_distribution_points = true
+  enable_certificate_authority_policy_constraints = true
+  enable_certificate_authority_name_constraints = true
+  enable_certificate_authority_any_extended_key_usage = true
+  enable_certificate_authority_inhibit_any_policy = true
+  enable_certificate_authority_freshest_crl = true
+  enable_certificate_authority_ct_poison = true
+  enable_certificate_authority_ct_scts = true
+  enable_certificate_authority_issuer_alt_name = true
+  enable_certificate_authority_ocsp_must_staple = true
+  enable_certificate_authority_signed_certificate_timestamps = true
+  enable_certificate_authority_certificate_transparency = true
+  enable_certificate_authority_certificate_issuer = true
+  enable_certificate_authority_certificate_subject = true
+  enable_certificate_authority_certificate_public_key = true
+  enable_certificate_authority_certificate_key_usage = true
+  enable_certificate_authority_certificate_extended_
+}
+

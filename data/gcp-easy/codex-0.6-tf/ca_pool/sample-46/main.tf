@@ -1,0 +1,29 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block 
+provider "google" {
+  credentials = file("${path.module}/account.json")
+  project     = var.project
+  region      = var.region
+}
+
+# create a CaPool resource
+resource "google_compute_region_backend_service" "name_0" {
+  name            = "my-backend-service"
+  region          = var.region
+  health_checks   = ["${google_compute_health_check.default.self_link}"]
+  load_balancing_scheme = "INTERNAL_SELF_MANAGED"
+  protocol = "TCP"
+  timeout_sec = 10
+  port_name = "http"
+  backend {
+    group = "${google_compute_instance_group_manager.default.instance_group}"
+  }
+}
+

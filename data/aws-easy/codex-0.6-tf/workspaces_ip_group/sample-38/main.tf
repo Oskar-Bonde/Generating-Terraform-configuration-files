@@ -1,0 +1,22 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider AWS
+provider "aws" {
+  region = var.region
+}
+
+# create a workspace ip group
+resource "aws_workspaces_ip_group" "name_0" {
+  name = var.ip_group_name
+  description = var.ip_group_description
+  rules {
+    source = "10.0.0.0/8"
+  }
+}
+

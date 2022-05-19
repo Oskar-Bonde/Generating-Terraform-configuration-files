@@ -1,0 +1,142 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block with only region set to europe north1
+provider "google" {
+  region = "europe-north1"
+}
+
+# create a CaPool resource. Located in europe west 4, enterprise tier and set publishing options ca cert and crl to true
+resource "google_privateca_certificate_authority" "name_0" {
+  provider = google-beta
+  name     = "ca-pool"
+  type     = "SUBORDINATE"
+  tier     = "ENTERPRISE"
+  region   = "europe-west4"
+  config {
+    key_spec = "RSA_4096"
+    ca_options {
+      is_ca                 = true
+      max_issue_lifetime    = "P10Y"
+      expiry                = "P10Y"
+      csr_only              = false
+      crl_config {
+        enabled = true
+      }
+      ca_certificate_config {
+        signing_algorithm = "SHA256_RSA_PSS"
+        lifetime          = "P10Y"
+        is_ca             = true
+        key_usage {
+          usage = "SIGN_CERTIFICATES"
+        }
+        key_usage {
+          usage = "CRL_SIGN"
+        }
+        key_usage {
+          usage = "KEY_CERT_SIGN"
+        }
+        key_usage {
+          usage = "DIGITAL_SIGNATURE"
+        }
+        key_usage {
+          usage = "KEY_ENCIPHERMENT"
+        }
+        key_usage {
+          usage = "DATA_ENCIPHERMENT"
+        }
+        key_usage {
+          usage = "KEY_AGREEMENT"
+        }
+        key_usage {
+          usage = "CERTIFICATE_SIGN"
+        }
+        key_usage {
+          usage = "ENCIPHER_ONLY"
+        }
+        key_usage {
+          usage = "DECIPHER_ONLY"
+        }
+        extended_key_usage {
+          usage = "SERVER_AUTH"
+        }
+        extended_key_usage {
+          usage = "CLIENT_AUTH"
+        }
+        extended_key_usage {
+          usage = "CODE_SIGNING"
+        }
+        extended_key_usage {
+          usage = "EMAIL_PROTECTION"
+        }
+        extended_key_usage {
+          usage = "TIME_STAMPING"
+        }
+        extended_key_usage {
+          usage = "OCSP_SIGNING"
+        }
+        extended_key_usage {
+          usage = "ANY"
+        }
+        extended_key_usage {
+          usage = "ANY"
+        }
+        subject_config {
+          subject_type = "RFC822_NAME"
+          subject_value = "ca@example.com"
+        }
+        subject_config {
+          subject_type = "ORGANIZATION_NAME"
+          subject_value = "Example Org"
+        }
+        subject_config {
+          subject_type = "ORGANIZATIONAL_UNIT_NAME"
+          subject_value = "Example Org Unit"
+        }
+        subject_config {
+          subject_type = "COUNTRY"
+          subject_value = "US"
+        }
+        subject_config {
+          subject_type = "LOCALITY"
+          subject_value = "Mountain View"
+        }
+        subject_config {
+          subject_type = "PROVINCE"
+          subject_value = "California"
+        }
+        subject_config {
+          subject_type = "STREET_ADDRESS"
+          subject_value = "1600 Amphitheatre Parkway"
+        }
+        subject_config {
+          subject_type = "POSTAL_CODE"
+          subject_value = "94043"
+        }
+        subject_config {
+          subject_type = "SERIAL_NUMBER"
+          subject_value = "1234567890"
+        }
+        subject_config {
+          subject_type = "JURISDICTION_COUNTRY"
+          subject_value = "US"
+        }
+        subject_config {
+          subject_type = "JURISDICTION_LOCALITY"
+          subject_value = "Mountain View"
+        }
+        subject_config {
+          subject_type = "JURISDICTION_PROVINCE"
+          subject_value = "California"
+        }
+        subject_config {
+          subject_type = "JURISDICTION_ORGANIZATION_NAME"
+          subject_value = "Example Org"
+       
+}
+

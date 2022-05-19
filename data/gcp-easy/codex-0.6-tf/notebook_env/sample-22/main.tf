@@ -1,0 +1,65 @@
+terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+  }
+}
+
+# google provider block
+provider "google" {
+  credentials = file("${path.module}/credentials.json")
+  project     = var.project
+  region      = var.region
+}
+
+# create google notebooks enviroment
+resource "google_notebooks_environment" "name_0" {
+  name          = var.name
+  project       = var.project
+  region        = var.region
+  machine_type  = var.machine_type
+  network       = var.network
+  subnetwork    = var.subnetwork
+  service_account = var.service_account
+  boot_disk_size_gb = var.boot_disk_size_gb
+  boot_disk_type = var.boot_disk_type
+  accelerator_count = var.accelerator_count
+  accelerator_type = var.accelerator_type
+  container_image_uri = var.container_image_uri
+  container_image_project = var.container_image_project
+  container_image_family = var.container_image_family
+  container_image_version = var.container_image_version
+  install_gpu_driver = var.install_gpu_driver
+  install_nvidia_driver = var.install_nvidia_driver
+  install_nvidia_runtime = var.install_nvidia_runtime
+  install_nvidia_cuda_toolkit = var.install_nvidia_cuda_toolkit
+  install_nvidia_cudnn = var.install_nvidia_cudnn
+  install_nvidia_tensorrt = var.install_nvidia_tensorrt
+  install_nvidia_nccl = var.install_nvidia_nccl
+  install_nvidia_nccl_version = var.install_nvidia_nccl_version
+  install_nvidia_nccl_path = var.install_nvidia_nccl_path
+  install_nvidia_nccl_sha256 = var.install_nvidia_nccl_sha256
+  install_nvidia_nccl_url = var.install_nvidia_nccl_url
+  install_nvidia_nccl_deb_path = var.install_nvidia_nccl_deb_path
+  install_nvidia_nccl_deb_sha256 = var.install_nvidia_nccl_deb_sha256
+  install_nvidia_nccl_deb_url = var.install_nvidia_nccl_deb_url
+  install_nvidia_nccl_rpm_path = var.install_nvidia_nccl_rpm_path
+  install_nvidia_nccl_rpm_sha256 = var.install_nvidia_nccl_rpm_sha256
+  install_nvidia_nccl_rpm_url = var.install_nvidia_nccl_rpm_url
+  install_nvidia_nccl_tar_path = var.install_nvidia_nccl_tar_path
+  install_nvidia_nccl_tar_sha256 = var.install_nvidia_nccl_tar_sha256
+  install_nvidia_nccl_tar_url = var.install_nvidia_nccl_tar_url
+  install_nvidia_nccl_tgz_path = var.install_nvidia_nccl_tgz_path
+  install_nvidia_nccl_tgz_sha256 = var.install_nvidia_nccl_tgz_sha256
+  install_nvidia_nccl_tgz_url = var.install_nvidia_nccl_tgz_url
+  install_nvidia_nccl_zip_path = var.install_nvidia_nccl_zip_path
+  install_nvidia_nccl_zip_sha256 = var.install_nvidia_nccl_zip_sha256
+  install_nvidia_nccl_zip_url = var.install_nvidia_nccl_zip_url
+  install_nvidia_nccl_whl_path = var.install_nvidia_nccl_whl_path
+  install_nvidia_nccl_whl_sha256 = var.install_nvidia_nccl_whl_sha256
+  install_nvidia_nccl_whl_url = var.install_nvidia_nccl_whl_url
+  install_nvidia_nccl_egg_path = var.install_nvidia_nccl_egg_path
+  install_nvidia_nccl_
+}
+

@@ -108,6 +108,8 @@ def clean_json(input):
     input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id|bucket_name|network|instance)":".+?"','', input)
     input = re.sub('"(description|name|constant_value|terraform_version|resource_group_name|id|bucket_name|network)":null','', input)
     input = re.sub('"(name|description)":{.*?}','', input)
+    input = re.sub('"(profile)":{.*?}','', input)
+    # "profile":{"constant_value":"default"}
     input = re.sub('({|}|,|\[|\]|"|:)','', input)
     return  re.sub('\n','', input)
 
@@ -130,8 +132,8 @@ def pass1(provider, model, n_samples):
         for sample in sorted(os.listdir(f'data/{provider}/{model}-tf/{task}')):
             sample_to_int[sample]=i
             if not os.path.exists(f'data/{provider}/{model}-tf/{task}/{sample}/plan.json'):
-                duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}/{sample}')[0]
                 try:
+                    duplicate = os.listdir(f'data/{provider}/{model}-tf/{task}/{sample}')[0]
                     distr[sample_to_int[duplicate[:-4]]]+=1
                 except:
                     print(f'data/{provider}/{model}-tf/{task}/{sample}')
@@ -280,8 +282,10 @@ def make_json_model(provider, model):
 if __name__ == "__main__":
     model = 'codeparrot-small'
     n_samples = 50
+    
     #for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']: # 'azure', 'azure-easy'
+    #clean_terraform(model, n_samples)
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
         print(f'-----------------------------------------\n{provider}')
         make_json_human(provider)
         make_json_model(provider, model)
@@ -289,5 +293,6 @@ if __name__ == "__main__":
         if not easy:
             pass1(provider, model, n_samples)
         else:
-            compile_check(provider, model, n_samples)    
+            compile_check(provider, model, n_samples)
     clean_terraform(model, n_samples)
+    

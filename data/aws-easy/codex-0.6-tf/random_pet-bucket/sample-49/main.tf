@@ -1,0 +1,32 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+    random = {
+      source  = "hashicorp/random"
+    }
+  }
+}
+
+# AWS provider block
+provider "aws" {
+  region = var.region
+}
+
+# Resource block to create a random pet name 
+resource "random_pet" "name_0" {
+  keepers = {
+    # Generate a new pet name when changing this variable
+    pet_name = var.pet_name
+  }
+
+  length    = 2
+  separator = "-"
+}
+
+# Create AWS S3 bucket 
+resource "aws_s3_bucket" "name_1" {
+  bucket = random_pet.name_0.id
+}
+
