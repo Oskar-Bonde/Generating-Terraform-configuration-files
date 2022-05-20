@@ -119,7 +119,7 @@ def remove_brackets(input):
 
 def pass1(provider, model, n_samples):
     out_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'w', encoding='utf-8', errors='ignore')
-    out_txt.write('Task | Success rate | Errors\n')
+    out_txt.write('Task | Success rate | Errors | Distribution\n')
     total_success_rate = []
     task_names = []
     for task in sorted(os.listdir(f'data/{provider}/human-tf')):
@@ -165,7 +165,7 @@ def pass1(provider, model, n_samples):
                 break
 
         total_success_rate.append(np.mean(success_rate))
-        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
+        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} | {sorted(distr)}\n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
 
 def clean_plan(plan):
@@ -233,7 +233,7 @@ def compile_check(provider, model, n_samples):
 
         if success_rate == []: success_rate=[0]
         total_success_rate.append(np.mean(success_rate))
-        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} \n')
+        out_txt.write(f'{task} | {np.mean(success_rate)*100}% | {sorted(errors)} | {sorted(distr)}\n')
     out_txt.write(f'Average success rate {np.mean(total_success_rate)*100}%\n')
 
 def make_json_human(provider):
@@ -282,17 +282,16 @@ def make_json_model(provider, model):
 if __name__ == "__main__":
     model = 'codeparrot-small'
     n_samples = 50
-    
-    #for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
-    #clean_terraform(model, n_samples)
-    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
-        print(f'-----------------------------------------\n{provider}')
-        make_json_human(provider)
-        make_json_model(provider, model)
-        easy = True if 'easy' in provider else False
-        if not easy:
-            pass1(provider, model, n_samples)
-        else:
-            compile_check(provider, model, n_samples)
-    clean_terraform(model, n_samples)
-    
+    for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+        clean_terraform(model, n_samples)
+        for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+            print(f'-----------------------------------------\n{provider}')
+            make_json_human(provider)
+            make_json_model(provider, model)
+            easy = True if 'easy' in provider else False
+            if not easy:
+                pass1(provider, model, n_samples)
+            else:
+                compile_check(provider, model, n_samples)
+        #clean_terraform(model, n_samples)
+        
