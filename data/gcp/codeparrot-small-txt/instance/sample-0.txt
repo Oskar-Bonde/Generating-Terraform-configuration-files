@@ -10,7 +10,8 @@ terraform {
 provider "google" {
 }
 
-# a compute instance that has boot disk debian-9 image, network interface default, is type e2-medium and has a nameresource
+# a compute instance that has boot disk debian-9 image, 
+network interface default, is type e2-medium and has a name
 resource "google_compute_instance" "vm_instance" {
   name = "my-vm"
   machine_type = "e2-medium"
