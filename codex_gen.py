@@ -98,4 +98,7 @@ def all_providers():
         model.generate_samples()
 
 if __name__ == "__main__":
+    model = CodexModel('gcp', n_samples=10, wait=0, temperature=0.6, batch_size=10, file_name='-timetest' )
+    model.generate_samples()
+    quit()
     all_providers()

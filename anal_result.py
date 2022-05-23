@@ -4,23 +4,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-def main():
-    model = 'codex'
+def one_model(model = 'codex'):
+    n_samples = 50
     success_rate = []
     task_int = {}
     analysis = {}
     num = 0
-    for provider in ['aws', 'gcp', 'azure']:
+    for provider in ['aws', 'gcp', 'azure', 'aws-easy', 'gcp-easy', 'azure-easy']: #['aws', 'gcp', 'azure']:
         result_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'r', encoding='utf-8', errors='ignore')
         lines = result_txt.readlines()[1:-1]
-        
+
         for i in range(len(lines)):
-            task = lines[i].split()[0]
-            rate = float(lines[i].split()[2][:-1])
+            seg = lines[i].split(' | ')
+            task = seg[0]
+            rate = float(seg[1][:-1])
             task_int[f'{provider} {task}'] = num
             success_rate.append(rate)
             num += 1
-        
         
         for task in sorted(os.listdir(f'data/{provider}/human-txt')):
             with open(f'data/{provider}/human-txt/{task}', 'r', encoding='utf-8', errors='ignore') as task_file:
@@ -41,12 +41,15 @@ def main():
 
                 analysis[f'{provider} {task[:-4]}'] = [n_blocks, n_characters, long_comment, n_comment_characters, n_lines]
 
-    bar_figure(analysis, task_int, success_rate, 0, 'Number of Blocks')
+    bar_figure(analysis, task_int, success_rate, 0)
+    """
     create_figure(analysis, task_int, success_rate, 1, 'Lenght of Longest Comment')
     create_figure(analysis, task_int, success_rate, 2, 'Number of Characters')
     create_figure(analysis, task_int, success_rate, 3, 'Length of Comments')
     create_figure(analysis, task_int, success_rate, 4, 'Number of lines')
+    """
     plt.show()
+    
 
 def create_figure(analysis, task_int, success_rate, num, name):
     x = []
@@ -72,7 +75,7 @@ def create_figure(analysis, task_int, success_rate, num, name):
     plt.legend()
 
 
-def bar_figure(analysis, task_int, success_rate, num, name):
+def bar_figure(analysis, task_int, success_rate, num):
     x = []
     y = []
     
@@ -88,19 +91,69 @@ def bar_figure(analysis, task_int, success_rate, num, name):
     mean_rate = []
     for i in range(1, max(x)+1):
         mean_rate.append(np.mean(rate[i]))
+    mean_rate = np.nan_to_num(mean_rate)
         
     """ Success rate over XXXXX """
-    fig = plt.figure()
-    ax = fig.add_axes([0,0,1,1])
-    ax.set_title(f"Success rate over {name}")
-    #ax.set_xlabel(name)
-    #ax.set_ylabel('Success rate')
+    plt.figure()
+    plt.title(f"Success Rate Over Number of Blocks")
+    plt.xlabel('Number of blocks in task')
+    plt.ylabel('Average Success rate')
     x_axis = np.arange(1, max(x)+1)
-    ax.bar(x_axis, mean_rate) 
-    #ax.set_xticks(ind,)
-    #ax.bar_label(vbar, labels=freq, padding=8, color='b', fontsize=14)
+    plt.bar(x_axis, mean_rate, width=0.7, color='royalblue', linewidth=0.5, edgecolor='k') 
+    for i in range(len(x_axis)):
+        plt.text(x_axis[i], 2.5, freq[i], ha = 'center', bbox = dict(facecolor = 'tomato', alpha =1), label='Number of samples') # mean_rate[i]
+    plt.legend()
 
- 
+
+def distribution():
+    n_samples = 50
+    model_distr = {}
+    for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+        provider_distr = {}
+        for provider in ['aws', 'gcp', 'azure', 'aws-easy', 'gcp-easy', 'azure-easy']:
+            num = 0
+            distribution = np.zeros(n_samples)
+            result_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'r', encoding='utf-8', errors='ignore')
+            lines = result_txt.readlines()[1:-1]
+
+            for i in range(len(lines)):
+                seg = lines[i].split(' | ')
+                distr = seg[3][1:-2].split(', ')
+                distr = [int(i) for i in distr]
+                distribution += np.array(sorted(distr, reverse=True))/n_samples
+                num += 1
+            distribution *= 1/num
+            provider_distr[provider] = distribution
+            print(np.sum(distribution))
+            
+        model_distr[model] = np.zeros(n_samples)
+        for key in ['aws', 'gcp', 'azure', 'aws-easy', 'gcp-easy', 'azure-easy']:
+            model_distr[model] += provider_distr[key]
+        model_distr[model] *= 1/6
+        
+        x = np.arange(n_samples)
+        plt.figure()
+        plt.title(f'Duplicate Distribution {model}')
+        plt.xlabel('Unique Sample')
+        plt.ylabel('Probability')
+        for key in ['aws', 'gcp', 'azure', 'aws-easy', 'gcp-easy', 'azure-easy']:
+            plt.plot(x, provider_distr[key], linestyle='dashed', marker='o', label=key)
+        plt.xlim([0, 5])
+        plt.ylim([0, 0.8])
+        plt.legend()
+    
+    plt.figure()
+    plt.title(f'Duplicate Distribution Average')
+    plt.xlabel('Unique Sample')
+    plt.ylabel('Probability')
+    for key in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+        plt.plot(x, model_distr[key], linestyle='dashed', marker='o', label=key)
+    plt.xlim([0, 5])
+    plt.ylim([0, 0.8])
+    plt.legend()
+    
+    plt.show()
+
 # for each provider and average
 
 # success rate vs number of blocks 
@@ -117,4 +170,6 @@ def bar_figure(analysis, task_int, success_rate, num, name):
 # success rate vs number of lines
 
 if __name__ == "__main__":
-    main()
+    #one_model()
+    distribution()
+    
