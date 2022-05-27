@@ -134,3 +134,4 @@ dmypy.json
 raw-data/
 data/train-raw/
 models/
+.vscode/
