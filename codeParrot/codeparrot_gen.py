@@ -116,7 +116,8 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.model_max_length = 1024
     # Generation settings
-    """comment_token = tokenizer(['#','//','\n/', '/*', '*/'], add_special_tokens=False).input_ids
+    """
+    comment_token = tokenizer(['#','//','\n/', '/*', '*/'], add_special_tokens=False).input_ids
     block_token = tokenizer(['ter', 'provider', 'resource', 'data', 'variable', 'output', 'module'], add_special_tokens=False).input_ids
     print(f'Comment tokens {comment_token}')
     print(f'Block tokens {block_token}')

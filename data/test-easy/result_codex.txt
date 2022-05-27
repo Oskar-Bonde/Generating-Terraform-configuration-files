@@ -1,5 +1,0 @@
-Task | Success rate | Errors
-bucket | 100.0% | [] 
-instance | 100.0% | [] 
-security | 100.0% | [] 
-Average success rate 100.0%

@@ -8,26 +8,19 @@ terraform {
 
 # google provider block 
 provider "google" {
-  credentials = file("${path.module}/account.json")
-  project     = var.project
-  region      = var.region
+  project = "my-project"
+  region  = "us-central1"
 }
 
-# create composer environment in region us-central1
+# create composer environment
 resource "google_composer_environment" "name_0" {
-  name          = "my-composer-environment"
-  region        = var.region
-  project       = var.project
+  name = "my-environment"
   config {
+    node_count = 3
     node_config {
       machine_type = "n1-standard-1"
       disk_size_gb = 10
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/cloud-platform",
-      ]
-    }
-    software_config {
-      image_version = "composer-1.10.2-airflow-1.10.2"
+      location = "us-central1-a"
     }
   }
 }

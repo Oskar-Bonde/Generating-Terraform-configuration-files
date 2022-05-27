@@ -14,7 +14,7 @@ provider "google" {
 
 # create a compute instance 
 resource "google_compute_instance" "vm_instance" {
-  name = "my-compute-instance-%%{random_suffix}"
+  name = "my-compute-instance"
   machine_type = "f1-micro"
 
   boot_disk {

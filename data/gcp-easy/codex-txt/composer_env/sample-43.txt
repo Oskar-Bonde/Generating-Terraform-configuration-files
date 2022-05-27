@@ -9,20 +9,24 @@ terraform {
 # google provider block 
 provider "google" {
   credentials = file("${path.module}/account.json")
-  project     = "my-project"
-  region      = "us-central1"
+  project     = var.project
+  region      = var.region
 }
 
-# create composer environment in region us-central1
-resource "google_composer_environment" "my-composer-environment" {
-  name = "my-composer-environment"
-  region = "us-central1"
+# create composer environment
+resource "google_composer_environment" "composer_environment" {
+  name            = var.composer_environment_name
+  project         = var.project
+  region          = var.region
   config {
-    node_count = 1
     node_config {
-      machine_type = "n1-standard-1"
-      disk_size_gb = 30
-      network = "default"
+      machine_type = var.machine_type
+      disk_size_gb = var.disk_size_gb
+      network      = var.network
+      subnetwork   = var.subnetwork
+    }
+    software_config {
+      image_version = var.image_version
     }
   }
 }

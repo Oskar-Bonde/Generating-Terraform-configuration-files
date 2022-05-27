@@ -8,24 +8,18 @@ terraform {
 
 # google provider block 
 provider "google" {
-  credentials = file("${var.credentials_file}")
-  project     = "${var.project}"
-  region      = "${var.region}"
+  credentials = file("credentials.json")
+  project     = "my-project"
+  region      = "us-central1"
 }
 
-# create composer environment in region us-central1
+# create composer environment
 resource "google_composer_environment" "name_0" {
-  name = "${var.composer_environment_name}"
-  region = "${var.region}"
+  name = "my-environment"
   config {
-    node_config {
-      machine_type = "${var.machine_type}"
-      disk_size_gb = "${var.disk_size_gb}"
-      network = "${var.network}"
-      subnetwork = "${var.subnetwork}"
-    }
+    node_count = 3
     software_config {
-      image_version = "${var.image_version}"
+      image_version = "composer-1.7.1-airflow-1.10.1"
     }
   }
 }

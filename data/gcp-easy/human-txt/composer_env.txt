@@ -12,7 +12,7 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create composer environment in region us-central1
+# create composer environment
 resource "google_composer_environment" "test" {
   name   = "example-composer-env"
   region = "us-central1"

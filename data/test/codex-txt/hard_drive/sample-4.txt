@@ -1,0 +1,25 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS in us-east-1 region and default profile
+provider "aws" {
+  region  = "us-east-1"
+  profile = "default"
+}
+
+# create hard drive resource. Create 3 counts of hard drives with capacity 8gb in location 120.0.32.16. Set distributed to True
+resource "aws_ebs_volume" "ebs_volume" {
+  count = 3
+  availability_zone = "us-east-1a"
+  size = 8
+  type = "gp2"
+  tags = {
+    Name = "terraform-ebs-volume-example"
+  }
+}
+

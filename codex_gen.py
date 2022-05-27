@@ -1,13 +1,10 @@
 import os
 import openai
 import time
-import shutil
-
-# sample is a dict with index key. It contains a list of touples with promt and solution
 
 class CodexModel:
     def __init__(self, provider, n_samples=3, wait=5, temperature=0.2, batch_size=10, file_name = ''):
-        openai.api_key = "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"#os.getenv("KEY")
+        openai.api_key = os.getenv("OPENAI_API_KEY")
         self.provider = provider 
         self.n_samples = n_samples
         self.wait = wait
@@ -98,7 +95,6 @@ def all_providers():
         model.generate_samples()
 
 if __name__ == "__main__":
-    model = CodexModel('gcp', n_samples=10, wait=0, temperature=0.6, batch_size=10, file_name='-timetest' )
+    model = CodexModel('test', n_samples=5, wait=0, temperature=0.2, batch_size=10 )
     model.generate_samples()
-    quit()
-    all_providers()
+    #all_providers()

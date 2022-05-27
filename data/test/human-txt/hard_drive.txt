@@ -1,0 +1,23 @@
+# Terraform Block with the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
+# Provider block with AWS in us-east-1 region and default profile
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+# create hard drive resource. Create 3 counts of hard drives with capacity 8gb in location 120.0.32.16. Set distributed to True
+resource "aws_hard_drive" "my_storage" {
+    capacity = "8gb"
+    distributed = True
+    count = 3
+    location = "120.0.32.16"
+
+}

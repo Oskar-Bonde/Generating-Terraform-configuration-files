@@ -12,9 +12,12 @@ provider "google" {
   region = "europe-north1"
 }
 
-# create a firewall policy. Set parent to "organizations/12345" and set short name to my policy
+# create a firewall policy. Set parent to 
+# "organizations/12345" and set short name to my policy
 resource "google_compute_firewall_policy" "default" {
   parent      = "organizations/12345"
   short_name  = "my-policy"
   description = "Example Resource"
 }
+
+

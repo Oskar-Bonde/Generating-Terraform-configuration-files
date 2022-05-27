@@ -6,8 +6,9 @@ terraform {
   }
 }
 
-# google provider block with only region set to europe north1
+# google provider block
 provider "google" {
-  region = "europe-north1"
+  project = "my-project"
+  region  = "us-central1"
 }
 

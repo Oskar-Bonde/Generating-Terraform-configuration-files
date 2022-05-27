@@ -13,22 +13,20 @@ provider "google" {
   region      = var.region
 }
 
-# create composer environment in region us-central1
+# create composer environment
 resource "google_composer_environment" "name_0" {
-  name          = "composer-environment-1"
-  region        = var.region
-  zone          = var.zone
+  name          = var.composer_environment_name
   project       = var.project
+  region        = var.region
   config {
     node_config {
-      machine_type = "n1-standard-1"
-      disk_size_gb = 30
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/cloud-platform",
-      ]
+      machine_type = var.machine_type
+      disk_size_gb = var.disk_size_gb
+      network      = var.network
+      subnetwork   = var.subnetwork
     }
     software_config {
-      image_version = "composer-1.10.0-airflow-1.10.1"
+      image_version = var.image_version
     }
   }
 }
