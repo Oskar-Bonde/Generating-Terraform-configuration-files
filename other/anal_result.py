@@ -4,16 +4,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-def one_model(model = 'codex'):
+def one_model(model = 'codex', ):
     n_samples = 50
     success_rate = []
     task_int = {}
     analysis = {}
     num = 0
-    for provider in ['aws', 'gcp', 'azure', 'aws-easy', 'gcp-easy', 'azure-easy']: #['aws', 'gcp', 'azure']:
+    avg_rate = 0
+    
+    for provider in ['aws', 'gcp', 'azure']: #['aws', 'gcp', 'azure']:
         result_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'r', encoding='utf-8', errors='ignore')
-        lines = result_txt.readlines()[1:-1]
-
+        all_lines = result_txt.readlines()
+        lines = all_lines[1:-1]
+        provider_tasks = 0
+        
         for i in range(len(lines)):
             seg = lines[i].split(' | ')
             task = seg[0]
@@ -21,6 +25,7 @@ def one_model(model = 'codex'):
             task_int[f'{provider} {task}'] = num
             success_rate.append(rate)
             num += 1
+            provider_tasks +=1
         
         for task in sorted(os.listdir(f'data/{provider}/human-txt')):
             with open(f'data/{provider}/human-txt/{task}', 'r', encoding='utf-8', errors='ignore') as task_file:
@@ -40,7 +45,8 @@ def one_model(model = 'codex'):
                         n_characters += len(line)
 
                 analysis[f'{provider} {task[:-4]}'] = [n_blocks, n_characters, long_comment, n_comment_characters, n_lines]
-
+        
+        
     bar_figure(analysis, task_int, success_rate, 0)
     """
     create_figure(analysis, task_int, success_rate, 1, 'Lenght of Longest Comment')
@@ -154,6 +160,29 @@ def distribution():
     
     plt.show()
 
+def all_results():
+
+    for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small', 'codex-0.6']:
+        for dataset in [['aws', 'gcp', 'azure'], ['aws-easy',  'gcp-easy', 'azure-easy']]:
+            avg_rate = 0
+            n_tasks = 0
+            for provider in dataset: #['aws', 'gcp', 'azure']:
+                result_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'r', encoding='utf-8', errors='ignore')
+                all_lines = result_txt.readlines()
+                lines = all_lines[1:-1]
+                provider_tasks = 0
+                
+                for i in range(len(lines)):
+                    n_tasks += 1
+                    provider_tasks +=1
+                    
+                last_line = all_lines[-1]
+                print(f'{model} on {dataset}: {float(last_line.split()[-1][:-1])}')
+                avg_rate += float(last_line.split()[-1][:-1])*provider_tasks
+            avg_rate = avg_rate/n_tasks
+            print(f'Average success rate {model} on {dataset} {avg_rate}')
+        
+        
 # for each provider and average
 
 # success rate vs number of blocks 
@@ -171,5 +200,6 @@ def distribution():
 
 if __name__ == "__main__":
     #one_model()
-    distribution()
+    all_results()
+    #distribution()
     
