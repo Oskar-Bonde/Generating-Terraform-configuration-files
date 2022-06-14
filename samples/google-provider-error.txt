@@ -1,7 +1,0 @@
-
-# google provider block with region set to europe north1
-provider "google" {
-  credentials = "${file("${path.module}/credentials.json")}"
-  project     = "${var.project}"
-  region      = "europe-north1"
-}

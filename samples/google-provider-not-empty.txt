@@ -1,7 +1,0 @@
-# google provider block that is empty
-provider "google" {}
-
-# google provider block that is not empty
-provider "google" {
-  project = "my-project"
-}
