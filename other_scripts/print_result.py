@@ -107,7 +107,7 @@ def bar_figure(analysis, task_int, success_rate, num):
     x_axis = np.arange(1, max(x)+1)
     plt.bar(x_axis, mean_rate, width=0.7, color='royalblue', linewidth=0.5, edgecolor='k') 
     for i in range(len(x_axis)):
-        plt.text(x_axis[i], 2.5, freq[i], ha = 'center', bbox = dict(facecolor = 'tomato', alpha =1), label='Number of samples') # mean_rate[i]
+        plt.text(x_axis[i], mean_rate[i], freq[i], ha = 'center', bbox = dict(facecolor = 'tomato', alpha =1), label='Number of samples') # mean_rate[i]
     plt.legend()
 
 
@@ -199,7 +199,7 @@ def all_results():
 # success rate vs number of lines
 
 if __name__ == "__main__":
-    #one_model()
-    all_results()
+    one_model()
+    #all_results()
     #distribution()
     

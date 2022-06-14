@@ -16,7 +16,7 @@ ps -x
 # save model
 gcloud auth login
 zip -r txt-data.zip data
-gsutil cp /home/oskar_bonde/cloud-codeparrot/models/model-2.zip gs://terraform-models 
+gsutil cp /home/oskar_bonde/cloud-codeparrot/models/gpt-2-small-model.zip gs://terraform-models 
 gsutil cp /home/oskar_bonde_ericsson_com/codeparrot.zip gs://terraform-models 
 gsutil cp gs://terraform-models/codeparrot.zip /home/oskar_bonde/
 gsutil cp /home/oskar_bonde/cloud-codeparrot/gpt-2-small-data.zip gs://terraform-models 

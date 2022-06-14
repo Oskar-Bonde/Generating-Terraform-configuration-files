@@ -135,3 +135,6 @@ raw-data/
 data/train-raw/
 models/
 .vscode/
+.vscode
+commands.txt
+samples/
