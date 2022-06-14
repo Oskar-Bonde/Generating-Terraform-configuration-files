@@ -133,8 +133,9 @@ dmypy.json
 **binary
 raw-data/
 data/train-raw/
-#models/
-#**/.vscode/
-#commands.txt
-#samples/
-#data/ericsson/**
+**/pytorch_model.bin
+models/
+**/.vscode/
+commands.txt
+samples/
+data/ericsson/**
