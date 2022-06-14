@@ -134,7 +134,6 @@ dmypy.json
 raw-data/
 data/train-raw/
 **/pytorch_model.bin
-models/
 **/.vscode/
 commands.txt
 samples/

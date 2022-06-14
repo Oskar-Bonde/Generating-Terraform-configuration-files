@@ -1,0 +1,1241 @@
+/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py:164: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+  "The module torch.distributed.launch is deprecated "
+The module torch.distributed.launch is deprecated and going to be removed in future.Migrate to torch.distributed.run
+INFO:torch.distributed.launcher.api:Starting elastic_operator with launch configs:
+  entrypoint       : new_codeparrot_training.py
+  min_nodes        : 1
+  max_nodes        : 1
+  nproc_per_node   : 16
+  run_id           : none
+  rdzv_backend     : static
+  rdzv_endpoint    : 127.0.0.1:29500
+  rdzv_configs     : {'rank': 0, 'timeout': 900}
+  max_restarts     : 3
+  monitor_interval : 5
+  log_dir          : None
+  metrics_cfg      : {}
+
+INFO:torch.distributed.elastic.agent.server.local_elastic_agent:log directory set to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk
+INFO:torch.distributed.elastic.agent.server.api:[default] starting workers for entrypoint: python3.7
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous'ing worker group
+/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/utils/store.py:53: FutureWarning: This is an experimental API and will be changed in future.
+  "This is an experimental API and will be changed in future.", FutureWarning
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous complete for workers. Result:
+  restart_count=0
+  master_addr=127.0.0.1
+  master_port=29500
+  group_rank=0
+  group_world_size=1
+  local_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  global_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+  global_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+
+INFO:torch.distributed.elastic.agent.server.api:[default] Starting worker group
+INFO:torch.distributed.elastic.multiprocessing:Setting worker0 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/0/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker1 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/1/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker2 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/2/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker3 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/3/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker4 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/4/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker5 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/5/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker6 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/6/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker7 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/7/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker8 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/8/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker9 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/9/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker10 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/10/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker11 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/11/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker12 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/12/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker13 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/13/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker14 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/14/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker15 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_0/15/error.json
+04/27/2022 10:39:57 - INFO - __main__ - Distributed environment: MULTI_GPU  Backend: nccl
+Num processes: 16
+Process index: 0
+Local process index: 0
+Device: cuda:0
+Mixed precision type: fp16
+
+loading configuration file https://huggingface.co/lvwerra/codeparrot/resolve/main/config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c594cfb5386d04c2e7af1795e85033e933f7c04c8a28dde55f0e1fa2f725b72c.b9b5856ecafb918ccdc40d52ab917b89d9c3c6fa78e2dc18ad7d9a358e432aab
+Model config GPT2Config {
+  "_name_or_path": "lvwerra/codeparrot",
+  "activation_function": "gelu_new",
+  "architectures": [
+    "GPT2LMHeadModel"
+  ],
+  "attn_pdrop": 0.1,
+  "bos_token_id": 50256,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 50256,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gpt2",
+  "n_ctx": 1024,
+  "n_embd": 1600,
+  "n_head": 25,
+  "n_inner": null,
+  "n_layer": 48,
+  "n_positions": 1024,
+  "output_past": true,
+  "reorder_and_upcast_attn": true,
+  "resid_pdrop": 0.1,
+  "scale_attn_by_inverse_layer_idx": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "task_specific_params": {
+    "text-generation": {
+      "do_sample": true,
+      "max_length": 50
+    }
+  },
+  "torch_dtype": "float32",
+  "transformers_version": "4.15.0",
+  "use_cache": true,
+  "vocab_size": 32768
+}
+
+loading weights file https://huggingface.co/lvwerra/codeparrot/resolve/main/pytorch_model.bin from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/3601e41822216da64359803e12f05eec2acfded100875b6d3cc845599c79dc20.63256438916b3eeafb55662f74ba85d12b7d5d2fb36a2e6fe1db5499aafc2648
+All model checkpoint weights were used when initializing GPT2LMHeadModel.
+
+All the weights of GPT2LMHeadModel were initialized from the model checkpoint at lvwerra/codeparrot.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GPT2LMHeadModel for predictions without further training.
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/vocab.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/d4c2482a5da8882c8d1ec0e3221150100f233d2b2acf66878febcb6cc56f18de.e1e79be960ac552aa28d70494c56c5899ed90b1537d41fd037262657a9befd6a
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/merges.txt from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/de35c3c3c22ca9117b396a8474954092c4fffe984aa1267422c6c9af66298340.d722e5972b12fc42e29215757e41549636c5ce2c31cb49e3e46e35e10d103923
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/df053a83882dfbc6d41d077adeceea2f0848d9e13a2c915e2cb44fcb9f0d3307.e4fbee984d45ae8f3f9c9eb054628582f6489ad789c3552c94efb1208b03ffdf
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/added_tokens.json from cache at None
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/special_tokens_map.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c7bb2e7b7bb9c7fe62d1a881eec761303a488f6fbf706cf7f82033487c8af553.3ae9ae72462581d20e36bc528e9c47bb30cd671bb21add40ca0b24a0be9fac22
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer_config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/f01f6d46c71625883cae6b83304b33a10d6a0c077e4ea7fc8639df22a017294a.173e36d458460b8910258ea66979b41056ea6ae08a7c74b11807859b62b51acc
+04/27/2022 10:40:58 - WARNING - datasets.builder - Using custom data configuration train-b61d70ef90b56455
+04/27/2022 10:40:58 - WARNING - datasets.builder - Using custom data configuration validation-bfbd664215916c2f
+Start trainingStart training
+
+Start training
+Start training
+Start training
+Start training
+Start trainingStart training
+
+Start training
+Start training
+Start training
+Start trainingStart training
+
+Start training
+Start training
+Start training
+Token indices sequence length is longer than the specified maximum sequence length for this model (3254 > 1024). Running this sequence through the model will result in indexing errors
+04/27/2022 10:41:28 - INFO - __main__ - Step 1: {'lr': 0.0, 'samples': 32, 'steps': 0, 'loss/train': 2.068716049194336}
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:28 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 10:41:29 - INFO - __main__ - Step 2: {'lr': 0.0, 'samples': 64, 'steps': 0, 'loss/train': 1.204140305519104}
+04/27/2022 10:41:29 - INFO - __main__ - Step 3: {'lr': 0.0, 'samples': 96, 'steps': 0, 'loss/train': 1.750077486038208}
+04/27/2022 10:41:30 - INFO - __main__ - Step 4: {'lr': 0.0, 'samples': 128, 'steps': 0, 'loss/train': 1.4117218255996704}
+04/27/2022 10:41:31 - INFO - __main__ - Step 5: {'lr': 0.0, 'samples': 160, 'steps': 0, 'loss/train': 1.1929031610488892}
+04/27/2022 10:41:32 - INFO - __main__ - Step 6: {'lr': 0.0, 'samples': 192, 'steps': 0, 'loss/train': 1.135462999343872}
+04/27/2022 10:41:32 - INFO - __main__ - Step 7: {'lr': 0.0, 'samples': 224, 'steps': 0, 'loss/train': 1.5956158638000488}
+04/27/2022 10:41:33 - INFO - __main__ - Step 8: {'lr': 0.0, 'samples': 256, 'steps': 0, 'loss/train': 1.2528138160705566}
+04/27/2022 10:41:34 - INFO - __main__ - Step 9: {'lr': 0.0, 'samples': 288, 'steps': 0, 'loss/train': 1.8490314483642578}
+04/27/2022 10:41:35 - INFO - __main__ - Step 10: {'lr': 0.0, 'samples': 320, 'steps': 0, 'loss/train': 2.241741180419922}
+04/27/2022 10:41:35 - INFO - __main__ - Step 11: {'lr': 0.0, 'samples': 352, 'steps': 0, 'loss/train': 1.870575189590454}
+04/27/2022 10:41:36 - INFO - __main__ - Step 12: {'lr': 0.0, 'samples': 384, 'steps': 0, 'loss/train': 1.2562342882156372}
+04/27/2022 10:41:37 - INFO - __main__ - Step 13: {'lr': 0.0, 'samples': 416, 'steps': 0, 'loss/train': 1.5669326782226562}
+04/27/2022 10:41:38 - INFO - __main__ - Step 14: {'lr': 0.0, 'samples': 448, 'steps': 0, 'loss/train': 0.9859884977340698}
+04/27/2022 10:41:38 - INFO - __main__ - Step 15: {'lr': 0.0, 'samples': 480, 'steps': 0, 'loss/train': 1.5922073125839233}
+04/27/2022 10:41:39 - INFO - __main__ - Step 16: {'lr': 0.0, 'samples': 512, 'steps': 0, 'loss/train': 1.2351442575454712}
+04/27/2022 10:41:42 - INFO - __main__ - Step 16: {'steps': 1, 'tflops': 28.579386576622756, 'time_per_iteration': 15.328763723373413}
+04/27/2022 10:41:54 - INFO - __main__ - Step 32: {'steps': 2, 'tflops': 35.498215630585264, 'time_per_iteration': 12.341089725494385}
+04/27/2022 10:42:07 - INFO - __main__ - Step 48: {'steps': 3, 'tflops': 33.69806629892073, 'time_per_iteration': 13.0003502368927}
+04/27/2022 10:42:19 - INFO - __main__ - Step 64: {'steps': 4, 'tflops': 35.945264453229306, 'time_per_iteration': 12.187604427337646}
+04/27/2022 10:42:32 - INFO - __main__ - Step 80: {'steps': 5, 'tflops': 33.95126706197448, 'time_per_iteration': 12.903396606445312}
+04/27/2022 10:42:44 - INFO - __main__ - Step 96: {'steps': 6, 'tflops': 35.954403832492986, 'time_per_iteration': 12.1845064163208}
+04/27/2022 10:42:57 - INFO - __main__ - Step 112: {'steps': 7, 'tflops': 34.04702074715692, 'time_per_iteration': 12.867107152938843}
+04/27/2022 10:43:10 - INFO - __main__ - Step 128: {'steps': 8, 'tflops': 35.9345203387607, 'time_per_iteration': 12.191248416900635}
+04/27/2022 10:43:22 - INFO - __main__ - Step 144: {'steps': 9, 'tflops': 35.94240908634837, 'time_per_iteration': 12.188572645187378}
+04/27/2022 10:43:35 - INFO - __main__ - Step 160: {'steps': 10, 'tflops': 33.69825170060166, 'time_per_iteration': 13.00027871131897}
+04/27/2022 10:43:47 - INFO - __main__ - Step 176: {'steps': 11, 'tflops': 35.90300275304355, 'time_per_iteration': 12.201950550079346}
+04/27/2022 10:44:00 - INFO - __main__ - Step 192: {'steps': 12, 'tflops': 33.96070777886403, 'time_per_iteration': 12.89980959892273}
+04/27/2022 10:44:12 - INFO - __main__ - Step 208: {'steps': 13, 'tflops': 35.938617865914225, 'time_per_iteration': 12.189858436584473}
+04/27/2022 10:44:25 - INFO - __main__ - Step 224: {'steps': 14, 'tflops': 33.44538376601925, 'time_per_iteration': 13.0985689163208}
+04/27/2022 10:44:37 - INFO - __main__ - Step 240: {'steps': 15, 'tflops': 35.92740565345631, 'time_per_iteration': 12.193662643432617}
+04/27/2022 10:44:50 - INFO - __main__ - Step 256: {'steps': 16, 'tflops': 33.91671975086267, 'time_per_iteration': 12.916539907455444}
+04/27/2022 10:45:02 - INFO - __main__ - Step 272: {'steps': 17, 'tflops': 35.93262791998478, 'time_per_iteration': 12.191890478134155}
+04/27/2022 10:45:15 - INFO - __main__ - Step 288: {'steps': 18, 'tflops': 35.96798010139409, 'time_per_iteration': 12.179907321929932}
+04/27/2022 10:45:28 - INFO - __main__ - Step 304: {'steps': 19, 'tflops': 33.56883770656423, 'time_per_iteration': 13.050397157669067}
+04/27/2022 10:45:40 - INFO - __main__ - Step 320: {'steps': 20, 'tflops': 35.98414070035482, 'time_per_iteration': 12.174437284469604}
+04/27/2022 10:45:53 - INFO - __main__ - Step 336: {'steps': 21, 'tflops': 33.99149792861365, 'time_per_iteration': 12.888124704360962}
+04/27/2022 10:46:05 - INFO - __main__ - Step 352: {'steps': 22, 'tflops': 35.95271402653206, 'time_per_iteration': 12.185079097747803}
+04/27/2022 10:46:19 - INFO - __main__ - Step 368: {'steps': 23, 'tflops': 31.80986905548512, 'time_per_iteration': 13.772036075592041}
+04/27/2022 10:46:31 - INFO - __main__ - Step 384: {'steps': 24, 'tflops': 35.982457962953205, 'time_per_iteration': 12.175006628036499}
+04/27/2022 10:46:43 - INFO - __main__ - Step 400: {'steps': 25, 'tflops': 35.980825407113336, 'time_per_iteration': 12.175559043884277}
+04/27/2022 10:46:46 - INFO - __main__ - Dataset epoch: 1
+04/27/2022 10:46:56 - INFO - __main__ - Step 416: {'steps': 26, 'tflops': 33.799798400162715, 'time_per_iteration': 12.96122121810913}
+04/27/2022 10:47:08 - INFO - __main__ - Step 432: {'steps': 27, 'tflops': 35.98142641281425, 'time_per_iteration': 12.175355672836304}
+04/27/2022 10:47:21 - INFO - __main__ - Step 448: {'steps': 28, 'tflops': 34.04084125806207, 'time_per_iteration': 12.8694429397583}
+04/27/2022 10:47:33 - INFO - __main__ - Step 464: {'steps': 29, 'tflops': 35.96932913868327, 'time_per_iteration': 12.179450511932373}
+04/27/2022 10:47:46 - INFO - __main__ - Step 480: {'steps': 30, 'tflops': 33.69538067539902, 'time_per_iteration': 13.001386404037476}
+04/27/2022 10:47:58 - INFO - __main__ - Step 496: {'steps': 31, 'tflops': 35.9732592441971, 'time_per_iteration': 12.178119897842407}
+04/27/2022 10:48:01 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 10:48:19 - INFO - __main__ - Step 500: {'loss/eval': 1.359014630317688, 'perplexity': 3.8923559188842773}
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 277, in <module>
+  File "new_codeparrot_training.py", line 277, in <module>
+  File "new_codeparrot_training.py", line 277, in <module>
+  File "new_codeparrot_training.py", line 277, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 277, in <module>
+  File "new_codeparrot_training.py", line 277, in <module>
+  File "new_codeparrot_training.py", line 277, in <module>
+                os.makedirs(save_path)os.makedirs(save_path)os.makedirs(save_path)os.makedirs(save_path)
+
+
+
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+        os.makedirs(save_path)    os.makedirs(save_path)
+os.makedirs(save_path)
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+        mkdir(name, mode)mkdir(name, mode)    
+    
+mkdir(name, mode)        mkdir(name, mode)
+mkdir(name, mode)FileExistsErrormkdir(name, mode)
+FileExistsErrorFileExistsError
+:     
+: : FileExistsError[Errno 17] File exists: './models/model-3/step_500'mkdir(name, mode)[Errno 17] File exists: './models/model-3/step_500'[Errno 17] File exists: './models/model-3/step_500'FileExistsErrorFileExistsError: 
+: 
+
+
+[Errno 17] File exists: './models/model-3/step_500': [Errno 17] File exists: './models/model-3/step_500'
+[Errno 17] File exists: './models/model-3/step_500'
+FileExistsError
+: [Errno 17] File exists: './models/model-3/step_500'
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 277, in <module>
+    os.makedirs(save_path)
+  File "/opt/conda/lib/python3.7/os.py", line 223, in makedirs
+    mkdir(name, mode)
+FileExistsError: [Errno 17] File exists: './models/model-3/step_500'
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 4585) of binary: /opt/conda/bin/python3.7
+ERROR:torch.distributed.elastic.agent.server.local_elastic_agent:[default] Worker group failed
+INFO:torch.distributed.elastic.agent.server.api:[default] Worker group FAILED. 3/3 attempts left; will restart worker group
+INFO:torch.distributed.elastic.agent.server.api:[default] Stopping worker group
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous'ing worker group
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous complete for workers. Result:
+  restart_count=1
+  master_addr=127.0.0.1
+  master_port=29500
+  group_rank=0
+  group_world_size=1
+  local_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  global_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+  global_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+
+INFO:torch.distributed.elastic.agent.server.api:[default] Starting worker group
+INFO:torch.distributed.elastic.multiprocessing:Setting worker0 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/0/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker1 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/1/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker2 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/2/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker3 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/3/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker4 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/4/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker5 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/5/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker6 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/6/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker7 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/7/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker8 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/8/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker9 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/9/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker10 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/10/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker11 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/11/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker12 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/12/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker13 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/13/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker14 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/14/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker15 reply file to: /tmp/torchelastic_sg91a8f5/none_6lphn1yk/attempt_1/15/error.json
+/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py:164: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+  "The module torch.distributed.launch is deprecated "
+The module torch.distributed.launch is deprecated and going to be removed in future.Migrate to torch.distributed.run
+INFO:torch.distributed.launcher.api:Starting elastic_operator with launch configs:
+  entrypoint       : new_codeparrot_training.py
+  min_nodes        : 1
+  max_nodes        : 1
+  nproc_per_node   : 16
+  run_id           : none
+  rdzv_backend     : static
+  rdzv_endpoint    : 127.0.0.1:29500
+  rdzv_configs     : {'rank': 0, 'timeout': 900}
+  max_restarts     : 3
+  monitor_interval : 5
+  log_dir          : None
+  metrics_cfg      : {}
+
+INFO:torch.distributed.elastic.agent.server.local_elastic_agent:log directory set to: /tmp/torchelastic_pz06tuai/none_odlqry7y
+INFO:torch.distributed.elastic.agent.server.api:[default] starting workers for entrypoint: python3.7
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous'ing worker group
+{"name": "torchelastic.worker.status.FAILED", "source": "AGENT", "timestamp": 0, "metadata": {"run_id": "none", "global_rank": null, "group_rank": null, "worker_id": null, "role": "default", "hostname": "a100-16-preemptible-b.c.buspcstlabdev-40513.internal", "state": "FAILED", "total_run_time": 0, "rdzv_backend": "static", "raw_error": "Traceback (most recent call last):\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/launcher/api.py\", line 238, in launch_agent\n    result = agent.run()\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 700, in run\n    result = self._invoke_run(role)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 822, in _invoke_run\n    self._initialize_workers(self._worker_group)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 670, in _initialize_workers\n    self._rendezvous(worker_group)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 530, in _rendezvous\n    store, group_rank, group_world_size = spec.rdzv_handler.next_rendezvous()\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py\", line 60, in next_rendezvous\n    self.timeout,\nRuntimeError: Address already in use\n", "metadata": "{\"group_world_size\": null, \"entry_point\": \"python3.7\"}", "agent_restarts": 0}}
+ERROR:torch.distributed.elastic.multiprocessing.errors.error_handler:{
+  "message": {
+    "message": "RuntimeError: Address already in use",
+    "extraInfo": {
+      "py_callstack": "Traceback (most recent call last):\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py\", line 348, in wrapper\n    return f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/launcher/api.py\", line 238, in launch_agent\n    result = agent.run()\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 700, in run\n    result = self._invoke_run(role)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 822, in _invoke_run\n    self._initialize_workers(self._worker_group)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 670, in _initialize_workers\n    self._rendezvous(worker_group)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py\", line 125, in wrapper\n    result = f(*args, **kwargs)\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py\", line 530, in _rendezvous\n    store, group_rank, group_world_size = spec.rdzv_handler.next_rendezvous()\n  File \"/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py\", line 60, in next_rendezvous\n    self.timeout,\nRuntimeError: Address already in use\n",
+      "timestamp": "1651056882"
+    }
+  }
+}
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/opt/conda/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py", line 173, in <module>
+    main()
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py", line 169, in main
+    run(args)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/run.py", line 624, in run
+    )(*cmd_args)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launcher/api.py", line 116, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launcher/api.py", line 238, in launch_agent
+    result = agent.run()
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 700, in run
+    result = self._invoke_run(role)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 822, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 670, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 530, in _rendezvous
+    store, group_rank, group_world_size = spec.rdzv_handler.next_rendezvous()
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/rendezvous/static_tcp_rendezvous.py", line 60, in next_rendezvous
+    self.timeout,
+RuntimeError: Address already in use
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Traceback (most recent call last):
+  File "/opt/conda/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/commands/accelerate_cli.py", line 43, in main
+    args.func(args)
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/commands/launch.py", line 468, in launch_command
+    multi_gpu_launcher(args)
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/commands/launch.py", line 228, in multi_gpu_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/opt/conda/bin/python3.7', '-m', 'torch.distributed.launch', '--use_env', '--nproc_per_node', '16', 'new_codeparrot_training.py', '--model_ckpt', 'lvwerra/codeparrot', '--save_dir', './models/model-3', '--learning_rate', '2e-5', '--num_warmup_steps', '750', '--gradient_accumulation_steps', '16', '--gradient_checkpointing', 'True', '--train_batch_size', '2', '--valid_batch_size', '2']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 171, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "new_codeparrot_training.py", line 171, in <module>
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "new_codeparrot_training.py", line 171, in <module>
+    accelerator = Accelerator() # Traceback (most recent call last):
+
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+  File "new_codeparrot_training.py", line 171, in <module>
+        **kwargs,accelerator = Accelerator() # 
+
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+          File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+accelerator = Accelerator() # accelerator = Accelerator() #     
+
+accelerator = Accelerator() #   File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+      File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+
+accelerator = Accelerator() # Traceback (most recent call last):
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+  File "new_codeparrot_training.py", line 171, in <module>
+    Traceback (most recent call last):
+**kwargs,
+        **kwargs,  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+  File "new_codeparrot_training.py", line 171, in <module>
+**kwargs,
+
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+      File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+**kwargs,
+  File "new_codeparrot_training.py", line 171, in <module>
+      File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+**kwargs,
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 171, in <module>
+Traceback (most recent call last):
+    **kwargs,
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+    accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+Traceback (most recent call last):
+Traceback (most recent call last):
+        accelerator = Accelerator() # **kwargs,
+
+  File "new_codeparrot_training.py", line 171, in <module>
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+  File "new_codeparrot_training.py", line 171, in <module>
+Traceback (most recent call last):
+        **kwargs,accelerator = Accelerator() # 
+
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+  File "new_codeparrot_training.py", line 171, in <module>
+    **kwargs,
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    **kwargs,
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+    accelerator = Accelerator() #     
+accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+    **kwargs,
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    **kwargs,
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+        accelerator = Accelerator() # **kwargs,
+
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+    accelerator = Accelerator() # 
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 164, in __init__
+            **kwargs,    **kwargs,    
+torch.distributed.init_process_group(backend="nccl", **kwargs)    
+torch.distributed.init_process_group(backend="nccl", **kwargs)    torch.distributed.init_process_group(backend="nccl", **kwargs)        
+torch.distributed.init_process_group(backend="nccl", **kwargs)      File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+
+torch.distributed.init_process_group(backend="nccl", **kwargs)    
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/state.py", line 199, in __init__
+    torch.distributed.init_process_group(backend="nccl", **kwargs)torch.distributed.init_process_group(backend="nccl", **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+torch.distributed.init_process_group(backend="nccl", **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+torch.distributed.init_process_group(backend="nccl", **kwargs)  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+    torch.distributed.init_process_group(backend="nccl", **kwargs)
+
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+torch.distributed.init_process_group(backend="nccl", **kwargs)    
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+          File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+torch.distributed.init_process_group(backend="nccl", **kwargs)  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+torch.distributed.init_process_group(backend="nccl", **kwargs)torch.distributed.init_process_group(backend="nccl", **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+    torch.distributed.init_process_group(backend="nccl", **kwargs)    
+torch.distributed.init_process_group(backend="nccl", **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 547, in init_process_group
+            _store_based_barrier(rank, store, timeout)_store_based_barrier(rank, store, timeout)        _store_based_barrier(rank, store, timeout)    
+        
+        _store_based_barrier(rank, store, timeout)_store_based_barrier(rank, store, timeout)    
+    _store_based_barrier(rank, store, timeout)      File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+    _store_based_barrier(rank, store, timeout)_store_based_barrier(rank, store, timeout)      File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+_store_based_barrier(rank, store, timeout)_store_based_barrier(rank, store, timeout)
+
+    _store_based_barrier(rank, store, timeout)  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+_store_based_barrier(rank, store, timeout)
+_store_based_barrier(rank, store, timeout)_store_based_barrier(rank, store, timeout)
+
+_store_based_barrier(rank, store, timeout)
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+_store_based_barrier(rank, store, timeout)
+
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+
+      File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+
+      File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+worker_count = store.add(store_key, 0)  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+worker_count = store.add(store_key, 0)      File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 208, in _store_based_barrier
+
+            
+worker_count = store.add(store_key, 0)
+worker_count = store.add(store_key, 0)    worker_count = store.add(store_key, 0)worker_count = store.add(store_key, 0)    
+worker_count = store.add(store_key, 0)
+RuntimeError
+RuntimeErrorworker_count = store.add(store_key, 0)    
+: RuntimeError: 
+worker_count = store.add(store_key, 0)RuntimeErrorConnection reset by peer: Connection reset by peer    RuntimeErrorRuntimeError
+: 
+Connection reset by peer
+worker_count = store.add(store_key, 0)RuntimeError: : RuntimeErrorConnection reset by peer    
+    
+:     Connection reset by peerConnection reset by peer: 
+worker_count = store.add(store_key, 0)RuntimeErrorworker_count = store.add(store_key, 0)Connection reset by peerworker_count = store.add(store_key, 0)
+
+Connection reset by peer    RuntimeError
+    : 
+
+
+
+worker_count = store.add(store_key, 0): 
+    worker_count = store.add(store_key, 0)Connection reset by peerRuntimeErrorConnection reset by peerworker_count = store.add(store_key, 0)RuntimeErrorRuntimeError
+
+: 
+
+: : Connection reset by peerConnection reset by peerRuntimeErrorConnection reset by peer
+: 
+
+Connection reset by peerRuntimeError
+RuntimeError: : Connection reset by peerConnection reset by peer
+
+/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py:164: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+  "The module torch.distributed.launch is deprecated "
+The module torch.distributed.launch is deprecated and going to be removed in future.Migrate to torch.distributed.run
+INFO:torch.distributed.launcher.api:Starting elastic_operator with launch configs:
+  entrypoint       : new_codeparrot_training.py
+  min_nodes        : 1
+  max_nodes        : 1
+  nproc_per_node   : 16
+  run_id           : none
+  rdzv_backend     : static
+  rdzv_endpoint    : 127.0.0.1:29500
+  rdzv_configs     : {'rank': 0, 'timeout': 900}
+  max_restarts     : 3
+  monitor_interval : 5
+  log_dir          : None
+  metrics_cfg      : {}
+
+INFO:torch.distributed.elastic.agent.server.local_elastic_agent:log directory set to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w
+INFO:torch.distributed.elastic.agent.server.api:[default] starting workers for entrypoint: python3.7
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous'ing worker group
+/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/utils/store.py:53: FutureWarning: This is an experimental API and will be changed in future.
+  "This is an experimental API and will be changed in future.", FutureWarning
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous complete for workers. Result:
+  restart_count=0
+  master_addr=127.0.0.1
+  master_port=29500
+  group_rank=0
+  group_world_size=1
+  local_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  global_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+  global_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+
+INFO:torch.distributed.elastic.agent.server.api:[default] Starting worker group
+INFO:torch.distributed.elastic.multiprocessing:Setting worker0 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/0/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker1 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/1/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker2 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/2/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker3 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/3/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker4 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/4/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker5 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/5/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker6 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/6/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker7 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/7/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker8 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/8/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker9 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/9/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker10 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/10/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker11 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/11/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker12 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/12/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker13 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/13/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker14 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/14/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker15 reply file to: /tmp/torchelastic_ze1o4v2o/none_vdwyi42w/attempt_0/15/error.json
+04/27/2022 11:19:37 - INFO - __main__ - Distributed environment: MULTI_GPU  Backend: nccl
+Num processes: 16
+Process index: 0
+Local process index: 0
+Device: cuda:0
+Mixed precision type: fp16
+
+loading configuration file https://huggingface.co/lvwerra/codeparrot/resolve/main/config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c594cfb5386d04c2e7af1795e85033e933f7c04c8a28dde55f0e1fa2f725b72c.b9b5856ecafb918ccdc40d52ab917b89d9c3c6fa78e2dc18ad7d9a358e432aab
+Model config GPT2Config {
+  "_name_or_path": "lvwerra/codeparrot",
+  "activation_function": "gelu_new",
+  "architectures": [
+    "GPT2LMHeadModel"
+  ],
+  "attn_pdrop": 0.1,
+  "bos_token_id": 50256,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 50256,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gpt2",
+  "n_ctx": 1024,
+  "n_embd": 1600,
+  "n_head": 25,
+  "n_inner": null,
+  "n_layer": 48,
+  "n_positions": 1024,
+  "output_past": true,
+  "reorder_and_upcast_attn": true,
+  "resid_pdrop": 0.1,
+  "scale_attn_by_inverse_layer_idx": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "task_specific_params": {
+    "text-generation": {
+      "do_sample": true,
+      "max_length": 50
+    }
+  },
+  "torch_dtype": "float32",
+  "transformers_version": "4.15.0",
+  "use_cache": true,
+  "vocab_size": 32768
+}
+
+loading weights file https://huggingface.co/lvwerra/codeparrot/resolve/main/pytorch_model.bin from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/3601e41822216da64359803e12f05eec2acfded100875b6d3cc845599c79dc20.63256438916b3eeafb55662f74ba85d12b7d5d2fb36a2e6fe1db5499aafc2648
+All model checkpoint weights were used when initializing GPT2LMHeadModel.
+
+All the weights of GPT2LMHeadModel were initialized from the model checkpoint at lvwerra/codeparrot.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GPT2LMHeadModel for predictions without further training.
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/vocab.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/d4c2482a5da8882c8d1ec0e3221150100f233d2b2acf66878febcb6cc56f18de.e1e79be960ac552aa28d70494c56c5899ed90b1537d41fd037262657a9befd6a
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/merges.txt from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/de35c3c3c22ca9117b396a8474954092c4fffe984aa1267422c6c9af66298340.d722e5972b12fc42e29215757e41549636c5ce2c31cb49e3e46e35e10d103923
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/df053a83882dfbc6d41d077adeceea2f0848d9e13a2c915e2cb44fcb9f0d3307.e4fbee984d45ae8f3f9c9eb054628582f6489ad789c3552c94efb1208b03ffdf
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/added_tokens.json from cache at None
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/special_tokens_map.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c7bb2e7b7bb9c7fe62d1a881eec761303a488f6fbf706cf7f82033487c8af553.3ae9ae72462581d20e36bc528e9c47bb30cd671bb21add40ca0b24a0be9fac22
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer_config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/f01f6d46c71625883cae6b83304b33a10d6a0c077e4ea7fc8639df22a017294a.173e36d458460b8910258ea66979b41056ea6ae08a7c74b11807859b62b51acc
+04/27/2022 11:19:57 - WARNING - datasets.builder - Using custom data configuration train-b61d70ef90b56455
+04/27/2022 11:19:57 - WARNING - datasets.builder - Using custom data configuration validation-bfbd664215916c2f
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Token indices sequence length is longer than the specified maximum sequence length for this model (3254 > 1024). Running this sequence through the model will result in indexing errors
+04/27/2022 11:20:25 - INFO - __main__ - Step 1: {'lr': 0.0, 'samples': 32, 'steps': 0, 'loss/train': 2.068716049194336}
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:25 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:20:26 - INFO - __main__ - Step 2: {'lr': 0.0, 'samples': 64, 'steps': 0, 'loss/train': 1.204140305519104}
+04/27/2022 11:20:26 - INFO - __main__ - Step 3: {'lr': 0.0, 'samples': 96, 'steps': 0, 'loss/train': 1.750077486038208}
+04/27/2022 11:20:27 - INFO - __main__ - Step 4: {'lr': 0.0, 'samples': 128, 'steps': 0, 'loss/train': 1.4117218255996704}
+04/27/2022 11:20:28 - INFO - __main__ - Step 5: {'lr': 0.0, 'samples': 160, 'steps': 0, 'loss/train': 1.1929031610488892}
+04/27/2022 11:20:29 - INFO - __main__ - Step 6: {'lr': 0.0, 'samples': 192, 'steps': 0, 'loss/train': 1.135462999343872}
+04/27/2022 11:20:29 - INFO - __main__ - Step 7: {'lr': 0.0, 'samples': 224, 'steps': 0, 'loss/train': 1.5956158638000488}
+04/27/2022 11:20:30 - INFO - __main__ - Step 8: {'lr': 0.0, 'samples': 256, 'steps': 0, 'loss/train': 1.2528138160705566}
+04/27/2022 11:20:31 - INFO - __main__ - Step 9: {'lr': 0.0, 'samples': 288, 'steps': 0, 'loss/train': 1.8490314483642578}
+04/27/2022 11:20:32 - INFO - __main__ - Step 10: {'lr': 0.0, 'samples': 320, 'steps': 0, 'loss/train': 2.241741180419922}
+04/27/2022 11:20:32 - INFO - __main__ - Step 11: {'lr': 0.0, 'samples': 352, 'steps': 0, 'loss/train': 1.870575189590454}
+04/27/2022 11:20:33 - INFO - __main__ - Step 12: {'lr': 0.0, 'samples': 384, 'steps': 0, 'loss/train': 1.2562342882156372}
+04/27/2022 11:20:34 - INFO - __main__ - Step 13: {'lr': 0.0, 'samples': 416, 'steps': 0, 'loss/train': 1.5669326782226562}
+04/27/2022 11:20:35 - INFO - __main__ - Step 14: {'lr': 0.0, 'samples': 448, 'steps': 0, 'loss/train': 0.9859884977340698}
+04/27/2022 11:20:35 - INFO - __main__ - Step 15: {'lr': 0.0, 'samples': 480, 'steps': 0, 'loss/train': 1.5922073125839233}
+04/27/2022 11:20:36 - INFO - __main__ - Step 16: {'lr': 0.0, 'samples': 512, 'steps': 0, 'loss/train': 1.2351442575454712}
+04/27/2022 11:20:39 - INFO - __main__ - Step 16: {'steps': 1, 'tflops': 28.765897937966738, 'time_per_iteration': 15.22937560081482}
+04/27/2022 11:20:51 - INFO - __main__ - Step 32: {'steps': 2, 'tflops': 35.33894138663299, 'time_per_iteration': 12.396711587905884}
+04/27/2022 11:21:04 - INFO - __main__ - Step 48: {'steps': 3, 'tflops': 33.70926822134744, 'time_per_iteration': 12.99603009223938}
+04/27/2022 11:21:17 - INFO - __main__ - Step 64: {'steps': 4, 'tflops': 35.89815728961811, 'time_per_iteration': 12.20359754562378}
+04/27/2022 11:21:29 - INFO - __main__ - Step 80: {'steps': 5, 'tflops': 34.00770887807279, 'time_per_iteration': 12.881981134414673}
+04/27/2022 11:21:42 - INFO - __main__ - Step 96: {'steps': 6, 'tflops': 35.84468606029264, 'time_per_iteration': 12.221802234649658}
+04/27/2022 11:21:54 - INFO - __main__ - Step 112: {'steps': 7, 'tflops': 34.06659962308186, 'time_per_iteration': 12.85971212387085}
+04/27/2022 11:22:07 - INFO - __main__ - Step 128: {'steps': 8, 'tflops': 35.8711300386896, 'time_per_iteration': 12.21279239654541}
+04/27/2022 11:22:19 - INFO - __main__ - Step 144: {'steps': 9, 'tflops': 35.854339644620985, 'time_per_iteration': 12.218511581420898}
+04/27/2022 11:22:32 - INFO - __main__ - Step 160: {'steps': 10, 'tflops': 33.79765975248549, 'time_per_iteration': 12.96204137802124}
+04/27/2022 11:22:44 - INFO - __main__ - Step 176: {'steps': 11, 'tflops': 35.85558571488237, 'time_per_iteration': 12.218086957931519}
+04/27/2022 11:22:57 - INFO - __main__ - Step 192: {'steps': 12, 'tflops': 34.00398757394744, 'time_per_iteration': 12.8833909034729}
+04/27/2022 11:23:09 - INFO - __main__ - Step 208: {'steps': 13, 'tflops': 35.877051862489346, 'time_per_iteration': 12.210776567459106}
+04/27/2022 11:23:22 - INFO - __main__ - Step 224: {'steps': 14, 'tflops': 33.509118291524864, 'time_per_iteration': 13.073655366897583}
+04/27/2022 11:23:34 - INFO - __main__ - Step 240: {'steps': 15, 'tflops': 35.8533427108513, 'time_per_iteration': 12.218851327896118}
+04/27/2022 11:23:47 - INFO - __main__ - Step 256: {'steps': 16, 'tflops': 33.9389239289337, 'time_per_iteration': 12.908089399337769}
+04/27/2022 11:24:00 - INFO - __main__ - Step 272: {'steps': 17, 'tflops': 35.8380095104517, 'time_per_iteration': 12.224079132080078}
+04/27/2022 11:24:12 - INFO - __main__ - Step 288: {'steps': 18, 'tflops': 35.89047652988745, 'time_per_iteration': 12.206209182739258}
+04/27/2022 11:24:25 - INFO - __main__ - Step 304: {'steps': 19, 'tflops': 33.605591392183015, 'time_per_iteration': 13.036124229431152}
+04/27/2022 11:24:37 - INFO - __main__ - Step 320: {'steps': 20, 'tflops': 35.88191825620084, 'time_per_iteration': 12.209120512008667}
+04/27/2022 11:24:50 - INFO - __main__ - Step 336: {'steps': 21, 'tflops': 34.053660662652035, 'time_per_iteration': 12.864598274230957}
+04/27/2022 11:25:02 - INFO - __main__ - Step 352: {'steps': 22, 'tflops': 35.88060589536835, 'time_per_iteration': 12.209567070007324}
+04/27/2022 11:25:16 - INFO - __main__ - Step 368: {'steps': 23, 'tflops': 31.471157557308068, 'time_per_iteration': 13.92025899887085}
+04/27/2022 11:25:28 - INFO - __main__ - Step 384: {'steps': 24, 'tflops': 35.91632469605743, 'time_per_iteration': 12.19742465019226}
+04/27/2022 11:25:40 - INFO - __main__ - Step 400: {'steps': 25, 'tflops': 35.923486964735794, 'time_per_iteration': 12.194992780685425}
+04/27/2022 11:25:43 - INFO - __main__ - Dataset epoch: 1
+04/27/2022 11:25:53 - INFO - __main__ - Step 416: {'steps': 26, 'tflops': 33.904444260551514, 'time_per_iteration': 12.921216487884521}
+04/27/2022 11:26:06 - INFO - __main__ - Step 432: {'steps': 27, 'tflops': 35.89532132237147, 'time_per_iteration': 12.204561710357666}
+04/27/2022 11:26:18 - INFO - __main__ - Step 448: {'steps': 28, 'tflops': 33.99366180769154, 'time_per_iteration': 12.887304306030273}
+04/27/2022 11:26:31 - INFO - __main__ - Step 464: {'steps': 29, 'tflops': 35.89974096976013, 'time_per_iteration': 12.203059196472168}
+04/27/2022 11:26:44 - INFO - __main__ - Step 480: {'steps': 30, 'tflops': 33.92960621222012, 'time_per_iteration': 12.91163420677185}
+04/27/2022 11:26:56 - INFO - __main__ - Step 496: {'steps': 31, 'tflops': 35.88960166193005, 'time_per_iteration': 12.206506729125977}
+04/27/2022 11:26:59 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 11:27:16 - INFO - __main__ - Step 500: {'loss/eval': 1.359014630317688, 'perplexity': 3.8923559188842773}
+Configuration saved in ./models/model-3/step_500/config.json
+Model weights saved in ./models/model-3/step_500/pytorch_model.bin
+04/27/2022 11:27:36 - INFO - __main__ - Step 512: {'steps': 32, 'tflops': 10.984645958653566, 'time_per_iteration': 39.881728172302246}
+04/27/2022 11:27:49 - INFO - __main__ - Step 528: {'steps': 33, 'tflops': 34.13504369447759, 'time_per_iteration': 12.833927154541016}
+04/27/2022 11:28:01 - INFO - __main__ - Step 544: {'steps': 34, 'tflops': 35.89201957003346, 'time_per_iteration': 12.205684423446655}
+04/27/2022 11:28:14 - INFO - __main__ - Step 560: {'steps': 35, 'tflops': 33.917457251639405, 'time_per_iteration': 12.916259050369263}
+04/27/2022 11:28:26 - INFO - __main__ - Step 576: {'steps': 36, 'tflops': 35.889938845570455, 'time_per_iteration': 12.206392049789429}
+04/27/2022 11:28:39 - INFO - __main__ - Step 592: {'steps': 37, 'tflops': 34.15272997079046, 'time_per_iteration': 12.82728099822998}
+04/27/2022 11:28:51 - INFO - __main__ - Step 608: {'steps': 38, 'tflops': 35.90134513190189, 'time_per_iteration': 12.202513933181763}
+04/27/2022 11:29:04 - INFO - __main__ - Step 624: {'steps': 39, 'tflops': 33.816998238415586, 'time_per_iteration': 12.954628944396973}
+04/27/2022 11:29:16 - INFO - __main__ - Step 640: {'steps': 40, 'tflops': 35.9151747861039, 'time_per_iteration': 12.197815179824829}
+04/27/2022 11:29:28 - INFO - __main__ - Step 656: {'steps': 41, 'tflops': 35.87527756159929, 'time_per_iteration': 12.21138048171997}
+04/27/2022 11:29:41 - INFO - __main__ - Step 672: {'steps': 42, 'tflops': 34.08065395254809, 'time_per_iteration': 12.854408979415894}
+04/27/2022 11:29:53 - INFO - __main__ - Step 688: {'steps': 43, 'tflops': 35.897635505329966, 'time_per_iteration': 12.20377492904663}
+04/27/2022 11:30:06 - INFO - __main__ - Step 704: {'steps': 44, 'tflops': 34.04616152703211, 'time_per_iteration': 12.867431879043579}
+04/27/2022 11:30:18 - INFO - __main__ - Step 720: {'steps': 45, 'tflops': 35.90318164217335, 'time_per_iteration': 12.201889753341675}
+04/27/2022 11:30:31 - INFO - __main__ - Step 736: {'steps': 46, 'tflops': 33.53376705325471, 'time_per_iteration': 13.064045667648315}
+04/27/2022 11:30:44 - INFO - __main__ - Step 752: {'steps': 47, 'tflops': 35.887741307277516, 'time_per_iteration': 12.207139492034912}
+04/27/2022 11:30:58 - INFO - __main__ - Step 768: {'steps': 48, 'tflops': 31.073529324664587, 'time_per_iteration': 14.098387718200684}
+04/27/2022 11:31:10 - INFO - __main__ - Step 784: {'steps': 49, 'tflops': 35.892297205151706, 'time_per_iteration': 12.205590009689331}
+04/27/2022 11:31:22 - INFO - __main__ - Step 800: {'steps': 50, 'tflops': 35.884123490813245, 'time_per_iteration': 12.208370208740234}
+04/27/2022 11:31:34 - INFO - __main__ - Step 816: {'steps': 51, 'tflops': 35.92055430235907, 'time_per_iteration': 12.195988416671753}
+04/27/2022 11:31:34 - INFO - __main__ - Dataset epoch: 2
+04/27/2022 11:31:47 - INFO - __main__ - Step 832: {'steps': 52, 'tflops': 33.74411654113143, 'time_per_iteration': 12.982608795166016}
+04/27/2022 11:32:00 - INFO - __main__ - Step 848: {'steps': 53, 'tflops': 35.899034678847464, 'time_per_iteration': 12.203299283981323}
+04/27/2022 11:32:12 - INFO - __main__ - Step 864: {'steps': 54, 'tflops': 34.04163651206428, 'time_per_iteration': 12.869142293930054}
+04/27/2022 11:32:25 - INFO - __main__ - Step 880: {'steps': 55, 'tflops': 35.90876668561631, 'time_per_iteration': 12.199991941452026}
+04/27/2022 11:32:38 - INFO - __main__ - Step 896: {'steps': 56, 'tflops': 33.82800037790732, 'time_per_iteration': 12.95041561126709}
+04/27/2022 11:32:50 - INFO - __main__ - Step 912: {'steps': 57, 'tflops': 35.884063223411374, 'time_per_iteration': 12.208390712738037}
+04/27/2022 11:33:03 - INFO - __main__ - Step 928: {'steps': 58, 'tflops': 34.09205985378668, 'time_per_iteration': 12.85010838508606}
+04/27/2022 11:33:15 - INFO - __main__ - Step 944: {'steps': 59, 'tflops': 35.90189017283069, 'time_per_iteration': 12.2023286819458}
+04/27/2022 11:33:27 - INFO - __main__ - Step 960: {'steps': 60, 'tflops': 35.90209430438799, 'time_per_iteration': 12.202259302139282}
+04/27/2022 11:33:40 - INFO - __main__ - Step 976: {'steps': 61, 'tflops': 33.87225357869299, 'time_per_iteration': 12.933496236801147}
+04/27/2022 11:33:52 - INFO - __main__ - Step 992: {'steps': 62, 'tflops': 35.89786764135932, 'time_per_iteration': 12.203696012496948}
+04/27/2022 11:33:59 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 11:34:17 - INFO - __main__ - Step 1000: {'loss/eval': 1.236820936203003, 'perplexity': 3.444645404815674}
+Configuration saved in ./models/model-3/step_1000/config.json
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.7/site-packages/torch/serialization.py", line 379, in save
+    _save(obj, opened_zipfile, pickle_module, pickle_protocol)
+  File "/opt/conda/lib/python3.7/site-packages/torch/serialization.py", line 499, in _save
+    zip_file.write_record(name, storage.data_ptr(), num_bytes)
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "new_codeparrot_training.py", line 280, in <module>
+    unwrapped_model.save_pretrained(save_path, save_function=accelerator.save)
+  File "/home/oskar_bonde_ericsson_com/.local/lib/python3.7/site-packages/transformers/modeling_utils.py", line 1069, in save_pretrained
+    save_function(state_dict, output_model_file)
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/accelerator.py", line 568, in save
+    save(obj, f)
+  File "/opt/conda/lib/python3.7/site-packages/accelerate/utils.py", line 602, in save
+    torch.save(obj, f)
+  File "/opt/conda/lib/python3.7/site-packages/torch/serialization.py", line 380, in save
+    return
+  File "/opt/conda/lib/python3.7/site-packages/torch/serialization.py", line 259, in __exit__
+    self.file_like.write_end_of_file()
+RuntimeError: [enforce fail at inline_container.cc:298] . unexpected pos 5828804480 vs 5828804376
+terminate called after throwing an instance of 'c10::Error'
+  what():  [enforce fail at inline_container.cc:298] . unexpected pos 5828804480 vs 5828804376
+frame #0: c10::ThrowEnforceNotMet(char const*, int, char const*, std::string const&, void const*) + 0x47 (0x7ff2c58f57a7 in /opt/conda/lib/python3.7/site-packages/torch/lib/libc10.so)
+frame #1: <unknown functi/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py:164: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+  "The module torch.distributed.launch is deprecated "
+The module torch.distributed.launch is deprecated and going to be removed in future.Migrate to torch.distributed.run
+INFO:torch.distributed.launcher.api:Starting elastic_operator with launch configs:
+  entrypoint       : new_codeparrot_training.py
+  min_nodes        : 1
+  max_nodes        : 1
+  nproc_per_node   : 16
+  run_id           : none
+  rdzv_backend     : static
+  rdzv_endpoint    : 127.0.0.1:29500
+  rdzv_configs     : {'rank': 0, 'timeout': 900}
+  max_restarts     : 3
+  monitor_interval : 5
+  log_dir          : None
+  metrics_cfg      : {}
+
+INFO:torch.distributed.elastic.agent.server.local_elastic_agent:log directory set to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1
+INFO:torch.distributed.elastic.agent.server.api:[default] starting workers for entrypoint: python3.7
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous'ing worker group
+/opt/conda/lib/python3.7/site-packages/torch/distributed/elastic/utils/store.py:53: FutureWarning: This is an experimental API and will be changed in future.
+  "This is an experimental API and will be changed in future.", FutureWarning
+INFO:torch.distributed.elastic.agent.server.api:[default] Rendezvous complete for workers. Result:
+  restart_count=0
+  master_addr=127.0.0.1
+  master_port=29500
+  group_rank=0
+  group_world_size=1
+  local_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  global_ranks=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  role_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+  global_world_sizes=[16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+
+INFO:torch.distributed.elastic.agent.server.api:[default] Starting worker group
+INFO:torch.distributed.elastic.multiprocessing:Setting worker0 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/0/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker1 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/1/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker2 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/2/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker3 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/3/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker4 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/4/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker5 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/5/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker6 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/6/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker7 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/7/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker8 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/8/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker9 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/9/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker10 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/10/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker11 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/11/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker12 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/12/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker13 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/13/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker14 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/14/error.json
+INFO:torch.distributed.elastic.multiprocessing:Setting worker15 reply file to: /tmp/torchelastic_rpxqynq5/none_gzvtinr1/attempt_0/15/error.json
+04/27/2022 11:44:27 - INFO - __main__ - Distributed environment: MULTI_GPU  Backend: nccl
+Num processes: 16
+Process index: 0
+Local process index: 0
+Device: cuda:0
+Mixed precision type: fp16
+
+loading configuration file https://huggingface.co/lvwerra/codeparrot/resolve/main/config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c594cfb5386d04c2e7af1795e85033e933f7c04c8a28dde55f0e1fa2f725b72c.b9b5856ecafb918ccdc40d52ab917b89d9c3c6fa78e2dc18ad7d9a358e432aab
+Model config GPT2Config {
+  "_name_or_path": "lvwerra/codeparrot",
+  "activation_function": "gelu_new",
+  "architectures": [
+    "GPT2LMHeadModel"
+  ],
+  "attn_pdrop": 0.1,
+  "bos_token_id": 50256,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 50256,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gpt2",
+  "n_ctx": 1024,
+  "n_embd": 1600,
+  "n_head": 25,
+  "n_inner": null,
+  "n_layer": 48,
+  "n_positions": 1024,
+  "output_past": true,
+  "reorder_and_upcast_attn": true,
+  "resid_pdrop": 0.1,
+  "scale_attn_by_inverse_layer_idx": true,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "task_specific_params": {
+    "text-generation": {
+      "do_sample": true,
+      "max_length": 50
+    }
+  },
+  "torch_dtype": "float32",
+  "transformers_version": "4.15.0",
+  "use_cache": true,
+  "vocab_size": 32768
+}
+
+loading weights file https://huggingface.co/lvwerra/codeparrot/resolve/main/pytorch_model.bin from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/3601e41822216da64359803e12f05eec2acfded100875b6d3cc845599c79dc20.63256438916b3eeafb55662f74ba85d12b7d5d2fb36a2e6fe1db5499aafc2648
+All model checkpoint weights were used when initializing GPT2LMHeadModel.
+
+All the weights of GPT2LMHeadModel were initialized from the model checkpoint at lvwerra/codeparrot.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use GPT2LMHeadModel for predictions without further training.
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/vocab.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/d4c2482a5da8882c8d1ec0e3221150100f233d2b2acf66878febcb6cc56f18de.e1e79be960ac552aa28d70494c56c5899ed90b1537d41fd037262657a9befd6a
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/merges.txt from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/de35c3c3c22ca9117b396a8474954092c4fffe984aa1267422c6c9af66298340.d722e5972b12fc42e29215757e41549636c5ce2c31cb49e3e46e35e10d103923
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/df053a83882dfbc6d41d077adeceea2f0848d9e13a2c915e2cb44fcb9f0d3307.e4fbee984d45ae8f3f9c9eb054628582f6489ad789c3552c94efb1208b03ffdf
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/added_tokens.json from cache at None
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/special_tokens_map.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/c7bb2e7b7bb9c7fe62d1a881eec761303a488f6fbf706cf7f82033487c8af553.3ae9ae72462581d20e36bc528e9c47bb30cd671bb21add40ca0b24a0be9fac22
+loading file https://huggingface.co/lvwerra/codeparrot/resolve/main/tokenizer_config.json from cache at /home/oskar_bonde_ericsson_com/.cache/huggingface/transformers/f01f6d46c71625883cae6b83304b33a10d6a0c077e4ea7fc8639df22a017294a.173e36d458460b8910258ea66979b41056ea6ae08a7c74b11807859b62b51acc
+04/27/2022 11:44:48 - WARNING - datasets.builder - Using custom data configuration train-b61d70ef90b56455
+04/27/2022 11:44:48 - WARNING - datasets.builder - Using custom data configuration validation-bfbd664215916c2f
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Start trainingStart training
+
+Start training
+Start training
+Start training
+Start training
+Start training
+Start training
+Token indices sequence length is longer than the specified maximum sequence length for this model (3254 > 1024). Running this sequence through the model will result in indexing errors
+04/27/2022 11:45:15 - INFO - __main__ - Step 1: {'lr': 0.0, 'samples': 32, 'steps': 0, 'loss/train': 2.068716049194336}
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - root - Reducer buckets have been rebuilt in this iteration.
+04/27/2022 11:45:16 - INFO - __main__ - Step 2: {'lr': 0.0, 'samples': 64, 'steps': 0, 'loss/train': 1.204140305519104}
+04/27/2022 11:45:17 - INFO - __main__ - Step 3: {'lr': 0.0, 'samples': 96, 'steps': 0, 'loss/train': 1.750077486038208}
+04/27/2022 11:45:17 - INFO - __main__ - Step 4: {'lr': 0.0, 'samples': 128, 'steps': 0, 'loss/train': 1.4117218255996704}
+04/27/2022 11:45:18 - INFO - __main__ - Step 5: {'lr': 0.0, 'samples': 160, 'steps': 0, 'loss/train': 1.1929031610488892}
+04/27/2022 11:45:19 - INFO - __main__ - Step 6: {'lr': 0.0, 'samples': 192, 'steps': 0, 'loss/train': 1.135462999343872}
+04/27/2022 11:45:20 - INFO - __main__ - Step 7: {'lr': 0.0, 'samples': 224, 'steps': 0, 'loss/train': 1.5956158638000488}
+04/27/2022 11:45:20 - INFO - __main__ - Step 8: {'lr': 0.0, 'samples': 256, 'steps': 0, 'loss/train': 1.2528138160705566}
+04/27/2022 11:45:21 - INFO - __main__ - Step 9: {'lr': 0.0, 'samples': 288, 'steps': 0, 'loss/train': 1.8490314483642578}
+04/27/2022 11:45:22 - INFO - __main__ - Step 10: {'lr': 0.0, 'samples': 320, 'steps': 0, 'loss/train': 2.241741180419922}
+04/27/2022 11:45:23 - INFO - __main__ - Step 11: {'lr': 0.0, 'samples': 352, 'steps': 0, 'loss/train': 1.870575189590454}
+04/27/2022 11:45:23 - INFO - __main__ - Step 12: {'lr': 0.0, 'samples': 384, 'steps': 0, 'loss/train': 1.2562342882156372}
+04/27/2022 11:45:24 - INFO - __main__ - Step 13: {'lr': 0.0, 'samples': 416, 'steps': 0, 'loss/train': 1.5669326782226562}
+04/27/2022 11:45:25 - INFO - __main__ - Step 14: {'lr': 0.0, 'samples': 448, 'steps': 0, 'loss/train': 0.9859884977340698}
+04/27/2022 11:45:26 - INFO - __main__ - Step 15: {'lr': 0.0, 'samples': 480, 'steps': 0, 'loss/train': 1.5922073125839233}
+04/27/2022 11:45:26 - INFO - __main__ - Step 16: {'lr': 0.0, 'samples': 512, 'steps': 0, 'loss/train': 1.2351442575454712}
+04/27/2022 11:50:32 - INFO - __main__ - Dataset epoch: 1
+04/27/2022 11:51:48 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 11:52:06 - INFO - __main__ - Step 500: {'loss/eval': 1.359014630317688, 'perplexity': 3.8923559188842773}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 11:56:23 - INFO - __main__ - Dataset epoch: 2
+04/27/2022 11:58:48 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 11:59:05 - INFO - __main__ - Step 1000: {'loss/eval': 1.236820936203003, 'perplexity': 3.444645404815674}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:03:18 - INFO - __main__ - Dataset epoch: 3
+04/27/2022 12:06:29 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:06:47 - INFO - __main__ - Step 1500: {'loss/eval': 1.1354727745056152, 'perplexity': 3.112644910812378}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:08:58 - INFO - __main__ - Step 1601: {'lr': 2.666666666666667e-06, 'samples': 51232, 'steps': 100, 'loss/train': 1.6155816316604614}
+04/27/2022 12:08:58 - INFO - __main__ - Step 1602: {'lr': 2.666666666666667e-06, 'samples': 51264, 'steps': 100, 'loss/train': 1.2108023166656494}
+04/27/2022 12:08:59 - INFO - __main__ - Step 1603: {'lr': 2.666666666666667e-06, 'samples': 51296, 'steps': 100, 'loss/train': 0.8917255401611328}
+04/27/2022 12:09:00 - INFO - __main__ - Step 1604: {'lr': 2.666666666666667e-06, 'samples': 51328, 'steps': 100, 'loss/train': 1.37590491771698}
+04/27/2022 12:09:01 - INFO - __main__ - Step 1605: {'lr': 2.666666666666667e-06, 'samples': 51360, 'steps': 100, 'loss/train': 1.235864281654358}
+04/27/2022 12:09:02 - INFO - __main__ - Step 1606: {'lr': 2.666666666666667e-06, 'samples': 51392, 'steps': 100, 'loss/train': 1.3672192096710205}
+04/27/2022 12:09:02 - INFO - __main__ - Step 1607: {'lr': 2.666666666666667e-06, 'samples': 51424, 'steps': 100, 'loss/train': 1.4957847595214844}
+04/27/2022 12:09:03 - INFO - __main__ - Step 1608: {'lr': 2.666666666666667e-06, 'samples': 51456, 'steps': 100, 'loss/train': 1.3317055702209473}
+04/27/2022 12:09:04 - INFO - __main__ - Step 1609: {'lr': 2.666666666666667e-06, 'samples': 51488, 'steps': 100, 'loss/train': 0.4822406768798828}
+04/27/2022 12:09:05 - INFO - __main__ - Step 1610: {'lr': 2.666666666666667e-06, 'samples': 51520, 'steps': 100, 'loss/train': 1.2000529766082764}
+04/27/2022 12:09:05 - INFO - __main__ - Step 1611: {'lr': 2.666666666666667e-06, 'samples': 51552, 'steps': 100, 'loss/train': 1.0574411153793335}
+04/27/2022 12:09:06 - INFO - __main__ - Step 1612: {'lr': 2.666666666666667e-06, 'samples': 51584, 'steps': 100, 'loss/train': 1.526779055595398}
+04/27/2022 12:09:07 - INFO - __main__ - Step 1613: {'lr': 2.666666666666667e-06, 'samples': 51616, 'steps': 100, 'loss/train': 0.8868736624717712}
+04/27/2022 12:09:08 - INFO - __main__ - Step 1614: {'lr': 2.666666666666667e-06, 'samples': 51648, 'steps': 100, 'loss/train': 0.3521840572357178}
+04/27/2022 12:09:08 - INFO - __main__ - Step 1615: {'lr': 2.666666666666667e-06, 'samples': 51680, 'steps': 100, 'loss/train': 0.798855721950531}
+04/27/2022 12:09:09 - INFO - __main__ - Step 1616: {'lr': 2.666666666666667e-06, 'samples': 51712, 'steps': 100, 'loss/train': 1.1488789319992065}
+04/27/2022 12:09:46 - INFO - __main__ - Dataset epoch: 4
+04/27/2022 12:14:11 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:14:29 - INFO - __main__ - Step 2000: {'loss/eval': 1.0488471984863281, 'perplexity': 2.854358673095703}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:16:40 - INFO - __main__ - Dataset epoch: 5
+04/27/2022 12:21:53 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:22:11 - INFO - __main__ - Step 2500: {'loss/eval': 0.9809293746948242, 'perplexity': 2.666933536529541}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:23:09 - INFO - __main__ - Dataset epoch: 6
+04/27/2022 12:28:53 - INFO - __main__ - Dataset epoch: 7
+04/27/2022 12:29:35 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:29:53 - INFO - __main__ - Step 3000: {'loss/eval': 0.9280576705932617, 'perplexity': 2.5295910835266113}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:33:22 - INFO - __main__ - Step 3201: {'lr': 5.333333333333334e-06, 'samples': 102432, 'steps': 200, 'loss/train': 0.28184327483177185}
+04/27/2022 12:33:23 - INFO - __main__ - Step 3202: {'lr': 5.333333333333334e-06, 'samples': 102464, 'steps': 200, 'loss/train': 0.8359801173210144}
+04/27/2022 12:33:24 - INFO - __main__ - Step 3203: {'lr': 5.333333333333334e-06, 'samples': 102496, 'steps': 200, 'loss/train': 1.1105502843856812}
+04/27/2022 12:33:24 - INFO - __main__ - Step 3204: {'lr': 5.333333333333334e-06, 'samples': 102528, 'steps': 200, 'loss/train': 0.8918742537498474}
+04/27/2022 12:33:25 - INFO - __main__ - Step 3205: {'lr': 5.333333333333334e-06, 'samples': 102560, 'steps': 200, 'loss/train': 0.5473568439483643}
+04/27/2022 12:33:26 - INFO - __main__ - Step 3206: {'lr': 5.333333333333334e-06, 'samples': 102592, 'steps': 200, 'loss/train': 0.7700525522232056}
+04/27/2022 12:33:27 - INFO - __main__ - Step 3207: {'lr': 5.333333333333334e-06, 'samples': 102624, 'steps': 200, 'loss/train': 1.2536826133728027}
+04/27/2022 12:33:27 - INFO - __main__ - Step 3208: {'lr': 5.333333333333334e-06, 'samples': 102656, 'steps': 200, 'loss/train': 0.3593423068523407}
+04/27/2022 12:33:28 - INFO - __main__ - Step 3209: {'lr': 5.333333333333334e-06, 'samples': 102688, 'steps': 200, 'loss/train': 1.1739040613174438}
+04/27/2022 12:33:29 - INFO - __main__ - Step 3210: {'lr': 5.333333333333334e-06, 'samples': 102720, 'steps': 200, 'loss/train': 1.2862845659255981}
+04/27/2022 12:33:30 - INFO - __main__ - Step 3211: {'lr': 5.333333333333334e-06, 'samples': 102752, 'steps': 200, 'loss/train': 0.8347300291061401}
+04/27/2022 12:33:30 - INFO - __main__ - Step 3212: {'lr': 5.333333333333334e-06, 'samples': 102784, 'steps': 200, 'loss/train': 0.9201712012290955}
+04/27/2022 12:33:31 - INFO - __main__ - Step 3213: {'lr': 5.333333333333334e-06, 'samples': 102816, 'steps': 200, 'loss/train': 1.0977851152420044}
+04/27/2022 12:33:32 - INFO - __main__ - Step 3214: {'lr': 5.333333333333334e-06, 'samples': 102848, 'steps': 200, 'loss/train': 0.5482587218284607}
+04/27/2022 12:33:33 - INFO - __main__ - Step 3215: {'lr': 5.333333333333334e-06, 'samples': 102880, 'steps': 200, 'loss/train': 0.2888566851615906}
+04/27/2022 12:33:33 - INFO - __main__ - Step 3216: {'lr': 5.333333333333334e-06, 'samples': 102912, 'steps': 200, 'loss/train': 1.4079793691635132}
+04/27/2022 12:35:21 - INFO - __main__ - Dataset epoch: 8
+04/27/2022 12:37:17 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:37:35 - INFO - __main__ - Step 3500: {'loss/eval': 0.8855029940605164, 'perplexity': 2.424203395843506}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:42:17 - INFO - __main__ - Dataset epoch: 9
+04/27/2022 12:44:59 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:45:17 - INFO - __main__ - Step 4000: {'loss/eval': 0.8468927145004272, 'perplexity': 2.332388162612915}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:48:45 - INFO - __main__ - Dataset epoch: 10
+04/27/2022 12:52:41 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 12:52:59 - INFO - __main__ - Step 4500: {'loss/eval': 0.8135546445846558, 'perplexity': 2.2559127807617188}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 12:55:39 - INFO - __main__ - Dataset epoch: 11
+04/27/2022 12:57:47 - INFO - __main__ - Step 4801: {'lr': 8.000000000000001e-06, 'samples': 153632, 'steps': 300, 'loss/train': 0.4964880645275116}
+04/27/2022 12:57:48 - INFO - __main__ - Step 4802: {'lr': 8.000000000000001e-06, 'samples': 153664, 'steps': 300, 'loss/train': 0.0723956972360611}
+04/27/2022 12:57:48 - INFO - __main__ - Step 4803: {'lr': 8.000000000000001e-06, 'samples': 153696, 'steps': 300, 'loss/train': 1.2870246171951294}
+04/27/2022 12:57:49 - INFO - __main__ - Step 4804: {'lr': 8.000000000000001e-06, 'samples': 153728, 'steps': 300, 'loss/train': 0.9544776678085327}
+04/27/2022 12:57:50 - INFO - __main__ - Step 4805: {'lr': 8.000000000000001e-06, 'samples': 153760, 'steps': 300, 'loss/train': 1.3560256958007812}
+04/27/2022 12:57:51 - INFO - __main__ - Step 4806: {'lr': 8.000000000000001e-06, 'samples': 153792, 'steps': 300, 'loss/train': 0.7882564663887024}
+04/27/2022 12:57:51 - INFO - __main__ - Step 4807: {'lr': 8.000000000000001e-06, 'samples': 153824, 'steps': 300, 'loss/train': 0.9378271698951721}
+04/27/2022 12:57:52 - INFO - __main__ - Step 4808: {'lr': 8.000000000000001e-06, 'samples': 153856, 'steps': 300, 'loss/train': 0.4127310514450073}
+04/27/2022 12:57:53 - INFO - __main__ - Step 4809: {'lr': 8.000000000000001e-06, 'samples': 153888, 'steps': 300, 'loss/train': 1.0210903882980347}
+04/27/2022 12:57:54 - INFO - __main__ - Step 4810: {'lr': 8.000000000000001e-06, 'samples': 153920, 'steps': 300, 'loss/train': 0.4706169068813324}
+04/27/2022 12:57:55 - INFO - __main__ - Step 4811: {'lr': 8.000000000000001e-06, 'samples': 153952, 'steps': 300, 'loss/train': 3.502084255218506}
+04/27/2022 12:57:55 - INFO - __main__ - Step 4812: {'lr': 8.000000000000001e-06, 'samples': 153984, 'steps': 300, 'loss/train': 0.7918860912322998}
+04/27/2022 12:57:56 - INFO - __main__ - Step 4813: {'lr': 8.000000000000001e-06, 'samples': 154016, 'steps': 300, 'loss/train': 1.0977776050567627}
+04/27/2022 12:57:57 - INFO - __main__ - Step 4814: {'lr': 8.000000000000001e-06, 'samples': 154048, 'steps': 300, 'loss/train': 1.26627516746521}
+04/27/2022 12:57:58 - INFO - __main__ - Step 4815: {'lr': 8.000000000000001e-06, 'samples': 154080, 'steps': 300, 'loss/train': 0.7557249665260315}
+04/27/2022 12:57:58 - INFO - __main__ - Step 4816: {'lr': 8.000000000000001e-06, 'samples': 154112, 'steps': 300, 'loss/train': 0.9895854592323303}
+04/27/2022 13:00:24 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:00:42 - INFO - __main__ - Step 5000: {'loss/eval': 0.7837903499603271, 'perplexity': 2.1897566318511963}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:02:07 - INFO - __main__ - Dataset epoch: 12
+04/27/2022 13:07:53 - INFO - __main__ - Dataset epoch: 13
+04/27/2022 13:08:06 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:08:23 - INFO - __main__ - Step 5500: {'loss/eval': 0.7583001852035522, 'perplexity': 2.1346445083618164}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:14:20 - INFO - __main__ - Dataset epoch: 14
+04/27/2022 13:15:48 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:16:05 - INFO - __main__ - Step 6000: {'loss/eval': 0.7322181463241577, 'perplexity': 2.079688549041748}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:21:15 - INFO - __main__ - Dataset epoch: 15
+04/27/2022 13:22:11 - INFO - __main__ - Step 6401: {'lr': 1.0666666666666667e-05, 'samples': 204832, 'steps': 400, 'loss/train': 0.6409884095191956}
+04/27/2022 13:22:12 - INFO - __main__ - Step 6402: {'lr': 1.0666666666666667e-05, 'samples': 204864, 'steps': 400, 'loss/train': 0.8701823353767395}
+04/27/2022 13:22:13 - INFO - __main__ - Step 6403: {'lr': 1.0666666666666667e-05, 'samples': 204896, 'steps': 400, 'loss/train': 1.095435380935669}
+04/27/2022 13:22:14 - INFO - __main__ - Step 6404: {'lr': 1.0666666666666667e-05, 'samples': 204928, 'steps': 400, 'loss/train': 0.954731285572052}
+04/27/2022 13:22:15 - INFO - __main__ - Step 6405: {'lr': 1.0666666666666667e-05, 'samples': 204960, 'steps': 400, 'loss/train': 0.061075303703546524}
+04/27/2022 13:22:16 - INFO - __main__ - Step 6406: {'lr': 1.0666666666666667e-05, 'samples': 204992, 'steps': 400, 'loss/train': 0.6497737169265747}
+04/27/2022 13:22:16 - INFO - __main__ - Step 6407: {'lr': 1.0666666666666667e-05, 'samples': 205024, 'steps': 400, 'loss/train': 1.225022792816162}
+04/27/2022 13:22:17 - INFO - __main__ - Step 6408: {'lr': 1.0666666666666667e-05, 'samples': 205056, 'steps': 400, 'loss/train': 1.174431324005127}
+04/27/2022 13:22:18 - INFO - __main__ - Step 6409: {'lr': 1.0666666666666667e-05, 'samples': 205088, 'steps': 400, 'loss/train': 0.9451627135276794}
+04/27/2022 13:22:19 - INFO - __main__ - Step 6410: {'lr': 1.0666666666666667e-05, 'samples': 205120, 'steps': 400, 'loss/train': 0.8895005583763123}
+04/27/2022 13:22:19 - INFO - __main__ - Step 6411: {'lr': 1.0666666666666667e-05, 'samples': 205152, 'steps': 400, 'loss/train': 0.8694232106208801}
+04/27/2022 13:22:20 - INFO - __main__ - Step 6412: {'lr': 1.0666666666666667e-05, 'samples': 205184, 'steps': 400, 'loss/train': 1.2550854682922363}
+04/27/2022 13:22:21 - INFO - __main__ - Step 6413: {'lr': 1.0666666666666667e-05, 'samples': 205216, 'steps': 400, 'loss/train': 0.7007222175598145}
+04/27/2022 13:22:22 - INFO - __main__ - Step 6414: {'lr': 1.0666666666666667e-05, 'samples': 205248, 'steps': 400, 'loss/train': 0.033137500286102295}
+04/27/2022 13:22:22 - INFO - __main__ - Step 6415: {'lr': 1.0666666666666667e-05, 'samples': 205280, 'steps': 400, 'loss/train': 0.8849536776542664}
+04/27/2022 13:22:23 - INFO - __main__ - Step 6416: {'lr': 1.0666666666666667e-05, 'samples': 205312, 'steps': 400, 'loss/train': 1.2121446132659912}
+04/27/2022 13:23:29 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:23:47 - INFO - __main__ - Step 6500: {'loss/eval': 0.7100216746330261, 'perplexity': 2.0340352058410645}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:27:43 - INFO - __main__ - Dataset epoch: 16
+04/27/2022 13:31:11 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:31:29 - INFO - __main__ - Step 7000: {'loss/eval': 0.6892356276512146, 'perplexity': 1.9921921491622925}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:34:38 - INFO - __main__ - Dataset epoch: 17
+04/27/2022 13:38:54 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:39:12 - INFO - __main__ - Step 7500: {'loss/eval': 0.669242262840271, 'perplexity': 1.9527570009231567}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:41:07 - INFO - __main__ - Dataset epoch: 18
+04/27/2022 13:46:37 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:46:54 - INFO - __main__ - Step 8000: {'loss/eval': 0.6518735289573669, 'perplexity': 1.9191330671310425}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 13:47:47 - INFO - __main__ - Step 8001: {'lr': 1.3333333333333333e-05, 'samples': 256032, 'steps': 500, 'loss/train': 1.433025598526001}
+04/27/2022 13:47:48 - INFO - __main__ - Step 8002: {'lr': 1.3333333333333333e-05, 'samples': 256064, 'steps': 500, 'loss/train': 1.366692304611206}
+04/27/2022 13:47:48 - INFO - __main__ - Step 8003: {'lr': 1.3333333333333333e-05, 'samples': 256096, 'steps': 500, 'loss/train': 0.07822124660015106}
+04/27/2022 13:47:49 - INFO - __main__ - Step 8004: {'lr': 1.3333333333333333e-05, 'samples': 256128, 'steps': 500, 'loss/train': 0.07216285914182663}
+04/27/2022 13:47:50 - INFO - __main__ - Step 8005: {'lr': 1.3333333333333333e-05, 'samples': 256160, 'steps': 500, 'loss/train': 0.7130002379417419}
+04/27/2022 13:47:51 - INFO - __main__ - Step 8006: {'lr': 1.3333333333333333e-05, 'samples': 256192, 'steps': 500, 'loss/train': 0.7812924981117249}
+04/27/2022 13:47:51 - INFO - __main__ - Step 8007: {'lr': 1.3333333333333333e-05, 'samples': 256224, 'steps': 500, 'loss/train': 0.7459158301353455}
+04/27/2022 13:47:52 - INFO - __main__ - Step 8008: {'lr': 1.3333333333333333e-05, 'samples': 256256, 'steps': 500, 'loss/train': 0.03393850848078728}
+04/27/2022 13:47:53 - INFO - __main__ - Step 8009: {'lr': 1.3333333333333333e-05, 'samples': 256288, 'steps': 500, 'loss/train': 1.0218011140823364}
+04/27/2022 13:47:54 - INFO - __main__ - Step 8010: {'lr': 1.3333333333333333e-05, 'samples': 256320, 'steps': 500, 'loss/train': 0.3966630697250366}
+04/27/2022 13:47:54 - INFO - __main__ - Step 8011: {'lr': 1.3333333333333333e-05, 'samples': 256352, 'steps': 500, 'loss/train': 0.059262052178382874}
+04/27/2022 13:47:55 - INFO - __main__ - Step 8012: {'lr': 1.3333333333333333e-05, 'samples': 256384, 'steps': 500, 'loss/train': 0.6403909921646118}
+04/27/2022 13:47:56 - INFO - __main__ - Step 8013: {'lr': 1.3333333333333333e-05, 'samples': 256416, 'steps': 500, 'loss/train': 0.038895383477211}
+04/27/2022 13:47:57 - INFO - __main__ - Step 8014: {'lr': 1.3333333333333333e-05, 'samples': 256448, 'steps': 500, 'loss/train': 0.9451731443405151}
+04/27/2022 13:47:57 - INFO - __main__ - Step 8015: {'lr': 1.3333333333333333e-05, 'samples': 256480, 'steps': 500, 'loss/train': 0.4614245891571045}
+04/27/2022 13:47:58 - INFO - __main__ - Step 8016: {'lr': 1.3333333333333333e-05, 'samples': 256512, 'steps': 500, 'loss/train': 0.39930829405784607}
+04/27/2022 13:48:02 - INFO - __main__ - Dataset epoch: 19
+04/27/2022 13:53:20 - INFO - __main__ - Dataset epoch: 20
+04/27/2022 13:54:19 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 13:54:37 - INFO - __main__ - Step 8500: {'loss/eval': 0.6353201866149902, 'perplexity': 1.8876265287399292}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:00:15 - INFO - __main__ - Dataset epoch: 21
+04/27/2022 14:02:00 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:02:18 - INFO - __main__ - Step 9000: {'loss/eval': 0.6211307644844055, 'perplexity': 1.861031174659729}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:06:43 - INFO - __main__ - Dataset epoch: 22
+04/27/2022 14:09:42 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:10:00 - INFO - __main__ - Step 9500: {'loss/eval': 0.607627272605896, 'perplexity': 1.8360697031021118}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:12:11 - INFO - __main__ - Step 9601: {'lr': 1.6000000000000003e-05, 'samples': 307232, 'steps': 600, 'loss/train': 0.5605772137641907}
+04/27/2022 14:12:12 - INFO - __main__ - Step 9602: {'lr': 1.6000000000000003e-05, 'samples': 307264, 'steps': 600, 'loss/train': 0.042588554322719574}
+04/27/2022 14:12:13 - INFO - __main__ - Step 9603: {'lr': 1.6000000000000003e-05, 'samples': 307296, 'steps': 600, 'loss/train': 1.3254597187042236}
+04/27/2022 14:12:13 - INFO - __main__ - Step 9604: {'lr': 1.6000000000000003e-05, 'samples': 307328, 'steps': 600, 'loss/train': 0.6738259196281433}
+04/27/2022 14:12:14 - INFO - __main__ - Step 9605: {'lr': 1.6000000000000003e-05, 'samples': 307360, 'steps': 600, 'loss/train': 0.8881495594978333}
+04/27/2022 14:12:15 - INFO - __main__ - Step 9606: {'lr': 1.6000000000000003e-05, 'samples': 307392, 'steps': 600, 'loss/train': 0.2116689383983612}
+04/27/2022 14:12:16 - INFO - __main__ - Step 9607: {'lr': 1.6000000000000003e-05, 'samples': 307424, 'steps': 600, 'loss/train': 0.781518280506134}
+04/27/2022 14:12:16 - INFO - __main__ - Step 9608: {'lr': 1.6000000000000003e-05, 'samples': 307456, 'steps': 600, 'loss/train': 0.680420458316803}
+04/27/2022 14:12:17 - INFO - __main__ - Step 9609: {'lr': 1.6000000000000003e-05, 'samples': 307488, 'steps': 600, 'loss/train': 0.9409133791923523}
+04/27/2022 14:12:18 - INFO - __main__ - Step 9610: {'lr': 1.6000000000000003e-05, 'samples': 307520, 'steps': 600, 'loss/train': 0.7681255340576172}
+04/27/2022 14:12:19 - INFO - __main__ - Step 9611: {'lr': 1.6000000000000003e-05, 'samples': 307552, 'steps': 600, 'loss/train': 0.021010151132941246}
+04/27/2022 14:12:19 - INFO - __main__ - Step 9612: {'lr': 1.6000000000000003e-05, 'samples': 307584, 'steps': 600, 'loss/train': 0.12694098055362701}
+04/27/2022 14:12:20 - INFO - __main__ - Step 9613: {'lr': 1.6000000000000003e-05, 'samples': 307616, 'steps': 600, 'loss/train': 0.039681028574705124}
+04/27/2022 14:12:21 - INFO - __main__ - Step 9614: {'lr': 1.6000000000000003e-05, 'samples': 307648, 'steps': 600, 'loss/train': 0.42394405603408813}
+04/27/2022 14:12:22 - INFO - __main__ - Step 9615: {'lr': 1.6000000000000003e-05, 'samples': 307680, 'steps': 600, 'loss/train': 0.5628780722618103}
+04/27/2022 14:12:22 - INFO - __main__ - Step 9616: {'lr': 1.6000000000000003e-05, 'samples': 307712, 'steps': 600, 'loss/train': 0.13320599496364594}
+04/27/2022 14:13:37 - INFO - __main__ - Dataset epoch: 23
+04/27/2022 14:17:24 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:17:42 - INFO - __main__ - Step 10000: {'loss/eval': 0.5951237678527832, 'perplexity': 1.8132553100585938}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:20:06 - INFO - __main__ - Dataset epoch: 24
+04/27/2022 14:25:06 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:25:24 - INFO - __main__ - Step 10500: {'loss/eval': 0.579857349395752, 'perplexity': 1.7857836484909058}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:27:01 - INFO - __main__ - Dataset epoch: 25
+04/27/2022 14:32:19 - INFO - __main__ - Dataset epoch: 26
+04/27/2022 14:32:49 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:33:07 - INFO - __main__ - Step 11000: {'loss/eval': 0.5689403414726257, 'perplexity': 1.7663942575454712}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:36:36 - INFO - __main__ - Step 11201: {'lr': 1.866666666666667e-05, 'samples': 358432, 'steps': 700, 'loss/train': 0.21855315566062927}
+04/27/2022 14:36:36 - INFO - __main__ - Step 11202: {'lr': 1.866666666666667e-05, 'samples': 358464, 'steps': 700, 'loss/train': 0.6417598128318787}
+04/27/2022 14:36:37 - INFO - __main__ - Step 11203: {'lr': 1.866666666666667e-05, 'samples': 358496, 'steps': 700, 'loss/train': 0.21109990775585175}
+04/27/2022 14:36:38 - INFO - __main__ - Step 11204: {'lr': 1.866666666666667e-05, 'samples': 358528, 'steps': 700, 'loss/train': 0.7050421833992004}
+04/27/2022 14:36:39 - INFO - __main__ - Step 11205: {'lr': 1.866666666666667e-05, 'samples': 358560, 'steps': 700, 'loss/train': 0.5903761982917786}
+04/27/2022 14:36:39 - INFO - __main__ - Step 11206: {'lr': 1.866666666666667e-05, 'samples': 358592, 'steps': 700, 'loss/train': 3.1447033882141113}
+04/27/2022 14:36:40 - INFO - __main__ - Step 11207: {'lr': 1.866666666666667e-05, 'samples': 358624, 'steps': 700, 'loss/train': 0.014285393059253693}
+04/27/2022 14:36:41 - INFO - __main__ - Step 11208: {'lr': 1.866666666666667e-05, 'samples': 358656, 'steps': 700, 'loss/train': 0.02996126003563404}
+04/27/2022 14:36:42 - INFO - __main__ - Step 11209: {'lr': 1.866666666666667e-05, 'samples': 358688, 'steps': 700, 'loss/train': 0.8025049567222595}
+04/27/2022 14:36:42 - INFO - __main__ - Step 11210: {'lr': 1.866666666666667e-05, 'samples': 358720, 'steps': 700, 'loss/train': 0.5098567605018616}
+04/27/2022 14:36:43 - INFO - __main__ - Step 11211: {'lr': 1.866666666666667e-05, 'samples': 358752, 'steps': 700, 'loss/train': 0.37914398312568665}
+04/27/2022 14:36:44 - INFO - __main__ - Step 11212: {'lr': 1.866666666666667e-05, 'samples': 358784, 'steps': 700, 'loss/train': 0.605998158454895}
+04/27/2022 14:36:45 - INFO - __main__ - Step 11213: {'lr': 1.866666666666667e-05, 'samples': 358816, 'steps': 700, 'loss/train': 0.7693423628807068}
+04/27/2022 14:36:45 - INFO - __main__ - Step 11214: {'lr': 1.866666666666667e-05, 'samples': 358848, 'steps': 700, 'loss/train': 0.040491096675395966}
+04/27/2022 14:36:46 - INFO - __main__ - Step 11215: {'lr': 1.866666666666667e-05, 'samples': 358880, 'steps': 700, 'loss/train': 0.5269381999969482}
+04/27/2022 14:36:48 - INFO - __main__ - Step 11216: {'lr': 1.866666666666667e-05, 'samples': 358912, 'steps': 700, 'loss/train': 0.49789148569107056}
+04/27/2022 14:39:14 - INFO - __main__ - Dataset epoch: 27
+04/27/2022 14:40:31 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:40:48 - INFO - __main__ - Step 11500: {'loss/eval': 0.5569661855697632, 'perplexity': 1.7453694343566895}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:45:42 - INFO - __main__ - Dataset epoch: 28
+04/27/2022 14:48:13 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:48:31 - INFO - __main__ - Step 12000: {'loss/eval': 0.5483128428459167, 'perplexity': 1.7303311824798584}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:52:37 - INFO - __main__ - Dataset epoch: 29
+04/27/2022 14:55:54 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 14:56:12 - INFO - __main__ - Step 12500: {'loss/eval': 0.5379201173782349, 'perplexity': 1.7124414443969727}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 14:59:05 - INFO - __main__ - Dataset epoch: 30
+04/27/2022 15:01:01 - INFO - __main__ - Step 12801: {'lr': 1.9999667075404385e-05, 'samples': 409632, 'steps': 800, 'loss/train': 0.42824113368988037}
+04/27/2022 15:01:02 - INFO - __main__ - Step 12802: {'lr': 1.9999667075404385e-05, 'samples': 409664, 'steps': 800, 'loss/train': 0.5872699022293091}
+04/27/2022 15:01:02 - INFO - __main__ - Step 12803: {'lr': 1.9999667075404385e-05, 'samples': 409696, 'steps': 800, 'loss/train': 0.4551011025905609}
+04/27/2022 15:01:03 - INFO - __main__ - Step 12804: {'lr': 1.9999667075404385e-05, 'samples': 409728, 'steps': 800, 'loss/train': 0.5239179730415344}
+04/27/2022 15:01:04 - INFO - __main__ - Step 12805: {'lr': 1.9999667075404385e-05, 'samples': 409760, 'steps': 800, 'loss/train': 0.03434806317090988}
+04/27/2022 15:01:05 - INFO - __main__ - Step 12806: {'lr': 1.9999667075404385e-05, 'samples': 409792, 'steps': 800, 'loss/train': 0.37331241369247437}
+04/27/2022 15:01:05 - INFO - __main__ - Step 12807: {'lr': 1.9999667075404385e-05, 'samples': 409824, 'steps': 800, 'loss/train': 0.22542639076709747}
+04/27/2022 15:01:06 - INFO - __main__ - Step 12808: {'lr': 1.9999667075404385e-05, 'samples': 409856, 'steps': 800, 'loss/train': 0.02761765569448471}
+04/27/2022 15:01:07 - INFO - __main__ - Step 12809: {'lr': 1.9999667075404385e-05, 'samples': 409888, 'steps': 800, 'loss/train': 0.24696382880210876}
+04/27/2022 15:01:08 - INFO - __main__ - Step 12810: {'lr': 1.9999667075404385e-05, 'samples': 409920, 'steps': 800, 'loss/train': 0.5519953966140747}
+04/27/2022 15:01:08 - INFO - __main__ - Step 12811: {'lr': 1.9999667075404385e-05, 'samples': 409952, 'steps': 800, 'loss/train': 0.23169085383415222}
+04/27/2022 15:01:09 - INFO - __main__ - Step 12812: {'lr': 1.9999667075404385e-05, 'samples': 409984, 'steps': 800, 'loss/train': 0.5983235239982605}
+04/27/2022 15:01:10 - INFO - __main__ - Step 12813: {'lr': 1.9999667075404385e-05, 'samples': 410016, 'steps': 800, 'loss/train': 0.5625937581062317}
+04/27/2022 15:01:11 - INFO - __main__ - Step 12814: {'lr': 1.9999667075404385e-05, 'samples': 410048, 'steps': 800, 'loss/train': 0.5738139152526855}
+04/27/2022 15:01:11 - INFO - __main__ - Step 12815: {'lr': 1.9999667075404385e-05, 'samples': 410080, 'steps': 800, 'loss/train': 0.027828248217701912}
+04/27/2022 15:01:12 - INFO - __main__ - Step 12816: {'lr': 1.9999667075404385e-05, 'samples': 410112, 'steps': 800, 'loss/train': 0.570576012134552}
+04/27/2022 15:03:36 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 15:03:54 - INFO - __main__ - Step 13000: {'loss/eval': 0.5316140651702881, 'perplexity': 1.7016767263412476}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 15:06:00 - INFO - __main__ - Dataset epoch: 31
+04/27/2022 15:11:18 - INFO - __main__ - Dataset epoch: 32
+04/27/2022 15:11:20 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 15:11:38 - INFO - __main__ - Step 13500: {'loss/eval': 0.5238770246505737, 'perplexity': 1.6885615587234497}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
+04/27/2022 15:18:13 - INFO - __main__ - Dataset epoch: 33
+04/27/2022 15:19:01 - INFO - __main__ - Evaluating and saving model checkpoint
+04/27/2022 15:19:19 - INFO - __main__ - Step 14000: {'loss/eval': 0.52243971824646, 'perplexity': 1.686136245727539}
+Configuration saved in ./models/model-3/config.json
+Model weights saved in ./models/model-3/pytorch_model.bin
