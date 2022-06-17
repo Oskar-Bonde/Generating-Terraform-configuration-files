@@ -291,7 +291,7 @@ def make_json_model(provider, model):
 if __name__ == "__main__":
     #model = 'codeparrot-small'
     n_samples = 50
-    for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+    for model in ['codex-0.6']: #['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
         #clean_terraform(model, n_samples)
         for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
             print(f'-----------------------------------------\n{provider}')
