@@ -3,11 +3,9 @@ import os
 
 def add_space(tokenizer):
     space = '  '
-    tokens=[]
-    for i in range(30):
+    for i in range(6):
         tokenizer.add_tokens( [ space ] )
-        space += ' '
-
+        space += '  '
     return tokenizer
 
 def main():
