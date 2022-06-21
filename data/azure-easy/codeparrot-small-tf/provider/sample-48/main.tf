@@ -1,1 +1,0 @@
- Provider block with azure

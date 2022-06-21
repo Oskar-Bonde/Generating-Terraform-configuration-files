@@ -6,16 +6,13 @@ terraform {
   }
 }
 
-# google provider block
+# google provider block with only region set to europe north1
 provider "google" {
-  credentials = file("${path.module}/credentials.json")
-  project     = var.project
-  region      = var.region
 }
 
-
-resource "google_compute_instance" "vm_instance" {
-  name = "my-compute-instance"
+# a compute instance that has boot disk debian-9 image, network interface default, is type f1-micro and has a name of "default"
+resource "google_compute_instance" "name_0" {
+  name = "my-compute-instance-boot-disk-${random_suffix}"
   machine_type = "f1-micro"
 
   boot_disk {
@@ -30,3 +27,4 @@ resource "google_compute_instance" "vm_instance" {
     }
   }
 }
+

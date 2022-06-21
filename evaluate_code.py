@@ -7,7 +7,7 @@ import json
 import time
 from collections import defaultdict
 
-def make_tf(tf_path, easy, human=False):
+def make_plan(tf_path, easy, human=False):
     os.system(f'terraform -chdir={tf_path} init')
     if not easy:
         os.system(f'terraform -chdir={tf_path} plan -out=binary')
@@ -175,6 +175,10 @@ def clean_plan(plan):
             cleaned_plan.append(plan[i])
     return cleaned_plan
             
+def add_resource(txt_file, provider):
+    re_file = open(f'data/resource/{provider}_resource.txt', 'r', encoding='utf-8', errors='ignore')
+    resource = re_file.read()
+    return txt_file+'\n'+resource
 
 def compile_check(provider, model, n_samples):
     task_names = []
@@ -245,10 +249,13 @@ def make_json_human(provider):
             os.makedirs(tf_path)
             clean_txt = remove_identifiers(f'data/{provider}/human-txt/{task}')
             tf_file = open(tf_path+'/main.tf', 'w', encoding='utf-8', errors='ignore')
+            if task[:-4] == 'provider':
+                clean_txt = add_resource(clean_txt, provider)
+                print("clean_txt", clean_txt)
             tf_file.write(clean_txt)
             tf_file.close()
             easy = True if 'easy' in provider else False
-            make_tf(tf_path, easy, human=True)
+            make_plan(tf_path, easy, human=True)
 
 def make_json_model(provider, model):
     print(f'------------------------------------\n{model}')
@@ -270,10 +277,12 @@ def make_json_model(provider, model):
                 if hash(clean_txt) not in hash_to_sample:
                     hash_to_sample[hash(clean_txt)] = sample
                     tf_file = open( f'{tf_path}/{sample}/main.tf', 'w', encoding='utf-8', errors='ignore')
+                    if task == 'provider':
+                        clean_txt = add_resource(clean_txt, provider)
                     tf_file.write(clean_txt)
                     tf_file.close()
                     easy = True if 'easy' in provider else False
-                    make_tf(f'{tf_path}/{sample}', easy)
+                    make_plan(f'{tf_path}/{sample}', easy)
                 else:
                     duplicate = hash_to_sample[hash(clean_txt)]
                     tf_file = open(f'{tf_path}/{sample}/{duplicate}.txt', 'w', encoding='utf-8', errors='ignore')
@@ -282,9 +291,9 @@ def make_json_model(provider, model):
 if __name__ == "__main__":
     #model = 'codeparrot-small'
     n_samples = 50
-    for model in ['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
+    for model in ['codeparrot-large']: #['codex', 'codeparrot-large', 'codeparrot-small', 'gpt-2-large', 'gpt-2-small']:
         #clean_terraform(model, n_samples)
-        for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        for provider in ['gcp']: # ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
             print(f'-----------------------------------------\n{provider}')
             make_json_human(provider)
             make_json_model(provider, model)

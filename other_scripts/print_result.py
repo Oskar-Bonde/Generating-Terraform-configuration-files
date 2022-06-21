@@ -199,7 +199,7 @@ def all_results():
 # success rate vs number of lines
 
 if __name__ == "__main__":
-    one_model()
-    #all_results()
+    #one_model()
+    all_results()
     #distribution()
     
