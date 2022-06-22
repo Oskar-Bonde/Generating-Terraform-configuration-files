@@ -108,6 +108,20 @@ def clean_map(row):
     row['content'] = content
     return row
 
+def print_tokens(dataset):
+    codex_tokenizer = AutoTokenizer.from_pretrained('gpt2')
+    space = '  '
+    for i in range(6):
+        codex_tokenizer.add_tokens( [ space ] )
+        space += '  '
+
+    total_tokens = 0
+    for text in dataset['content']:
+        tokens = codex_tokenizer(text, return_tensors="pt")
+        total_tokens += tokens.input_ids.shape[-1]
+    print(f'In total there are {total_tokens} tokens in the fine-tune dataset')
+        
+        
 # Settings
 parser = HfArgumentParser(PreprocessingArguments)
 args = parser.parse_args()
@@ -138,6 +152,9 @@ print(f"Size of filtered dataset: {len(ds_filter)}")
 # Remove license comments
 ds_filter = ds_filter.map(clean_map)
 
+# Measure number of tokens
+print_tokens(ds_filter)
+quit()
 # Save data in batches of samples_per_file
 if not os.path.exists(args.output_dir):
     os.makedirs(args.output_dir)
