@@ -182,7 +182,44 @@ def all_results():
             avg_rate = avg_rate/n_tasks
             print(f'Average success rate {model} on {dataset} {avg_rate}')
         
-        
+def print_table():
+    for provider in ['aws', 'aws-easy', 'gcp', 'gcp-easy', 'azure', 'azure-easy']:
+        table = ['Task & Codex-12B & CodeParrot-110M & CodeParrot-1.5B & GPT-2-110M & GPT-2-1.5B \\\\','\hline\hline']
+        print(f'-------------{provider}-------------')
+        for model in ['codex', 'codeparrot-small', 'codeparrot-large',  'gpt-2-small', 'gpt-2-large']:
+            result_txt = open(f'data/{provider}/result_{model}_{provider}.txt', 'r', encoding='utf-8', errors='ignore')
+            all_lines = result_txt.readlines()
+            lines = all_lines[1:-1]
+            for i in range(len(lines)):
+                seg = lines[i].split(' | ')
+                task = seg[0]
+                rate = float(seg[1][:-1])
+                if model == 'codex':
+                    task = task.replace('_','\\_')
+                    if len(task) > 20:
+                        table.append(f'{task[:20]}... & ')
+                    else:
+                        table.append(f'{task} & ')
+                    table.append('\hline')
+                if rate > 0:
+                    result = '\\textbf{'+str(rate)[:5]+'}'
+                else:
+                    result = str(rate)[:5]
+                if model != 'gpt-2-large':
+                    table[2*i+2] = table[2*i+2] + result +' & '
+                else: 
+                    table[2*i+2] = table[2*i+2] + result +' \\\\ '
+            avg_rate = all_lines[-1].split(' ')[-1][:-2]
+            if model == 'codex':
+                table.append(f'Average & {avg_rate[:5]} & ')
+                table.append('\hline')
+            elif model != 'gpt-2-large':
+                table[-2] = table[-2] + avg_rate[:5] +' & '
+            else:
+                table[-2] = table[-2] + avg_rate[:5] +' \\\\ '
+            
+        print('\n'.join(table))
+        print('-------------------------------------------------')
 # for each provider and average
 
 # success rate vs number of blocks 
@@ -200,6 +237,7 @@ def all_results():
 
 if __name__ == "__main__":
     #one_model()
-    all_results()
+    #all_results()
     #distribution()
+    print_table()
     
